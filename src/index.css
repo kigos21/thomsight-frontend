@@ -1,0 +1,16 @@
+@import "/node_modules/modern-normalize/modern-normalize.css";
+
+:root {
+  --dark-text-color: #323232;
+  --light-text-color: #ffffff;
+  --muted-text-color: #999999;
+  --bg-color: #ffffff;
+  --gray: #f5f5f5;
+
+  --base-border-radius: 2px;
+
+  --xl-width: 1440px;
+  --l-width: 1024px;
+  --md-width: 768px;
+  --sm-width: 640px;
+}
