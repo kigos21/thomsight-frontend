@@ -1,16 +1,87 @@
 @import "/node_modules/modern-normalize/modern-normalize.css";
 
 :root {
-  --dark-text-color: #323232;
-  --light-text-color: #ffffff;
-  --muted-text-color: #999999;
-  --bg-color: #ffffff;
-  --gray: #f5f5f5;
+  --yellow-0: #fffae3;
+  --yellow-1: #fff2ce;
+  --yellow-2: #fde49e;
+  --yellow-3: #fcd56a;
+  --yellow-4: #fbc93e;
+  --yellow-5: #fac123;
+  --yellow-6: #fabd13;
+  --yellow-7: #dea605; /* primary yellow */
+  --yellow-8: #c59300;
+  --yellow-9: #ab7f00;
 
-  --base-border-radius: 2px;
+  --blue-0: #ecf0ff;
+  --blue-1: #d6dcfc;
+  --blue-2: #abb6f1;
+  --blue-3: #7c8de8;
+  --blue-4: #556be0;
+  --blue-5: #3c55db;
+  --blue-6: #2e4ada; /* secondary blue */
+  --blue-7: #203cc2;
+  --blue-8: #1835ae;
+  --blue-9: #0a2d9a;
+
+  --green-0: #e5feee;
+  --green-1: #d2f9e0;
+  --green-2: #a8f1c0;
+  --green-3: #7aea9f;
+  --green-4: #53e383;
+  --green-5: #3bdf70;
+  --green-6: #2bdd66;
+  --green-7: #1ac455;
+  --green-8: #0caf49;
+  --green-9: #00963c;
+
+  --red-0: #ffe9e9;
+  --red-1: #ffd1d1;
+  --red-2: #fba0a1;
+  --red-3: #f76d6d;
+  --red-4: #f34141;
+  --red-5: #f22625;
+  --red-6: #f21616;
+  --red-7: #d8070b;
+  --red-8: #c10008;
+  --red-9: #a90003;
+
+  --blue-0: #e5f4ff;
+  --blue-1: #cde2ff;
+  --blue-2: #9bc2ff;
+  --blue-3: #64a0ff;
+  --blue-4: #3984fe;
+  --blue-5: #1d72fe;
+  --blue-6: #0969ff;
+  --blue-7: #0058e4;
+  --blue-8: #004ecc;
+  --blue-9: #0043b5;
+
+  --white: #ffffff;
+  --neutral-0: #f5f5f5;
+  --neutral-1: #e7e7e7;
+  --neutral-2: #cdcdcd;
+  --neutral-3: #b2b2b2;
+  --neutral-4: #9a9a9a;
+  --neutral-5: #8b8b8b;
+  --neutral-6: #848484;
+  --neutral-7: #717171;
+  --neutral-8: #656565;
+  --neutral-9: #575757;
+  --black: #000000;
+
+  --color-primary: var(--yellow-7);
+  --color-secondary: var(--blue-6);
+
+  --dark-text-color: var(--neutral-9);
+  --light-text-color: var(--white);
+  --muted-text-color: var(--neutral-4);
+  --bg-color: var(--white);
+  --gray: var(--neutral-0);
 
   --xl-width: 1440px;
   --l-width: 1024px;
   --md-width: 768px;
   --sm-width: 640px;
+
+  --base-border-radius: 4px;
 }
