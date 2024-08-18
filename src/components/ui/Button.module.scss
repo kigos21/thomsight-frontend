@@ -1,0 +1,31 @@
+.button {
+  display: block;
+
+  color: var(--white);
+  padding: 14px 28px;
+  font-weight: 600;
+
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.primary {
+  background-color: var(--primary-color);
+}
+
+.secondary {
+  background-color: var(--secondary-color);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
+}
+
+.smRounded {
+  border-radius: var(--base-border-radius);
+}
+
+.rounded {
+  border-radius: 999px;
+}
