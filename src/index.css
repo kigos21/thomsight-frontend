@@ -1,4 +1,5 @@
 @import "/node_modules/modern-normalize/modern-normalize.css";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
   --yellow-0: #fffae3;
@@ -69,8 +70,8 @@
   --neutral-9: #575757;
   --black: #000000;
 
-  --color-primary: var(--yellow-7);
-  --color-secondary: var(--blue-6);
+  --primary-color: var(--yellow-7);
+  --secondary-color: var(--blue-6);
 
   --dark-text-color: var(--neutral-9);
   --light-text-color: var(--white);
@@ -84,4 +85,50 @@
   --sm-width: 640px;
 
   --base-border-radius: 4px;
+}
+
+/* *,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+/* Headings set to Montserrat */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+body {
+  color: var(--neutral-9);
+  background-color: var(--bg-color);
+  font-family: "Poppins", sans-serif;
 }
