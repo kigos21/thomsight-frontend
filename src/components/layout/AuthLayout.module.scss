@@ -1,0 +1,17 @@
+.container {
+  background-color: #c9d3df;
+  min-height: 100vh;
+  min-width: 280px;
+
+  display: flex;
+  flex-direction: column;
+
+  background-image: url(../../assets/bg-img.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
+
+.main {
+  flex-grow: 1;
+}

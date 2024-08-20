@@ -2,7 +2,7 @@
   display: block;
 
   color: var(--white);
-  padding: 14px 28px;
+  padding: 0.875rem 1.75rem;
   font-weight: 600;
 
   transition-property: all;
@@ -12,6 +12,15 @@
 
 .primary {
   background-color: var(--primary-color);
+  color: var(--black);
+
+  &:hover {
+    background-color: var(--yellow-8);
+  }
+
+  &:active {
+    background-color: var(--yellow-9);
+  }
 }
 
 .secondary {
@@ -20,12 +29,31 @@
   &:hover {
     background-color: var(--blue-8);
   }
+
+  &:active {
+    background-color: var(--blue-9);
+  }
 }
 
 .smRounded {
-  border-radius: var(--base-border-radius);
+  border-radius: 0.25rem;
 }
 
 .rounded {
-  border-radius: 999px;
+  border-radius: 99rem;
+}
+
+@media screen and (max-width: 768px) {
+  .button {
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+}
+
+@media screen and (max-width: 480px) {
+  .button {
+    font-size: 0.8rem;
+  }
 }

@@ -68,7 +68,8 @@
   --neutral-7: #717171;
   --neutral-8: #656565;
   --neutral-9: #575757;
-  --black: #000000;
+  --black: hsl(0, 0%, 16%);
+  --muted-black: hsl(0, 0%, 60%);
 
   --primary-color: var(--yellow-7);
   --secondary-color: var(--blue-6);
@@ -77,14 +78,12 @@
   --light-text-color: var(--white);
   --muted-text-color: var(--neutral-4);
   --bg-color: var(--white);
-  --gray: var(--neutral-0);
 
   --xl-width: 1440px;
   --l-width: 1024px;
   --md-width: 768px;
   --sm-width: 640px;
-
-  --base-border-radius: 4px;
+  --xs-width: 480px;
 }
 
 /* *,
@@ -93,6 +92,12 @@
   margin: 0;
   padding: 0;
 } */
+
+body {
+  color: var(--dark-text-color);
+  background-color: var(--bg-color);
+  font-family: "Poppins", sans-serif;
+}
 
 h1,
 h2,
@@ -111,6 +116,7 @@ h3,
 h4,
 h5,
 h6 {
+  color: var(--black);
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
 }
@@ -127,8 +133,61 @@ input[type="reset"] {
   outline: inherit;
 }
 
-body {
-  color: var(--neutral-9);
-  background-color: var(--bg-color);
-  font-family: "Poppins", sans-serif;
+button:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible {
+  outline: 3px solid var(--blue-4);
+  outline-offset: 3px;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.45rem;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  h5 {
+    font-size: 1.15rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1.1rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
 }

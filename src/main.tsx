@@ -6,6 +6,7 @@ import "./index.css";
 import AppLayout from "./components/layout/AppLayout.tsx";
 import AuthLayout from "./components/layout/AuthLayout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import PreRegisterPage from "./pages/auth/PreRegister.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,12 +17,17 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <AuthLayout />,
-    children: [],
+    children: [
+      {
+        index: true,
+        element: <PreRegisterPage />,
+      },
+    ],
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </StrictMode>
 );

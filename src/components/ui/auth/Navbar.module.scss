@@ -2,9 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-
-  padding: 46px;
 }
 
 .heading {
@@ -33,19 +30,25 @@
 }
 
 @media screen and (max-width: 768px) {
-  .container {
-    padding: 2rem;
-  }
-
   .logo {
     width: 70px;
     height: 70px;
+  }
+}
 
-    position: static;
-    margin-right: 0;
+@media screen and (max-width: 640px) {
+  .logo {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .heading {
+    font-size: 1.5rem;
   }
 
-  .button {
-    display: none;
+  .logo {
+    width: 60px;
+    height: 60px;
   }
 }

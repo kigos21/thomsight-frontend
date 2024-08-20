@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../ui/auth/Navbar";
 
+import styles from "./AuthLayout.module.scss";
+
 export default function AuthRoot() {
   return (
-    <div>
+    <div className={styles.container}>
       <Navbar />
-      <main>
+      <main className={styles.main}>
         <Outlet />
       </main>
     </div>
