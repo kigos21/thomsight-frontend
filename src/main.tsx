@@ -10,6 +10,7 @@ import PreRegisterPage from "./pages/auth/PreRegister.tsx";
 import StudentRegisterPage from "./pages/auth/StudentRegisterPage.tsx";
 import AlumniRegisterPage from "./pages/auth/AlumniRegisterPage.tsx";
 import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
+import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
         element: <AlumniRegisterPage />,
       },
       {
-        path: "/ForgotPassword",
+        path: "/forgotpassword/email",
         element: <ForgotPasswordEmail />,
+      },
+      {
+        path: "/forgotpassword/changepassword",
+        element: <ForgotPasswordChangePassword />,
       },
     ],
   },
