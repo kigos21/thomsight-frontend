@@ -7,6 +7,7 @@ import AppLayout from "./components/layout/AppLayout.tsx";
 import AuthLayout from "./components/layout/AuthLayout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import PreRegisterPage from "./pages/auth/PreRegister.tsx";
+import StudentRegisterPage from "./pages/auth/StudentRegisterPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,12 +16,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/auth",
     element: <AuthLayout />,
     children: [
       {
-        index: true,
+        path: "/register",
         element: <PreRegisterPage />,
+      },
+      {
+        path: "/register/student",
+        element: <StudentRegisterPage />,
       },
     ],
   },
