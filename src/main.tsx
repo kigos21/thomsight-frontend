@@ -12,6 +12,7 @@ import AlumniRegisterPage from "./pages/auth/AlumniRegisterPage.tsx";
 import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
 import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
 import CompanyTokenPage from "./pages/auth/CompanyTokenPage.tsx";
+import CompanyRegisterPage from "./pages/auth/CompanyRegisterPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/company/tokenpage",
         element: <CompanyTokenPage />,
+      },
+      {
+        path: "/register/company",
+        element: <CompanyRegisterPage />,
       },
     ],
   },
