@@ -2,12 +2,12 @@ import PaddedContainer from "../../components/layout/PaddedContainer";
 import AuthContentContainer from "../../components/ui/auth/AuthContentContainer";
 import Button from "../../components/ui/Button";
 
-import { IconLock, IconMail, IconPhone } from "@tabler/icons-react";
+import { IconLock, IconMail, IconPhone, IconUser } from "@tabler/icons-react";
 
-import styles from "./StudentRegisterPage.module.scss";
+import styles from "./AlumniRegisterPage.module.scss";
 import { Link } from "react-router-dom";
 
-export default function StudentRegisterPage() {
+export default function AlumniRegisterPage() {
   return (
     <PaddedContainer>
       <AuthContentContainer>
@@ -16,10 +16,21 @@ export default function StudentRegisterPage() {
           <div className={styles.formContainer}>
             <form className={styles.form}>
               <div className={styles.formGroup}>
+                <IconUser size={35} stroke={1.5} className={styles.icon} />
+                <input
+                  type="number"
+                  placeholder="Alumni ID"
+                  min="10"
+                  max="16"
+                  required
+                  className={styles.textField}
+                />
+              </div>
+              <div className={styles.formGroup}>
                 <IconMail size={35} stroke={1.5} className={styles.icon} />
                 <input
                   type="email"
-                  placeholder="Email (cics@ust.edu.ph)"
+                  placeholder="Email"
                   required
                   className={styles.textField}
                 />
