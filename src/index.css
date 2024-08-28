@@ -152,6 +152,15 @@ input[type="checkbox"] {
   transform: scale(1.5);
 }
 
+/* para wala yung button sa form na for numbers up and down */
+input[type="number"] {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 1.75rem;
