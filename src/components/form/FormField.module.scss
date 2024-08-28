@@ -1,0 +1,25 @@
+.formGroup {
+  position: relative;
+}
+
+.formField {
+  width: 100%;
+  padding: 1.2rem 4.4rem;
+  border-radius: 999px;
+
+  border: 2px solid var(--muted-black);
+  color: var(--black);
+}
+
+@media screen and (max-width: 768px) {
+  .formField {
+    padding: 1rem 4rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .formField {
+    padding: 0.8rem 1.2rem 0.8rem 3.6rem;
+    font-size: 0.875rem;
+  }
+}

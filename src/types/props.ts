@@ -24,3 +24,10 @@ export type PaddedContainerProps = {
   classNames?: string;
   style?: React.CSSProperties;
 };
+
+export type FormFieldProps = {
+  icon: JSX.Element;
+  type: string;
+  placeholder: string;
+  required: true | false;
+};
