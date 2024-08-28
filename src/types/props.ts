@@ -30,4 +30,5 @@ export type FormFieldProps = {
   type: string;
   placeholder: string;
   required: true | false;
+  extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
