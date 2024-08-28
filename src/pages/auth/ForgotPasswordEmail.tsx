@@ -1,6 +1,7 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import AuthContentContainer from "../../components/ui/auth/AuthContentContainer";
 import Button from "../../components/ui/Button";
+import FormField from "../../components/form/FormField";
 import { IconMail } from "@tabler/icons-react";
 
 import styles from "./ForgotPasswordEmail.module.scss";
@@ -13,15 +14,14 @@ export default function ForgotPasswordEmail() {
           <h1>Password Recovery</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
-              <div className={styles.formGroup}>
-                <IconMail size={35} stroke={1.5} className={styles.icon} />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  required
-                  className={styles.textField}
-                />
-              </div>
+              <FormField
+                icon={
+                  <IconMail size={35} stroke={1.5} className={styles.icon} />
+                }
+                type={"email"}
+                placeholder={"Email"}
+                required={true}
+              />
             </form>
             <Button
               color="primary"

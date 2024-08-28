@@ -36,21 +36,32 @@ const router = createBrowserRouter([
         element: <AlumniRegisterPage />,
       },
       {
-        path: "/forgotpassword/email",
-        element: <ForgotPasswordEmail />,
-      },
-      {
-        path: "/forgotpassword/changepassword",
-        element: <ForgotPasswordChangePassword />,
-      },
-      {
-        path: "/company/tokenpage",
+        path: "/register/token",
         element: <CompanyTokenPage />,
       },
+
       {
+        // TODO: company must be a protected route, a link which should be
+        // clicked from email
         path: "/register/company",
         element: <CompanyRegisterPage />,
       },
+      {
+        path: "/forgot-password",
+        element: <ForgotPasswordEmail />,
+      },
+      {
+        path: "/forgot-password/change-password",
+        element: <ForgotPasswordChangePassword />,
+      },
+      // {
+      //   path: "/terms-and-conditions",
+      //   element: <TermsAndConditionsPage />,
+      // },
+      // {
+      //   path: "/data-privacy",
+      //   element: <DataPrivacyPage />,
+      // },
     ],
   },
 ]);

@@ -1,5 +1,6 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import Button from "../../components/ui/Button";
+import FormField from "../../components/form/FormField";
 import { IconKey } from "@tabler/icons-react";
 
 import styles from "./CompanyTokenPage.module.scss";
@@ -11,15 +12,12 @@ export default function CompanyTokenPage() {
         <h1>Password Recovery</h1>
         <div className={styles.formContainer}>
           <form className={styles.form}>
-            <div className={styles.formGroup}>
-              <IconKey size={35} stroke={1.5} className={styles.icon} />
-              <input
-                type="number"
-                placeholder="Enter Token"
-                required
-                className={styles.textField}
-              />
-            </div>
+            <FormField
+              icon={<IconKey size={35} stroke={1.5} className={styles.icon} />}
+              type={"number"}
+              placeholder={"Enter Token"}
+              required={true}
+            />
           </form>
           <Button
             color="primary"

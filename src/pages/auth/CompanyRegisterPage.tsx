@@ -1,6 +1,8 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import AuthContentContainer from "../../components/ui/auth/AuthContentContainer";
 import Button from "../../components/ui/Button";
+import FormField from "../../components/form/FormField";
+import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
 
 import {
   IconLock,
@@ -9,8 +11,7 @@ import {
   IconBuildings,
 } from "@tabler/icons-react";
 
-import styles from "./AlumniRegisterPage.module.scss";
-import { Link } from "react-router-dom";
+import styles from "./CompanyRegisterPage.module.scss";
 
 export default function CompanyRegisterPage() {
   return (
@@ -20,65 +21,77 @@ export default function CompanyRegisterPage() {
           <h1>Register your Company</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
-              <div className={styles.formGroup}>
-                <IconBuildings size={35} stroke={1.5} className={styles.icon} />
-                <input
-                  type="text"
-                  placeholder="Company Name"
-                  required
-                  className={styles.textField}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <IconMail size={35} stroke={1.5} className={styles.icon} />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  required
-                  className={styles.textField}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <IconLock size={35} stroke={1.5} className={styles.icon} />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  required
-                  className={styles.textField}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <IconLock size={35} stroke={1.5} className={styles.icon} />
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  required
-                  className={styles.textField}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <IconPhone size={35} stroke={1.5} className={styles.icon} />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  required
-                  className={styles.textField}
-                />
-              </div>
-              <div className={styles.checkGroup}>
-                <input type="checkbox" id="terms" />
-                <label htmlFor="terms">
-                  I have read and agree to the website{" "}
-                  <Link to={"#"}>terms & conditions</Link>
-                </label>
-              </div>
-              <div className={styles.checkGroup}>
-                <input type="checkbox" id="privacy" />
-                <label htmlFor="privacy">
-                  By ticking this box, I agree that I have read the{" "}
-                  <Link to={"#"}>data privacy policy</Link>
-                </label>
-              </div>
+              {/* Company Name Field */}
+              <FormField
+                icon={
+                  <IconBuildings
+                    size={35}
+                    stroke={1.5}
+                    className={styles.icon}
+                  />
+                }
+                type="text"
+                placeholder="Company Name"
+                required
+              />
+
+              {/* Email Field */}
+              <FormField
+                icon={
+                  <IconMail size={35} stroke={1.5} className={styles.icon} />
+                }
+                type="email"
+                placeholder="Email"
+                required
+              />
+
+              {/* Password Field */}
+              <FormField
+                icon={
+                  <IconLock size={35} stroke={1.5} className={styles.icon} />
+                }
+                type="password"
+                placeholder="Password"
+                required
+              />
+
+              {/* Confirm Password Field */}
+              <FormField
+                icon={
+                  <IconLock size={35} stroke={1.5} className={styles.icon} />
+                }
+                type="password"
+                placeholder="Confirm Password"
+                required
+              />
+
+              {/* Phone Number Field */}
+              <FormField
+                icon={
+                  <IconPhone size={35} stroke={1.5} className={styles.icon} />
+                }
+                type="tel"
+                placeholder="Phone Number"
+                required
+              />
+
+              {/* Terms and Conditions Checkbox */}
+              <CheckboxWithLabel
+                id="terms"
+                label="I have read and agree to the website"
+                linkText="terms & conditions"
+                linkHref="#"
+                required={true}
+              />
+
+              {/* Data Privacy Policy Checkbox */}
+              <CheckboxWithLabel
+                id="privacy"
+                label="By ticking this box, I agree that I have read the"
+                linkText="data privacy policy"
+                linkHref="#"
+                required={true}
+              />
             </form>
             <Button
               color="primary"
