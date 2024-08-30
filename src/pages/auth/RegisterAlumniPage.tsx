@@ -3,79 +3,59 @@ import AuthContentContainer from "../../components/ui/auth/AuthContentContainer"
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
 import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
+import { IconLock, IconMail, IconPhone, IconUser } from "@tabler/icons-react";
 
-import {
-  IconLock,
-  IconMail,
-  IconPhone,
-  IconBuildings,
-} from "@tabler/icons-react";
+import styles from "./RegisterAlumniPage.module.scss";
 
-import styles from "./CompanyRegisterPage.module.scss";
-
-export default function CompanyRegisterPage() {
+export default function RegisterAlumniPage() {
   return (
     <PaddedContainer>
       <AuthContentContainer>
         <div className={styles.container}>
-          <h1>Register your Company</h1>
+          <h1>Register your Account</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
-              {/* Company Name Field */}
               <FormField
                 icon={
-                  <IconBuildings
-                    size={35}
-                    stroke={1.5}
-                    className={styles.icon}
-                  />
+                  <IconUser size={35} stroke={1.5} className={styles.icon} />
                 }
-                type="text"
-                placeholder="Company Name"
-                required
+                type="number"
+                placeholder="Alumni ID"
+                extraProps={{ min: 10, max: 16 }}
+                required={true}
               />
-
-              {/* Email Field */}
               <FormField
                 icon={
                   <IconMail size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="email"
                 placeholder="Email"
-                required
+                required={true}
               />
-
-              {/* Password Field */}
               <FormField
                 icon={
                   <IconLock size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="password"
                 placeholder="Password"
-                required
+                required={true}
               />
-
-              {/* Confirm Password Field */}
               <FormField
                 icon={
                   <IconLock size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="password"
                 placeholder="Confirm Password"
-                required
+                required={true}
               />
-
-              {/* Phone Number Field */}
               <FormField
                 icon={
                   <IconPhone size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="tel"
                 placeholder="Phone Number"
-                required
+                required={true}
               />
-
-              {/* Terms and Conditions Checkbox */}
               <CheckboxWithLabel
                 id="terms"
                 label="I have read and agree to the website"
@@ -83,8 +63,6 @@ export default function CompanyRegisterPage() {
                 linkHref="#"
                 required={true}
               />
-
-              {/* Data Privacy Policy Checkbox */}
               <CheckboxWithLabel
                 id="privacy"
                 label="By ticking this box, I agree that I have read the"

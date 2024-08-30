@@ -3,50 +3,79 @@ import AuthContentContainer from "../../components/ui/auth/AuthContentContainer"
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
 import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
-import { IconLock, IconMail, IconPhone } from "@tabler/icons-react";
 
-import styles from "./StudentRegisterPage.module.scss";
+import {
+  IconLock,
+  IconMail,
+  IconPhone,
+  IconBuildings,
+} from "@tabler/icons-react";
 
-export default function StudentRegisterPage() {
+import styles from "./RegisterCompanyPage.module.scss";
+
+export default function CompanyRegisterPage() {
   return (
     <PaddedContainer>
       <AuthContentContainer>
         <div className={styles.container}>
-          <h1>Register your Account</h1>
+          <h1>Register your Company</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
+              {/* Company Name Field */}
+              <FormField
+                icon={
+                  <IconBuildings
+                    size={35}
+                    stroke={1.5}
+                    className={styles.icon}
+                  />
+                }
+                type="text"
+                placeholder="Company Name"
+                required
+              />
+
+              {/* Email Field */}
               <FormField
                 icon={
                   <IconMail size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="email"
-                placeholder="Email (cics@ust.edu.ph)"
-                required={true}
+                placeholder="Email"
+                required
               />
+
+              {/* Password Field */}
               <FormField
                 icon={
                   <IconLock size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="password"
                 placeholder="Password"
-                required={true}
+                required
               />
+
+              {/* Confirm Password Field */}
               <FormField
                 icon={
                   <IconLock size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="password"
                 placeholder="Confirm Password"
-                required={true}
+                required
               />
+
+              {/* Phone Number Field */}
               <FormField
                 icon={
                   <IconPhone size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="tel"
                 placeholder="Phone Number"
-                required={true}
+                required
               />
+
+              {/* Terms and Conditions Checkbox */}
               <CheckboxWithLabel
                 id="terms"
                 label="I have read and agree to the website"
@@ -54,6 +83,8 @@ export default function StudentRegisterPage() {
                 linkHref="#"
                 required={true}
               />
+
+              {/* Data Privacy Policy Checkbox */}
               <CheckboxWithLabel
                 id="privacy"
                 label="By ticking this box, I agree that I have read the"

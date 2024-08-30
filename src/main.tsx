@@ -7,12 +7,14 @@ import AppLayout from "./components/layout/AppLayout.tsx";
 import AuthLayout from "./components/layout/AuthLayout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import PreRegisterPage from "./pages/auth/PreRegister.tsx";
-import StudentRegisterPage from "./pages/auth/StudentRegisterPage.tsx";
-import AlumniRegisterPage from "./pages/auth/AlumniRegisterPage.tsx";
+import StudentRegisterPage from "./pages/auth/RegisterStudentPage.tsx";
+import RegisterAlumniPage from "./pages/auth/RegisterAlumniPage.tsx";
 import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
 import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
 import CompanyTokenPage from "./pages/auth/CompanyTokenPage.tsx";
-import CompanyRegisterPage from "./pages/auth/CompanyRegisterPage.tsx";
+import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
+import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
+import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,9 @@ const router = createBrowserRouter([
   {
     element: <AuthLayout />,
     children: [
+      /**
+       * Route group for Register
+       */
       {
         path: "/register",
         element: <PreRegisterPage />,
@@ -33,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/register/alumni",
-        element: <AlumniRegisterPage />,
+        element: <RegisterAlumniPage />,
       },
       {
         path: "/register/token",
@@ -46,6 +51,22 @@ const router = createBrowserRouter([
         path: "/register/company",
         element: <CompanyRegisterPage />,
       },
+
+      /**
+       * Route Group for Login
+       */
+      {
+        path: "/login",
+        element: <PreLoginPage />,
+      },
+      {
+        path: "/login/student",
+        element: <LoginStudentPage />,
+      },
+
+      /**
+       * Others
+       */
       {
         path: "/forgot-password",
         element: <ForgotPasswordEmail />,

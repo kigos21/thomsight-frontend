@@ -3,11 +3,11 @@ import AuthContentContainer from "../../components/ui/auth/AuthContentContainer"
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
 import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
-import { IconLock, IconMail, IconPhone, IconUser } from "@tabler/icons-react";
+import { IconLock, IconMail, IconPhone } from "@tabler/icons-react";
 
-import styles from "./AlumniRegisterPage.module.scss";
+import styles from "./RegisterStudentPage.module.scss";
 
-export default function AlumniRegisterPage() {
+export default function StudentRegisterPage() {
   return (
     <PaddedContainer>
       <AuthContentContainer>
@@ -17,19 +17,10 @@ export default function AlumniRegisterPage() {
             <form className={styles.form}>
               <FormField
                 icon={
-                  <IconUser size={35} stroke={1.5} className={styles.icon} />
-                }
-                type="number"
-                placeholder="Alumni ID"
-                extraProps={{ min: 10, max: 16 }}
-                required={true}
-              />
-              <FormField
-                icon={
                   <IconMail size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="email"
-                placeholder="Email"
+                placeholder="Email (cics@ust.edu.ph)"
                 required={true}
               />
               <FormField
