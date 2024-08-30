@@ -32,11 +32,11 @@ export default function Navbar() {
 
   return (
     <PaddedContainer style={{ marginBottom: "50px" }}>
-      <header className={styles.container}>
+      <nav className={styles.container}>
         <h1 className={styles.heading}>Thomsight</h1>
         <img src={logo} alt="Logo" className={styles.logo} />
         {button}
-      </header>
+      </nav>
     </PaddedContainer>
   );
 }
