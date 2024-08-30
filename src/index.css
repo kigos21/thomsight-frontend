@@ -9,7 +9,7 @@
   --yellow-4: #fbc93e;
   --yellow-5: #fac123;
   --yellow-6: #fabd13;
-  --yellow-7: #dea605; /* primary yellow */
+  --yellow-7: #f0b305; /* primary yellow */
   --yellow-8: #c59300;
   --yellow-9: #ab7f00;
 
@@ -61,7 +61,7 @@
   --neutral-0: #f5f5f5;
   --neutral-1: #e7e7e7;
   --neutral-2: #cdcdcd;
-  --neutral-3: #b2b2b2;
+  --neutral-3: #f0f0f0; /*binago ko to from figma */
   --neutral-4: #9a9a9a;
   --neutral-5: #8b8b8b;
   --neutral-6: #848484;

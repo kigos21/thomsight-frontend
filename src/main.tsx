@@ -15,12 +15,19 @@ import CompanyTokenPage from "./pages/auth/CompanyTokenPage.tsx";
 import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
 import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
+import UserHomePage from "./pages/auth/UserHomePage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/home",
+        element: <UserHomePage />,
+      },
+    ],
   },
   {
     element: <AuthLayout />,

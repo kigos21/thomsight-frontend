@@ -1,0 +1,12 @@
+.container {
+  background-color: #ffffff;
+  min-height: 100vh;
+  min-width: 280px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex-grow: 1;
+}

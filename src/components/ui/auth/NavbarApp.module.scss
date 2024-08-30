@@ -1,0 +1,58 @@
+.paddedContainer {
+  background-color: var(--yellow-7);
+  padding: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--yellow-7);
+}
+
+.heading {
+  text-transform: uppercase;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.elementContainer {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  font-size: 16px;
+
+  a {
+    text-decoration: none;
+    color: #000;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--blue-6);
+    }
+  }
+}
+
+.profileIcon {
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--blue-6);
+  }
+}
