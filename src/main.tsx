@@ -13,6 +13,7 @@ import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
 import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
 import CompanyTokenPage from "./pages/auth/CompanyTokenPage.tsx";
 import CompanyRegisterPage from "./pages/auth/CompanyRegisterPage.tsx";
+import UserHomePage from "./pages/auth/UserHomePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "",
-        element: "",
+        path: "/home",
+        element: <UserHomePage />,
       },
     ],
   },
