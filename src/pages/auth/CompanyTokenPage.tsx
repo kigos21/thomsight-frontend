@@ -9,7 +9,6 @@ export default function CompanyTokenPage() {
   return (
     <PaddedContainer>
       <div className={styles.container}>
-        <h1>Password Recovery</h1>
         <div className={styles.formContainer}>
           <form className={styles.form}>
             <FormField
