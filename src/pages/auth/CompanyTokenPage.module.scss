@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formContainer {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.form {
+  width: 100%;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 1.8rem;
+
+  transform: translate(0%, -50%);
+}
+
+.button {
+  padding: 1.2rem 2.4rem;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .icon {
+    left: 1.4rem;
+  }
+
+  .button {
+    padding: 1.1rem 2.2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .formContainer {
+    margin-top: 1.5rem;
+  }
+
+  .formContainer {
+    flex-direction: column;
+  }
+
+  .icon {
+    left: 1.2rem;
+    aspect-ratio: 1/1;
+    width: 1.75rem;
+  }
+
+  .button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}
