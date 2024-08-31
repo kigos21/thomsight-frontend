@@ -1,0 +1,42 @@
+.paddedContainer {
+  background-color: var(--white);
+  padding: 3rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.underline {
+  display: block;
+  border-bottom: 2px solid var(--neutral-4);
+  margin-top: 5rem;
+  width: 80%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.elementContainer {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  font-size: 16px;
+
+  a {
+    text-decoration: none;
+    color: #000;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--blue-6);
+    }
+  }
+}
