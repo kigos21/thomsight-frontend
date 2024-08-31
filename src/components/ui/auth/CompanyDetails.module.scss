@@ -1,0 +1,32 @@
+.paddedContainer {
+  // padding: 2.25rem 6rem;
+  // padding-bottom: 0.5rem;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+}
+
+.imageHolder {
+  img {
+    width: 120px;
+  }
+}
+
+.detailsHolder {
+  p {
+    font-size: 0.875rem;
+  }
+}
+
+.companyName {
+  font-size: 1.25rem !important;
+}
+
+.detailsHolder {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
