@@ -8,7 +8,7 @@ export default function PaddedContainer({
   style,
 }: PaddedContainerProps) {
   return (
-    <div className={`${styles.container} ${classNames}`} style={style}>
+    <div className={`${classNames} ${styles.container}`} style={style}>
       {children}
     </div>
   );

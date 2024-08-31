@@ -1,60 +1,64 @@
-import { Outlet } from "react-router-dom";
-import NavbarApp from "../ui/auth/NavbarApp";
 import styles from "./AppLayout.module.scss";
 
-export default function AppRoot() {
-  let elements: React.ReactNode[];
+import { Link, Outlet } from "react-router-dom";
+import NavbarApp from "../ui/main/NavbarApp";
 
-  if (true) {
-    elements = [
-      <a href="/" key="homeUser">
+export default function AppRoot() {
+  const isStudent = false;
+  const isCompany = false;
+
+  let links: JSX.Element[];
+
+  if (isStudent) {
+    links = [
+      <Link to="/" key="homeUser">
         Home
-      </a>,
-      <a href="/" key="interviewtipsUser">
+      </Link>,
+      <Link to="/" key="interviewtipsUser">
         Interview Tips
-      </a>,
-      <a href="/" key="resumeUser">
+      </Link>,
+      <Link to="/" key="resumeUser">
         Resume
-      </a>,
+      </Link>,
     ];
-  } else if (false) {
-    elements = [
-      <a href="/" key="homeCompany">
+  } else if (isCompany) {
+    links = [
+      <Link to="/" key="homeCompany">
         Home
-      </a>,
-      <a href="/" key="announcementsCompany">
+      </Link>,
+      <Link to="/" key="announcementsCompany">
         Announcements
-      </a>,
-      <a href="/" key="overviewCompany">
+      </Link>,
+      <Link to="/" key="overviewCompany">
         Overview
-      </a>,
-      <a href="/" key="manageinfoCompany">
+      </Link>,
+      <Link to="/" key="manageinfoCompany">
         Manage Info
-      </a>,
+      </Link>,
     ];
   } else {
-    elements = [
-      <a href="/" key="homeAdmin">
+    links = [
+      <Link to="/" key="homeAdmin">
         Home
-      </a>,
-      <a href="/" key="tokensAdmin">
+      </Link>,
+      <Link to="/" key="tokensAdmin">
         Tokens
-      </a>,
-      <a href="/" key="announcementsAdmin">
+      </Link>,
+      <Link to="/" key="announcementsAdmin">
         Announcements
-      </a>,
-      <a href="/" key="companiesAdmin">
+      </Link>,
+      <Link to="/" key="companiesAdmin">
         Companies
-      </a>,
-      <a href="/" key="reportsAdmin">
+      </Link>,
+      <Link to="/" key="reportsAdmin">
         Reports
-      </a>,
+      </Link>,
     ];
   }
 
   return (
     <div className={styles.container}>
-      <NavbarApp elements={elements} />
+      <NavbarApp links={links} />
       <main className={styles.main}>
         <Outlet />
       </main>
