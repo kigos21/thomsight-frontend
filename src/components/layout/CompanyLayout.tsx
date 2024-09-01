@@ -36,12 +36,11 @@ export default function CompanyRoot() {
   }
   return (
     <div className={styles.container}>
-      {/* for viewing purposes only sa company dapat ito not home */}
       <CompanyDetails />
       <NavbarCompany elements={elements} />
-      <main className={styles.main}>
+      <div className="">
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 }

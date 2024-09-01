@@ -28,16 +28,15 @@ const router = createBrowserRouter([
         index: true,
         element: <UserHomePage />,
       },
-    ],
-  },
-  {
-    path: "/",
-    element: <CompanyLayout />,
-    errorElement: <ErrorPage />,
-    children: [
       {
-        path: "/",
-        element: "",
+        path: "company/:companyId",
+        element: <CompanyLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>This is the Overview</h1>,
+          },
+        ],
       },
     ],
   },
