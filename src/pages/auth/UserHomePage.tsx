@@ -5,8 +5,7 @@ import styles from "./UserHomePage.module.scss";
 
 export default function UserHomePage() {
   return (
-    <PaddedContainer classNames="">
-      <CompanyLayout />
+    <PaddedContainer>
       <StyledBox classNames={styles.styledBox}>
         <h1 className={styles.sample}>This is the home page</h1>
       </StyledBox>

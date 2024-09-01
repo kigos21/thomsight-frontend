@@ -39,9 +39,9 @@ export default function CompanyRoot() {
       {/* for viewing purposes only sa company dapat ito not home */}
       <CompanyDetails />
       <NavbarCompany elements={elements} />
-      <main className={styles.main}>
+      <div className={styles.main}>
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 }
