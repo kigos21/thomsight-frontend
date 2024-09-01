@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavbarCompany from "../ui/auth/NavbarCompany";
 import CompanyDetails from "../ui/auth/CompanyDetails";
-import styles from "./AppLayout.module.scss";
+import styles from "./CompanyLayout.module.scss";
 
 export default function CompanyRoot() {
   let elements: React.ReactNode[];

@@ -11,12 +11,12 @@ export default function JobItem({
   jobDescription,
 }: JobItemProps) {
   return (
-    <PaddedContainer>
-      <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
+    <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
+      <PaddedContainer classNames={styles.paddedContainer}>
         <h2 className={styles.jobTitle}>{jobTitle}</h2>
         <h3 className={styles.companyName}>{companyName}</h3>
         <p className={styles.jobDescription}>{jobDescription}</p>
-      </div>
-    </PaddedContainer>
+      </PaddedContainer>
+    </div>
   );
 }

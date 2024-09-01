@@ -1,6 +1,9 @@
+.paddedContainer {
+  padding: 1rem;
+}
 .container {
   border-radius: 1.25rem;
-  background-color: burlywood;
+  background-color: var(--neutral-0);
 }
 
 @media screen and (max-width: 768px) {
