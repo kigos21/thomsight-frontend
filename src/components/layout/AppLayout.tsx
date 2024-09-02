@@ -14,11 +14,11 @@ export default function AppRoot() {
       <Link to="/" key="homeUser">
         Home
       </Link>,
-      <Link to="/" key="interviewtipsUser">
+      <Link to="/interview-guide" key="interviewTipsUser">
         Interview Tips
       </Link>,
-      <Link to="/" key="resumeUser">
-        Resume
+      <Link to="#" key="resumeUser">
+        Resume (dropdown to)
       </Link>,
     ];
   } else if (isCompany) {
@@ -26,13 +26,13 @@ export default function AppRoot() {
       <Link to="/" key="homeCompany">
         Home
       </Link>,
-      <Link to="/" key="announcementsCompany">
+      <Link to="/announcements" key="announcementsCompany">
         Announcements
       </Link>,
-      <Link to="/" key="overviewCompany">
+      <Link to="/company/theirCompanyId" key="overviewCompany">
         Overview
       </Link>,
-      <Link to="/" key="manageinfoCompany">
+      <Link to="/manage/overview" key="manageinfoCompany">
         Manage Info
       </Link>,
     ];
@@ -41,16 +41,16 @@ export default function AppRoot() {
       <Link to="/" key="homeAdmin">
         Home
       </Link>,
-      <Link to="/" key="tokensAdmin">
+      <Link to="/tokens" key="tokensAdmin">
         Tokens
       </Link>,
-      <Link to="/" key="announcementsAdmin">
+      <Link to="/announcements" key="announcementsAdmin">
         Announcements
       </Link>,
-      <Link to="/" key="companiesAdmin">
+      <Link to="/tokens/companies" key="companiesAdmin">
         Companies
       </Link>,
-      <Link to="/" key="reportsAdmin">
+      <Link to="/reports" key="reportsAdmin">
         Reports
       </Link>,
     ];

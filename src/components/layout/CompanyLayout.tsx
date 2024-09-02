@@ -1,46 +1,47 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import NavbarCompany from "../ui/auth/NavbarCompany";
 import CompanyDetails from "../ui/auth/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
+import PaddedContainer from "./PaddedContainer";
 
 export default function CompanyRoot() {
   let elements: React.ReactNode[];
 
   if (true) {
     elements = [
-      <a href="/" key="overviewCompany">
+      <Link to="/company" key="overviewCompany">
         Overview
-      </a>,
-      <a href="/" key="reviewCompany">
+      </Link>,
+      <Link to="/company#reviews" key="reviewCompany">
         Review
-      </a>,
-      <a href="/" key="jobsCompany">
+      </Link>,
+      <Link to="/company/jobs" key="jobsCompany">
         Jobs
-      </a>,
-      <a href="/" key="discussionforumCompany">
-        Discussion Forum
-      </a>,
-      <a href="/" key="interviewtipsCompany">
-        Interview Tips
-      </a>,
+      </Link>,
+      <Link to="/company/forum" key="discussionforumCompany">
+        Discussion&nbsp;Forum
+      </Link>,
+      <Link to="/company/interview-tips" key="interviewtipsCompany">
+        Interview&nbsp;Tips
+      </Link>,
     ];
   } else if (false) {
     elements = [
-      <a href="/" key="overviewmanageinfoCompany">
+      <Link to="/manage/overview" key="overviewmanageinfoCompany">
         Overview
-      </a>,
-      <a href="/" key="jobinfomanageinfoCompany">
-        Job Info
-      </a>,
+      </Link>,
+      <Link to="/manage/jobs" key="jobinfomanageinfoCompany">
+        Job&nbsp;Info
+      </Link>,
     ];
   }
   return (
     <div className={styles.container}>
       <CompanyDetails />
       <NavbarCompany elements={elements} />
-      <div className={styles.main}>
+      <PaddedContainer>
         <Outlet />
-      </div>
+      </PaddedContainer>
     </div>
   );
 }
