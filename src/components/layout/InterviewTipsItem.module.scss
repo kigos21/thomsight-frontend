@@ -39,6 +39,14 @@
   padding: 0rem 2rem;
 }
 
+button {
+  transition: 0.3s;
+}
+
+button:hover {
+  color: var(--blue-6);
+}
+
 @media screen and (max-width: 768px) {
   .container {
     border-radius: 1rem;
