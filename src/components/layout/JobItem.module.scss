@@ -1,9 +1,40 @@
 .paddedContainer {
-  padding: 1rem;
+  padding: 1.5rem;
 }
+
 .container {
   border-radius: 1.25rem;
   background-color: var(--neutral-0);
+  color: black;
+}
+
+.jobDetailsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.jobSubjectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 25%;
+
+  p {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+.jobTitle {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+}
+
+.jobDescription {
+  width: 75%;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 768px) {

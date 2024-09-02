@@ -12,12 +12,12 @@ export default function UserHomePage() {
         <h1 className={styles.sample}>This is the home page</h1>
         {/* try lang ulit for seeing */}
       </StyledBox>
-      <div>tits</div>
+      <div> spacer </div>
       <JobItem
         classNames=""
         jobTitle="Java Developer"
         companyName="Accenture"
-        jobDescription="this is your fucking work"
+        jobDescription="this is your work so do well lorem morel ako ikaw siya tayo lahat sino siya sino ako "
       ></JobItem>
     </PaddedContainer>
   );
