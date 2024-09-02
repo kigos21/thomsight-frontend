@@ -17,6 +17,7 @@ import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
 import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
 import UserHomePage from "./pages/auth/UserHomePage.tsx";
+import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
         element: <UserHomePage />,
       },
       {
-        path: "company/:companyId",
+        path: "company",
         element: <CompanyLayout />,
         children: [
           {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
           },
           {
             path: "jobs",
-            element: <h1>Jobs</h1>,
+            element: <UserCompanyJobs />,
           },
         ],
       },
