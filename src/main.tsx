@@ -18,6 +18,7 @@ import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
 import UserHomePage from "./pages/auth/UserHomePage.tsx";
 import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
+import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
           {
             path: "jobs",
             element: <UserCompanyJobs />,
+          },
+          {
+            path: "interviewtips",
+            element: <UserCompanyInterviewTips />,
           },
         ],
       },
