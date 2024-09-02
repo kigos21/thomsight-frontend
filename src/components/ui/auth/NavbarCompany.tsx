@@ -8,9 +8,9 @@ interface NavbarCompanyProps {
 export default function NavbarCompany({ elements }: NavbarCompanyProps) {
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
-      <nav className={styles.container}>
+      <nav>
         <div className={styles.elementContainer}>{elements}</div>
-        <div className={styles.underline}></div>
+        {/* <div className={styles.underline}/ > */}
       </nav>
     </PaddedContainer>
   );
