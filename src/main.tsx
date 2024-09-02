@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <UserHomePage />,
       },
       {
-        path: "company",
+        path: "company/",
         element: <CompanyLayout />,
         children: [
           {
@@ -39,11 +39,11 @@ const router = createBrowserRouter([
             element: <h1>This is the Overview</h1>,
           },
           {
-            path: "jobs",
+            path: "jobs/",
             element: <UserCompanyJobs />,
           },
           {
-            path: "interviewtips",
+            path: "interview-tips/",
             element: <UserCompanyInterviewTips />,
           },
         ],
