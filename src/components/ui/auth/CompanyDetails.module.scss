@@ -1,18 +1,21 @@
 .paddedContainer {
-  // padding: 2.25rem 6rem;
-  padding: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .container {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 25px;
-  padding: 2rem 4rem 0rem 4rem;
 }
 
-.imageHolder {
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 120px;
+
   img {
-    width: 120px;
+    max-width: 100%;
   }
 }
 
