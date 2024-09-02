@@ -1,0 +1,12 @@
+.styledBox {
+  background-color: var(--neutral-0);
+  text-align: center;
+  //   border: 1px black;
+  border-color: black;
+  border: 2px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
