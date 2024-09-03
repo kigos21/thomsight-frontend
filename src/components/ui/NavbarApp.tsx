@@ -1,7 +1,7 @@
 import styles from "./NavbarApp.module.scss";
-import logo from "../../../assets/thomsight-logo.svg";
+import logo from "../../assets/thomsight-logo.svg";
 
-import PaddedContainer from "../../layout/PaddedContainer";
+import PaddedContainer from "../layout/PaddedContainer";
 import { IconUser, IconMenu2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";

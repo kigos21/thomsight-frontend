@@ -1,5 +1,5 @@
 import { JobItemProps } from "../../types/props";
-import PaddedContainer from "./PaddedContainer";
+import PaddedContainer from "../layout/PaddedContainer";
 
 import styles from "./JobItem.module.scss";
 

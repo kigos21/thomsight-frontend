@@ -1,7 +1,7 @@
 import styles from "./AppLayout.module.scss";
 
 import { Link, Outlet } from "react-router-dom";
-import NavbarApp from "../ui/main/NavbarApp";
+import NavbarApp from "../ui/NavbarApp";
 
 export default function AppRoot() {
   const isStudent = false;

@@ -1,5 +1,5 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
-import JobItem from "../../components/layout/JobItem";
+import JobItem from "../../components/ui/JobItem";
 import styles from "./UserCompanyJobs.module.scss";
 
 export default function UserCompanyJobs() {

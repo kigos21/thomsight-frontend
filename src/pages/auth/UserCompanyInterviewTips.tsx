@@ -1,5 +1,5 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
-import InterviewTipsItem from "../../components/layout/InterviewTipsItem";
+import InterviewTipsItem from "../../components/ui/InterviewTipsItem";
 import styles from "./UserCompanyInterviewTips.module.scss";
 
 export default function UserCompanyInterviewTips() {

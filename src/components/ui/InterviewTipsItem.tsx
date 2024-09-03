@@ -1,5 +1,5 @@
 import { InterviewTipsItemProps } from "../../types/props";
-import PaddedContainer from "./PaddedContainer";
+import PaddedContainer from "../layout/PaddedContainer";
 import { IconFlagFilled } from "@tabler/icons-react";
 
 import styles from "./InterviewTipsItem.module.scss";
