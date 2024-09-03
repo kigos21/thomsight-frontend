@@ -20,6 +20,7 @@ import UserHomePage from "./pages/auth/UserHomePage.tsx";
 import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
 import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
 import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
+import CVLayout from "./components/layout/CVLayout.tsx";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,12 @@ const router = createBrowserRouter([
             element: <UserCompanyInterviewTips />,
           },
         ],
+      },
+
+      // CV Peer Review
+      {
+        path: "cv-review",
+        element: <CVLayout />,
       },
     ],
   },
