@@ -32,11 +32,11 @@ const router = createBrowserRouter([
         element: <UserHomePage />,
       },
       {
-        path: "/profilemanagement",
+        path: "profilemanagement",
         element: <ProfileManagement />,
       },
       {
-        path: "/profilemanagement",
+        path: "profilemanagement",
         element: <ProfileManagement />,
       },
       {
@@ -48,11 +48,11 @@ const router = createBrowserRouter([
             element: <h1>This is the Overview</h1>,
           },
           {
-            path: "jobs/",
+            path: "jobs",
             element: <UserCompanyJobs />,
           },
           {
-            path: "interview-tips/",
+            path: "interview-tips",
             element: <UserCompanyInterviewTips />,
           },
         ],
