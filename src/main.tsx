@@ -5,6 +5,7 @@ import "./index.css";
 
 import AppLayout from "./components/layout/AppLayout.tsx";
 import AuthLayout from "./components/layout/AuthLayout.tsx";
+import CompanyLayout from "./components/layout/CompanyLayout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import PreRegisterPage from "./pages/auth/PreRegister.tsx";
 import StudentRegisterPage from "./pages/auth/RegisterStudentPage.tsx";
@@ -16,6 +17,9 @@ import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
 import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
 import UserHomePage from "./pages/auth/UserHomePage.tsx";
+import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
+import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
+import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +28,34 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/home",
+        index: true,
         element: <UserHomePage />,
+      },
+      {
+        path: "/profilemanagement",
+        element: <ProfileManagement />,
+      },
+      {
+        path: "/profilemanagement",
+        element: <ProfileManagement />,
+      },
+      {
+        path: "company",
+        element: <CompanyLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>This is the Overview</h1>,
+          },
+          {
+            path: "jobs/",
+            element: <UserCompanyJobs />,
+          },
+          {
+            path: "interview-tips/",
+            element: <UserCompanyInterviewTips />,
+          },
+        ],
       },
     ],
   },

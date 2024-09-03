@@ -1,0 +1,60 @@
+.paddedContainer {
+  padding: 1.5rem;
+}
+
+.container {
+  border-radius: 1.25rem;
+  background-color: var(--neutral-0);
+  color: black;
+  margin-top: 1rem;
+}
+
+.tipsDetailsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tipsSubjectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 25%;
+
+  p {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+.subjectHeading {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+}
+
+.jobDescription {
+  width: 75%;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: 0rem 2rem;
+}
+
+button {
+  transition: 0.3s;
+}
+
+button:hover {
+  color: var(--blue-6);
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    border-radius: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    border-radius: 0.75rem;
+  }
+}

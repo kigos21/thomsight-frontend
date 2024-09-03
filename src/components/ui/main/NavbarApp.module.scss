@@ -1,0 +1,146 @@
+.rootContainer {
+  background-color: var(--primary-color);
+  padding: 1.5rem 2.5rem !important;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.brandImage {
+  width: 70px;
+  height: auto;
+  aspect-ratio: 1/1;
+}
+
+.brandText {
+  text-transform: uppercase;
+}
+
+.navList {
+  display: flex;
+  gap: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+  align-self: center;
+  justify-content: center;
+
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  a {
+    color: var(--dark-text-color);
+  }
+}
+
+.profileGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobileNavContainer {
+  display: none;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 100%;
+
+  border-top: 1px solid var(--neutral-5);
+
+  padding: 1.5rem 1rem;
+  background-color: var(--primary-color);
+
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  font-size: 1.15rem;
+
+  z-index: 99;
+}
+
+.block {
+  display: block;
+}
+
+.mobileNavList {
+  list-style: none;
+  padding-left: 0;
+
+  & > li:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+
+.hamburgerButton {
+  display: none;
+
+  border: 1px solid var(--muted-black);
+  padding: 4px;
+  border-radius: 6px;
+
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1100px) {
+  .navList {
+    gap: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .mobileNavContainer {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .navList,
+  .profileGroup {
+    display: none;
+  }
+
+  .hamburgerButton {
+    display: flex;
+  }
+
+  .hamburgerIcon {
+    width: 24px;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rootContainer {
+    padding: 1.25rem 2rem !important;
+  }
+
+  .mobileNavContainer {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .rootContainer {
+    padding: 1rem !important;
+    padding-right: 1.25em !important;
+  }
+
+  .brandImage {
+    width: 50px;
+  }
+}

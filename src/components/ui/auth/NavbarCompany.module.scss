@@ -1,0 +1,38 @@
+.paddedContainer {
+  // padding: 3rem;
+  // padding-left: 1.5rem;
+  // padding-right: 1.5rem;
+
+  padding-bottom: 0;
+}
+
+// .underline {
+//   display: block;
+//   border-bottom: 2px solid var(--neutral-4);
+//   margin-top: 5rem;
+//   width: 90%;
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, 0);
+// }
+
+.elementContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  font-size: 16px;
+
+  border-bottom: 1px solid var(--muted-black);
+  padding-bottom: 1.5rem;
+
+  a {
+    text-decoration: none;
+    color: #000;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--blue-6);
+    }
+  }
+}

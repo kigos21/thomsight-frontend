@@ -18,6 +18,24 @@ export type StyledBoxProps = {
   style?: React.CSSProperties;
 };
 
+export type JobItemProps = {
+  jobTitle: string;
+  companyName: string;
+  jobDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
+export type InterviewTipsItemProps = {
+  subjectHeading: string;
+  internName: string;
+  tipDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
 export type PaddedContainerProps = {
   children: React.ReactNode;
 
