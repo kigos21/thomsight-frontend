@@ -99,6 +99,12 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+* {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 h1,
 h2,
 h3,
