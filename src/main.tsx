@@ -20,6 +20,10 @@ import UserHomePage from "./pages/auth/UserHomePage.tsx";
 import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
 import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
 import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
+import CVLayout from "./components/layout/CVLayout.tsx";
+import CVListing from "./pages/cv/CVListing.tsx";
+import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
+import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
 
 const router = createBrowserRouter([
   {
@@ -32,11 +36,11 @@ const router = createBrowserRouter([
         element: <UserHomePage />,
       },
       {
-        path: "/profilemanagement",
+        path: "profilemanagement",
         element: <ProfileManagement />,
       },
       {
-        path: "/profilemanagement",
+        path: "profilemanagement",
         element: <ProfileManagement />,
       },
       {
@@ -48,12 +52,24 @@ const router = createBrowserRouter([
             element: <h1>This is the Overview</h1>,
           },
           {
-            path: "jobs/",
+            path: "jobs",
             element: <UserCompanyJobs />,
           },
           {
-            path: "interview-tips/",
+            path: "interview-tips",
             element: <UserCompanyInterviewTips />,
+          },
+        ],
+      },
+
+      // CV Peer Review
+      {
+        path: "cv-review",
+        element: <CVLayout />,
+        children: [
+          {
+            index: true,
+            element: <CVListing />,
           },
         ],
       },
@@ -112,14 +128,14 @@ const router = createBrowserRouter([
         path: "/forgot-password/change-password",
         element: <ForgotPasswordChangePassword />,
       },
-      // {
-      //   path: "/terms-and-conditions",
-      //   element: <TermsAndConditionsPage />,
-      // },
-      // {
-      //   path: "/data-privacy",
-      //   element: <DataPrivacyPage />,
-      // },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndConditions />,
+      },
+      {
+        path: "/data-privacy",
+        element: <DataPrivacy />,
+      },
     ],
   },
 ]);

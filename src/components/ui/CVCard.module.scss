@@ -1,0 +1,36 @@
+.card {
+  width: 100%; /* Allow the card to take up the available space */
+  background-color: var(--neutral-0);
+  padding: 1.5rem;
+  border-radius: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 312px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  margin: 0 auto;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.name {
+  font-weight: 600;
+}
+
+.fileTitle {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
