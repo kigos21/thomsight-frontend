@@ -13,8 +13,10 @@ const CVCard = ({ name, fileTitle, description, buttonText }: CVCardProps) => {
   return (
     <div className={styles.card}>
       <p className={styles.name}>{name}</p>
-      <Link to="#">{fileTitle}</Link>
-      <p>{description}</p>
+      <Link to="#" className={styles.fileTitle}>
+        {fileTitle}
+      </Link>
+      <p className={styles.description}>{description}</p>
       <ButtonCV>{buttonText}</ButtonCV>
     </div>
   );

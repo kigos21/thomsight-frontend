@@ -35,7 +35,7 @@ const CVListing = () => {
         name={"Jair T. Tongol"}
         fileTitle={"jair-cv-2024.pdf"}
         description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
+          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonText={"Request Access"}
       />
