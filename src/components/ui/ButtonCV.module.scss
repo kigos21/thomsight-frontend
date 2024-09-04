@@ -1,0 +1,14 @@
+.button {
+  margin-top: auto;
+  padding: 1rem;
+
+  background-color: var(--black);
+  border-radius: 8px;
+
+  color: var(--white);
+  font-size: 0.9rem;
+
+  &:hover {
+    background-color: hsl(0, 0%, 28%);
+  }
+}

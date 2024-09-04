@@ -39,12 +39,12 @@
   padding: 0rem 2rem;
 }
 
-button {
+.iconButton {
   transition: 0.3s;
-}
 
-button:hover {
-  color: var(--blue-6);
+  &:hover {
+    color: var(--blue-6);
+  }
 }
 
 .iconContainer {
