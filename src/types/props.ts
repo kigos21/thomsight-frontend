@@ -13,6 +13,7 @@ export type StyledBoxProps = {
   children: React.ReactNode;
   bgColor?: string;
   border?: string;
+  paddedContainerClass?: string;
 
   classNames?: string;
   style?: React.CSSProperties;
@@ -31,6 +32,15 @@ export type InterviewTipsItemProps = {
   subjectHeading: string;
   internName: string;
   tipDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
+export type DiscussionForumItemProps = {
+  internName: string;
+  date: string;
+  discussionForumDescription: string;
 
   classNames?: string;
   style?: React.CSSProperties;

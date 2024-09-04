@@ -8,6 +8,7 @@ export default function StyledBox({
   bgColor,
   border,
   classNames,
+  paddedContainerClass,
   style,
 }: StyledBoxProps) {
   return (
@@ -15,7 +16,9 @@ export default function StyledBox({
       className={`${styles.container} ${classNames}`}
       style={{ border: border, backgroundColor: bgColor, ...style }}
     >
-      <PaddedContainer>{children}</PaddedContainer>
+      <PaddedContainer classNames={paddedContainerClass}>
+        {children}
+      </PaddedContainer>
     </div>
   );
 }
