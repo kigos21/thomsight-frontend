@@ -1,6 +1,7 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import DiscussionForumItem from "../../components/ui/DiscussionForumItem";
 import Button from "../../components/ui/Button";
+import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyDiscussionForum.module.scss";
 
 export default function UserCompanyDiscussionForum() {
@@ -27,7 +28,13 @@ export default function UserCompanyDiscussionForum() {
           </div>
         </div>
         <div className={styles.rightcontainer}>
-          <h2>right container holder</h2>
+          <StyledBox paddedContainerClass={styles.styledBox}>
+            <p className={styles.noteTitle}>Note</p>
+            <p>
+              No offensive and rude behavior is allowed. Please report them by
+              clicking the report button on the post.
+            </p>
+          </StyledBox>
         </div>
       </div>
     </PaddedContainer>
