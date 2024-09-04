@@ -8,12 +8,7 @@ import { IconHelp } from "@tabler/icons-react";
 const CVLayout = () => {
   const location = useLocation();
 
-  const helpText = `Lorem ipsum dolor 
-  Lorem ipsum dolor 
-  Lorem ipsum dolor 
-  Lorem ipsum dolor 
-  Lorem ipsum dolor 
-  `;
+  const helpText = "Lorem ipsum Lorem ipsum Lorem ipsum";
 
   return (
     <div className={styles.rootLayout}>
@@ -53,7 +48,6 @@ const CVLayout = () => {
         </header>
         {/* MAIN CONTENT */}
         <Outlet />
-        test
       </PaddedContainer>
     </div>
   );

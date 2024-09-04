@@ -1,0 +1,21 @@
+.card {
+  max-width: 300px; /* Set a max width for the cards */
+  width: 100%; /* Allow the card to take up the available space */
+  background-color: var(--neutral-0);
+  padding: 1.5rem;
+  border-radius: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 312px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.name {
+  font-weight: 600;
+}

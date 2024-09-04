@@ -8,6 +8,7 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   required,
   extraProps,
+  rightIcon,
 }) => (
   <div className={styles.formGroup}>
     {icon}
@@ -18,6 +19,7 @@ const FormField: React.FC<FormFieldProps> = ({
       className={styles.formField}
       {...extraProps}
     />
+    {rightIcon && rightIcon}
   </div>
 );
 
