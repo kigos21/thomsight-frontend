@@ -23,6 +23,7 @@ import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
 import CVGuidePage from "./pages/auth/CVGuidePage.tsx";
 import UserCompanyDiscussionForum from "./pages/auth/UserCompanyDiscussionForum.tsx";
+import InterviewTipsPage from "./pages/auth/InterviewTipsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/cv-guide",
         element: <CVGuidePage />,
+      },
+      {
+        path: "/interview-tips",
+        element: <InterviewTipsPage />,
       },
       {
         path: "company",
