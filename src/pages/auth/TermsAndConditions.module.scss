@@ -1,0 +1,49 @@
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  max-width: 420px;
+  width: 100%;
+
+  margin-top: 2.5rem;
+}
+
+.button {
+  width: 100%;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.2rem;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .button {
+    padding: 1.1rem 2.2rem;
+    font-size: 1.1rem;
+  }
+
+  .textContainer {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .buttonContainer {
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .textContainer {
+    gap: 0.8rem;
+  }
+}

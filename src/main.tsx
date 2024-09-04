@@ -21,6 +21,9 @@ import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
 import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
 import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
+import CVListing from "./pages/cv/CVListing.tsx";
+import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
+import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +66,12 @@ const router = createBrowserRouter([
       {
         path: "cv-review",
         element: <CVLayout />,
+        children: [
+          {
+            index: true,
+            element: <CVListing />,
+          },
+        ],
       },
     ],
   },
@@ -119,14 +128,14 @@ const router = createBrowserRouter([
         path: "/forgot-password/change-password",
         element: <ForgotPasswordChangePassword />,
       },
-      // {
-      //   path: "/terms-and-conditions",
-      //   element: <TermsAndConditionsPage />,
-      // },
-      // {
-      //   path: "/data-privacy",
-      //   element: <DataPrivacyPage />,
-      // },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndConditions />,
+      },
+      {
+        path: "/data-privacy",
+        element: <DataPrivacy />,
+      },
     ],
   },
 ]);
