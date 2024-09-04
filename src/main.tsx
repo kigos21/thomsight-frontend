@@ -21,6 +21,8 @@ import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
 import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
 import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
+import CVGuidePage from "./pages/auth/CVGuidePage.tsx";
+import UserCompanyDiscussionForum from "./pages/auth/UserCompanyDiscussionForum.tsx";
 import CVListing from "./pages/cv/CVListing.tsx";
 import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
 import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
@@ -44,6 +46,10 @@ const router = createBrowserRouter([
         element: <ProfileManagement />,
       },
       {
+        path: "/cv-guide",
+        element: <CVGuidePage />,
+      },
+      {
         path: "company",
         element: <CompanyLayout />,
         children: [
@@ -54,6 +60,10 @@ const router = createBrowserRouter([
           {
             path: "jobs",
             element: <UserCompanyJobs />,
+          },
+          {
+            path: "discussion-forum",
+            element: <UserCompanyDiscussionForum />,
           },
           {
             path: "interview-tips",

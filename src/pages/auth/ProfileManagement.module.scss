@@ -1,12 +1,68 @@
+.paddedContainer {
+  padding: 2rem 12rem;
+}
+
 .styledBox {
   background-color: var(--neutral-0);
   text-align: center;
-  //   border: 1px black;
-  border-color: black;
-  border: 2px;
+  padding: 0 8rem;
+  border: 2px solid black;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.nameContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: black;
+}
+
+.fieldBio {
+  height: 170px;
+  border-radius: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.headerIcon {
+  display: block;
+  margin: auto;
+  color: black;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 1.8rem;
+
+  transform: translate(0%, -50%);
+}
+
+.name {
+  width: 80%;
+}
+
+.nameEditIcon {
+  width: 20%;
+  color: black;
+}
+
+.editIcon {
+  position: absolute;
+  color: black;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.button {
+  height: 70px;
 }

@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+.containeritems{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+  
+  @media screen and (max-width: 768px) {
+    .form {
+      gap: 0.5rem;
+    }
+  
+    .icon {
+      left: 1.4rem;
+    }
+  
+    .button {
+      padding: 1.1rem 2.2rem;
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .formContainer,
+    .button {
+      margin-top: 1.5rem;
+    }
+  
+    .form {
+      gap: 0.4rem;
+    }
+  
+    .icon {
+      left: 1.2rem;
+      aspect-ratio: 1/1;
+      width: 1.75rem;
+    }
+  
+    .button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+  }
+  

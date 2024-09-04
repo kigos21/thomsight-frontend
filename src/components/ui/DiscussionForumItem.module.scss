@@ -1,4 +1,4 @@
-.paddedContainer {
+.styledBox {
   padding: 1.5rem;
 }
 
@@ -9,12 +9,17 @@
   margin-top: 1rem;
 }
 
-.tipsDetailsContainer {
+.forumContainer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 
-.tipsSubjectContainer {
+.replyButtonContainer {
+  padding: 0.8rem 0rem;
+}
+
+.ForumSubjectContainer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -26,12 +31,12 @@
   }
 }
 
-.subjectHeading {
+.internName {
   font-size: 22px !important;
   font-weight: 600 !important;
 }
 
-.jobDescription {
+.discussionForumDescription {
   width: 75%;
   text-align: left;
   font-size: 0.875rem;
@@ -41,10 +46,18 @@
 
 .iconButton {
   transition: 0.3s;
+}
 
-  &:hover {
-    color: var(--blue-6);
-  }
+.iconButton:hover {
+  color: var(--blue-6);
+}
+
+.replyButton {
+  background-color: var(--black);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 }
 
 .iconContainer {
