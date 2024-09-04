@@ -1,0 +1,32 @@
+.paddedContainer {
+  padding: 0rem 0rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.leftcontainer {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+  gap: 20px;
+  padding: 0rem 2rem;
+}
+
+.titleButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.discussionContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.rightcontainer {
+  width: 25%;
+  padding: 0rem 2rem;
+}

@@ -21,6 +21,7 @@ import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
 import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
 import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
+import UserCompanyDiscussionForum from "./pages/auth/UserCompanyDiscussionForum.tsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: "jobs",
             element: <UserCompanyJobs />,
+          },
+          {
+            path: "discussion-forum",
+            element: <UserCompanyDiscussionForum />,
           },
           {
             path: "interview-tips",

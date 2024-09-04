@@ -1,0 +1,79 @@
+.styledBox {
+  padding: 1.5rem;
+}
+
+.container {
+  border-radius: 1.25rem;
+  background-color: var(--neutral-0);
+  color: black;
+  margin-top: 1rem;
+}
+
+.forumContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.replyButtonContainer {
+  padding: 0.8rem 0rem;
+}
+
+.ForumSubjectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 25%;
+
+  p {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+.internName {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+}
+
+.discussionForumDescription {
+  width: 75%;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: 0rem 2rem;
+}
+
+.iconButton {
+  transition: 0.3s;
+}
+
+.iconButton:hover {
+  color: var(--blue-6);
+}
+
+.replyButton {
+  background-color: var(--black);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    border-radius: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    border-radius: 0.75rem;
+  }
+}
