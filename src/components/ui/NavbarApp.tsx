@@ -22,8 +22,8 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </div>
 
         <ul className={styles.navList}>
-          {links.map((link) => (
-            <li>{link}</li>
+          {links.map((link, i) => (
+            <li key={i}>{link}</li>
           ))}
         </ul>
 
@@ -32,8 +32,8 @@ export default function NavbarApp({ links }: NavbarAppProps) {
           className={`${styles.mobileNavContainer} ${displayNav && styles.block}`}
         >
           <ul className={styles.mobileNavList}>
-            {links.map((link) => (
-              <li>{link}</li>
+            {links.map((link, i) => (
+              <li key={i}>{link}</li>
             ))}
             <li>
               <Link to={"/"}>Profile</Link>
