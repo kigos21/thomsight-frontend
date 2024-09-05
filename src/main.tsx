@@ -23,10 +23,15 @@ import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
 import CVGuidePage from "./pages/auth/CVGuidePage.tsx";
 import UserCompanyDiscussionForum from "./pages/auth/UserCompanyDiscussionForum.tsx";
+import InterviewTipsPage from "./pages/auth/InterviewTipsPage.tsx";
 import CVListing from "./pages/cv/CVListing.tsx";
 import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
 import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
 import UserCompanyOverview from "./pages/auth/UserCompanyOverview.tsx";
+import CVPending from "./pages/cv/CVPending.tsx";
+import CVToReview from "./pages/cv/CVToReview.tsx";
+import CVReviewed from "./pages/cv/CVReviewed.tsx";
+import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 
 const router = createBrowserRouter([
   {
@@ -47,8 +52,12 @@ const router = createBrowserRouter([
         element: <ProfileManagement />,
       },
       {
-        path: "/cv-guide",
+        path: "cv-guide",
         element: <CVGuidePage />,
+      },
+      {
+        path: "interview-tips",
+        element: <InterviewTipsPage />,
       },
       {
         path: "company",
@@ -85,6 +94,22 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <CVListing />,
+          },
+          {
+            path: "pending",
+            element: <CVPending />,
+          },
+          {
+            path: "to-review",
+            element: <CVToReview />,
+          },
+          {
+            path: "reviewed",
+            element: <CVReviewed />,
+          },
+          {
+            path: "my-requests",
+            element: <CVMyRequests />,
           },
         ],
       },

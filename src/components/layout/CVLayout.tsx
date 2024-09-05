@@ -5,7 +5,7 @@ import PaddedContainer from "./PaddedContainer";
 import Button from "../ui/Button";
 import {
   IconFileCheck,
-  IconFileExport,
+  IconFilePencil,
   IconHelp,
   IconHourglassHigh,
   IconList,
@@ -17,57 +17,69 @@ const CVLayout = () => {
 
   const helpText = "Lorem ipsum Lorem ipsum Lorem ipsum";
 
+  const links: {
+    path: string;
+    name?: string;
+    icon?: JSX.Element;
+  }[] = [
+    {
+      path: "/cv-review",
+      name: "Listing",
+      icon: <IconList stroke={2} className={styles.bottomNavIcon} />,
+    },
+    {
+      path: "/cv-review/pending",
+      name: "Pending",
+      icon: <IconHourglassHigh stroke={2} className={styles.bottomNavIcon} />,
+    },
+    {
+      path: "/cv-review/to-review",
+      name: "To Review",
+      icon: <IconFilePencil stroke={2} className={styles.bottomNavIcon} />,
+    },
+    {
+      path: "/cv-review/reviewed",
+      name: "Reviewed",
+      icon: <IconFileCheck stroke={2} className={styles.bottomNavIcon} />,
+    },
+    {
+      path: "/cv-review/my-requests",
+      name: "My Requests",
+      icon: <IconOutbound stroke={2} className={styles.bottomNavIcon} />,
+    },
+  ];
+
   return (
     <div className={styles.rootLayout}>
       <div className={styles.sideNav}>
         <PaddedContainer>
           <ul className={styles.navList}>
-            <li>
-              <Link to="#">Listing</Link>
-            </li>
-            <li>
-              <Link to="#">Pending</Link>
-            </li>
-            <li>
-              <Link to="#">To Review</Link>
-            </li>
-            <li>
-              <Link to="#">Reviewed</Link>
-            </li>
-            <li>
-              <Link to="#">My Requests</Link>
-            </li>
+            {links.map((link) => (
+              <li key={link.name}>
+                <Link
+                  to={link.path}
+                  className={`${location.pathname === link.path && styles.activeLink}`}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </PaddedContainer>
       </div>
 
       <div className={styles.bottomNav}>
         <ul className={styles.bottomNavList}>
-          <li>
-            <Link to="#">
-              <IconList size={27} stroke={2} className={styles.bottomNavIcon} />
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <IconHourglassHigh stroke={2} className={styles.bottomNavIcon} />
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <IconFileExport stroke={2} className={styles.bottomNavIcon} />
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <IconFileCheck stroke={2} className={styles.bottomNavIcon} />
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <IconOutbound stroke={2} className={styles.bottomNavIcon} />
-            </Link>
-          </li>
+          {links.map((link) => (
+            <li key={link.name}>
+              <Link
+                to={link.path}
+                className={`${location.pathname === link.path && styles.bottomNavIconActive}`}
+              >
+                {link.icon && link.icon}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
 
