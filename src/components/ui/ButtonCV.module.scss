@@ -2,11 +2,68 @@
   margin-top: auto;
   padding: 1rem;
 
-  background-color: var(--black);
   border-radius: 8px;
-
-  color: var(--white);
   font-size: 0.9rem;
+}
+
+.requestAccess {
+  background-color: var(--black);
+  color: var(--white);
+
+  &:hover {
+    background-color: hsl(0, 0%, 28%);
+  }
+}
+
+.delete {
+  background-color: var(--red-8);
+  color: var(--white);
+
+  &:hover {
+    background-color: var(--red-9);
+  }
+}
+
+.acceptRequest {
+  background-color: var(--green-8);
+  color: var(--white);
+
+  &:hover {
+    background-color: var(--green-9);
+  }
+}
+
+.review {
+  background-color: var(--blue-8);
+  color: var(--white);
+
+  &:hover {
+    background-color: var(--blue-9);
+  }
+}
+
+.submitted {
+  background-color: var(--white);
+  color: var(--green-8);
+  border: 1px solid var(--green-8);
+
+  &:hover {
+    background-color: var(--green-0);
+  }
+}
+
+.cancel {
+  background-color: var(--red-8);
+  color: var(--white);
+
+  &:hover {
+    background-color: var(--red-9);
+  }
+}
+
+.viewFeedback {
+  background-color: var(--black);
+  color: var(--white);
 
   &:hover {
     background-color: hsl(0, 0%, 28%);

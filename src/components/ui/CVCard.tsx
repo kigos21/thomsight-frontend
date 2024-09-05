@@ -1,4 +1,4 @@
-import ButtonCV from "./ButtonCV";
+import ButtonCV, { ButtonVariant } from "./ButtonCV";
 import { Link } from "react-router-dom";
 import styles from "./CVCard.module.scss";
 
@@ -6,10 +6,15 @@ interface CVCardProps {
   name: string;
   fileTitle: string;
   description: string;
-  buttonText: string;
+  buttonVariant?: ButtonVariant;
 }
 
-const CVCard = ({ name, fileTitle, description, buttonText }: CVCardProps) => {
+const CVCard = ({
+  name,
+  fileTitle,
+  description,
+  buttonVariant,
+}: CVCardProps) => {
   return (
     <div className={styles.card}>
       <p className={styles.name}>{name}</p>
@@ -17,7 +22,7 @@ const CVCard = ({ name, fileTitle, description, buttonText }: CVCardProps) => {
         {fileTitle}
       </Link>
       <p className={styles.description}>{description}</p>
-      <ButtonCV>{buttonText}</ButtonCV>
+      <ButtonCV variant={buttonVariant} />
     </div>
   );
 };

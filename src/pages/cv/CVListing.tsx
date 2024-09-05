@@ -11,6 +11,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonText={"Request Access"}
+        buttonVariant="request-access"
       />
 
       <CVCard
@@ -19,7 +20,8 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Request Access"}
+        buttonText={"Delete"}
+        buttonVariant="delete"
       />
 
       <CVCard
@@ -28,7 +30,8 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Request Access"}
+        buttonText={"Accept Request"}
+        buttonVariant="accept-request"
       />
 
       <CVCard
@@ -37,7 +40,8 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
-        buttonText={"Request Access"}
+        buttonText={"Review"}
+        buttonVariant="review"
       />
 
       <CVCard
@@ -46,7 +50,8 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Request Access"}
+        buttonText={"Submitted"}
+        buttonVariant="submitted"
       />
 
       <CVCard
@@ -55,7 +60,8 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Request Access"}
+        buttonText={"Cancel Request"}
+        buttonVariant="cancel"
       />
 
       <CVCard
@@ -64,7 +70,8 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Request Access"}
+        buttonText={"View Feedback"}
+        buttonVariant="view-feedback"
       />
     </div>
   );
