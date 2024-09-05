@@ -9,6 +9,11 @@ export type ButtonProps = {
   style?: React.CSSProperties;
 };
 
+export type ButtonReviewProps = {
+  children: React.ReactNode;
+  classNames?: string;
+};
+
 export type StyledBoxProps = {
   children: React.ReactNode;
   bgColor?: string;
@@ -41,6 +46,16 @@ export type DiscussionForumItemProps = {
   internName: string;
   date: string;
   discussionForumDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
+export type ReviewItemProps = {
+  internName: string;
+  date: string;
+  rating: string; //not sure kasi number to eh?
+  reviewDescription: string;
 
   classNames?: string;
   style?: React.CSSProperties;

@@ -1,0 +1,78 @@
+.paddedContainer {
+  padding: 0rem 0rem;
+}
+
+.styledBox {
+  padding: 1rem 2rem;
+  background-color: var(--blue-0);
+  border: 1.5px solid black;
+  border-radius: 1.875rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.leftcontainer {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+  gap: 20px;
+  padding: 0rem 2rem;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0rem 0rem 2rem 0rem;
+
+  p {
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+}
+
+.titleHeader {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.reviewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reviewHeaderContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rightcontainer {
+  width: 35%;
+  padding: 0rem 2rem;
+
+  p {
+    font-size: 14px;
+    padding: 0.4rem 0rem;
+    color: black;
+  }
+}
+
+.noteContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.companySize,
+.industry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}

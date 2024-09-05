@@ -26,6 +26,7 @@ import UserCompanyDiscussionForum from "./pages/auth/UserCompanyDiscussionForum.
 import CVListing from "./pages/cv/CVListing.tsx";
 import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
 import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
+import UserCompanyOverview from "./pages/auth/UserCompanyOverview.tsx";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <h1>This is the Overview</h1>,
+          },
+          {
+            path: "overview",
+            element: <UserCompanyOverview />,
           },
           {
             path: "jobs",
