@@ -85,3 +85,12 @@ export type NotificationItemProps = {
   classNames?: string;
   style?: React.CSSProperties;
 };
+
+export type AnnouncementItemProps = {
+  announcementHeader: string;
+  announcementDescription: string;
+  date: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};

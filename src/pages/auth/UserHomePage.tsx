@@ -3,6 +3,7 @@ import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserHomePage.module.scss";
 
 import NotificationItem from "../../components/ui/NotificationItem";
+import AnnouncementItem from "../../components/ui/AnnouncementItem";
 
 export default function UserHomePage() {
   return (
@@ -26,6 +27,12 @@ export default function UserHomePage() {
           notificationDescription="This is an announcement"
         ></NotificationItem>
       </StyledBox>
+
+      <AnnouncementItem
+        announcementHeader="Announcement sample"
+        date="1/17/2024"
+        announcementDescription="this is the announcement for today"
+      ></AnnouncementItem>
     </PaddedContainer>
   );
 }

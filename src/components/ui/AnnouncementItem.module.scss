@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.detailsHeaderContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: black;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconButton {
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--blue-6);
+  }
+}
+
+.styledBox {
+  background-color: var(--neutral-0);
+  margin-bottom: 2rem;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  border: 2px solid var(--black);
+}
+
+.header {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.description {
+  font-size: 1rem;
+}
