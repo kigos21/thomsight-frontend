@@ -13,13 +13,21 @@ const FormField: React.FC<FormFieldProps> = ({
 }) => (
   <div className={styles.formGroup}>
     {icon && icon}
-    <input
-      type={type}
-      placeholder={placeholder}
-      required={required}
-      className={`${styles.formField} ${classNames}`}
-      {...extraProps}
-    />
+    {type === "textarea" ? (
+      <textarea
+        placeholder={placeholder}
+        required={required}
+        className={`${styles.formField} ${classNames}`}
+      />
+    ) : (
+      <input
+        type={type}
+        placeholder={placeholder}
+        required={required}
+        className={`${styles.formField} ${classNames}`}
+        {...extraProps}
+      />
+    )}
     {editIcon && editIcon}
   </div>
 );

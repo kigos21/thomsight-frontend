@@ -25,6 +25,7 @@
 .fieldBio {
   height: 170px;
   border-radius: 30px;
+  resize: none;
 }
 
 .form {
@@ -42,6 +43,14 @@
 .icon {
   position: absolute;
   top: 50%;
+  left: 1.8rem;
+
+  transform: translate(0%, -50%);
+}
+
+.iconTextArea {
+  position: absolute;
+  top: 18%;
   left: 1.8rem;
 
   transform: translate(0%, -50%);

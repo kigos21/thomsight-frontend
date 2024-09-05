@@ -77,3 +77,11 @@ export type FormFieldProps = {
   required: true | false;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
+
+export type NotificationItemProps = {
+  notificationHeader: string;
+  notificationDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
