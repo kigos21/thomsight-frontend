@@ -1,7 +1,8 @@
-import CVCard from "../../components/ui/CVCard";
-import styles from "./CVListing.module.scss";
+import styles from "./CVMyRequests.module.scss";
 
-const CVListing = () => {
+import CVCard from "../../components/ui/CVCard";
+
+const CVMyRequests = () => {
   return (
     <div className={styles.rootContainer}>
       <CVCard
@@ -10,50 +11,73 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="cancel"
       />
+
       <CVCard
         name={"Jair T. Tongol"}
         fileTitle={"jair-cv-2024.pdf"}
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="delete"
+        buttonVariant="view-feedback"
       />
+
       <CVCard
         name={"Jair T. Tongol"}
         fileTitle={"jair-cv-2024.pdf"}
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="cancel"
       />
+
       <CVCard
         name={"Jair T. Tongol"}
         fileTitle={"jair-cv-2024.pdf"}
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="view-feedback"
       />
+
       <CVCard
         name={"Jair T. Tongol"}
         fileTitle={"jair-cv-2024.pdf"}
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="cancel"
       />
+
       <CVCard
         name={"Jair T. Tongol"}
         fileTitle={"jair-cv-2024.pdf"}
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="view-feedback"
+      />
+
+      <CVCard
+        name={"Jair T. Tongol"}
+        fileTitle={"jair-cv-2024.pdf"}
+        description={
+          "Help me review my CV guys, I am applying for a Junior Developer position"
+        }
+        buttonVariant="cancel"
+      />
+
+      <CVCard
+        name={"Jair T. Tongol"}
+        fileTitle={"jair-cv-2024.pdf"}
+        description={
+          "Help me review my CV guys, I am applying for a Junior Developer position"
+        }
+        buttonVariant="view-feedback"
       />
     </div>
   );
 };
 
-export default CVListing;
+export default CVMyRequests;

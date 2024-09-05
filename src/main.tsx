@@ -27,6 +27,10 @@ import InterviewTipsPage from "./pages/auth/InterviewTipsPage.tsx";
 import CVListing from "./pages/cv/CVListing.tsx";
 import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
 import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
+import CVPending from "./pages/cv/CVPending.tsx";
+import CVToReview from "./pages/cv/CVToReview.tsx";
+import CVReviewed from "./pages/cv/CVReviewed.tsx";
+import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +89,22 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <CVListing />,
+          },
+          {
+            path: "pending",
+            element: <CVPending />,
+          },
+          {
+            path: "to-review",
+            element: <CVToReview />,
+          },
+          {
+            path: "reviewed",
+            element: <CVReviewed />,
+          },
+          {
+            path: "my-requests",
+            element: <CVMyRequests />,
           },
         ],
       },
