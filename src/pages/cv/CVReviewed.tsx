@@ -1,7 +1,8 @@
-import CVCard from "../../components/ui/CVCard";
-import styles from "./CVListing.module.scss";
+import styles from "./CVReviewed.module.scss";
 
-const CVListing = () => {
+import CVCard from "../../components/ui/CVCard";
+
+const CVReviewed = () => {
   return (
     <div className={styles.rootContainer}>
       <CVCard
@@ -10,7 +11,7 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="submitted"
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -18,7 +19,7 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="delete"
+        buttonVariant="submitted"
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -26,7 +27,7 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="submitted"
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -34,7 +35,7 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="submitted"
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -42,7 +43,7 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="submitted"
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -50,10 +51,26 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonVariant="request-access"
+        buttonVariant="submitted"
+      />
+      <CVCard
+        name={"Jair T. Tongol"}
+        fileTitle={"jair-cv-2024.pdf"}
+        description={
+          "Help me review my CV guys, I am applying for a Junior Developer position"
+        }
+        buttonVariant="submitted"
+      />
+      <CVCard
+        name={"Jair T. Tongol"}
+        fileTitle={"jair-cv-2024.pdf"}
+        description={
+          "Help me review my CV guys, I am applying for a Junior Developer position"
+        }
+        buttonVariant="submitted"
       />
     </div>
   );
 };
 
-export default CVListing;
+export default CVReviewed;

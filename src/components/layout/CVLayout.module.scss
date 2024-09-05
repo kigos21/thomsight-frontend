@@ -94,6 +94,17 @@
   color: var(--black);
 }
 
+.bottomNavIconActive {
+  background-color: var(--blue-1);
+  border: 1px solid var(--blue-2);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.activeLink {
+  font-weight: 700;
+}
+
 @media screen and (max-width: 868px) {
   .sideNav {
     display: none;
@@ -122,6 +133,6 @@
   }
 
   .bottomNavList {
-    gap: 1.5rem;
+    gap: 2.5rem;
   }
 }
