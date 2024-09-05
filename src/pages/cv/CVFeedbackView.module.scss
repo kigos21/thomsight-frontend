@@ -1,0 +1,48 @@
+.rootContainer {
+  max-width: 720px;
+}
+
+.documentPlaceholder {
+  width: 100%;
+  aspect-ratio: 8.5/11;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--neutral-0);
+  border-radius: 30px;
+}
+
+.headingGroup {
+  margin-top: 70px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.separator {
+  display: block;
+}
+
+.rootContainer > p:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.rootContainer > p:last-child {
+  margin-bottom: 6rem;
+}
+
+@media screen and (max-width: 768px) {
+  .headingGroup {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .separator {
+    display: none;
+  }
+}
