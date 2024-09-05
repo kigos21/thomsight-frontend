@@ -10,7 +10,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Request Access"}
         buttonVariant="request-access"
       />
 
@@ -20,7 +19,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Delete"}
         buttonVariant="delete"
       />
 
@@ -30,7 +28,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Accept Request"}
         buttonVariant="accept-request"
       />
 
@@ -40,7 +37,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
-        buttonText={"Review"}
         buttonVariant="review"
       />
 
@@ -50,7 +46,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Submitted"}
         buttonVariant="submitted"
       />
 
@@ -60,7 +55,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"Cancel Request"}
         buttonVariant="cancel"
       />
 
@@ -70,7 +64,6 @@ const CVListing = () => {
         description={
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
-        buttonText={"View Feedback"}
         buttonVariant="view-feedback"
       />
     </div>

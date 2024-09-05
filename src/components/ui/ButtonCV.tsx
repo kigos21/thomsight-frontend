@@ -10,7 +10,7 @@ export type ButtonVariant =
   | "view-feedback";
 
 interface ButtonCVProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   variant?: ButtonVariant;
 }
 
@@ -56,6 +56,7 @@ const ButtonCV = ({ variant }: ButtonCVProps) => {
 
     default:
       variantClassname = styles.requestAccess;
+      buttonText = "Request Access";
       break;
   }
 
