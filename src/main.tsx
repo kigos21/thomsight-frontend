@@ -47,11 +47,11 @@ const router = createBrowserRouter([
         element: <ProfileManagement />,
       },
       {
-        path: "/cv-guide",
+        path: "cv-guide",
         element: <CVGuidePage />,
       },
       {
-        path: "/interview-tips",
+        path: "interview-tips",
         element: <InterviewTipsPage />,
       },
       {
