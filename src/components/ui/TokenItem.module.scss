@@ -1,0 +1,32 @@
+.tokenItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+  }
+  
+  .number {
+    flex: 0.5; /* Fixed width for number column */
+    align-items: center;
+    margin-right: 1rem; /* Space between number and token */
+  }
+  
+  .token {
+    flex: 2; /* Takes the remaining space */
+    align-items: center;
+    margin-right: 1rem; /* Space between token and edit icon */
+  }
+  
+  .tokenformfield {
+    flex: 4; /* Ensure the TokenFormField takes space properly */
+    margin-right: 1rem; /* Space between TokenFormField and trash icon */
+    align-items: center;
+  }
+  
+  .trashIcon {
+    cursor: pointer;
+    color: #ff4d4d; /* Adjust color for the trash icon */
+    align-items: center;
+  }
+  

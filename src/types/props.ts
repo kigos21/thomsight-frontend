@@ -77,3 +77,19 @@ export type FormFieldProps = {
   required: true | false;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
+
+export type TokenFormFieldProps = {
+  icon?: JSX.Element;
+  editIcon?: JSX.Element;
+  classNames?: string;
+  type: React.HTMLInputTypeAttribute;
+  placeholder: string;
+  required: boolean; // Simplified to boolean
+  extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  readOnly?: boolean; // Ensure this prop is optional
+};
+
+export type TokenItemProps = {
+  number: number; // Number to display
+  token: string;  // Token string to display
+};

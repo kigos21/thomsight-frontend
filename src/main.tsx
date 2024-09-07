@@ -34,6 +34,7 @@ import CVReviewed from "./pages/cv/CVReviewed.tsx";
 import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
 import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
+import GenerateTokenPage from "./pages/auth/GenerateTokenPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "interview-tips",
         element: <InterviewTipsPage />,
+      },
+      {
+        path: "generate-token",
+        element: <GenerateTokenPage />,
       },
       {
         path: "company",
