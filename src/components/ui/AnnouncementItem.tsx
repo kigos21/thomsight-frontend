@@ -1,6 +1,6 @@
 import { AnnouncementItemProps } from "../../types/props";
 import StyledBox from "../layout/StyledBox";
-import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
+import { IconTrash, IconEdit } from "@tabler/icons-react";
 
 import styles from "./AnnouncementItem.module.scss";
 

@@ -94,3 +94,17 @@ export type AnnouncementItemProps = {
   classNames?: string;
   style?: React.CSSProperties;
 };
+
+export type CompanyOverviewDescriptionItemProps = {
+  companyDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
+export type CompanyLocationItemProps = {
+  location: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};

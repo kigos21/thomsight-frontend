@@ -1,0 +1,66 @@
+.paddedContainer {
+  padding: 1rem 2.875rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+
+  p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: black;
+  }
+}
+
+.styledBox {
+  background-color: var(--neutral-0);
+  margin-bottom: 2rem;
+  padding: 1rem 1rem;
+  border-radius: 20px;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); //lilipat sa corresponding page
+  gap: 16px;
+  justify-items: center;
+  align-items: center;
+}
+
+.locationContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    font-size: 1.125rem;
+  }
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.iconButton {
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--blue-6);
+  }
+}

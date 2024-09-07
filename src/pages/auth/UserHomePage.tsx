@@ -4,6 +4,8 @@ import styles from "./UserHomePage.module.scss";
 
 import NotificationItem from "../../components/ui/NotificationItem";
 import AnnouncementItem from "../../components/ui/AnnouncementItem";
+import CompanyOverviewDescriptionItem from "../../components/ui/CompanyOverviewDescriptionItem";
+import CompanyLocationItem from "../../components/ui/CompanyLocationItem";
 
 export default function UserHomePage() {
   return (
@@ -33,6 +35,10 @@ export default function UserHomePage() {
         date="1/17/2024"
         announcementDescription="this is the announcement for today"
       ></AnnouncementItem>
+
+      <CompanyOverviewDescriptionItem companyDescription="This is the description"></CompanyOverviewDescriptionItem>
+
+      <CompanyLocationItem location="Makati, Philippines"></CompanyLocationItem>
     </PaddedContainer>
   );
 }
