@@ -93,3 +93,16 @@ export type TokenItemProps = {
   number: number; // Number to display
   token: string;  // Token string to display
 };
+
+export type CompanyAccountsItemProps = {
+  token: string;  // Token string to display
+  expiration: string;  // Token string to display
+  status: 'active' | 'inactive' | 'expiring';
+  classNames?: string; // Optional classNames prop
+};
+
+export type StatusProps = {
+  status: 'active' | 'inactive' | 'expiring';
+  classNames?: string; // Optional classNames prop
+};
+
