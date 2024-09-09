@@ -1,0 +1,32 @@
+.tokenItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    justify-content: space-between; /* Distribute space between items */
+    width: 100%; /* Make sure it takes the full width */
+  }
+  
+  .token {
+    width: 8%; /* Adjust based on space available */
+  }
+  
+  .expiration {
+    width: 8%; /* Adjust width for expiration text */
+  }
+  
+  .tokenformfield {
+    width: 50%; /* Adjust the width to fit in the container */
+  }
+  
+  .trashIcon {
+    cursor: pointer;
+    color: #ff4d4d;
+    margin-left: 1rem; /* Adjust the margin as needed */
+  }
+  
+  /* To make sure elements align neatly in a row */
+  .tokenItem p, .tokenItem input {
+    margin: 0;
+  }
+  

@@ -79,6 +79,34 @@ export type FormFieldProps = {
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
+export type TokenFormFieldProps = {
+  icon?: JSX.Element;
+  editIcon?: JSX.Element;
+  classNames?: string;
+  type: React.HTMLInputTypeAttribute;
+  placeholder: string;
+  required: boolean; // Simplified to boolean
+  extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  readOnly?: boolean; // Ensure this prop is optional
+};
+
+export type TokenItemProps = {
+  number: number; // Number to display
+  token: string; // Token string to display
+};
+
+export type CompanyAccountsItemProps = {
+  token: string; // Token string to display
+  expiration: string; // Token string to display
+  status: "active" | "inactive" | "expiring";
+  classNames?: string; // Optional classNames prop
+};
+
+export type StatusProps = {
+  status: "active" | "inactive" | "expiring";
+  classNames?: string; // Optional classNames prop
+};
+
 export type NotificationItemProps = {
   notificationHeader: string;
   notificationDescription: string;

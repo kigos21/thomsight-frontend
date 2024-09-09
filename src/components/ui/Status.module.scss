@@ -1,0 +1,33 @@
+.statusContainer {
+    display: flex;
+    align-items: center;
+    background-color: var(--neutral-1);
+    border-radius: 30px;
+    padding: 0.3rem 1rem;
+    width: 7rem;
+  }
+  
+  .circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+  
+  .green {
+    background-color: var(--green-8);
+  }
+  
+  .yellow {
+    background-color: var(--yellow-7);
+  }
+  
+  .red {
+    background-color: var(--red-7);
+  }
+  
+  .statusText {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
