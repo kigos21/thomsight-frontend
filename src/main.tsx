@@ -42,6 +42,8 @@ import GenerateTokenPage from "./pages/auth/GenerateTokenPage.tsx";
 import CompanyAccountsPage from "./pages/auth/CompanyAccountsPage.tsx";
 import ReportsLayout from "./components/layout/ReportsLayout.tsx";
 import ReportsDiscussion from "./pages/reports/ReportsDiscussion.tsx";
+import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
+import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
 
 const router = createBrowserRouter([
   {
@@ -159,11 +161,11 @@ const router = createBrowserRouter([
           },
           {
             path: "reviews",
-            element: <h1>Reviews</h1>,
+            element: <ReportsReviews />,
           },
           {
             path: "interview-tips",
-            element: <h1>Interview Tips</h1>,
+            element: <ReportsInterviewTips />,
           },
         ],
       },
