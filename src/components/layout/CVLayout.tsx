@@ -15,7 +15,12 @@ import {
 const CVLayout = () => {
   const location = useLocation();
 
-  const helpText = "Lorem ipsum Lorem ipsum Lorem ipsum";
+  const helpText =
+    "Listing: posted CVs by the community \n" +
+    "Pending: CVs sent to you for a review request \n" +
+    "To Review: CVs to review \n" +
+    "Reviewed: CVs reviewed \n" +
+    "My Requests: Your CV review requests sent to others";
 
   const links: {
     path: string;

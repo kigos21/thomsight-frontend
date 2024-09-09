@@ -75,6 +75,7 @@ export type FormFieldProps = {
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
   required: true | false;
+  value?: string;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
@@ -91,18 +92,18 @@ export type TokenFormFieldProps = {
 
 export type TokenItemProps = {
   number: number; // Number to display
-  token: string;  // Token string to display
+  token: string; // Token string to display
 };
 
 export type CompanyAccountsItemProps = {
-  token: string;  // Token string to display
-  expiration: string;  // Token string to display
-  status: 'active' | 'inactive' | 'expiring';
+  token: string; // Token string to display
+  expiration: string; // Token string to display
+  status: "active" | "inactive" | "expiring";
   classNames?: string; // Optional classNames prop
 };
 
 export type StatusProps = {
-  status: 'active' | 'inactive' | 'expiring';
+  status: "active" | "inactive" | "expiring";
   classNames?: string; // Optional classNames prop
 };
 

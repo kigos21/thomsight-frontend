@@ -27,9 +27,13 @@ export default function ProfileManagement() {
             <FormField
               classNames={styles.fieldBio}
               icon={
-                <IconBook2 size={35} stroke={1.5} className={styles.icon} />
+                <IconBook2
+                  size={35}
+                  stroke={1.5}
+                  className={styles.iconTextArea}
+                />
               }
-              type="text"
+              type="textarea"
               placeholder="Your Bio"
               required={true}
               editIcon={

@@ -4,7 +4,6 @@ import styles from "./CompanyAccountsPage.module.scss";
 import CompanyAccountsItem from "../../components/ui/CompanyAccountsItem";
 import SortButton from "../../components/ui/SortButton";
 
-
 export default function CVGuidePage() {
   return (
     <PaddedContainer>
@@ -21,17 +20,56 @@ export default function CVGuidePage() {
             <p>Expires In</p>
             <p>Company</p>
           </div>
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="1 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="inactive" expiration="4 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="expiring" expiration="6 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="10 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="13 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="16 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="1 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="1 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="1 month" />
-            <CompanyAccountsItem token="X7pL9kFg" status="active" expiration="1 month" />
-
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="1 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="inactive"
+            expiration="4 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="expiring"
+            expiration="6 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="10 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="13 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="16 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="1 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="1 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="1 month"
+          />
+          <CompanyAccountsItem
+            token="X7pL9kFg"
+            status="active"
+            expiration="1 month"
+          />
         </div>
       </StyledBox>
     </PaddedContainer>

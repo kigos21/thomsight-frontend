@@ -1,5 +1,5 @@
 import { IconCircleFilled } from "@tabler/icons-react";
-import Button from "../../components/ui/Button";
+
 import styles from "./CVFeedbackView.module.scss";
 
 const CVFeedbackCreate = () => {
