@@ -39,6 +39,7 @@ import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
 import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
 import ReportsLayout from "./components/layout/ReportsLayout.tsx";
+import ReportsDiscussion from "./pages/reports/ReportsDiscussion.tsx";
 
 const router = createBrowserRouter([
   {
@@ -144,7 +145,7 @@ const router = createBrowserRouter([
           },
           {
             path: "discussion",
-            element: <h1>Discussion</h1>,
+            element: <ReportsDiscussion />,
           },
           {
             path: "reviews",
