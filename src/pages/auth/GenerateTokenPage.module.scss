@@ -37,7 +37,6 @@
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
     border-bottom: 2px solid var(--neutral-1);
@@ -48,19 +47,17 @@
   }
   
   .header p:nth-child(1) {
-    flex: 0.5; /* Width for the "#" column */
     text-align: left;
   }
   
   .header p:nth-child(2) {
-    flex: 2; /* Width for the "Token" column */
     text-align: left;
-    margin-left: .7rem;
+    margin-left: 3rem;
   }
   
   .header p:nth-child(3) {
-    flex: 4; /* Width for the "Company" column */
     text-align: left;
+    margin-left: 13rem;
   }
 
 .tokenformfield{

@@ -106,3 +106,8 @@ export type StatusProps = {
   classNames?: string; // Optional classNames prop
 };
 
+export interface SortButtonProps {
+  onSort: (sortOption: string) => void;
+}
+
+

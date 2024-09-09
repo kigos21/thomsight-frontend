@@ -1,0 +1,51 @@
+.buttonContainer {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    border-radius: 999px;
+  }
+  
+  .sortButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--blue-8); // Blue color
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1rem;
+    position: relative;
+  
+    &:hover {
+      background-color: var(--blue-8);
+    }
+  }
+  
+  .chevron {
+    margin-left: 0.5rem;
+  }
+  
+  .menuContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    background-color: var(--blue-8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1000;
+  
+    div {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      white-space: nowrap;
+  
+      &:hover {
+        background-color: var(--blue-5);
+      }
+    }
+  }
+  

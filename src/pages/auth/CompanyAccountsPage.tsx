@@ -1,16 +1,16 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./CompanyAccountsPage.module.scss";
-import ButtonWithDropdown from "../../components/ui/ButtonWithDropdown";
 import CompanyAccountsItem from "../../components/ui/CompanyAccountsItem";
+import SortButton from "../../components/ui/SortButton";
+
 
 export default function CVGuidePage() {
   return (
     <PaddedContainer>
       <div className={styles.title}>
         <h1>Company Accounts</h1>
-        <ButtonWithDropdown classNames={styles.button}>
-        </ButtonWithDropdown>
+        <SortButton/>
       </div>
 
       <StyledBox classNames={styles.styledbox}>

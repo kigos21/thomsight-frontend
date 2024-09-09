@@ -3,29 +3,28 @@
     flex-direction: row;
     align-items: center;
     padding: 0.5rem 2rem;
-    justify-content: space-between; /* Distribute space between items */
-    width: 100%; /* Make sure it takes the full width */
+    justify-content: space-between; 
+    width: 100%; 
   }
   
   .token {
-    width: 8%; /* Adjust based on space available */
+    width: 8%; 
   }
   
   .expiration {
-    width: 8%; /* Adjust width for expiration text */
+    width: 8%; 
   }
   
   .tokenformfield {
-    width: 50%; /* Adjust the width to fit in the container */
+    width: 50%;
   }
   
   .trashIcon {
     cursor: pointer;
-    color: #ff4d4d;
-    margin-left: 1rem; /* Adjust the margin as needed */
+    color: var(--red-6);
+    margin-left: 1rem;
   }
   
-  /* To make sure elements align neatly in a row */
   .tokenItem p, .tokenItem input {
     margin: 0;
   }
