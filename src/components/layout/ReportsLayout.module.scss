@@ -1,0 +1,122 @@
+.rootLayout {
+  display: flex;
+  min-height: 92vh;
+
+  gap: 2rem;
+}
+
+.sideNav {
+  background-color: var(--neutral-0);
+  box-shadow: 0 0 20px -10px black;
+
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 228px;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 120px;
+  font-size: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  a {
+    color: var(--dark-text-color);
+  }
+}
+
+.main {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  max-width: 80%;
+}
+
+.bottomNav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 99;
+  background-color: var(--neutral-1);
+
+  box-shadow: 0 40px 16px 32px var(--black);
+}
+
+.bottomNavList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+
+  height: 80px;
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.bottomNavIcon {
+  color: var(--black);
+}
+
+.bottomNavIconActive {
+  background-color: var(--blue-1);
+  border: 1px solid var(--blue-2);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.activeLink {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 868px) {
+  .sideNav {
+    display: none;
+  }
+
+  .bottomNav {
+    display: block;
+  }
+
+  .main {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navList {
+    font-size: 1rem;
+    gap: 1.15rem;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .navList {
+    font-size: 0.9rem;
+    gap: 1rem;
+  }
+
+  .bottomNavList {
+    gap: 2.5rem;
+  }
+}

@@ -1,6 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import "./index.css";
 
 import AppLayout from "./components/layout/AppLayout.tsx";
@@ -34,6 +38,8 @@ import CVReviewed from "./pages/cv/CVReviewed.tsx";
 import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
 import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
+import ReportsLayout from "./components/layout/ReportsLayout.tsx";
+import ReportsDiscussion from "./pages/reports/ReportsDiscussion.tsx";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +126,34 @@ const router = createBrowserRouter([
           {
             path: "view/:reviewId",
             element: <CVFeedbackView />,
+          },
+        ],
+      },
+
+      /**
+       * Admin Routes
+       */
+
+      // Reports
+      {
+        path: "reports",
+        element: <ReportsLayout />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={"discussion"} replace />,
+          },
+          {
+            path: "discussion",
+            element: <ReportsDiscussion />,
+          },
+          {
+            path: "reviews",
+            element: <h1>Reviews</h1>,
+          },
+          {
+            path: "interview-tips",
+            element: <h1>Interview Tips</h1>,
           },
         ],
       },
