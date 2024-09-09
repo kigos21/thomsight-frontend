@@ -6,14 +6,10 @@ import {
 } from "@tabler/icons-react";
 import styles from "./ReportsTable.module.scss";
 
-interface ReportsTableProps {
-  rows: Array<{ col1: string; col2: string; col3: string }>;
-}
-
 const help =
   "Check button resolves the issue by deleting the reported content.\n\nCross mark button ignores the issue and removes it from this list.";
 
-const ReportsTable: React.FC<ReportsTableProps> = () => {
+const ReportsTable: React.FC = () => {
   return (
     <div className={styles.scrollOverflow}>
       <div className={styles.table}>
