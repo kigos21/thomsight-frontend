@@ -1,0 +1,122 @@
+.scrollOverflow {
+  overflow-x: scroll;
+  margin-bottom: 5rem;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid var(--neutral-1);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+
+  min-width: 650px;
+}
+
+.tableHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--neutral-1);
+
+  padding: 1.25rem 1.875rem;
+  gap: 2rem;
+}
+
+.actionHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.iconHelp {
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.25rem 1.875rem;
+}
+
+.col {
+  flex: 1 1 0;
+}
+
+.thirdCol {
+  flex: 0 0 200px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.postDetailsHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  margin-bottom: 0.875rem;
+}
+
+.postDetailsName {
+  font-weight: 600;
+}
+
+.postDetailsDate {
+  font-size: 0.75rem;
+}
+
+.postDetailsBody {
+  font-size: 0.875rem;
+}
+
+.reportDetailsHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  margin-bottom: 0.875rem;
+  color: var(--red-5);
+}
+
+.reportDetailsName {
+  font-weight: 600;
+}
+
+.reportDetailsDate {
+  font-size: 0.75rem;
+}
+
+.reportDetailsBody {
+  font-size: 0.875rem;
+  color: var(--red-5);
+}
+
+.actionsButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  align-self: baseline;
+
+  button {
+    aspect-ratio: 1/1;
+  }
+}
+
+.btnCheck {
+  background-color: var(--green-5);
+  padding: 0.125rem;
+  border-radius: 4px;
+  color: var(--black);
+}
+
+.btnDismiss {
+  background-color: var(--red-5);
+  padding: 0.125rem;
+  border-radius: 4px;
+  color: var(--black);
+}
