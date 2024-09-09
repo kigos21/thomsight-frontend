@@ -1,7 +1,7 @@
 import styles from "./SortButton.module.scss";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
-import { SortButtonProps } from './props'; // Importing the type
+import { SortButtonProps } from "../../types/props";
 
 const SortButton = ({ onSort }: SortButtonProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
