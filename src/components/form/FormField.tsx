@@ -7,6 +7,7 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   placeholder,
   required,
+  value,
   extraProps,
   classNames,
   editIcon,
@@ -17,6 +18,7 @@ const FormField: React.FC<FormFieldProps> = ({
       <textarea
         placeholder={placeholder}
         required={required}
+        value={value}
         className={`${styles.formField} ${classNames}`}
       />
     ) : (
@@ -24,6 +26,7 @@ const FormField: React.FC<FormFieldProps> = ({
         type={type}
         placeholder={placeholder}
         required={required}
+        value={value}
         className={`${styles.formField} ${classNames}`}
         {...extraProps}
       />

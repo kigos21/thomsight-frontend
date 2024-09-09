@@ -23,18 +23,15 @@
 
 .styledBox {
   background-color: var(--neutral-0);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1rem 1rem;
   border-radius: 20px;
 }
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(200px, 1fr)
-  ); //lilipat sa corresponding page
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   justify-items: center;
   align-items: center;
 }

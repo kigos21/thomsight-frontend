@@ -75,6 +75,7 @@ export type FormFieldProps = {
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
   required: true | false;
+  value?: string;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
@@ -104,6 +105,23 @@ export type CompanyOverviewDescriptionItemProps = {
 
 export type CompanyLocationItemProps = {
   location: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
+export type CompanyJobInformationFormItemProps = {
+  jobTitle: string;
+  tags: string;
+  jobDescription: string;
+
+  classNames?: string;
+  style?: React.CSSProperties;
+};
+
+export type AdminCreatennouncementItemProps = {
+  subject: string;
+  detail: string;
 
   classNames?: string;
   style?: React.CSSProperties;

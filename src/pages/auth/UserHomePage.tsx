@@ -6,6 +6,8 @@ import NotificationItem from "../../components/ui/NotificationItem";
 import AnnouncementItem from "../../components/ui/AnnouncementItem";
 import CompanyOverviewDescriptionItem from "../../components/ui/CompanyOverviewDescriptionItem";
 import CompanyLocationItem from "../../components/ui/CompanyLocationItem";
+import CompanyJobInformationFormItem from "../../components/ui/CompanyJobInformationFormItem";
+import AdminCreatennouncementItem from "../../components/ui/AdminCreateAnnouncementItem";
 
 export default function UserHomePage() {
   return (
@@ -39,6 +41,17 @@ export default function UserHomePage() {
       <CompanyOverviewDescriptionItem companyDescription="This is the description"></CompanyOverviewDescriptionItem>
 
       <CompanyLocationItem location="Makati, Philippines"></CompanyLocationItem>
+
+      <CompanyJobInformationFormItem
+        jobTitle=""
+        tags=""
+        jobDescription=""
+      ></CompanyJobInformationFormItem>
+
+      <AdminCreatennouncementItem
+        subject=""
+        detail=""
+      ></AdminCreatennouncementItem>
     </PaddedContainer>
   );
 }
