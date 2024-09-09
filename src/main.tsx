@@ -32,6 +32,8 @@ import CVPending from "./pages/cv/CVPending.tsx";
 import CVToReview from "./pages/cv/CVToReview.tsx";
 import CVReviewed from "./pages/cv/CVReviewed.tsx";
 import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
+import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
+import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
 
 const router = createBrowserRouter([
   {
@@ -110,6 +112,14 @@ const router = createBrowserRouter([
           {
             path: "my-requests",
             element: <CVMyRequests />,
+          },
+          {
+            path: ":reviewId",
+            element: <CVFeedbackCreate />,
+          },
+          {
+            path: "view/:reviewId",
+            element: <CVFeedbackView />,
           },
         ],
       },
