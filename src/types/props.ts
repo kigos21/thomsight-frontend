@@ -7,6 +7,7 @@ export type ButtonProps = {
 
   classNames?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 };
 
 export type ButtonReviewProps = {

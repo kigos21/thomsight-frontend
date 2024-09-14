@@ -7,6 +7,7 @@ export default function Button({
   classNames,
   children,
   style,
+  onClick,
 }: ButtonProps) {
   const colorClass = color === "primary" ? styles.primary : styles.secondary;
   const roundnessClass =
@@ -15,7 +16,12 @@ export default function Button({
   const allClasses: string = `${styles.button} ${colorClass} ${roundnessClass} ${classNames}`;
 
   return (
-    <button type="button" className={allClasses} style={style}>
+    <button
+      type="button"
+      className={allClasses}
+      style={style}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
