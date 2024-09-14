@@ -12,7 +12,6 @@ export default function CompanyDetails() {
   const [company, setCompany] = useState<Company | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  console.log("Slug: " + slug);
 
   useEffect(() => {
     if (slug) {
@@ -35,6 +34,7 @@ export default function CompanyDetails() {
     }
   }, [slug]);
 
+  //temporary placeholders
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -47,6 +47,9 @@ export default function CompanyDetails() {
     return <div>No company found.</div>;
   }
 
+  const firstLocation =
+    company.locations.length > 0 ? company.locations[0] : null;
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
@@ -57,7 +60,17 @@ export default function CompanyDetails() {
         <div className={styles.detailsHolder}>
           <p className={styles.companyName}>{company.name}</p>
           <p>{company.email}</p>
-          <p>Company Location</p>
+          {/* temporary location placeholder */}
+          {firstLocation ? (
+            <div>
+              <p>{firstLocation.address}</p>
+              <p>
+                {firstLocation.city}, {firstLocation.state}
+              </p>
+            </div>
+          ) : (
+            <p>No location data available.</p>
+          )}
         </div>
       </div>
     </PaddedContainer>
