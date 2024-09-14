@@ -155,3 +155,14 @@ export type AdminCreatennouncementItemProps = {
   classNames?: string;
   style?: React.CSSProperties;
 };
+
+export type Company = {
+  id: number;
+  name: string;
+  posted_by: number;
+  description: string;
+  industry: string;
+  size: string;
+  email: string;
+  slug: string;
+};

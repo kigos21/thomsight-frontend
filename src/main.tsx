@@ -80,7 +80,7 @@ const router = createBrowserRouter([
         element: <CompanyAccountsPage />,
       },
       {
-        path: "company",
+        path: "company/:slug",
         element: <CompanyLayout />,
         children: [
           {
