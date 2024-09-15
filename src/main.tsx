@@ -83,12 +83,13 @@ const router = createBrowserRouter([
         path: "company/:slug",
         element: <CompanyLayout />,
         children: [
+          // {
+          //   index: true,
+          //   element: <h1>This is the Overview</h1>,
+          // },
           {
+            // path: "overview",
             index: true,
-            element: <h1>This is the Overview</h1>,
-          },
-          {
-            path: "overview",
             element: <UserCompanyOverview />,
           },
           {
