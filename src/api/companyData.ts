@@ -5,9 +5,16 @@ import { Company } from "../types/props";
 
 const BASE_URL = "http://127.0.0.1:8000/api";
 
-export const getCompanyData = async (slug: string): Promise<Company> => {
-  const response = await axios.get<Company>(`${BASE_URL}/company/${slug}`);
-  return response.data;
+export const fetchCompanyData = async (
+  slug: string
+): Promise<Company | null> => {
+  try {
+    const response = await axios.get<Company>(`${BASE_URL}/company/${slug}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching company data:", error);
+    return null;
+  }
 };
 
 export const useCompanyData = () => {
@@ -17,10 +24,10 @@ export const useCompanyData = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchCompanyData = async () => {
+    const getCompanyData = async () => {
       if (slug) {
         try {
-          const data = await getCompanyData(slug);
+          const data = await fetchCompanyData(slug);
           setCompany(data);
           setLoading(false);
         } catch (error) {
@@ -31,7 +38,7 @@ export const useCompanyData = () => {
       }
     };
 
-    fetchCompanyData();
+    getCompanyData();
   }, [slug]);
 
   return { company, loading, error };

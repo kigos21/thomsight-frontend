@@ -156,6 +156,28 @@ export type AdminCreatennouncementItemProps = {
   style?: React.CSSProperties;
 };
 
+export type User = {
+  id: number;
+  email: string;
+  name: string;
+  email_verified_at?: string;
+  role: UserRole;
+  profile_info?: string;
+  status: UserStatus;
+};
+
+export enum UserRole {
+  ADMIN = "Admin",
+  STUDENT = "Student",
+  REP = "Rep",
+  ALUMNI = "Alumni",
+}
+
+export enum UserStatus {
+  EXISTING = "Existing",
+  DEACTIVATED = "Deactivated",
+}
+
 export type Company = {
   id: number;
   name: string;
