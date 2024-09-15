@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Company } from "../../../types/props";
+import { getCompanyData } from "../../../api/companyData";
 
 export default function CompanyDetails() {
   const { slug } = useParams<{ slug: string }>();
@@ -14,24 +15,21 @@ export default function CompanyDetails() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (slug) {
-      fetch(`http://127.0.0.1:8000/api/company/${slug}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
+    const fetchCompanyData = async () => {
+      if (slug) {
+        try {
+          const data = await getCompanyData(slug);
           setCompany(data);
           setLoading(false);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error fetching company data:", error);
           setError("Failed to fetch company data.");
           setLoading(false);
-        });
-    }
+        }
+      }
+    };
+
+    fetchCompanyData();
   }, [slug]);
 
   //temporary placeholders

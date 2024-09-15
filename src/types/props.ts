@@ -166,4 +166,5 @@ export type Company = {
   email: string;
   slug: string;
   locations?: Location[];
+  jobs?: Job[];
 };
