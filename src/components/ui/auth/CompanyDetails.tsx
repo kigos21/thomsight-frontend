@@ -2,35 +2,10 @@ import styles from "./CompanyDetails.module.scss";
 
 import logo from "../../../assets/thomsight-logo.svg";
 import PaddedContainer from "../../layout/PaddedContainer";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Company } from "../../../types/props";
-import { getCompanyData } from "../../../api/companyData";
+import { useCompanyData } from "../../../api/companyData.ts";
 
 export default function CompanyDetails() {
-  const { slug } = useParams<{ slug: string }>();
-  const [company, setCompany] = useState<Company | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchCompanyData = async () => {
-      if (slug) {
-        try {
-          const data = await getCompanyData(slug);
-          setCompany(data);
-          setLoading(false);
-        } catch (error) {
-          console.error("Error fetching company data:", error);
-          setError("Failed to fetch company data.");
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchCompanyData();
-  }, [slug]);
+  const { company, loading, error } = useCompanyData();
 
   //temporary placeholders
   if (loading) {
