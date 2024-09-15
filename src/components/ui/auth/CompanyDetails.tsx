@@ -37,9 +37,6 @@ export default function CompanyDetails() {
           {firstLocation ? (
             <div>
               <p>{firstLocation.address}</p>
-              <p>
-                {firstLocation.city}, {firstLocation.state}
-              </p>
             </div>
           ) : (
             <p>No location data available.</p>
