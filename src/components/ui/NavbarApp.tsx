@@ -15,6 +15,10 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
   const { user, loading } = useUserData();
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <PaddedContainer classNames={styles.rootContainer}>
       <nav className={styles.container}>
