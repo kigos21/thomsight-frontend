@@ -16,12 +16,7 @@ export default function Button({
   const allClasses: string = `${styles.button} ${colorClass} ${roundnessClass} ${classNames}`;
 
   return (
-    <button
-      type="button"
-      className={allClasses}
-      style={style}
-      onClick={onClick}
-    >
+    <button className={allClasses} style={style} onClick={onClick}>
       {children}
     </button>
   );
