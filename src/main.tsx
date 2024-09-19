@@ -47,6 +47,8 @@ import AdminViewAnnouncements from "./pages/auth/AdminViewAnnouncements.tsx";
 import CompanyManageInformationCompany from "./pages/auth/CompanyManageInformationCompany.tsx";
 import CompanyManageInformationJobs from "./pages/auth/CompanyManageInformationJobs.tsx";
 import AdminCreateAnnouncement from "./pages/auth/AdminCreateAnnouncement.tsx";
+import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
+import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
 
 const router = createBrowserRouter([
   {
@@ -188,11 +190,11 @@ const router = createBrowserRouter([
           },
           {
             path: "reviews",
-            element: <h1>Reviews</h1>,
+            element: <ReportsReviews />,
           },
           {
             path: "interview-tips",
-            element: <h1>Interview Tips</h1>,
+            element: <ReportsInterviewTips />,
           },
         ],
       },
