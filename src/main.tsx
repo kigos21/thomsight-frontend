@@ -38,10 +38,15 @@ import CVReviewed from "./pages/cv/CVReviewed.tsx";
 import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
 import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
-import GenerateTokenPage from "./pages/auth/GenerateTokenPage.tsx";
-import CompanyAccountsPage from "./pages/auth/CompanyAccountsPage.tsx";
+import AdminGenerateTokenPage from "./pages/auth/AdminGenerateTokenPage.tsx";
+import AdminCompanyAccount from "./pages/auth/AdminCompanyAccount.tsx";
 import ReportsLayout from "./components/layout/ReportsLayout.tsx";
 import ReportsDiscussion from "./pages/reports/ReportsDiscussion.tsx";
+import CompanyNotification from "./pages/auth/CompanyNotification.tsx";
+import AdminViewAnnouncements from "./pages/auth/AdminViewAnnouncements.tsx";
+import CompanyManageInformationCompany from "./pages/auth/CompanyManageInformationCompany.tsx";
+import CompanyManageInformationJobs from "./pages/auth/CompanyManageInformationJobs.tsx";
+import AdminCreateAnnouncement from "./pages/auth/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
 
@@ -71,13 +76,27 @@ const router = createBrowserRouter([
         path: "interview-tips",
         element: <InterviewTipsPage />,
       },
+      //admin side things
       {
-        path: "generate-token",
-        element: <GenerateTokenPage />,
+        path: "admin-company-accounts",
+        element: <AdminCompanyAccount />,
       },
       {
-        path: "company-accounts",
-        element: <CompanyAccountsPage />,
+        path: "admin-generate-token",
+        element: <AdminGenerateTokenPage />,
+      },
+      {
+        path: "admin-view-announcements",
+        element: <AdminViewAnnouncements />,
+      },
+      {
+        path: "admin-create-announcements",
+        element: <AdminCreateAnnouncement />,
+      },
+      //company side things
+      {
+        path: "company-notification",
+        element: <CompanyNotification />,
       },
       {
         path: "company",
@@ -102,6 +121,16 @@ const router = createBrowserRouter([
           {
             path: "interview-tips",
             element: <UserCompanyInterviewTips />,
+          },
+
+          //company layout na maskonti laman navbar
+          {
+            path: "company-manage-information-company",
+            element: <CompanyManageInformationCompany />,
+          },
+          {
+            path: "company-manage-information-jobs",
+            element: <CompanyManageInformationJobs />,
           },
         ],
       },
