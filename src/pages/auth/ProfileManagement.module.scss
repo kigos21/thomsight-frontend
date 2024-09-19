@@ -1,5 +1,17 @@
 .paddedContainer {
   padding: 2rem 12rem;
+
+  @media (max-width: 1200px) {
+    padding: 2rem 8rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 4rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 }
 
 .styledBox {
@@ -7,6 +19,18 @@
   text-align: center;
   padding: 0 8rem;
   border: 2px solid black;
+
+  @media (max-width: 1200px) {
+    padding: 0 5rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+  }
 }
 
 .container {
@@ -45,7 +69,6 @@
   position: absolute;
   top: 50%;
   left: 1.8rem;
-
   transform: translate(0%, -50%);
 }
 
@@ -53,21 +76,54 @@
   position: absolute;
   top: 18%;
   left: 1.8rem;
-
   transform: translate(0%, -50%);
 }
 
 .name {
-  width: 80%;
+  font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 }
 
 .editIcon {
-  width: 20%;
+  width: 45%;
   color: black;
   position: absolute;
   transform: translateX(50%);
+
+  @media (max-width: 768px) {
+    width: 60%;
+  }
+  @media (max-width: 480px) {
+    width: 80%;
+  }
+}
+
+.title {
+  font-size: 1.75rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 }
 
 .button {
   height: 70px;
+  font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    height: 60px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    height: 50px;
+    font-size: 0.9rem;
+  }
 }

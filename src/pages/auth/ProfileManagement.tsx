@@ -17,7 +17,7 @@ export default function ProfileManagement() {
     <PaddedContainer classNames={styles.paddedContainer}>
       <StyledBox classNames={styles.styledBox}>
         <div className={styles.container}>
-          <h2>User Profile</h2>
+          <h2 className={styles.title}>User Profile</h2>
           <IconUser size={100} stroke={2} className={styles.headerIcon} />
           <div className={styles.nameContainer}>
             <div>
