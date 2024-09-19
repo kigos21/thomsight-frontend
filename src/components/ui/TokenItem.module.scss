@@ -4,29 +4,24 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 2rem;
+    width: 100%;
   }
   
   .number {
-    flex: 0.5; /* Fixed width for number column */
-    align-items: center;
-    margin-right: 1rem; /* Space between number and token */
+    width: 1%;
   }
   
   .token {
-    flex: 2; /* Takes the remaining space */
-    align-items: center;
-    margin-right: 1rem; /* Space between token and edit icon */
+    width: 20%;
   }
   
   .tokenformfield {
-    flex: 4; /* Ensure the TokenFormField takes space properly */
-    margin-right: 1rem; /* Space between TokenFormField and trash icon */
-    align-items: center;
+    width: 60%;
   }
   
   .trashIcon {
     cursor: pointer;
-    color: #ff4d4d; /* Adjust color for the trash icon */
+    color: var(--red-6); 
     align-items: center;
   }
   

@@ -107,50 +107,8 @@ export type StatusProps = {
   classNames?: string; // Optional classNames prop
 };
 
-export type NotificationItemProps = {
-  notificationHeader: string;
-  notificationDescription: string;
+export interface SortButtonProps {
+  onSort: (sortOption: string) => void;
+}
 
-  classNames?: string;
-  style?: React.CSSProperties;
-};
 
-export type AnnouncementItemProps = {
-  announcementHeader: string;
-  announcementDescription: string;
-  date: string;
-
-  classNames?: string;
-  style?: React.CSSProperties;
-};
-
-export type CompanyOverviewDescriptionItemProps = {
-  companyDescription: string;
-
-  classNames?: string;
-  style?: React.CSSProperties;
-};
-
-export type CompanyLocationItemProps = {
-  location: string;
-
-  classNames?: string;
-  style?: React.CSSProperties;
-};
-
-export type CompanyJobInformationFormItemProps = {
-  jobTitle: string;
-  tags: string;
-  jobDescription: string;
-
-  classNames?: string;
-  style?: React.CSSProperties;
-};
-
-export type AdminCreatennouncementItemProps = {
-  subject: string;
-  detail: string;
-
-  classNames?: string;
-  style?: React.CSSProperties;
-};
