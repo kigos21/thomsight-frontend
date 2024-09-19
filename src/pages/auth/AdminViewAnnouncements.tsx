@@ -4,6 +4,7 @@ import Button from "../../components/ui/Button";
 import { IconPlus } from "@tabler/icons-react";
 
 import styles from "./AdminViewAnnouncements.module.scss";
+import { Link } from "react-router-dom";
 
 export default function AdminViewAnnouncements() {
   return (
@@ -11,14 +12,16 @@ export default function AdminViewAnnouncements() {
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>Announcements</h2>
-          <Button
-            classNames={styles.announcementButton}
-            color="secondary"
-            roundness="rounded"
-          >
-            <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />
-            Create Announcement
-          </Button>
+          <Link to={"/announcements/create"}>
+            <Button
+              classNames={styles.announcementButton}
+              color="secondary"
+              roundness="rounded"
+            >
+              <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />
+              Create Announcement
+            </Button>
+          </Link>
         </div>
         <AnnouncementItem
           announcementHeader="Announcement title"

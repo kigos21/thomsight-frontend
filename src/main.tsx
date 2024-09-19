@@ -198,6 +198,26 @@ const router = createBrowserRouter([
           },
         ],
       },
+
+      // Announcements
+      {
+        path: "announcements",
+        element: <AdminViewAnnouncements />,
+      },
+      {
+        path: "announcements/create",
+        element: <AdminCreateAnnouncement />,
+      },
+
+      // Tokens
+      {
+        path: "tokens",
+        element: <AdminGenerateTokenPage />,
+      },
+      {
+        path: "tokens/companies",
+        element: <AdminCompanyAccount />,
+      },
     ],
   },
   {
