@@ -61,7 +61,7 @@ const router = createBrowserRouter([
         element: <UserHomePage />,
       },
       {
-        path: "profilemanagement",
+        path: "profile-management",
         element: <ProfileManagement />,
       },
       {

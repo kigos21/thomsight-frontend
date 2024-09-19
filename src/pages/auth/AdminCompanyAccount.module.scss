@@ -1,3 +1,25 @@
+.paddedContainer {
+  padding: 2rem;
+}
+
+.styledBox {
+  border: 2px solid var(--neutral-1);
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+  text-align: left;
+}
+
 .button {
   border-radius: 30px;
   text-align: center;
@@ -7,92 +29,70 @@
   gap: 1rem;
 }
 
-.styledbox {
-    border: 2px solid var(--neutral-1);
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 8px;
-    position: relative;
-  }
-  
-  .title{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: left;
-    margin-bottom: 2rem;
-    justify-content: space-between;
-    padding: 0rem 23.5rem;
-  }
-
-.title {
+.companyTokens {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  // align-items: center;
-  margin-bottom: 2rem;
-  justify-content: space-between;
-}
-
-.companytokens {
-  display: flex;
-  flex-direction: column;
-  margin-left: -3rem;
-  margin-right: -3rem;
-  margin-top: -2.8rem;
+  margin: 0;
 }
 
 .header {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1rem 2rem;
+  justify-content: space-between;
+  padding: 1rem;
   border-bottom: 2px solid var(--neutral-1);
+  font-weight: bold;
 }
 
 .header p {
+  flex: 1;
+  text-align: left;
   margin: 0;
 }
 
-.header p:nth-child(1) {
-  text-align: left;
-}
-
-.header p:nth-child(2) {
-  text-align: left;
-  margin-left: 6rem;
-}
-
-.header p:nth-child(3) {
-  text-align: left;
-  margin-left: 5rem;
-}
-
+.header p:nth-child(2),
+.header p:nth-child(3),
 .header p:nth-child(4) {
-  text-align: left;
-  margin-left: 3.7rem;
+  margin-left: 1rem;
 }
 
-@media screen and (max-width: 768px) {
-  .styledbox {
-    margin: 0 1rem;
-    padding: 1.5rem;
+// Mobile Responsive Adjustments
+@media (max-width: 768px) {
+  .title {
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
   }
 
-  .title {
-    margin-bottom: 1.5rem;
+  .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .header p {
+    margin-left: 0 !important;
+  }
+
+  .companyTokens {
+    margin: 0;
   }
 }
 
-@media screen and (max-width: 480px) {
-  .styledbox {
-    margin: 0 0.5rem;
-    padding: 1rem;
+@media (max-width: 576px) {
+  .styledBox {
+    padding: 0.5rem;
   }
 
-  .title {
-    margin-bottom: 1rem;
+  .header p {
+    font-size: 0.9rem;
+  }
+
+  .title h1 {
     font-size: 1.5rem;
   }
 }

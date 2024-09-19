@@ -7,14 +7,14 @@ import styles from "./AdminCompanyAccount.module.scss";
 
 export default function AdminCompanyAccount() {
   return (
-    <PaddedContainer>
+    <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.title}>
         <h1>Company Accounts</h1>
         <ButtonWithDropdown classNames={styles.button}></ButtonWithDropdown>
       </div>
 
-      <StyledBox classNames={styles.styledbox}>
-        <div className={styles.companytokens}>
+      <StyledBox classNames={styles.styledBox}>
+        <div className={styles.companyTokens}>
           <div className={styles.header}>
             <p>Token</p>
             <p>Status</p>
