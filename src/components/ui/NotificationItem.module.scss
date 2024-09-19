@@ -1,36 +1,71 @@
 .paddedContainer {
   padding: 1.5rem 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.25rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 1.25rem;
+  }
 }
 
 .container {
   background-color: var(--neutral-0);
   color: black;
   border-bottom: 1px solid var(--black);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
 }
 
 .notificationDetailsContainer {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 6px;
+  }
 }
 
 .header {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.875rem;
+  }
 }
 
 .description {
   padding: 1rem 3rem;
-}
 
-@media screen and (max-width: 768px) {
-  .container {
-    border-radius: 1rem;
+  @media (max-width: 768px) {
+    padding: 0.75rem 2rem;
   }
-}
 
-@media screen and (max-width: 480px) {
-  .container {
-    border-radius: 0.75rem;
+  @media (max-width: 480px) {
+    padding: 0.75rem 1.5rem;
   }
 }
