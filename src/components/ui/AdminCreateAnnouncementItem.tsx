@@ -32,7 +32,7 @@ export default function AdminCreatennouncementItem({
               type="text"
               placeholder="Subject"
               required={true}
-            ></FormField>
+            />
           </div>
 
           <div>
@@ -41,7 +41,7 @@ export default function AdminCreatennouncementItem({
               type="textarea"
               placeholder="Announcement Details"
               required={true}
-            ></FormField>
+            />
           </div>
         </div>
       </div>
