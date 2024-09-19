@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TokenFormFieldProps } from "../../types/props";
-import styles from "./TokenFormField.module.scss";
+import styles from "./TokenFormFIeld.module.scss";
 import { IconEdit } from "@tabler/icons-react";
 
 const TokenFormField: React.FC<TokenFormFieldProps> = ({

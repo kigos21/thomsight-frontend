@@ -1,14 +1,15 @@
-import { IconCheck, IconPointFilled, IconX } from "@tabler/icons-react";
-import ReportsTable from "../../components/ui/reports/ReportsTable";
-import styles from "./ReportsDiscussion.module.scss";
+import styles from "./ReportsInterviewTips.module.scss";
 
-const ReportsDiscussion = () => {
+import ReportsTable from "../../components/ui/reports/ReportsTable";
+import { IconCheck, IconPointFilled, IconX } from "@tabler/icons-react";
+
+const ReportsInterviewTips = () => {
   return (
     <div>
-      <h1 className={styles.heading}>Discussion</h1>
+      <h1 className={styles.heading}>Interview Tips</h1>
 
       <ReportsTable>
-        {[1, 2, 3].map(() => (
+        {[1, 3].map(() => (
           <div className={styles.row}>
             <div className={styles.col}>
               <div className={styles.postDetailsHeading}>
@@ -16,6 +17,9 @@ const ReportsDiscussion = () => {
                 <IconPointFilled size={8} />
                 <p className={styles.postDetailsDate}>09/09/2024</p>
               </div>
+              <p className={styles.postDetailsTitle}>
+                Lorem ipsum dolor sit amet consectetur.
+              </p>
               <p className={styles.postDetailsBody}>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Tempora, nam animi veritatis porro cupiditate molestias aliquam
@@ -71,4 +75,4 @@ const ReportsDiscussion = () => {
   );
 };
 
-export default ReportsDiscussion;
+export default ReportsInterviewTips;

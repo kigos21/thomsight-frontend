@@ -1,0 +1,17 @@
+.notificationContainer {
+  padding: 0rem 4rem;
+}
+
+.styledBox {
+  padding: 0;
+  margin-top: 0;
+  border-radius: 8px;
+  border: 2px solid var(--black);
+  overflow: hidden;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 0 0 1rem 0;
+}
