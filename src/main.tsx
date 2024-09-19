@@ -65,10 +65,6 @@ const router = createBrowserRouter([
         element: <ProfileManagement />,
       },
       {
-        path: "profilemanagement",
-        element: <ProfileManagement />,
-      },
-      {
         path: "cv-guide",
         element: <CVGuidePage />,
       },

@@ -18,7 +18,12 @@ export default function NavbarApp({ links }: NavbarAppProps) {
       <nav className={styles.container}>
         <div className={styles.brand}>
           <img className={styles.brandImage} src={logo} alt="Thomsight logo" />
-          <h2 className={styles.brandText}>Thomsight</h2>
+          <div className={styles.brandTextContainer}>
+            <h2 className={styles.brandText}>Thomsight</h2>
+            <p className={styles.brandTextCics}>
+              College of Information and Computing Sciences
+            </p>
+          </div>
         </div>
 
         <ul className={styles.navList}>
