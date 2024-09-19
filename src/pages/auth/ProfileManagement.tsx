@@ -20,8 +20,10 @@ export default function ProfileManagement() {
           <h2>User Profile</h2>
           <IconUser size={100} stroke={2} className={styles.headerIcon} />
           <div className={styles.nameContainer}>
-            <p className={styles.name}>Yung name ni user na editable</p>
-            <IconEdit size={35} stroke={1.5} className={styles.nameEditIcon} />
+            <div>
+              <p className={styles.name}>Yung name ni user na editable</p>
+            </div>
+            <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
           </div>
           <form className={styles.form}>
             <FormField
@@ -36,18 +38,12 @@ export default function ProfileManagement() {
               type="textarea"
               placeholder="Your Bio"
               required={true}
-              editIcon={
-                <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
-              }
             />
             <FormField
               icon={<IconUser size={35} stroke={1.5} className={styles.icon} />}
               type="text"
               placeholder="Profile Link"
               required={true}
-              editIcon={
-                <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
-              }
             />
             <FormField
               icon={
@@ -56,27 +52,18 @@ export default function ProfileManagement() {
               type="tel"
               placeholder="Phone Number"
               required={true}
-              editIcon={
-                <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
-              }
             />
             <FormField
               icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
               type="password"
               placeholder="Your Password"
               required={true}
-              editIcon={
-                <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
-              }
             />
             <FormField
               icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
               type="password"
               placeholder="Your New Password"
               required={true}
-              editIcon={
-                <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
-              }
             />
 
             <Button
