@@ -1,7 +1,7 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import StyledBox from "../../components/layout/StyledBox";
-import ButtonWithDropdown from "../../components/ui/ButtonWithDropdown";
 import CompanyAccountsItem from "../../components/ui/CompanyAccountsItem";
+import SortButton from "../../components/ui/SortButton";
 
 import styles from "./AdminCompanyAccount.module.scss";
 
@@ -10,7 +10,7 @@ export default function AdminCompanyAccount() {
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.title}>
         <h1>Company Accounts</h1>
-        <ButtonWithDropdown classNames={styles.button}></ButtonWithDropdown>
+        <SortButton classNames={styles.button}></SortButton>
       </div>
 
       <StyledBox classNames={styles.styledBox}>
