@@ -119,7 +119,4 @@ export interface AdminCreatennouncementItemProps {
   style?: CSSProperties;
   subject: string;
   detail: string;
-
-  classNames?: string;
-  style?: React.CSSProperties;
 }
