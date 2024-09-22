@@ -1,3 +1,11 @@
 .paddedContainer {
   padding: 0rem 4rem;
+
+  @media (max-width: 768px) {
+    padding: 0rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0rem 1rem;
+  }
 }
