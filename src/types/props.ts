@@ -117,3 +117,13 @@ export interface AdminCreatennouncementItemProps {
   subject: string;
   details: string;
 }
+
+export interface DeletePopUpProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface ReportFormProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
