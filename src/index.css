@@ -72,7 +72,7 @@
   --neutral-9: #575757;
   --black: hsl(0, 0%, 16%);
   --muted-black: hsl(0, 0%, 60%);
-
+  --black-overlay: rgba(0, 0, 0, 0.5);
   --primary-color: var(--yellow-7);
   --secondary-color: var(--blue-6);
 
