@@ -1,4 +1,4 @@
-import CVCard from "../../components/ui/CVCard";
+import CVCard from "../../components/ui/cv/CVCard";
 import styles from "./CVListing.module.scss";
 
 const CVListing = () => {

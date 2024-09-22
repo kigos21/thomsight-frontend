@@ -16,37 +16,37 @@ import StudentRegisterPage from "./pages/auth/RegisterStudentPage.tsx";
 import RegisterAlumniPage from "./pages/auth/RegisterAlumniPage.tsx";
 import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
 import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
-import CompanyTokenPage from "./pages/auth/CompanyTokenPage.tsx";
+import CompanyTokenPage from "./pages/company/CompanyTokenPage.tsx";
 import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
 import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
-import UserHomePage from "./pages/auth/UserHomePage.tsx";
-import UserCompanyJobs from "./pages/auth/UserCompanyJobs.tsx";
-import UserCompanyInterviewTips from "./pages/auth/UserCompanyInterviewTips.tsx";
-import ProfileManagement from "./pages/auth/ProfileManagement.tsx";
+import UserHomePage from "./pages/home/UserHomePage.tsx";
+import UserCompanyJobs from "./pages/company/UserCompanyJobs.tsx";
+import UserCompanyInterviewTips from "./pages/company/UserCompanyInterviewTips.tsx";
+import ProfileManagement from "./pages/profile/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
-import CVGuidePage from "./pages/auth/CVGuidePage.tsx";
-import UserCompanyDiscussionForum from "./pages/auth/UserCompanyDiscussionForum.tsx";
-import InterviewTipsPage from "./pages/auth/InterviewTipsPage.tsx";
+import CVGuidePage from "./pages/CVGuidePage.tsx";
+import UserCompanyDiscussionForum from "./pages/company/UserCompanyDiscussionForum.tsx";
+import InterviewGuidePage from "./pages/InterviewGuidePage.tsx";
 import CVListing from "./pages/cv/CVListing.tsx";
 import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
-import DataPrivacy from "./pages/auth/DataPrivacy.tsx";
-import UserCompanyOverview from "./pages/auth/UserCompanyOverview.tsx";
+import DataPrivacy from "./pages/DataPrivacy.tsx";
+import UserCompanyOverview from "./pages/company/UserCompanyOverview.tsx";
 import CVPending from "./pages/cv/CVPending.tsx";
 import CVToReview from "./pages/cv/CVToReview.tsx";
 import CVReviewed from "./pages/cv/CVReviewed.tsx";
 import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
 import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
 import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
-import AdminGenerateTokenPage from "./pages/auth/AdminGenerateTokenPage.tsx";
-import AdminCompanyAccount from "./pages/auth/AdminCompanyAccount.tsx";
+import AdminGenerateTokenPage from "./pages/tokens/AdminGenerateTokenPage.tsx";
+import AdminCompanyAccount from "./pages/tokens/AdminCompanyAccount.tsx";
 import ReportsLayout from "./components/layout/ReportsLayout.tsx";
 import ReportsDiscussion from "./pages/reports/ReportsDiscussion.tsx";
-import CompanyNotification from "./pages/auth/CompanyNotification.tsx";
-import AdminViewAnnouncements from "./pages/auth/AdminViewAnnouncements.tsx";
-import CompanyManageInformationCompany from "./pages/auth/CompanyManageInformationCompany.tsx";
-import CompanyManageInformationJobs from "./pages/auth/CompanyManageInformationJobs.tsx";
-import AdminCreateAnnouncement from "./pages/auth/AdminCreateAnnouncement.tsx";
+import CompanyNotification from "./pages/company/CompanyNotification.tsx";
+import AdminViewAnnouncements from "./pages/announcements/AdminViewAnnouncements.tsx";
+import CompanyManageInformationCompany from "./pages/company/CompanyManageInformationCompany.tsx";
+import CompanyManageInformationJobs from "./pages/company/CompanyManageInformationJobs.tsx";
+import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
 
@@ -56,51 +56,30 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <ErrorPage />,
     children: [
+      // Home
       {
         index: true,
         element: <UserHomePage />,
       },
+
+      // Announcements
       {
-        path: "profile-management",
-        element: <ProfileManagement />,
-      },
-      {
-        path: "cv-guide",
-        element: <CVGuidePage />,
-      },
-      {
-        path: "interview-tips",
-        element: <InterviewTipsPage />,
-      },
-      //admin side things
-      {
-        path: "admin-company-accounts",
-        element: <AdminCompanyAccount />,
-      },
-      {
-        path: "admin-generate-token",
-        element: <AdminGenerateTokenPage />,
-      },
-      {
-        path: "admin-view-announcements",
+        path: "announcements",
         element: <AdminViewAnnouncements />,
       },
       {
-        path: "admin-create-announcements",
+        path: "announcements/create",
         element: <AdminCreateAnnouncement />,
       },
-      //company side things
-      {
-        path: "company-notification",
-        element: <CompanyNotification />,
-      },
+
+      // Company
       {
         path: "company",
         element: <CompanyLayout />,
         children: [
           {
             index: true,
-            element: <h1>This is the Overview</h1>,
+            element: <Navigate to={"overview"} replace />,
           },
           {
             path: "overview",
@@ -111,7 +90,7 @@ const router = createBrowserRouter([
             element: <UserCompanyJobs />,
           },
           {
-            path: "discussion-forum",
+            path: "forum",
             element: <UserCompanyDiscussionForum />,
           },
           {
@@ -121,17 +100,69 @@ const router = createBrowserRouter([
 
           //company layout na maskonti laman navbar
           {
-            path: "company-manage-information-company",
+            path: "manage/info",
             element: <CompanyManageInformationCompany />,
           },
           {
-            path: "company-manage-information-jobs",
+            path: "manage/jobs",
             element: <CompanyManageInformationJobs />,
           },
         ],
       },
 
-      // CV Peer Review
+      // CV Guide
+      {
+        path: "cv-guide",
+        element: <CVGuidePage />,
+      },
+
+      // Interview Guide
+      {
+        path: "interview-guide",
+        element: <InterviewGuidePage />,
+      },
+
+      // Profile Management
+      {
+        path: "profile",
+        element: <ProfileManagement />,
+      },
+
+      // Tokens
+      {
+        path: "tokens",
+        element: <AdminGenerateTokenPage />,
+      },
+      {
+        path: "tokens/companies",
+        element: <AdminCompanyAccount />,
+      },
+
+      // Reports
+      {
+        path: "reports",
+        element: <ReportsLayout />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={"discussion"} replace />,
+          },
+          {
+            path: "discussion",
+            element: <ReportsDiscussion />,
+          },
+          {
+            path: "reviews",
+            element: <ReportsReviews />,
+          },
+          {
+            path: "interview-tips",
+            element: <ReportsInterviewTips />,
+          },
+        ],
+      },
+
+      // CV Review
       {
         path: "cv-review",
         element: <CVLayout />,
@@ -167,55 +198,17 @@ const router = createBrowserRouter([
         ],
       },
 
-      /**
-       * Admin Routes
-       */
-
-      // Reports
+      // Notifications
       {
-        path: "reports",
-        element: <ReportsLayout />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to={"discussion"} replace />,
-          },
-          {
-            path: "discussion",
-            element: <ReportsDiscussion />,
-          },
-          {
-            path: "reviews",
-            element: <ReportsReviews />,
-          },
-          {
-            path: "interview-tips",
-            element: <ReportsInterviewTips />,
-          },
-        ],
-      },
-
-      // Announcements
-      {
-        path: "announcements",
-        element: <AdminViewAnnouncements />,
-      },
-      {
-        path: "announcements/create",
-        element: <AdminCreateAnnouncement />,
-      },
-
-      // Tokens
-      {
-        path: "tokens",
-        element: <AdminGenerateTokenPage />,
-      },
-      {
-        path: "tokens/companies",
-        element: <AdminCompanyAccount />,
+        path: "/notifications",
+        element: <CompanyNotification />,
       },
     ],
   },
+
+  /**
+   * AUTH GROUP
+   */
   {
     element: <AuthLayout />,
     children: [

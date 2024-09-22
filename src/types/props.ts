@@ -1,4 +1,4 @@
-import React from "react";
+import { CSSProperties } from "react";
 
 export type ButtonProps = {
   children: React.ReactNode;
@@ -111,4 +111,9 @@ export interface SortButtonProps {
   onSort: (sortOption: string) => void;
 }
 
-
+export interface AdminCreatennouncementItemProps {
+  classNames?: string;
+  style?: CSSProperties;
+  subject: string;
+  details: string;
+}

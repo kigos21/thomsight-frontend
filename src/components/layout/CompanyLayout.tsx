@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
-import NavbarCompany from "../ui/auth/NavbarCompany";
-import CompanyDetails from "../ui/auth/CompanyDetails";
+import NavbarCompany from "../ui/NavbarCompany";
+import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
 import PaddedContainer from "./PaddedContainer";
 

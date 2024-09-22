@@ -1,6 +1,6 @@
 import styles from "./CVReviewed.module.scss";
 
-import CVCard from "../../components/ui/CVCard";
+import CVCard from "../../components/ui/cv/CVCard";
 
 const CVReviewed = () => {
   return (
