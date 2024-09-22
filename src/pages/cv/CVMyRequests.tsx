@@ -1,6 +1,6 @@
 import styles from "./CVMyRequests.module.scss";
 
-import CVCard from "../../components/ui/CVCard";
+import CVCard from "../../components/ui/cv/CVCard";
 
 const CVMyRequests = () => {
   return (

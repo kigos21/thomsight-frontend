@@ -11,6 +11,7 @@ const FormField: React.FC<FormFieldProps> = ({
   extraProps,
   classNames,
   editIcon,
+  onChange,
 }) => (
   <div className={styles.formGroup}>
     {icon && icon}
@@ -28,6 +29,7 @@ const FormField: React.FC<FormFieldProps> = ({
         required={required}
         value={value}
         className={`${styles.formField} ${classNames}`}
+        onChange={onChange}
         {...extraProps}
       />
     )}

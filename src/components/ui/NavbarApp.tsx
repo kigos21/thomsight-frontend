@@ -5,6 +5,7 @@ import PaddedContainer from "../layout/PaddedContainer";
 import { IconUser, IconMenu2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useUserData } from "../../api/userData";
 
 interface NavbarAppProps {
   links: JSX.Element[];
@@ -12,13 +13,23 @@ interface NavbarAppProps {
 
 export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
+  const { user, loading } = useUserData();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <PaddedContainer classNames={styles.rootContainer}>
       <nav className={styles.container}>
         <div className={styles.brand}>
           <img className={styles.brandImage} src={logo} alt="Thomsight logo" />
-          <h2 className={styles.brandText}>Thomsight</h2>
+          <div className={styles.brandTextContainer}>
+            <h2 className={styles.brandText}>Thomsight</h2>
+            <p className={styles.brandTextCics}>
+              College of Information and Computing Sciences
+            </p>
+          </div>
         </div>
 
         <ul className={styles.navList}>
@@ -52,7 +63,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
 
         {/* Profile button */}
         <Link to={"/"} className={styles.profileGroup}>
-          <span>User</span>
+          <span>{user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
         </Link>
       </nav>

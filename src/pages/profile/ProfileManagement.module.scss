@@ -1,0 +1,129 @@
+.paddedContainer {
+  padding: 2rem 12rem;
+
+  @media (max-width: 1200px) {
+    padding: 2rem 8rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 4rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+.styledBox {
+  background-color: var(--neutral-0);
+  text-align: center;
+  padding: 0 8rem;
+  border: 2px solid black;
+
+  @media (max-width: 1200px) {
+    padding: 0 5rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nameContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.fieldBio {
+  height: 170px;
+  border-radius: 30px;
+  resize: vertical;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.headerIcon {
+  display: block;
+  margin: auto;
+  color: black;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 1.8rem;
+  transform: translate(0%, -50%);
+}
+
+.iconTextArea {
+  position: absolute;
+  top: 18%;
+  left: 1.8rem;
+  transform: translate(0%, -50%);
+}
+
+.name {
+  font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.editIcon {
+  width: 45%;
+  color: black;
+  position: absolute;
+  transform: translateX(50%);
+
+  @media (max-width: 768px) {
+    width: 60%;
+  }
+  @media (max-width: 480px) {
+    width: 80%;
+  }
+}
+
+.title {
+  font-size: 1.75rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
+}
+
+.button {
+  height: 70px;
+  font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    height: 60px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    height: 50px;
+    font-size: 0.9rem;
+  }
+}

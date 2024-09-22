@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../ui/auth/Navbar";
+import Navbar from "../ui/Navbar";
 
 import styles from "./AuthLayout.module.scss";
 

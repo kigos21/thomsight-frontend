@@ -27,6 +27,17 @@
   text-transform: uppercase;
 }
 
+.brandTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: black;
+}
+
+.brandTextCics {
+  font-size: 0.625rem;
+}
+
 .navList {
   display: flex;
   gap: 1.5rem;
