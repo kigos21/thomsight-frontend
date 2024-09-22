@@ -1,10 +1,13 @@
 import React from 'react';
 import styles from "./ReportForm.module.scss";
+import { ReportFormProps } from '../../../types/props';
 
-const ReportForm: React.FC = () => {
+const ReportForm: React.FC<ReportFormProps> = ({ isVisible, onClose }) => {
+  if (!isVisible) return null;
+
   return (
-    <div className={styles.reportFormOverlay}>
-      <div className={styles.reportForm}>
+    <div className={styles.reportFormOverlay} onClick={onClose}>
+      <div className={styles.reportForm} onClick={(e) => e.stopPropagation()}>
         <h2 className={styles.heading}>Report Issue</h2>
         <form>
           <div className={styles.checkboxGroup}>
