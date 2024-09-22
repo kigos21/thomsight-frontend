@@ -49,8 +49,6 @@ import CompanyManageInformationJobs from "./pages/company/CompanyManageInformati
 import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
-import ReportForm from "./components/ui/company/ReportForm.tsx";
-import DeletePopUp from "./components/ui/company/DeletePopUp.tsx";
 
 const router = createBrowserRouter([
   {
@@ -94,17 +92,6 @@ const router = createBrowserRouter([
           {
             path: "forum",
             element: <UserCompanyDiscussionForum />,
-          },
-
-          // Report Pop-up
-          {
-            path: "report",
-            element: <ReportForm />,
-          },
-          // Delete Pop-up
-          {
-            path: "delete",
-            element: <DeletePopUp />,
           },
           {
             path: "interview-tips",

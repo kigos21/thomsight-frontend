@@ -26,7 +26,6 @@ export default function ReviewItem({
             <div className={styles.reviewerDetails}>
               <p className={styles.internName}>{internName}</p>
               <div className={styles.verticalDivider}></div>
-              {/* ginamit ko h2 para montsserat font */}
               <h2 className={styles.rating}>{rating}</h2>
             </div>
             <p className={styles.date}>{date}</p>
