@@ -74,10 +74,15 @@ const router = createBrowserRouter([
 
       // Company
       {
-        path: "company",
+        path: "company/:slug",
         element: <CompanyLayout />,
         children: [
+          // {
+          //   index: true,
+          //   element: <h1>This is the Overview</h1>,
+          // },
           {
+            // path: "overview",
             index: true,
             element: <Navigate to={"overview"} replace />,
           },
