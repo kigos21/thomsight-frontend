@@ -3,22 +3,31 @@ import ReviewItem from "../../components/ui/company/ReviewItem";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyOverview.module.scss";
 import Button from "../../components/ui/Button";
+import { useCompanyData } from "../../api/companyData";
 
 export default function UserCompanyOverview() {
+  const { company, loading, error } = useCompanyData();
+
+  //temporary placeholders
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!company) {
+    return <div>No company found.</div>;
+  }
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
         <div className={styles.leftcontainer}>
           <div className={styles.titleContainer}>
             <h2 className={styles.titleHeader}>Company Description</h2>
-            <p>
-              Vitae turpis massa sed elementum tempus egestas sed. Neque egestas
-              congue quisque egestas diam. Augue interdum velit euismod in
-              pellentesque massa. At in tellus integer feugiat scelerisque
-              varius morbi. Est pellentesque elit ullamcorper dignissim cras
-              tincidunt lobortis. Sed id semper risus in. Sit amet porttitor
-              eget dolor morbi non arcu risus.
-            </p>
+            <p>{company.description}</p>
           </div>
           <div className={styles.reviewContainer}>
             <div className={styles.reviewHeaderContainer}>
@@ -44,11 +53,11 @@ export default function UserCompanyOverview() {
             <div className={styles.noteContainer}>
               <div className={styles.companySize}>
                 <h5>Company Size</h5>
-                <p>10 000 Employees</p>
+                <p>{company.size}</p>
               </div>
               <div className={styles.industry}>
                 <h5>Industry</h5>
-                <p>Financial Tech</p>
+                <p>{company.industry}</p>
               </div>
             </div>
           </StyledBox>

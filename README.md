@@ -1,50 +1,52 @@
-# React + TypeScript + Vite
+<!-- ABOUT THE PROJECT -->
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About The Project
 
-Currently, two official plugins are available:
+Students at the University of Santo Tomas (UST) face challenges in securing internships and preparing for careers due to limited practical experience, lack of guidance on CVs, and an overwhelming number of opportunities. THOMSIGHT is a web application designed to help UST students overcome these obstacles by offering tailored internship searches, resume-building guides, interactive community forums, and a feedback system to ensure transparency. By providing these resources, THOMSIGHT aims to boost students’ job readiness and improve their career prospects.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Built With
 
-## Expanding the ESLint configuration
+[![React][React.js]][React-url]
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<!-- GETTING STARTED -->
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+To get a local copy up and running follow these steps.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Prerequisites
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+This is an example of how to list things you need to use the software and how to install them.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+- Node.js
+- npm
+- Git
+
+### Installation
+
+1. Clone the repo and change directory in it.
+
+   ```sh
+   git clone https://github.com/kigos21/outside-the-box.git
+   cd outside-the-box
+   ```
+
+2. Install npm packages.
+
+   ```sh
+   npm install
+   ```
+
+3. Start the development server.
+
+   ```sh
+   npm run dev
+   ```
+
+4. Go to http://localhost:5173
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/

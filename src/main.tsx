@@ -49,6 +49,7 @@ import CompanyManageInformationJobs from "./pages/company/CompanyManageInformati
 import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
+import LoginExternalPage from "./pages/auth/LoginExternalPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -74,10 +75,15 @@ const router = createBrowserRouter([
 
       // Company
       {
-        path: "company",
+        path: "company/:slug",
         element: <CompanyLayout />,
         children: [
+          // {
+          //   index: true,
+          //   element: <h1>This is the Overview</h1>,
+          // },
           {
+            // path: "overview",
             index: true,
             element: <Navigate to={"overview"} replace />,
           },
@@ -211,6 +217,7 @@ const router = createBrowserRouter([
    */
   {
     element: <AuthLayout />,
+    errorElement: <ErrorPage />,
     children: [
       /**
        * Route group for Register
@@ -249,6 +256,10 @@ const router = createBrowserRouter([
       {
         path: "/login/student",
         element: <LoginStudentPage />,
+      },
+      {
+        path: "/login/external",
+        element: <LoginExternalPage />,
       },
 
       /**

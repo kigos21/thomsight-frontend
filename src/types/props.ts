@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties, ChangeEvent } from "react";
 
 export type ButtonProps = {
   children: React.ReactNode;
@@ -7,6 +7,8 @@ export type ButtonProps = {
 
   classNames?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
+  type?: string;
 };
 
 export type ButtonReviewProps = {
@@ -77,6 +79,7 @@ export type FormFieldProps = {
   required: true | false;
   value?: string;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type TokenFormFieldProps = {
@@ -115,7 +118,7 @@ export interface AdminCreatennouncementItemProps {
   classNames?: string;
   style?: CSSProperties;
   subject: string;
-  details: string;
+  detail: string;
 }
 
 export interface DeletePopUpProps {
@@ -127,3 +130,37 @@ export interface ReportFormProps {
   isVisible: boolean;
   onClose: () => void;
 }
+export type User = {
+  id: number;
+  email: string;
+  name: string;
+  email_verified_at?: string;
+  role: UserRole;
+  profile_info?: string;
+  status: UserStatus;
+};
+
+export enum UserRole {
+  ADMIN = "Admin",
+  STUDENT = "Student",
+  REP = "Rep",
+  ALUMNI = "Alumni",
+}
+
+export enum UserStatus {
+  EXISTING = "Existing",
+  DEACTIVATED = "Deactivated",
+}
+
+export type Company = {
+  id: number;
+  name: string;
+  posted_by: number;
+  description: string;
+  industry: string;
+  size: string;
+  email: string;
+  slug: string;
+  locations?: Location[];
+  jobs?: Job[];
+};
