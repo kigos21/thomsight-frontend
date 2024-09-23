@@ -5,7 +5,7 @@ import FormField from "../../components/form/FormField";
 import { IconLock, IconMail } from "@tabler/icons-react";
 import googleIcon from "../../assets/google-logo.png";
 import { handleGoogleLogin } from "../../api/googleLogin";
-import { login, logout } from "../../api/authUser";
+import { login } from "../../api/authUser";
 
 import styles from "./LoginStudentPage.module.scss";
 
