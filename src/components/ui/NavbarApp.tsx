@@ -15,10 +15,6 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
   const { user, loading } = useUserData();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <PaddedContainer classNames={styles.rootContainer}>
       <nav className={styles.container}>
@@ -63,7 +59,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
 
         {/* Profile button */}
         <Link to={"/"} className={styles.profileGroup}>
-          <span>{user ? user.name : "User"}</span>
+          <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
         </Link>
       </nav>
