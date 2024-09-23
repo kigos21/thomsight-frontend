@@ -30,6 +30,7 @@ export default function LoginStudentPage() {
       });
 
       console.log("Login successful", response.data);
+      window.location.href = "http://localhost:5173/";
     } catch (err) {
       setError("Invalid credentials or server error");
       console.error("Login failed", err);
@@ -53,7 +54,7 @@ export default function LoginStudentPage() {
       <div className={styles.container}>
         <h1>Login with your Account</h1>
         <div className={styles.formContainer}>
-          <form className={styles.form} onSubmit={handleLogout}>
+          <form className={styles.form} onSubmit={handleLogin}>
             {error && <div className={styles.error}>{error}</div>}
             <FormField
               icon={<IconMail size={35} stroke={1.5} className={styles.icon} />}

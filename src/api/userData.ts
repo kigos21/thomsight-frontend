@@ -2,13 +2,15 @@ import axios from "axios";
 import { User } from "../types/props";
 import { useState, useEffect } from "react";
 
-const BASE_URL = "http://127.0.0.1:8000/api";
+const BASE_URL = "http://localhost:8000/api";
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
-export const fetchUserData = async (): Promise<User | null> => {
+export const fetchUserData = async () => {
   try {
-    const response = await axios.get<User>(`${BASE_URL}/user`, {
-      withCredentials: true,
-    });
+    await axios.get("http://localhost:8000/sanctum/csrf-cookie");
+
+    const response = await axios.get(`${BASE_URL}/profile`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);
