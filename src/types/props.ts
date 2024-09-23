@@ -121,6 +121,15 @@ export interface AdminCreatennouncementItemProps {
   detail: string;
 }
 
+export interface DeletePopUpProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface ReportFormProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
 export type User = {
   id: number;
   email: string;

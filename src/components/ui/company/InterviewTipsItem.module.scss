@@ -57,10 +57,43 @@
   .container {
     border-radius: 1rem;
   }
+
+  .tipsDetailsContainer {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tipsSubjectContainer {
+    width: 100%;
+  }
+
+  .jobDescription {
+    width: 100%;
+    font-size: 0.875rem;
+    font-weight: 400;
+    padding: 0rem 0rem 0.5rem 0rem;
+  }
+
+  .iconContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
 }
 
 @media screen and (max-width: 480px) {
   .container {
     border-radius: 0.75rem;
+  }
+
+  .subjectHeading,
+  .internName {
+    font-size: 0.75rem;
+  }
+
+  .iconContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
 }
