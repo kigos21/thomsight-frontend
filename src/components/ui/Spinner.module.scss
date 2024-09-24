@@ -27,6 +27,17 @@ body {
   z-index: 999; // Ensure it appears above other elements
 }
 
+.spinnerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white; // White background for the spinner container
+  border: 2px solid black; // Border color
+  border-radius: 10px; // Rounded corners
+  padding: 20px; // Padding around the spinner and message
+}
+
 .spinner {
   border: 8px solid rgba(255, 255, 255, 0.3);
   border-top: 8px solid #3498db; // Change color as needed
@@ -34,6 +45,12 @@ body {
   width: 60px; // Size of the spinner
   height: 60px; // Size of the spinner
   animation: spin 1s linear infinite;
+}
+
+.message {
+  color: black; // Change the color as needed
+  margin-top: 10px; // Space between spinner and message
+  font-size: 20px; // Adjust font size as needed
 }
 
 @keyframes spin {

@@ -6,6 +6,7 @@ import { IconLock, IconMail } from "@tabler/icons-react";
 import googleIcon from "../../assets/google-logo.png";
 import { handleGoogleLogin } from "../../api/googleLogin";
 import { login } from "../../api/authUser";
+import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
 
@@ -13,17 +14,21 @@ export default function LoginStudentPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       await login(email, password);
       window.location.href = "http://localhost:5173/";
     } catch (err) {
-      setError("Invalid credentials or server error");
+      setError("Invalid credentials");
       console.error("Login failed", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,11 +56,13 @@ export default function LoginStudentPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <a href="/forgot-password">Forgot Password?</a>
+            {loading && <Spinner message="Please wait while we log you in!" />}
             <Button
               color="primary"
               roundness="rounded"
               classNames={styles.button}
               type="submit"
+              disabled={loading}
             >
               Login
             </Button>

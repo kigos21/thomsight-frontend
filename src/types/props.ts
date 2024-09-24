@@ -9,6 +9,7 @@ export type ButtonProps = {
   style?: React.CSSProperties;
   onClick?: () => void;
   type?: string;
+  disabled?: boolean;
 };
 
 export type ButtonReviewProps = {

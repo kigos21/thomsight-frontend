@@ -3,13 +3,14 @@ import styles from "./CompanyDetails.module.scss";
 import logo from "../../../assets/thomsight-logo.svg";
 import PaddedContainer from "../../layout/PaddedContainer";
 import { useCompanyData } from "../../../api/companyData.ts";
+import Spinner from "../Spinner.tsx";
 
 export default function CompanyDetails() {
   const { company, loading, error } = useCompanyData();
 
   //temporary placeholders
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner message="Please wait while we render relevant data!" />;
   }
 
   if (error) {

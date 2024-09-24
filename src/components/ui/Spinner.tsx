@@ -1,11 +1,17 @@
 import React from "react";
 import styles from "./Spinner.module.scss";
 
-const Spinner: React.FC = () => {
+interface SpinnerProps {
+  message?: string;
+}
+
+const Spinner: React.FC<SpinnerProps> = ({ message }) => {
   return (
     <div className={styles.spinnerContainer}>
-      <div className={styles.spinner}></div>
-      <p>Loading...</p>
+      <div className={styles.spinnerBox}>
+        <div className={styles.spinner}></div>
+        {message && <div className={styles.message}>{message}</div>}
+      </div>
     </div>
   );
 };
