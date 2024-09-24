@@ -1,9 +1,30 @@
+/* Spinner.module.scss */
+html,
+body {
+  margin: 0; // Remove default margin from the body
+  padding: 0; // Remove default padding from the body
+  height: 100%; // Ensure the body takes full height
+}
+
 .spinnerContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh; // Full height of the viewport
+  width: 100vw; // Full width of the viewport
+  margin: 0; // Remove margins
+  padding: 0; // Remove padding
+  position: fixed; // Make sure it stays in place
+  top: 0; // Align to the top
+  left: 0; // Align to the left
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); // Optional: Add a semi-transparent background
+  z-index: 999; // Ensure it appears above other elements
 }
 
 .spinner {

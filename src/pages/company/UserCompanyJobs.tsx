@@ -2,13 +2,14 @@ import PaddedContainer from "../../components/layout/PaddedContainer";
 import JobItem from "../../components/ui/company/JobItem";
 import styles from "./UserCompanyJobs.module.scss";
 import { useCompanyData } from "../../api/companyData";
+import Spinner from "../../components/ui/Spinner";
 
 export default function UserCompanyJobs() {
   const { company, loading, error } = useCompanyData();
 
   //temporary placeholders
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (error) {
