@@ -1,3 +1,4 @@
+import MultiSelect from "../../components/form/MultiSelect";
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import HomeCompanyItem from "../../components/ui/home/HomeCompanyItem";
 import { HomeCompanyItemProps } from "../../types/props";
@@ -66,6 +67,20 @@ const companyData: HomeCompanyItemProps[] = [
 export default function UserHomePage() {
   return (
     <PaddedContainer classNames={styles.container}>
+      <div className={styles.filterSection}>
+        <input
+          type="text"
+          placeholder="Keywords, Company"
+          className={styles.searchBox}
+        />
+        <MultiSelect
+          options={[
+            { label: "Option 1", value: "option1" },
+            { label: "Option 2", value: "option2" },
+          ]}
+        />
+      </div>
+
       <h1 className={styles.h1}>Companies</h1>
 
       <div className={styles.itemContainer}>

@@ -13,6 +13,17 @@
   gap: 1rem;
 }
 
+.filterSection {
+  display: flex;
+  margin: 0 auto;
+  max-width: 768px;
+  flex-direction: row;
+}
+
+.searchBox {
+  padding: 10px 20px;
+}
+
 @media screen and (max-width: 1024px) {
   .itemContainer {
     display: grid;
