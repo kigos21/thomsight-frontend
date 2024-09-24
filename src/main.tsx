@@ -49,11 +49,17 @@ import CompanyManageInformationJobs from "./pages/company/CompanyManageInformati
 import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
+import { UserProvider } from "./contexts/UserContext.tsx";
+import PrivateRoute from "./contexts/PrivateRoute.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: (
+      <UserProvider>
+        <AppLayout />
+      </UserProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       // Home
@@ -65,11 +71,21 @@ const router = createBrowserRouter([
       // Announcements
       {
         path: "announcements",
-        element: <AdminViewAnnouncements />,
+        element: (
+          <PrivateRoute
+            element={<AdminViewAnnouncements />}
+            allowedRoles={["Admin"]}
+          />
+        ),
       },
       {
         path: "announcements/create",
-        element: <AdminCreateAnnouncement />,
+        element: (
+          <PrivateRoute
+            element={<AdminCreateAnnouncement />}
+            allowedRoles={["Admin"]}
+          />
+        ),
       },
 
       // Company
@@ -106,11 +122,21 @@ const router = createBrowserRouter([
           //company layout na maskonti laman navbar
           {
             path: "manage/info",
-            element: <CompanyManageInformationCompany />,
+            element: (
+              <PrivateRoute
+                element={<CompanyManageInformationCompany />}
+                allowedRoles={["Rep"]}
+              />
+            ),
           },
           {
             path: "manage/jobs",
-            element: <CompanyManageInformationJobs />,
+            element: (
+              <PrivateRoute
+                element={<CompanyManageInformationJobs />}
+                allowedRoles={["Rep"]}
+              />
+            ),
           },
         ],
       },
@@ -136,17 +162,29 @@ const router = createBrowserRouter([
       // Tokens
       {
         path: "tokens",
-        element: <AdminGenerateTokenPage />,
+        element: (
+          <PrivateRoute
+            element={<AdminGenerateTokenPage />}
+            allowedRoles={["Admin"]}
+          />
+        ),
       },
       {
         path: "tokens/companies",
-        element: <AdminCompanyAccount />,
+        element: (
+          <PrivateRoute
+            element={<AdminCompanyAccount />}
+            allowedRoles={["Admin"]}
+          />
+        ),
       },
 
       // Reports
       {
         path: "reports",
-        element: <ReportsLayout />,
+        element: (
+          <PrivateRoute element={<ReportsLayout />} allowedRoles={["Admin"]} />
+        ),
         children: [
           {
             index: true,

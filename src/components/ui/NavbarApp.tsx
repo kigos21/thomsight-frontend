@@ -5,7 +5,7 @@ import PaddedContainer from "../layout/PaddedContainer";
 import { IconUser, IconMenu2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useUserData } from "../../api/userData";
+import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
 
 interface NavbarAppProps {
@@ -14,7 +14,7 @@ interface NavbarAppProps {
 
 export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
-  const { user, loading } = useUserData();
+  const { user, loading } = useUser();
 
   const handleProfileClick = async () => {
     try {
