@@ -1,14 +1,14 @@
-// .paddedContainer {
-//   padding: 1rem 2.875rem;
+.paddedContainer {
+  padding: 1rem 2.875rem;
 
-//   @media (max-width: 768px) {
-//     padding: 1rem 1.5rem;
-//   }
+  @media (max-width: 768px) {
+    padding: 1rem 1rem;
+  }
 
-//   @media (max-width: 480px) {
-//     padding: 1rem;
-//   }
-// }
+  @media (max-width: 480px) {
+    padding: 1rem 0.5rem;
+  }
+}
 
 .container {
   display: flex;

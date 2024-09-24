@@ -29,3 +29,14 @@
     margin: 0;
   }
   
+  @media screen and (max-width: 768px) {
+    .tokenItem {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .token, .expiration, .tokenformfield {
+      width: 100%;
+    }
+  }

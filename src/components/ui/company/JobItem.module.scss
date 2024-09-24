@@ -50,3 +50,42 @@
     border-radius: 0.75rem;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    border-radius: 1rem;
+  }
+
+  .jobDetailsContainer {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .jobDescription {
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .jobSubjectContainer {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    border-radius: 0.75rem;
+  }
+
+  .jobDetailsContainer {
+    flex-direction: column;
+  }
+
+  .jobDescription {
+    padding: 1rem 0;
+    width: 100%;
+  }
+
+  .jobSubjectContainer {
+    width: 100%;
+  }
+}
