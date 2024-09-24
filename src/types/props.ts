@@ -164,3 +164,11 @@ export type Company = {
   locations?: Location[];
   jobs?: Job[];
 };
+
+export type HomeCompanyItemProps = {
+  imgSrc?: string;
+  name: string;
+  location?: string;
+  jobs?: string[];
+  about: string;
+};

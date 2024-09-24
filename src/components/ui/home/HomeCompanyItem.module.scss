@@ -1,0 +1,72 @@
+.container {
+  background-color: var(--neutral-0);
+  border-radius: 1.875rem;
+  height: 190px;
+  overflow: visible;
+}
+
+.paddedContainer {
+  padding: 1.5625rem;
+
+  display: flex;
+  gap: 1.5625rem;
+}
+
+.companyImage {
+  display: flex;
+  width: 140px;
+  height: 140px;
+  flex: 0 0 auto;
+  background-color: var(--primary-color);
+  border-radius: 1.25rem;
+
+  padding: 1rem;
+  font-size: 0.7rem;
+}
+
+.coreInfoSection {
+  flex: 7;
+}
+
+.about {
+  flex: 5;
+  font-size: 0.75rem;
+  line-height: 1.5;
+
+  max-height: 140px;
+  overflow: hidden;
+}
+
+.companyName {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.location {
+  font-size: 0.875rem;
+  margin-bottom: 0.625rem;
+}
+
+.jobsSection {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  height: 4rem;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    height: auto;
+    overflow: visible;
+  }
+
+  .paddedContainer {
+    flex-direction: column;
+  }
+
+  .jobsSection {
+    gap: 0.25rem;
+    height: auto;
+  }
+}
