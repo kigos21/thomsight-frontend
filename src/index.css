@@ -157,6 +157,7 @@ input[type="checkbox"] {
 /* para wala yung button sa form na for numbers up and down */
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
