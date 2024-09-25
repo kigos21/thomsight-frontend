@@ -1,9 +1,93 @@
 .container {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.title {
-  font-weight: bold;
-  padding: 0 0 1.2rem 0;
+.sectionHeading {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.locationGrid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.headingEditButton {
+  display: flex;
+  align-items: center;
+}
+
+.addLocationButton {
+  background-color: var(--secondary-color);
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  color: var(--white);
+  font-size: 0.8rem;
+
+  padding: 0.5rem 1rem;
+  padding-left: 0.75rem;
+  border-radius: 99px;
+
+  p {
+    line-height: 0.8;
+  }
+}
+
+.locationItem {
+  background-color: var(--neutral-1);
+  padding: 1.75rem;
+  padding-right: 2.25rem;
+
+  border-radius: 0.5rem;
+
+  position: relative;
+
+  &:hover .editButton,
+  &:hover .deleteButton {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .editButton {
+    position: absolute;
+    bottom: 50%;
+    right: 0.5rem;
+
+    transition: none;
+
+    opacity: 50%;
+
+    &:hover {
+      color: var(--blue-6);
+    }
+  }
+
+  .deleteButton {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+
+    transition: none;
+
+    opacity: 50%;
+
+    &:hover {
+      color: var(--blue-6);
+    }
+  }
+}
+
+/* Medium screens (2 columns) */
+@media (max-width: 768px) {
+  .locationGrid {
+    grid-template-columns: 1fr;
+  }
 }
