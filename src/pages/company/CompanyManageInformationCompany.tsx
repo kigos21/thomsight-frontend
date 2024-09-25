@@ -6,12 +6,14 @@ import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import ErrorPage from "../ErrorPage";
 import Spinner from "../../components/ui/Spinner";
-import axiosInstance from "../../services/axiosInstance";
+import { useUser } from "../../contexts/UserContext";
+import { updateCompanyInfo } from "../../api/companyCRUD";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug, loading, error } = useCompanies();
   const company = getCompanyBySlug(slug as string);
+  const { user } = useUser();
 
   // DATA FOR DESCRIPTION
   const [description, setDescription] = useState<string>("");
@@ -26,7 +28,6 @@ export default function CompanyManageInformationCompany() {
   const [industry, setIndustry] = useState<string>("");
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
 
-  // Update loading state
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   useEffect(() => {
@@ -41,25 +42,28 @@ export default function CompanyManageInformationCompany() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   if (!company) return <div></div>;
+  if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
+    return <ErrorPage />;
+  }
 
   const handleSaveUpdates = async () => {
-    setIsUpdating(true); // Start update spinner
+    setIsUpdating(true);
     try {
+      if (!slug) {
+        throw new Error("Slug is undefined");
+      }
+
       const updatedData = {
         description,
         industry,
         size,
       };
 
-      const response = await axiosInstance.put(
-        `/api/company/${slug}/edit`,
-        updatedData
-      );
-      console.log(response);
+      await updateCompanyInfo(slug, updatedData);
     } catch (error) {
       console.error("Error updating company data:", error);
     } finally {
-      setIsUpdating(false); // Stop update spinner
+      setIsUpdating(false);
       setIsEditDesc(false);
       setIsEditCompanySize(false);
       setIsEditIndustry(false);
@@ -70,7 +74,6 @@ export default function CompanyManageInformationCompany() {
     <div className={styles.container}>
       <h2>Company Information</h2>
       {isUpdating && <Spinner message="Updating..." />}{" "}
-      {/* Show spinner when updating */}
       {/* COMPANY DESCRIPTION */}
       <div>
         <div className={styles.sectionHeading}>

@@ -2,7 +2,6 @@ import styles from "./CompanyDetails.module.scss";
 
 import logo from "../../../assets/thomsight-logo.svg";
 import PaddedContainer from "../../layout/PaddedContainer";
-import Spinner from "../Spinner.tsx";
 import { useCompanies } from "../../../contexts/CompaniesContext.tsx";
 import { useParams } from "react-router-dom";
 
