@@ -1,15 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Company } from "../types/types";
-
-const BASE_URL = "http://127.0.0.1:8000/api";
+import axiosInstance from "../services/axiosInstance";
 
 export const fetchCompanyData = async (
   slug: string
 ): Promise<Company | null> => {
   try {
-    const response = await axios.get<Company>(`${BASE_URL}/company/${slug}`);
+    const response = await axiosInstance.get<Company>(`/api/company/${slug}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching company data:", error);
@@ -25,9 +23,11 @@ export const useCompanyData = () => {
 
   useEffect(() => {
     const getCompanyData = async () => {
+      setLoading(true);
       if (slug) {
         try {
           const data = await fetchCompanyData(slug);
+          console.log(data);
           setCompany(data);
           setLoading(false);
         } catch (error) {
@@ -42,4 +42,14 @@ export const useCompanyData = () => {
   }, [slug]);
 
   return { company, loading, error };
+};
+
+export const fetchCompanies = async (): Promise<Company[] | null> => {
+  try {
+    const response = await axiosInstance.get<Company[]>("/api/companies");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching company list:", error);
+    return null;
+  }
 };

@@ -32,3 +32,16 @@ export type Company = {
   locations?: Location[];
   jobs?: Job[];
 };
+
+export type Location = {
+  id: number;
+  company_id: number;
+  address: string;
+};
+
+export type Job = {
+  id: number;
+  company_id: number;
+  title: string;
+  description: string;
+};

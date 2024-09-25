@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
+import Spinner from "./Spinner";
 
 interface NavbarAppProps {
   links: JSX.Element[];
@@ -27,6 +28,9 @@ export default function NavbarApp({ links }: NavbarAppProps) {
 
   return (
     <PaddedContainer classNames={styles.rootContainer}>
+      {loading && (
+        <Spinner message="Please wait while we render relevant data!" />
+      )}
       <nav className={styles.container}>
         <div className={styles.brand}>
           <img className={styles.brandImage} src={logo} alt="Thomsight logo" />
@@ -49,9 +53,8 @@ export default function NavbarApp({ links }: NavbarAppProps) {
           className={`${styles.mobileNavContainer} ${displayNav && styles.block}`}
         >
           <ul className={styles.mobileNavList}>
-            {links.map((link, i) => (
-              <li key={i}>{link}</li>
-            ))}
+            {links.length > 0 &&
+              links.map((link, i) => <li key={i}>{link}</li>)}
             <li>
               <Link to={"/"}>Profile</Link>
             </li>

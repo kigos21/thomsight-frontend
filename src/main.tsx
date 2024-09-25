@@ -52,13 +52,16 @@ import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
 import LoginExternalPage from "./pages/auth/LoginExternalPage.tsx";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import PrivateRoute from "./contexts/PrivateRoute.tsx";
+import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <UserProvider>
-        <AppLayout />
+        <CompaniesProvider>
+          <AppLayout />
+        </CompaniesProvider>
       </UserProvider>
     ),
     errorElement: <ErrorPage />,

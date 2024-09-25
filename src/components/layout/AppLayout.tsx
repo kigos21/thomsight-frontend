@@ -44,7 +44,6 @@ export default function AppRoot() {
       break;
 
     case "Admin":
-    default: // Default case for admin or if no role matches
       links = [
         <Link to="/" key="homeAdmin">
           Home
@@ -63,6 +62,13 @@ export default function AppRoot() {
         </Link>,
       ];
       break;
+
+    default: // Default case for admin or if no role matches
+      links = [
+        <Link to="/" key="homeAdmin">
+          Home
+        </Link>,
+      ];
   }
 
   // if (isStudent) {
