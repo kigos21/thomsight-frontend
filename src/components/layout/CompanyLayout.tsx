@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import NavbarCompany from "../ui/NavbarCompany";
 import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
@@ -7,12 +7,22 @@ import { useParams } from "react-router-dom";
 
 export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
 
   const basePath = slug ? `/company/${slug}` : "/company";
+  const isManagePath = location.pathname.includes("manage");
 
   let elements: React.ReactNode[];
-
-  if (true) {
+  if (isManagePath) {
+    elements = [
+      <Link to={`manage/info`} key="overviewmanageinfoCompany">
+        Overview
+      </Link>,
+      <Link to={`manage/jobs`} key="jobinfomanageinfoCompany">
+        Job Info
+      </Link>,
+    ];
+  } else {
     elements = [
       <Link to={`${basePath}`} key="overviewCompany">
         Overview
@@ -30,46 +40,7 @@ export default function CompanyRoot() {
         Interview Tips
       </Link>,
     ];
-  } else {
-    elements = [
-      <Link to={`/manage/overview`} key="overviewmanageinfoCompany">
-        Overview
-      </Link>,
-      <Link to={`/manage/jobs`} key="jobinfomanageinfoCompany">
-        Job Info
-      </Link>,
-    ];
   }
-  // let elements: React.ReactNode[];
-
-  // if (true) {
-  //   elements = [
-  //     <Link to="/company" key="overviewCompany">
-  //       Overview
-  //     </Link>,
-  //     <Link to="/company#reviews" key="reviewCompany">
-  //       Review
-  //     </Link>,
-  //     <Link to="/company/jobs" key="jobsCompany">
-  //       Jobs
-  //     </Link>,
-  //     <Link to="/company/forum" key="discussionforumCompany">
-  //       Discussion&nbsp;Forum
-  //     </Link>,
-  //     <Link to="/company/interview-tips" key="interviewtipsCompany">
-  //       Interview&nbsp;Tips
-  //     </Link>,
-  //   ];
-  // } else if (false) {
-  //   elements = [
-  //     <Link to="/manage/overview" key="overviewmanageinfoCompany">
-  //       Overview
-  //     </Link>,
-  //     <Link to="/manage/jobs" key="jobinfomanageinfoCompany">
-  //       Job&nbsp;Info
-  //     </Link>,
-  //   ];
-  // }
   return (
     <div className={styles.container}>
       <CompanyDetails />
