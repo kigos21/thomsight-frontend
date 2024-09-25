@@ -3,9 +3,11 @@ import styles from "./AppLayout.module.scss";
 import { Link, Outlet } from "react-router-dom";
 import NavbarApp from "../ui/NavbarApp";
 import { useUser } from "../../contexts/UserContext";
+import { useCompanies } from "../../contexts/CompaniesContext";
 
 export default function AppRoot() {
   const { user } = useUser();
+  const { companies } = useCompanies();
 
   let links: JSX.Element[];
 
@@ -24,7 +26,12 @@ export default function AppRoot() {
       ];
       break;
 
-    case "Rep":
+    case "Rep": {
+      const userCompany = companies?.find(
+        (company) => company.posted_by === user.id
+      );
+      const companySlug = userCompany ? userCompany.slug : null;
+
       links = [
         <Link to="/" key="homeCompany">
           Home
@@ -32,16 +39,20 @@ export default function AppRoot() {
         <Link to="/announcements" key="announcementsCompany">
           Announcements
         </Link>,
-        <Link to={`/company/${user.companyId}`} key="overviewCompany">
+        <Link to={`/company/${companySlug}`} key="overviewCompany">
           {" "}
           {/* Assuming companyId is part of the user object */}
           Overview
         </Link>,
-        <Link to="/manage/overview" key="manageinfoCompany">
+        <Link
+          to={`/company/${companySlug}/manage/info`}
+          key="manageinfoCompany"
+        >
           Manage Info
         </Link>,
       ];
       break;
+    }
 
     case "Admin":
       links = [

@@ -15,7 +15,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   const { user, loading } = useUser();
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <Spinner message="Please wait while we check if you are allowed here!" />
+    );
   }
 
   if (!user) {

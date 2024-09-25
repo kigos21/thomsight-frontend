@@ -1,46 +1,44 @@
 import { IconEdit } from "@tabler/icons-react";
 import styles from "./CompanyManageInformationCompany.module.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LocationManagement from "../../components/ui/company/LocationManagement";
+import { useParams } from "react-router-dom";
+import { useCompanies } from "../../contexts/CompaniesContext";
+import ErrorPage from "../ErrorPage";
+import Spinner from "../../components/ui/Spinner";
 
 export default function CompanyManageInformationCompany() {
+  const { slug } = useParams<{ slug: string }>();
+  const { getCompanyBySlug, loading, error } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
+
   // DATA FOR DESCRIPTION
-  const [description, setDescription] = useState<string>(
-    [
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-    ].join(" ")
-  );
+  const [description, setDescription] = useState<string>("");
   const [isEditDesc, setIsEditDesc] = useState<boolean>(false);
   const descRef = useRef<HTMLTextAreaElement>(null);
 
   // DATA FOR COMPANY SIZE
-  const [companySize, setCompanySize] = useState<string>("10 000+");
+  const [companySize, setCompanySize] = useState<string>("");
   const [tempCompanySize, setTempCompanySize] = useState<string>("");
   const [isEditCompanySize, setIsEditCompanySize] = useState<boolean>(false);
 
   // DATA FOR COMPANY INDUSTRY
-  const [industry, setIndustry] = useState<string>("Bank Technologies");
+  const [industry, setIndustry] = useState<string>("");
   const [tempIndustry, setTempIndustry] = useState<string>("");
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (company) {
+      setDescription(company.description || "");
+      setCompanySize(company.size || "");
+      setIndustry(company.industry || "");
+    }
+  }, [company]);
+
+  if (loading)
+    return <Spinner message="Please wait while we render relevant data!" />;
+  if (error) return <ErrorPage />;
+  if (!company) return <div></div>;
 
   return (
     <div className={styles.container}>
