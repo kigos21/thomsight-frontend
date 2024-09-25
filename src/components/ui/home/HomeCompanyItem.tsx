@@ -6,7 +6,7 @@ import JobChip from "./JobChip";
 const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   company,
 }) => {
-  const { name, jobs, description, locations } = company;
+  const { name, jobs, description, locations, image } = company;
   const trimmedJobs = jobs?.slice(0, 3);
 
   return (
@@ -14,7 +14,11 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
       classNames={styles.container}
       paddedContainerClass={styles.paddedContainer}
     >
-      <img src="" alt={"Image of " + name} className={styles.companyImage} />
+      <img
+        src={image}
+        alt={"Image of " + name}
+        className={styles.companyImage}
+      />
 
       <div className={styles.coreInfoSection}>
         <p className={styles.companyName}>{name}</p>

@@ -24,13 +24,14 @@ export type Company = {
   id: number;
   name: string;
   posted_by: number;
-  description: string;
-  industry: string;
-  size: string;
+  description?: string;
+  industry?: string;
+  size?: string;
   email: string;
   slug: string;
   locations?: Location[];
   jobs?: Job[];
+  image?: string;
 };
 
 export type Location = {
