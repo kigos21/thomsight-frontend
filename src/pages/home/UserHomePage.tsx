@@ -7,11 +7,13 @@ import { useState } from "react";
 
 import styles from "./UserHomePage.module.scss";
 import { useCompanies } from "../../contexts/CompaniesContext";
+import { useNavigate } from "react-router-dom";
 
 export default function UserHomePage() {
   const { companies, jobs, loading, error } = useCompanies();
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const jobOptions = jobs
     ? jobs.map((job) => ({ label: job.title, value: job.title }))
@@ -36,6 +38,10 @@ export default function UserHomePage() {
           company.name.toLowerCase().includes(searchQuery.toLowerCase())
         ) || [];
 
+  const handleCompanyClick = (slug: string) => {
+    navigate(`/company/${slug}`);
+  };
+
   return (
     <PaddedContainer classNames={styles.container}>
       <div className={styles.filterSection}>
@@ -58,7 +64,12 @@ export default function UserHomePage() {
       {filteredCompanies && (
         <div className={styles.itemContainer}>
           {filteredCompanies.map((company) => (
-            <HomeCompanyItem key={company.id} company={company} />
+            <div
+              key={company.id}
+              onClick={() => handleCompanyClick(company.slug)}
+            >
+              <HomeCompanyItem company={company} />
+            </div>
           ))}
         </div>
       )}

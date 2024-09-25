@@ -9,7 +9,7 @@ export default function UserCompanyJobs() {
 
   //temporary placeholders
   if (loading) {
-    return <Spinner />;
+    return <Spinner message="Please wait while we render relevant data!" />;
   }
 
   if (error) {

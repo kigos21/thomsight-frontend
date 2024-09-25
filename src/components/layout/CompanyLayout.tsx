@@ -14,10 +14,10 @@ export default function CompanyRoot() {
   if (!slug || slug.trim() === "") {
     return <ErrorPage />;
   }
-  const location = useLocation();
+  // const location = useLocation();
 
   const basePath = slug ? `/company/${slug}` : "/company";
-  const isManagePath = location.pathname.includes("manage");
+  // const isManagePath = location.pathname.includes("manage");
 
   const elements: React.ReactNode[] = [
     <Link to={`${basePath}`} key="overviewCompany">
@@ -39,10 +39,10 @@ export default function CompanyRoot() {
 
   if (user?.role === "Rep") {
     elements.push(
-      <Link to={`/manage/overview`} key="overviewmanageinfoCompany">
+      <Link to={`${basePath}/manage/info`} key="overviewmanageinfoCompany">
         Manage Overview
       </Link>,
-      <Link to={`/manage/jobs`} key="jobinfomanageinfoCompany">
+      <Link to={`${basePath}/manage/jobs`} key="jobinfomanageinfoCompany">
         Manage Jobs
       </Link>
     );
