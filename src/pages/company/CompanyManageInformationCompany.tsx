@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import ErrorPage from "../ErrorPage";
 import Spinner from "../../components/ui/Spinner";
+import axiosInstance from "../../services/axiosInstance";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
@@ -18,14 +19,15 @@ export default function CompanyManageInformationCompany() {
   const descRef = useRef<HTMLTextAreaElement>(null);
 
   // DATA FOR COMPANY SIZE
-  const [companySize, setCompanySize] = useState<string>("");
-  const [tempCompanySize, setTempCompanySize] = useState<string>("");
+  const [size, setCompanySize] = useState<string>("");
   const [isEditCompanySize, setIsEditCompanySize] = useState<boolean>(false);
 
   // DATA FOR COMPANY INDUSTRY
   const [industry, setIndustry] = useState<string>("");
-  const [tempIndustry, setTempIndustry] = useState<string>("");
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
+
+  // Update loading state
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   useEffect(() => {
     if (company) {
@@ -40,10 +42,35 @@ export default function CompanyManageInformationCompany() {
   if (error) return <ErrorPage />;
   if (!company) return <div></div>;
 
+  const handleSaveUpdates = async () => {
+    setIsUpdating(true); // Start update spinner
+    try {
+      const updatedData = {
+        description,
+        industry,
+        size,
+      };
+
+      const response = await axiosInstance.put(
+        `/api/company/${slug}/edit`,
+        updatedData
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Error updating company data:", error);
+    } finally {
+      setIsUpdating(false); // Stop update spinner
+      setIsEditDesc(false);
+      setIsEditCompanySize(false);
+      setIsEditIndustry(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h2>Company Information</h2>
-
+      {isUpdating && <Spinner message="Updating..." />}{" "}
+      {/* Show spinner when updating */}
       {/* COMPANY DESCRIPTION */}
       <div>
         <div className={styles.sectionHeading}>
@@ -59,13 +86,7 @@ export default function CompanyManageInformationCompany() {
               >
                 Cancel
               </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => {
-                  setDescription(descRef.current!.value);
-                  setIsEditDesc(false);
-                }}
-              >
+              <button className={styles.saveButton} onClick={handleSaveUpdates}>
                 Save
               </button>
             </div>
@@ -86,6 +107,8 @@ export default function CompanyManageInformationCompany() {
             rows={10}
             className={styles.textareaDesc}
             ref={descRef}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           >
             {description}
           </textarea>
@@ -94,7 +117,6 @@ export default function CompanyManageInformationCompany() {
         )}
       </div>
       {/* END OF COMPANY DESCRIPTION */}
-
       {/* COMPANY SIZE */}
       <div>
         <div className={styles.sectionHeading}>
@@ -105,29 +127,19 @@ export default function CompanyManageInformationCompany() {
               <button
                 className={styles.cancelButton}
                 onClick={() => {
-                  setTempCompanySize(companySize);
                   setIsEditCompanySize(false);
                 }}
               >
                 Cancel
               </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => {
-                  setCompanySize(tempCompanySize);
-                  setIsEditCompanySize(false);
-                }}
-              >
+              <button className={styles.saveButton} onClick={handleSaveUpdates}>
                 Save
               </button>
             </div>
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => {
-                setTempCompanySize(companySize);
-                setIsEditCompanySize(true);
-              }}
+              onClick={() => setIsEditCompanySize(true)}
             >
               <IconEdit />
             </button>
@@ -137,16 +149,15 @@ export default function CompanyManageInformationCompany() {
         {isEditCompanySize ? (
           <input
             type="text"
-            value={tempCompanySize}
-            onChange={(e) => setTempCompanySize(e.target.value)}
+            value={size}
+            onChange={(e) => setCompanySize(e.target.value)}
             className={styles.inputText}
           />
         ) : (
-          <p>{companySize}</p>
+          <p>{size}</p>
         )}
       </div>
       {/* END OF COMPANY SIZE */}
-
       {/* COMPANY INDUSTRY */}
       <div>
         <div className={styles.sectionHeading}>
@@ -157,29 +168,19 @@ export default function CompanyManageInformationCompany() {
               <button
                 className={styles.cancelButton}
                 onClick={() => {
-                  setTempIndustry(industry);
                   setIsEditIndustry(false);
                 }}
               >
                 Cancel
               </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => {
-                  setIndustry(tempIndustry);
-                  setIsEditIndustry(false);
-                }}
-              >
+              <button className={styles.saveButton} onClick={handleSaveUpdates}>
                 Save
               </button>
             </div>
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => {
-                setTempIndustry(industry);
-                setIsEditIndustry(true);
-              }}
+              onClick={() => setIsEditIndustry(true)}
             >
               <IconEdit />
             </button>
@@ -189,8 +190,8 @@ export default function CompanyManageInformationCompany() {
         {isEditIndustry ? (
           <input
             type="text"
-            value={tempIndustry}
-            onChange={(e) => setTempIndustry(e.target.value)}
+            value={industry}
+            onChange={(e) => setIndustry(e.target.value)}
             className={styles.inputText}
           />
         ) : (
@@ -198,7 +199,6 @@ export default function CompanyManageInformationCompany() {
         )}
       </div>
       {/* END OF COMPANY INDUSTRY */}
-
       {/* LOCATIONS */}
       <LocationManagement />
       {/* END OF LOCATIONS */}

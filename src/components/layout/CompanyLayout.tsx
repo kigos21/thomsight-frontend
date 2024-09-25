@@ -6,18 +6,25 @@ import PaddedContainer from "./PaddedContainer";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import ErrorPage from "../../pages/ErrorPage";
+import { useCompanies } from "../../contexts/CompaniesContext";
+import Spinner from "../ui/Spinner";
 
 export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
   const { user } = useUser();
+  const { loading, error, getCompanyBySlug } = useCompanies();
 
-  if (!slug || slug.trim() === "") {
+  if (loading) {
+    return <Spinner message="Please wait while we render relevant data!" />;
+  }
+
+  if (!slug || slug.trim() === "" || error) {
     return <ErrorPage />;
   }
-  // const location = useLocation();
+
+  const company = getCompanyBySlug(slug || "");
 
   const basePath = slug ? `/company/${slug}` : "/company";
-  // const isManagePath = location.pathname.includes("manage");
 
   const elements: React.ReactNode[] = [
     <Link to={`${basePath}`} key="overviewCompany">
@@ -37,7 +44,7 @@ export default function CompanyRoot() {
     </Link>,
   ];
 
-  if (user?.role === "Rep") {
+  if (user?.role === "Rep" && company?.posted_by === user?.id) {
     elements.push(
       <Link to={`${basePath}/manage/info`} key="overviewmanageinfoCompany">
         Manage Overview
