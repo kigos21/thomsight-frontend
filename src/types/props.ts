@@ -134,10 +134,5 @@ export interface ReportFormProps {
 }
 
 export type HomeCompanyItemProps = {
-  // imgSrc?: string;
-  // name: string;
-  // location?: string;
-  // jobs?: string[];
-  // about: string;
   company: Company;
 };

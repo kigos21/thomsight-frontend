@@ -3,49 +3,16 @@ import ReviewItem from "../../components/ui/company/ReviewItem";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyOverview.module.scss";
 import Button from "../../components/ui/Button";
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Company } from "../../types/types";
-import Spinner from "../../components/ui/Spinner";
-import { fetchCompanyData } from "../../api/companyData";
+import { useCompanies } from "../../contexts/CompaniesContext";
 
 export default function UserCompanyOverview() {
   const { slug } = useParams<{ slug: string }>();
-  const [company, setCompany] = useState<Company | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getCompanyData = async () => {
-      setLoading(true);
-      if (slug) {
-        try {
-          const data = await fetchCompanyData(slug);
-          console.log(data);
-          setCompany(data);
-          setLoading(false);
-        } catch (error) {
-          console.error("Error fetching company data:", error);
-          setError("Failed to fetch company data.");
-          setLoading(false);
-        }
-      }
-    };
-
-    getCompanyData();
-  }, [slug]);
-
-  //temporary placeholders
-  if (loading) {
-    return <Spinner message="Please wait while we render relevant data!" />;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const { getCompanyBySlug } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
 
   if (!company) {
-    return <div>No company found.</div>;
+    return <div></div>;
   }
 
   return (

@@ -5,10 +5,15 @@ import styles from "./CompanyLayout.module.scss";
 import PaddedContainer from "./PaddedContainer";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
+import ErrorPage from "../../pages/ErrorPage";
 
 export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
   const { user } = useUser();
+
+  if (!slug || slug.trim() === "") {
+    return <ErrorPage />;
+  }
 
   const basePath = slug ? `/company/${slug}` : "/company";
 

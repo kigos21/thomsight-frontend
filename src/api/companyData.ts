@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Company } from "../types/types";
+import { Company, Job } from "../types/types";
 import axiosInstance from "../services/axiosInstance";
 
 export const fetchCompanyData = async (
@@ -50,6 +50,16 @@ export const fetchCompanies = async (): Promise<Company[] | null> => {
     return response.data;
   } catch (error) {
     console.error("Error fetching company list:", error);
+    return null;
+  }
+};
+
+export const fetchJobs = async (): Promise<Job[] | null> => {
+  try {
+    const response = await axiosInstance.get<Job[]>("/api/jobs");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
     return null;
   }
 };
