@@ -1,0 +1,33 @@
+.selectWindow {
+  position: absolute;
+  top: 110%;
+  width: 100%;
+
+  padding: 1.125rem 1.5rem;
+
+  border: 1px solid var(--muted-black);
+  background: #fefefe;
+  box-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  border-radius: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.selectWindow label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.iconFilter {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 1.5rem;
+}
