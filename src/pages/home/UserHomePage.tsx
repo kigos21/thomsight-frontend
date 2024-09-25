@@ -1,3 +1,4 @@
+import { IconSearch } from "@tabler/icons-react";
 import MultiSelect from "../../components/form/MultiSelect";
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import HomeCompanyItem from "../../components/ui/home/HomeCompanyItem";
@@ -68,6 +69,7 @@ export default function UserHomePage() {
   return (
     <PaddedContainer classNames={styles.container}>
       <div className={styles.filterSection}>
+        <IconSearch className={styles.iconSearch} />
         <input
           type="text"
           placeholder="Keywords, Company"
@@ -78,6 +80,7 @@ export default function UserHomePage() {
             { label: "Option 1", value: "option1" },
             { label: "Option 2", value: "option2" },
           ]}
+          className={styles.jobClassification}
         />
       </div>
 

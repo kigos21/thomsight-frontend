@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
+import styles from "./MultiSelect.module.scss";
+import { IconFilter } from "@tabler/icons-react";
 
 export interface Option {
   label: string;
   value: string;
 }
 
-interface MultiSelectProps extends HTMLDivElement {
+interface MultiSelectProps extends ComponentProps<"div"> {
   options: Option[];
 }
 
-const MultiSelect: React.FC<MultiSelectProps> = ({ options }) => {
+const MultiSelect: React.FC<MultiSelectProps> = ({ options, ...props }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,30 +22,35 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ options }) => {
   };
 
   return (
-    <div>
-      <div onClick={() => setIsOpen(!isOpen)}>
-        {selectedOptions.length > 0
-          ? selectedOptions.join(", ")
-          : "Select options"}
-      </div>
+    <div {...props} tabIndex={0} onClick={() => setIsOpen((state) => !state)}>
+      <IconFilter className={styles.iconFilter} />
+      <p>Job Classifications</p>
+
       {isOpen && (
         <div
-          style={{
-            border: "1px solid #ccc",
-            position: "absolute",
-            background: "#fff",
-          }}
+          className={styles.selectWindow}
+          onClick={(e) => e.stopPropagation()}
         >
-          {options.map((option) => (
-            <label key={option.value}>
-              <input
-                type="checkbox"
-                checked={selectedOptions.includes(option.value)}
-                onChange={() => toggleOption(option.value)}
-              />
-              {option.label}
-            </label>
-          ))}
+          <label>
+            <input type="checkbox" name="" id="" />
+            Test
+          </label>
+          <label>
+            <input type="checkbox" name="" id="" />
+            Test
+          </label>
+          <label>
+            <input type="checkbox" name="" id="" />
+            Test
+          </label>
+          <label>
+            <input type="checkbox" name="" id="" />
+            Test
+          </label>
+          <label>
+            <input type="checkbox" name="" id="" />
+            Test
+          </label>
         </div>
       )}
     </div>
