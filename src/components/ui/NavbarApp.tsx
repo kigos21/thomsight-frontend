@@ -5,7 +5,8 @@ import PaddedContainer from "../layout/PaddedContainer";
 import { IconUser, IconMenu2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useUserData } from "../../api/userData";
+import { useUser } from "../../contexts/UserContext";
+import { logout } from "../../api/authUser";
 
 interface NavbarAppProps {
   links: JSX.Element[];
@@ -13,11 +14,16 @@ interface NavbarAppProps {
 
 export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
-  const { user, loading } = useUserData();
+  const { user, loading } = useUser();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleProfileClick = async () => {
+    try {
+      await logout();
+      window.location.href = "http://localhost:5173/login";
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   return (
     <PaddedContainer classNames={styles.rootContainer}>
@@ -62,10 +68,14 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </button>
 
         {/* Profile button */}
-        <Link to={"/"} className={styles.profileGroup}>
-          <span>{user ? user.name : "User"}</span>
+        {/* <Link to={"/"} className={styles.profileGroup}>
+          <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
-        </Link>
+        </Link> */}
+        <div className={styles.profileGroup} onClick={handleProfileClick}>
+          <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
+          <IconUser size={30} stroke={1.5} />
+        </div>
       </nav>
     </PaddedContainer>
   );

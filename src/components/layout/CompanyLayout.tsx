@@ -4,41 +4,41 @@ import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
 import PaddedContainer from "./PaddedContainer";
 import { useParams } from "react-router-dom";
+import { useUser } from "../../contexts/UserContext";
 
 export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
+  const { user } = useUser();
 
   const basePath = slug ? `/company/${slug}` : "/company";
 
-  let elements: React.ReactNode[];
+  const elements: React.ReactNode[] = [
+    <Link to={`${basePath}`} key="overviewCompany">
+      Overview
+    </Link>,
+    <Link to={`${basePath}#reviews`} key="reviewCompany">
+      Review
+    </Link>,
+    <Link to={`${basePath}/jobs`} key="jobsCompany">
+      Jobs
+    </Link>,
+    <Link to={`${basePath}/forum`} key="discussionforumCompany">
+      Discussion Forum
+    </Link>,
+    <Link to={`${basePath}/interview-tips`} key="interviewtipsCompany">
+      Interview Tips
+    </Link>,
+  ];
 
-  if (true) {
-    elements = [
-      <Link to={`${basePath}`} key="overviewCompany">
-        Overview
-      </Link>,
-      <Link to={`${basePath}#reviews`} key="reviewCompany">
-        Review
-      </Link>,
-      <Link to={`${basePath}/jobs`} key="jobsCompany">
-        Jobs
-      </Link>,
-      <Link to={`${basePath}/forum`} key="discussionforumCompany">
-        Discussion Forum
-      </Link>,
-      <Link to={`${basePath}/interview-tips`} key="interviewtipsCompany">
-        Interview Tips
-      </Link>,
-    ];
-  } else {
-    elements = [
+  if (user?.role === "Rep") {
+    elements.push(
       <Link to={`/manage/overview`} key="overviewmanageinfoCompany">
-        Overview
+        Manage Overview
       </Link>,
       <Link to={`/manage/jobs`} key="jobinfomanageinfoCompany">
-        Job Info
-      </Link>,
-    ];
+        Manage Jobs
+      </Link>
+    );
   }
   // let elements: React.ReactNode[];
 

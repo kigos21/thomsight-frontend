@@ -1,16 +1,12 @@
-import axios from "axios";
-import { User } from "../types/props";
+import axiosInstance from "../services/axiosInstance";
+import { User } from "../types/types";
 import { useState, useEffect } from "react";
 
-const BASE_URL = "http://localhost:8000/api";
-axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
-
-export const fetchUserData = async () => {
+export const fetchUserData = async (): Promise<User | null> => {
   try {
-    await axios.get("http://localhost:8000/sanctum/csrf-cookie");
+    await axiosInstance.get("/sanctum/csrf-cookie");
 
-    const response = await axios.get(`${BASE_URL}/profile`);
+    const response = await axiosInstance.get("/api/profile");
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Company } from "../types/props";
+import { Company } from "../types/types";
 
 const BASE_URL = "http://127.0.0.1:8000/api";
 

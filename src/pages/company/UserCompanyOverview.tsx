@@ -4,13 +4,14 @@ import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyOverview.module.scss";
 import Button from "../../components/ui/Button";
 import { useCompanyData } from "../../api/companyData";
+import Spinner from "../../components/ui/Spinner";
 
 export default function UserCompanyOverview() {
   const { company, loading, error } = useCompanyData();
 
   //temporary placeholders
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner message="Please wait while we render relevant data!" />;
   }
 
   if (error) {
