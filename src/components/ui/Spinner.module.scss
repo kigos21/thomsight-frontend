@@ -1,0 +1,63 @@
+/* Spinner.module.scss */
+html,
+body {
+  margin: 0; // Remove default margin from the body
+  padding: 0; // Remove default padding from the body
+  height: 100%; // Ensure the body takes full height
+}
+
+.spinnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; // Full height of the viewport
+  width: 100vw; // Full width of the viewport
+  margin: 0; // Remove margins
+  padding: 0; // Remove padding
+  position: fixed; // Make sure it stays in place
+  top: 0; // Align to the top
+  left: 0; // Align to the left
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); // Optional: Add a semi-transparent background
+  z-index: 999; // Ensure it appears above other elements
+}
+
+.spinnerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white; // White background for the spinner container
+  border: 2px solid black; // Border color
+  border-radius: 10px; // Rounded corners
+  padding: 20px; // Padding around the spinner and message
+}
+
+.spinner {
+  border: 8px solid rgba(255, 255, 255, 0.3);
+  border-top: 8px solid #3498db; // Change color as needed
+  border-radius: 50%;
+  width: 60px; // Size of the spinner
+  height: 60px; // Size of the spinner
+  animation: spin 1s linear infinite;
+}
+
+.message {
+  color: black; // Change the color as needed
+  margin-top: 10px; // Space between spinner and message
+  font-size: 20px; // Adjust font size as needed
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

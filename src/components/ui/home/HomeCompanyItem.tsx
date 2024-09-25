@@ -4,13 +4,9 @@ import styles from "./HomeCompanyItem.module.scss";
 import JobChip from "./JobChip";
 
 const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
-  imgSrc,
-  about,
-  name,
-  jobs,
-  location,
+  company,
 }) => {
-  // Trimmin the jobs array will
+  const { name, jobs, description, locations, image } = company;
   const trimmedJobs = jobs?.slice(0, 3);
 
   return (
@@ -19,22 +15,33 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
       paddedContainerClass={styles.paddedContainer}
     >
       <img
-        src={imgSrc}
+        src={image}
         alt={"Image of " + name}
         className={styles.companyImage}
       />
 
       <div className={styles.coreInfoSection}>
         <p className={styles.companyName}>{name}</p>
-        <p className={styles.location}>{location}</p>
-        {jobs && (
+        <div className={styles.locationSection}>
+          {locations && locations.length > 0 ? (
+            <p className={styles.location}>
+              {locations.map((location) => location.address).join(" | ")}{" "}
+            </p>
+          ) : (
+            <p className={styles.location}>No locations available</p>
+          )}
+        </div>
+
+        {trimmedJobs && (
           <div className={styles.jobsSection}>
-            {trimmedJobs?.map((job) => <JobChip job={job} />)}
+            {trimmedJobs.map((job, index) => (
+              <JobChip key={index} job={job} /> // Ensure job is a string
+            ))}
           </div>
         )}
       </div>
 
-      <div className={styles.about}>{about}</div>
+      <div className={styles.about}>{description}</div>
     </StyledBox>
   );
 };

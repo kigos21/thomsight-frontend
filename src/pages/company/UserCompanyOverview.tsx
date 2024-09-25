@@ -3,22 +3,16 @@ import ReviewItem from "../../components/ui/company/ReviewItem";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyOverview.module.scss";
 import Button from "../../components/ui/Button";
-import { useCompanyData } from "../../api/companyData";
+import { useParams } from "react-router-dom";
+import { useCompanies } from "../../contexts/CompaniesContext";
 
 export default function UserCompanyOverview() {
-  const { company, loading, error } = useCompanyData();
-
-  //temporary placeholders
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const { slug } = useParams<{ slug: string }>();
+  const { getCompanyBySlug } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
 
   if (!company) {
-    return <div>No company found.</div>;
+    return <div></div>;
   }
 
   return (
