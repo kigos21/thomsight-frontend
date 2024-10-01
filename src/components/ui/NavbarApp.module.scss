@@ -50,6 +50,15 @@
   left: 50%;
   transform: translate(-50%, 0);
 
+  li {
+    transition: border-bottom 0.5s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  li:hover {
+    border-bottom: 1px solid var(--dark-text-color);
+  }
+
   a {
     color: var(--dark-text-color);
   }

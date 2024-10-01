@@ -140,7 +140,7 @@ const router = createBrowserRouter([
         element: <AdminGenerateTokenPage />,
       },
       {
-        path: "tokens/companies",
+        path: "companies",
         element: <AdminCompanyAccount />,
       },
 

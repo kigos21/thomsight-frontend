@@ -1,6 +1,6 @@
 import styles from "./AppLayout.module.scss";
 
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import NavbarApp from "../ui/NavbarApp";
 
 export default function AppRoot() {
@@ -11,48 +11,96 @@ export default function AppRoot() {
 
   if (isStudent) {
     links = [
-      <Link to="/" key="homeUser">
+      <NavLink
+        to="/"
+        key="homeUser"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Home
-      </Link>,
-      <Link to="/interview-guide" key="interviewTipsUser">
+      </NavLink>,
+      <NavLink
+        to="/interview-guide"
+        key="interviewTipsUser"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Interview Tips
-      </Link>,
-      <Link to="#" key="resumeUser">
+      </NavLink>,
+      <NavLink
+        to="#"
+        key="resumeUser"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Resume (dropdown to)
-      </Link>,
+      </NavLink>,
     ];
   } else if (isCompany) {
     links = [
-      <Link to="/" key="homeCompany">
+      <NavLink
+        to="/"
+        key="homeCompany"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Home
-      </Link>,
-      <Link to="/announcements" key="announcementsCompany">
+      </NavLink>,
+      <NavLink
+        to="/announcements"
+        key="announcementsCompany"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Announcements
-      </Link>,
-      <Link to="/company/theirCompanyId" key="overviewCompany">
+      </NavLink>,
+      <NavLink
+        to="/company/theirCompanyId"
+        key="overviewCompany"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Overview
-      </Link>,
-      <Link to="/manage/overview" key="manageinfoCompany">
+      </NavLink>,
+      <NavLink
+        to="/manage/overview"
+        key="manageinfoCompany"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Manage Info
-      </Link>,
+      </NavLink>,
     ];
   } else {
     links = [
-      <Link to="/" key="homeAdmin">
+      <NavLink
+        to="/"
+        key="homeAdmin"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Home
-      </Link>,
-      <Link to="/tokens" key="tokensAdmin">
+      </NavLink>,
+      <NavLink
+        to="/tokens"
+        key="tokensAdmin"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Tokens
-      </Link>,
-      <Link to="/announcements" key="announcementsAdmin">
+      </NavLink>,
+      <NavLink
+        to="/announcements"
+        key="announcementsAdmin"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Announcements
-      </Link>,
-      <Link to="/tokens/companies" key="companiesAdmin">
+      </NavLink>,
+      <NavLink
+        to="/companies"
+        key="companiesAdmin"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Companies
-      </Link>,
-      <Link to="/reports" key="reportsAdmin">
+      </NavLink>,
+      <NavLink
+        to="/reports"
+        key="reportsAdmin"
+        className={({ isActive }) => (isActive ? styles.active : "")}
+      >
         Reports
-      </Link>,
+      </NavLink>,
     ];
   }
 
