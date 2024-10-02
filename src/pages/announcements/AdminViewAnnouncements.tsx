@@ -2,11 +2,45 @@ import PaddedContainer from "../../components/layout/PaddedContainer";
 import AnnouncementItem from "../../components/ui/announcements/AnnouncementItem";
 import Button from "../../components/ui/Button";
 import { IconPlus } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { deleteAnnouncement, getAnnouncements } from "../../api/adminCRUD";
+import { Announcement } from "../../types/types";
 
 import styles from "./AdminViewAnnouncements.module.scss";
-import { Link } from "react-router-dom";
+import Spinner from "../../components/ui/Spinner";
 
 export default function AdminViewAnnouncements() {
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const data = await getAnnouncements();
+        setAnnouncements(data);
+      } catch (err) {
+        setError("Failed to load announcements." + err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteAnnouncement(id);
+      setAnnouncements((prevAnnouncements) =>
+        prevAnnouncements.filter((announcement) => announcement.id !== id)
+      );
+    } catch (err) {
+      setError("Failed to delete announcement.");
+    }
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
@@ -23,11 +57,25 @@ export default function AdminViewAnnouncements() {
             </Button>
           </Link>
         </div>
-        <AnnouncementItem
-          announcementHeader="Announcement title"
-          date="1/17/2024"
-          announcementDescription="this is the announcement for today"
-        ></AnnouncementItem>
+
+        {loading ? (
+          <Spinner message="Fetching announcements..." />
+        ) : error ? (
+          <p>{error}</p>
+        ) : announcements.length > 0 ? (
+          announcements.map((announcement) => (
+            <AnnouncementItem
+              key={announcement.id}
+              id={announcement.id}
+              announcementHeader={announcement.title}
+              date={new Date(announcement.updated_at).toLocaleDateString()}
+              announcementDescription={announcement.content}
+              onDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>No announcements available.</p>
+        )}
       </div>
     </PaddedContainer>
   );

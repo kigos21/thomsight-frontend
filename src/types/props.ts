@@ -81,7 +81,9 @@ export type FormFieldProps = {
   required: true | false;
   value?: string;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 };
 
 export type TokenFormFieldProps = {

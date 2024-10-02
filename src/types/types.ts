@@ -46,3 +46,10 @@ export type Job = {
   title: string;
   description: string;
 };
+
+export type Announcement = {
+  id: number;
+  title: string;
+  content: string;
+  updated_at: Date;
+};

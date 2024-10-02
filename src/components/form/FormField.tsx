@@ -21,6 +21,7 @@ const FormField: React.FC<FormFieldProps> = ({
         required={required}
         value={value}
         className={`${styles.formField} ${classNames}`}
+        onChange={onChange}
       />
     ) : (
       <input
