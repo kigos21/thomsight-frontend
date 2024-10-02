@@ -10,7 +10,9 @@ export default function Navbar() {
   const location = useLocation();
 
   // Determine the base path
-  const isRegisterRoute = location.pathname.startsWith("/register");
+  const isRegisterRoute: boolean =
+    location.pathname.startsWith("/register") ||
+    location.pathname.startsWith("/thomsight");
 
   let button: JSX.Element;
 

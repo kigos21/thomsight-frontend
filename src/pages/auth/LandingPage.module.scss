@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(255, 255, 255, 0.25); /* 25% opacity */
+  padding: 2rem;
+  border-radius: 30px;
+}
+
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 1rem 2rem 4rem;
+  width: 50%;
+  gap: 3.5rem;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  h1 {
+    font-size: 4.375rem;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.4;
+    padding: 0 16rem 0 0;
+  }
+
+  p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--black);
+    padding: 0 12rem 0 0;
+  }
+}
+
+.buttonContainer {
+  padding: 0 16rem 0 0;
+}
+
+.button {
+  font-size: 1.25rem;
+  border-radius: 14px;
+  padding: 1.2rem 2rem;
+}
+
+.rightContainer {
+  width: 50%;
+}
