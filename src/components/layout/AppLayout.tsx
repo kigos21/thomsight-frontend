@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import NavbarApp from "../ui/NavbarApp";
 import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
+import NavDropdown from "../ui/NavDropdown";
 
 export default function AppRoot() {
   const { user } = useUser();
@@ -20,9 +21,17 @@ export default function AppRoot() {
         <Link to="/interview-guide" key="interviewTipsUser">
           Interview Tips
         </Link>,
-        <Link to="#" key="resumeUser">
-          Resume (dropdown to)
-        </Link>,
+        <NavDropdown
+          key="resumeUser"
+          label={"Resume"}
+          items={[
+            { label: "Peer Review", link: "/cv-review" },
+            {
+              label: "Resume Tips",
+              link: "/cv-guide",
+            },
+          ]}
+        />,
       ];
       break;
 
