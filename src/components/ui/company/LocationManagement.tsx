@@ -17,6 +17,7 @@ import {
   deleteLocation,
 } from "../../../api/companyCRUD";
 import DeletePopUp from "./DeletePopUp";
+import ValidationError from "../../form/ValidationError";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -158,16 +159,7 @@ const LocationManagement: React.FC = () => {
           </button>
         </div>
       )}
-      {createErrorMessage && (
-        <div className={styles.errorMessage}>
-          <IconAlertCircle
-            stroke={1.5}
-            size={20}
-            className={styles.errorIcon}
-          />
-          <p>{createErrorMessage}</p>
-        </div>
-      )}
+      {createErrorMessage && <ValidationError message={createErrorMessage} />}
 
       {showEditDialog && editingLocation && (
         <div
@@ -194,14 +186,7 @@ const LocationManagement: React.FC = () => {
                 }
               />
               {editErrorMessage && (
-                <div className={styles.errorMessage}>
-                  <IconAlertCircle
-                    stroke={1.5}
-                    size={20}
-                    className={styles.errorIcon}
-                  />
-                  <p>{editErrorMessage}</p>
-                </div>
+                <ValidationError message={editErrorMessage} />
               )}
               <div className={styles.saveAndCancelButtons}>
                 <button

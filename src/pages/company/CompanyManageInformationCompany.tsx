@@ -1,4 +1,4 @@
-import { IconAlertCircle, IconEdit } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import styles from "./CompanyManageInformationCompany.module.scss";
 import { useEffect, useRef, useState } from "react";
 import LocationManagement from "../../components/ui/company/LocationManagement";
@@ -8,6 +8,7 @@ import ErrorPage from "../ErrorPage";
 import Spinner from "../../components/ui/Spinner";
 import { useUser } from "../../contexts/UserContext";
 import { updateCompanyInfo } from "../../api/companyCRUD";
+import ValidationError from "../../components/form/ValidationError";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
@@ -150,16 +151,7 @@ export default function CompanyManageInformationCompany() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            {descriptionError && (
-              <div className={styles.errorMessage}>
-                <IconAlertCircle
-                  stroke={1.5}
-                  size={20}
-                  className={styles.errorIcon}
-                />
-                <p>{descriptionError}</p>
-              </div>
-            )}
+            {descriptionError && <ValidationError message={descriptionError} />}
           </div>
         ) : (
           <p>{description}</p>
@@ -208,16 +200,7 @@ export default function CompanyManageInformationCompany() {
               onChange={(e) => setCompanySize(e.target.value)}
               className={styles.inputText}
             />
-            {sizeError && (
-              <div className={styles.errorMessage}>
-                <IconAlertCircle
-                  stroke={1.5}
-                  size={20}
-                  className={styles.errorIcon}
-                />
-                <p>{sizeError}</p>
-              </div>
-            )}
+            {sizeError && <ValidationError message={sizeError} />}
           </div>
         ) : (
           <p>{size}</p>
@@ -266,16 +249,7 @@ export default function CompanyManageInformationCompany() {
               onChange={(e) => setIndustry(e.target.value)}
               className={styles.inputText}
             />
-            {industryError && (
-              <div className={styles.errorMessage}>
-                <IconAlertCircle
-                  stroke={1.5}
-                  size={20}
-                  className={styles.errorIcon}
-                />
-                <p>{industryError}</p>
-              </div>
-            )}
+            {industryError && <ValidationError message={industryError} />}
           </div>
         ) : (
           <p>{industry}</p>
