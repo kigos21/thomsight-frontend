@@ -2,7 +2,6 @@ import styles from "./LandingPage.module.scss";
 
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import Button from "../../components/ui/Button";
-import ImageCarousel from "../../components/ui/ImageCarousel";
 
 const LandingPage = () => {
   return (
@@ -10,11 +9,14 @@ const LandingPage = () => {
       <div className={styles.container}>
         <div className={styles.leftContainer}>
           <div className={styles.heading}>
-            <h1>Learn and discover about internships now!</h1>
+            <h1>
+              Learn, Explore, and Discover Internship Opportunities and
+              Resources for UST-CICS Students!
+            </h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam
+              Gain access to exclusive UST-CICS internship opportunities, expert
+              advice from alumni, and all the tools you need to prepare for your
+              career journey—all in one platform.
             </p>
           </div>
           <div className={styles.buttonContainer}>
@@ -28,9 +30,7 @@ const LandingPage = () => {
             </Button>
           </div>
         </div>
-        <div className={styles.rightContainer}>
-          <ImageCarousel />
-        </div>
+        <div className={styles.rightContainer}></div>
       </div>
     </PaddedContainer>
   );

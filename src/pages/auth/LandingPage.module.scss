@@ -1,29 +1,26 @@
 .container {
   display: flex;
   flex-direction: row;
-  background-color: rgba(255, 255, 255, 0.25); /* 25% opacity */
-  padding: 2rem;
-  border-radius: 30px;
 }
 
 .leftContainer {
   display: flex;
   flex-direction: column;
-  padding: 0rem 1rem 2rem 4rem;
-  width: 50%;
-  gap: 3.5rem;
+  padding: 3rem 1rem 3rem 4rem;
+  width: 60%;
+  gap: 4rem;
 }
 
 .heading {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 
   h1 {
-    font-size: 4.375rem;
+    font-size: 3.5rem;
     font-family: "Poppins", sans-serif;
     line-height: 1.4;
-    padding: 0 16rem 0 0;
+    padding: 0 4rem 0 0;
   }
 
   p {
@@ -31,12 +28,16 @@
     font-size: 1.15rem;
     font-weight: 400;
     color: var(--black);
-    padding: 0 12rem 0 0;
+    padding: 0 10rem 0 0;
   }
 }
 
+.rightContainer {
+  width: 40%;
+}
+
 .buttonContainer {
-  padding: 0 16rem 0 0;
+  padding: 0 6rem 0 0;
 }
 
 .button {
@@ -45,6 +46,144 @@
   padding: 1.2rem 2rem;
 }
 
-.rightContainer {
-  width: 50%;
+// not yet sure
+@media screen and (max-width: 1024px) {
+  .background {
+    padding: 1rem;
+  }
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    h1 {
+      font-size: 2.75rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+      padding: 0 2rem 0 0;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.175rem;
+      font-weight: 400;
+      color: var(--black);
+      padding: 0 5rem 0 0;
+    }
+  }
+
+  .leftContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 1rem 2rem;
+    width: 90%;
+    gap: 3rem;
+  }
+  .rightContainer {
+    width: 10%;
+  }
+
+  .buttonContainer {
+    padding: 0 8rem 0 0;
+  }
+
+  .button {
+    font-size: 1.25rem;
+    border-radius: 14px;
+    padding: 1.125rem 1.875rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .background {
+    padding: 1rem;
+  }
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    h1 {
+      font-size: 2.25rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+      padding: 0 2rem 0 0;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--black);
+      padding: 0 5rem 0 0;
+    }
+  }
+
+  .leftContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem 1rem 1rem;
+    width: 100%;
+    gap: 3rem;
+  }
+  .rightContainer {
+    display: none;
+  }
+
+  .buttonContainer {
+    padding: 0 8rem 0 0;
+  }
+
+  .button {
+    font-size: 1rem;
+    border-radius: 14px;
+    padding: 1rem 1.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .background {
+    padding: 0rem 0.5rem;
+  }
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    h1 {
+      font-size: 2rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+      padding: 0 2rem 0 0;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--black);
+      padding: 0 2.5rem 0 0;
+    }
+  }
+
+  .leftContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 1rem 1rem 1rem;
+    width: 100%;
+    gap: 3rem;
+  }
+  .rightContainer {
+    display: none;
+  }
+
+  .buttonContainer {
+    padding: 0 4rem 0 0;
+  }
+
+  .button {
+    font-size: 0.85rem;
+    border-radius: 14px;
+    padding: 0.75rem 1.5rem;
+  }
 }
