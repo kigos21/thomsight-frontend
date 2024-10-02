@@ -1,14 +1,17 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import JobItem from "../../components/ui/company/JobItem";
 import styles from "./UserCompanyJobs.module.scss";
-import { useCompanyData } from "../../api/companyData";
+import Spinner from "../../components/ui/Spinner";
+import { useCompanies } from "../../contexts/CompaniesContext";
+import { useParams } from "react-router-dom";
 
 export default function UserCompanyJobs() {
-  const { company, loading, error } = useCompanyData();
+  const { slug } = useParams<{ slug: string }>();
+  const { loading, error, getCompanyBySlug } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
 
-  //temporary placeholders
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner message="Please wait while we render relevant data!" />;
   }
 
   if (error) {
@@ -16,7 +19,7 @@ export default function UserCompanyJobs() {
   }
 
   if (!company) {
-    return <div>No company found.</div>;
+    return <div></div>;
   }
 
   return (

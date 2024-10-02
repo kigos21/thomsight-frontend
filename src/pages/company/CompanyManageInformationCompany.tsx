@@ -1,51 +1,79 @@
 import { IconEdit } from "@tabler/icons-react";
 import styles from "./CompanyManageInformationCompany.module.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LocationManagement from "../../components/ui/company/LocationManagement";
+import { useParams } from "react-router-dom";
+import { useCompanies } from "../../contexts/CompaniesContext";
+import ErrorPage from "../ErrorPage";
+import Spinner from "../../components/ui/Spinner";
+import { useUser } from "../../contexts/UserContext";
+import { updateCompanyInfo } from "../../api/companyCRUD";
 
 export default function CompanyManageInformationCompany() {
+  const { slug } = useParams<{ slug: string }>();
+  const { getCompanyBySlug, loading, error } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
+  const { user } = useUser();
+
   // DATA FOR DESCRIPTION
-  const [description, setDescription] = useState<string>(
-    [
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,",
-      "ratione totam nostrum quas cum ipsam molestias libero molestiae",
-      "animi, officiis quo, iure iusto facilis dolores esse perferendis",
-      "ipsa quod eum similique id voluptatem fuga consectetur sunt sint?",
-      "consectetur quo velit dicta laboriosam eos, repudiandae tempora.",
-    ].join(" ")
-  );
+  const [description, setDescription] = useState<string>("");
   const [isEditDesc, setIsEditDesc] = useState<boolean>(false);
   const descRef = useRef<HTMLTextAreaElement>(null);
 
   // DATA FOR COMPANY SIZE
-  const [companySize, setCompanySize] = useState<string>("10 000+");
-  const [tempCompanySize, setTempCompanySize] = useState<string>("");
+  const [size, setCompanySize] = useState<string>("");
   const [isEditCompanySize, setIsEditCompanySize] = useState<boolean>(false);
 
   // DATA FOR COMPANY INDUSTRY
-  const [industry, setIndustry] = useState<string>("Bank Technologies");
-  const [tempIndustry, setTempIndustry] = useState<string>("");
+  const [industry, setIndustry] = useState<string>("");
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
+
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (company) {
+      setDescription(company.description || "");
+      setCompanySize(company.size || "");
+      setIndustry(company.industry || "");
+    }
+  }, [company]);
+
+  if (loading)
+    return <Spinner message="Please wait while we render relevant data!" />;
+  if (error) return <ErrorPage />;
+  if (!company) return <div></div>;
+  if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
+    return <ErrorPage />;
+  }
+
+  const handleSaveUpdates = async () => {
+    setIsUpdating(true);
+    try {
+      if (!slug) {
+        throw new Error("Slug is undefined");
+      }
+
+      const updatedData = {
+        description,
+        industry,
+        size,
+      };
+
+      await updateCompanyInfo(slug, updatedData);
+    } catch (error) {
+      console.error("Error updating company data:", error);
+    } finally {
+      setIsUpdating(false);
+      setIsEditDesc(false);
+      setIsEditCompanySize(false);
+      setIsEditIndustry(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
       <h2>Company Information</h2>
-
+      {isUpdating && <Spinner message="Updating..." />}{" "}
       {/* COMPANY DESCRIPTION */}
       <div>
         <div className={styles.sectionHeading}>
@@ -61,13 +89,7 @@ export default function CompanyManageInformationCompany() {
               >
                 Cancel
               </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => {
-                  setDescription(descRef.current!.value);
-                  setIsEditDesc(false);
-                }}
-              >
+              <button className={styles.saveButton} onClick={handleSaveUpdates}>
                 Save
               </button>
             </div>
@@ -88,6 +110,8 @@ export default function CompanyManageInformationCompany() {
             rows={10}
             className={styles.textareaDesc}
             ref={descRef}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           >
             {description}
           </textarea>
@@ -96,7 +120,6 @@ export default function CompanyManageInformationCompany() {
         )}
       </div>
       {/* END OF COMPANY DESCRIPTION */}
-
       {/* COMPANY SIZE */}
       <div>
         <div className={styles.sectionHeading}>
@@ -107,29 +130,19 @@ export default function CompanyManageInformationCompany() {
               <button
                 className={styles.cancelButton}
                 onClick={() => {
-                  setTempCompanySize(companySize);
                   setIsEditCompanySize(false);
                 }}
               >
                 Cancel
               </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => {
-                  setCompanySize(tempCompanySize);
-                  setIsEditCompanySize(false);
-                }}
-              >
+              <button className={styles.saveButton} onClick={handleSaveUpdates}>
                 Save
               </button>
             </div>
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => {
-                setTempCompanySize(companySize);
-                setIsEditCompanySize(true);
-              }}
+              onClick={() => setIsEditCompanySize(true)}
             >
               <IconEdit />
             </button>
@@ -139,16 +152,15 @@ export default function CompanyManageInformationCompany() {
         {isEditCompanySize ? (
           <input
             type="text"
-            value={tempCompanySize}
-            onChange={(e) => setTempCompanySize(e.target.value)}
+            value={size}
+            onChange={(e) => setCompanySize(e.target.value)}
             className={styles.inputText}
           />
         ) : (
-          <p>{companySize}</p>
+          <p>{size}</p>
         )}
       </div>
       {/* END OF COMPANY SIZE */}
-
       {/* COMPANY INDUSTRY */}
       <div>
         <div className={styles.sectionHeading}>
@@ -159,29 +171,19 @@ export default function CompanyManageInformationCompany() {
               <button
                 className={styles.cancelButton}
                 onClick={() => {
-                  setTempIndustry(industry);
                   setIsEditIndustry(false);
                 }}
               >
                 Cancel
               </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => {
-                  setIndustry(tempIndustry);
-                  setIsEditIndustry(false);
-                }}
-              >
+              <button className={styles.saveButton} onClick={handleSaveUpdates}>
                 Save
               </button>
             </div>
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => {
-                setTempIndustry(industry);
-                setIsEditIndustry(true);
-              }}
+              onClick={() => setIsEditIndustry(true)}
             >
               <IconEdit />
             </button>
@@ -191,8 +193,8 @@ export default function CompanyManageInformationCompany() {
         {isEditIndustry ? (
           <input
             type="text"
-            value={tempIndustry}
-            onChange={(e) => setTempIndustry(e.target.value)}
+            value={industry}
+            onChange={(e) => setIndustry(e.target.value)}
             className={styles.inputText}
           />
         ) : (
@@ -200,7 +202,6 @@ export default function CompanyManageInformationCompany() {
         )}
       </div>
       {/* END OF COMPANY INDUSTRY */}
-
       {/* LOCATIONS */}
       <LocationManagement />
       {/* END OF LOCATIONS */}

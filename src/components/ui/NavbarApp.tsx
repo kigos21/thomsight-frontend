@@ -5,7 +5,9 @@ import PaddedContainer from "../layout/PaddedContainer";
 import { IconUser, IconMenu2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useUserData } from "../../api/userData";
+import { useUser } from "../../contexts/UserContext";
+import { logout } from "../../api/authUser";
+import Spinner from "./Spinner";
 
 interface NavbarAppProps {
   links: JSX.Element[];
@@ -13,14 +15,22 @@ interface NavbarAppProps {
 
 export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
-  const { user, loading } = useUserData();
+  const { user, loading } = useUser();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleProfileClick = async () => {
+    try {
+      await logout();
+      window.location.href = "http://localhost:5173/login";
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   return (
     <PaddedContainer classNames={styles.rootContainer}>
+      {loading && (
+        <Spinner message="Please wait while we render relevant data!" />
+      )}
       <nav className={styles.container}>
         <div className={styles.brand}>
           <img className={styles.brandImage} src={logo} alt="Thomsight logo" />
@@ -43,9 +53,8 @@ export default function NavbarApp({ links }: NavbarAppProps) {
           className={`${styles.mobileNavContainer} ${displayNav && styles.block}`}
         >
           <ul className={styles.mobileNavList}>
-            {links.map((link, i) => (
-              <li key={i}>{link}</li>
-            ))}
+            {links.length > 0 &&
+              links.map((link, i) => <li key={i}>{link}</li>)}
             <li>
               <Link to={"/"}>Profile</Link>
             </li>
@@ -62,10 +71,14 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </button>
 
         {/* Profile button */}
-        <Link to={"/"} className={styles.profileGroup}>
-          <span>{user ? user.name : "User"}</span>
+        {/* <Link to={"/"} className={styles.profileGroup}>
+          <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
-        </Link>
+        </Link> */}
+        <div className={styles.profileGroup} onClick={handleProfileClick}>
+          <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
+          <IconUser size={30} stroke={1.5} />
+        </div>
       </nav>
     </PaddedContainer>
   );

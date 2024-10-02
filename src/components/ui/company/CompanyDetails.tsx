@@ -2,22 +2,16 @@ import styles from "./CompanyDetails.module.scss";
 
 import logo from "../../../assets/thomsight-logo.svg";
 import PaddedContainer from "../../layout/PaddedContainer";
-import { useCompanyData } from "../../../api/companyData.ts";
+import { useCompanies } from "../../../contexts/CompaniesContext.tsx";
+import { useParams } from "react-router-dom";
 
 export default function CompanyDetails() {
-  const { company, loading, error } = useCompanyData();
-
-  //temporary placeholders
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const { slug } = useParams<{ slug: string }>();
+  const { getCompanyBySlug } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
 
   if (!company) {
-    return <div>No company found.</div>;
+    return <div></div>;
   }
 
   const firstLocation =
