@@ -1,4 +1,4 @@
-import { IconEdit } from "@tabler/icons-react";
+import { IconAlertCircle, IconEdit } from "@tabler/icons-react";
 import styles from "./CompanyManageInformationCompany.module.scss";
 import { useEffect, useRef, useState } from "react";
 import LocationManagement from "../../components/ui/company/LocationManagement";
@@ -17,24 +17,34 @@ export default function CompanyManageInformationCompany() {
 
   // DATA FOR DESCRIPTION
   const [description, setDescription] = useState<string>("");
+  const [originalDescription, setOriginalDescription] = useState<string>("");
   const [isEditDesc, setIsEditDesc] = useState<boolean>(false);
+  const [descriptionError, setDescriptionError] = useState<string>("");
+
   const descRef = useRef<HTMLTextAreaElement>(null);
 
   // DATA FOR COMPANY SIZE
   const [size, setCompanySize] = useState<string>("");
+  const [originalSize, setOriginalSize] = useState<string>("");
   const [isEditCompanySize, setIsEditCompanySize] = useState<boolean>(false);
+  const [sizeError, setSizeError] = useState<string>("");
 
   // DATA FOR COMPANY INDUSTRY
   const [industry, setIndustry] = useState<string>("");
+  const [originalIndustry, setOriginalIndustry] = useState<string>("");
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
+  const [industryError, setIndustryError] = useState<string>("");
 
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   useEffect(() => {
     if (company) {
       setDescription(company.description || "");
+      setOriginalDescription(company.description || "");
       setCompanySize(company.size || "");
+      setOriginalSize(company.size || "");
       setIndustry(company.industry || "");
+      setOriginalIndustry(company.industry || "");
     }
   }, [company]);
 
@@ -47,6 +57,27 @@ export default function CompanyManageInformationCompany() {
   }
 
   const handleSaveUpdates = async () => {
+    let isValid = true;
+
+    setDescriptionError("");
+    setSizeError("");
+    setIndustryError("");
+
+    if (description.trim() === "") {
+      setDescriptionError("Description cannot be blank");
+      isValid = false;
+    }
+    if (size.trim() === "") {
+      setSizeError("Company size cannot be blank");
+      isValid = false;
+    }
+    if (industry.trim() === "") {
+      setIndustryError("Industry cannot be blank");
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
     setIsUpdating(true);
     try {
       if (!slug) {
@@ -85,6 +116,8 @@ export default function CompanyManageInformationCompany() {
                 className={styles.cancelButton}
                 onClick={() => {
                   setIsEditDesc(false);
+                  setDescription(originalDescription);
+                  setDescriptionError("");
                 }}
               >
                 Cancel
@@ -96,7 +129,10 @@ export default function CompanyManageInformationCompany() {
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => setIsEditDesc(true)}
+              onClick={() => {
+                setIsEditDesc(true);
+                setOriginalDescription(description);
+              }}
             >
               <IconEdit />
             </button>
@@ -104,17 +140,27 @@ export default function CompanyManageInformationCompany() {
         </div>
 
         {isEditDesc ? (
-          <textarea
-            name="description"
-            id="description"
-            rows={10}
-            className={styles.textareaDesc}
-            ref={descRef}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          >
-            {description}
-          </textarea>
+          <div>
+            <textarea
+              name="description"
+              id="description"
+              rows={10}
+              className={styles.textareaDesc}
+              ref={descRef}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            {descriptionError && (
+              <div className={styles.errorMessage}>
+                <IconAlertCircle
+                  stroke={1.5}
+                  size={20}
+                  className={styles.errorIcon}
+                />
+                <p>{descriptionError}</p>
+              </div>
+            )}
+          </div>
         ) : (
           <p>{description}</p>
         )}
@@ -131,6 +177,8 @@ export default function CompanyManageInformationCompany() {
                 className={styles.cancelButton}
                 onClick={() => {
                   setIsEditCompanySize(false);
+                  setCompanySize(originalSize);
+                  setSizeError("");
                 }}
               >
                 Cancel
@@ -142,7 +190,10 @@ export default function CompanyManageInformationCompany() {
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => setIsEditCompanySize(true)}
+              onClick={() => {
+                setIsEditCompanySize(true);
+                setOriginalSize(size);
+              }}
             >
               <IconEdit />
             </button>
@@ -150,12 +201,24 @@ export default function CompanyManageInformationCompany() {
         </div>
 
         {isEditCompanySize ? (
-          <input
-            type="text"
-            value={size}
-            onChange={(e) => setCompanySize(e.target.value)}
-            className={styles.inputText}
-          />
+          <div>
+            <input
+              type="text"
+              value={size}
+              onChange={(e) => setCompanySize(e.target.value)}
+              className={styles.inputText}
+            />
+            {sizeError && (
+              <div className={styles.errorMessage}>
+                <IconAlertCircle
+                  stroke={1.5}
+                  size={20}
+                  className={styles.errorIcon}
+                />
+                <p>{sizeError}</p>
+              </div>
+            )}
+          </div>
         ) : (
           <p>{size}</p>
         )}
@@ -172,6 +235,8 @@ export default function CompanyManageInformationCompany() {
                 className={styles.cancelButton}
                 onClick={() => {
                   setIsEditIndustry(false);
+                  setIndustry(originalIndustry);
+                  setIndustryError("");
                 }}
               >
                 Cancel
@@ -183,7 +248,10 @@ export default function CompanyManageInformationCompany() {
           ) : (
             <button
               className={styles.headingEditButton}
-              onClick={() => setIsEditIndustry(true)}
+              onClick={() => {
+                setIsEditIndustry(true);
+                setOriginalIndustry(industry);
+              }}
             >
               <IconEdit />
             </button>
@@ -191,12 +259,24 @@ export default function CompanyManageInformationCompany() {
         </div>
 
         {isEditIndustry ? (
-          <input
-            type="text"
-            value={industry}
-            onChange={(e) => setIndustry(e.target.value)}
-            className={styles.inputText}
-          />
+          <div>
+            <input
+              type="text"
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+              className={styles.inputText}
+            />
+            {industryError && (
+              <div className={styles.errorMessage}>
+                <IconAlertCircle
+                  stroke={1.5}
+                  size={20}
+                  className={styles.errorIcon}
+                />
+                <p>{industryError}</p>
+              </div>
+            )}
+          </div>
         ) : (
           <p>{industry}</p>
         )}
