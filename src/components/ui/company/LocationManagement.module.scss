@@ -160,3 +160,20 @@
     grid-template-columns: 1fr;
   }
 }
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.errorIcon {
+  margin-right: 8px;
+  color: #721c24;
+}
