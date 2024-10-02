@@ -11,16 +11,21 @@ import {
   updateLocation,
   deleteLocation,
 } from "../../../api/companyCRUD";
+import DeletePopUp from "./DeletePopUp";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [locations, setLocations] = useState<Location[]>([]);
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
   const [newLocation, setNewLocation] = useState("");
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [locationToDelete, setLocationToDelete] = useState<number | null>(null);
+
   const { getCompanyBySlug, loading, error } = useCompanies();
-  const company = getCompanyBySlug(slug || ""); // Provide a fallback
+  const company = getCompanyBySlug(slug || "");
 
   useEffect(() => {
     if (company) {
@@ -67,10 +72,17 @@ const LocationManagement: React.FC = () => {
     }
   };
 
-  const handleDeleteLocation = async (id: number) => {
-    if (slug) {
-      await deleteLocation(slug, id);
-      setLocations(locations.filter((loc) => loc.id !== id));
+  const handleDeleteClick = (locationId: number) => {
+    setLocationToDelete(locationId);
+    setShowDeletePopup(true);
+  };
+
+  const handleDeleteLocation = async () => {
+    if (locationToDelete && slug) {
+      await deleteLocation(slug, locationToDelete);
+      setLocations(locations.filter((loc) => loc.id !== locationToDelete));
+      setShowDeletePopup(false);
+      setLocationToDelete(null);
     }
   };
 
@@ -164,13 +176,23 @@ const LocationManagement: React.FC = () => {
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => handleDeleteLocation(location.id)}
+              onClick={() => handleDeleteClick(location.id)}
             >
               <IconTrash />
             </button>
           </div>
         ))}
       </div>
+
+      {showDeletePopup && (
+        <DeletePopUp
+          isVisible={showDeletePopup}
+          onClose={() => setShowDeletePopup(false)}
+          onDelete={handleDeleteLocation}
+          heading="Delete Location"
+          details="Are you sure you want to delete this location?"
+        />
+      )}
     </div>
   );
 };

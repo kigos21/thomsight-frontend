@@ -15,13 +15,16 @@ export default function AdminCreatennouncementItem({
   const [subject, setSubject] = useState<string>("");
   const [details, setDetails] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleSubmit = async () => {
     setLoading(true);
+    setSuccessMessage("");
     try {
       await createAnnouncement(subject, details);
       setSubject("");
       setDetails("");
+      setSuccessMessage("Announcement created successfully!");
     } catch (error) {
       console.error("Error creating announcement:", error);
     } finally {
@@ -35,6 +38,9 @@ export default function AdminCreatennouncementItem({
         <div className={styles.titleContainer}>
           <h2>Create Announcement</h2>
           {loading && <Spinner message="Creating..." />}
+          {successMessage && (
+            <p className={styles.successMessage}>{successMessage}</p>
+          )}{" "}
           <Button
             classNames={styles.submitButton}
             color="secondary"
