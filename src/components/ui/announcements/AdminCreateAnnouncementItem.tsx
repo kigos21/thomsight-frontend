@@ -7,6 +7,8 @@ import { useState } from "react";
 
 import styles from "./AdminCreateAnnouncementItem.module.scss";
 import Spinner from "../Spinner";
+import ValidationError from "../../form/ValidationError";
+import SuccessMessage from "../../form/SuccessMessage";
 
 export default function AdminCreatennouncementItem({
   classNames,
@@ -17,9 +19,30 @@ export default function AdminCreatennouncementItem({
   const [loading, setLoading] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>("");
 
+  const [subjectError, setSubjectError] = useState<string>("");
+  const [detailsError, setDetailsError] = useState<string>("");
+
   const handleSubmit = async () => {
     setLoading(true);
     setSuccessMessage("");
+    setSubjectError("");
+    setDetailsError("");
+    let isValid = true;
+
+    if (subject.trim() === "") {
+      setSubjectError("Subject cannot be blank");
+      isValid = false;
+    }
+    if (details.trim() === "") {
+      setDetailsError("Details cannot be blank");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      setLoading(false);
+      return;
+    }
+
     try {
       await createAnnouncement(subject, details);
       setSubject("");
@@ -38,9 +61,6 @@ export default function AdminCreatennouncementItem({
         <div className={styles.titleContainer}>
           <h2>Create Announcement</h2>
           {loading && <Spinner message="Creating..." />}
-          {successMessage && (
-            <p className={styles.successMessage}>{successMessage}</p>
-          )}{" "}
           <Button
             classNames={styles.submitButton}
             color="secondary"
@@ -51,7 +71,7 @@ export default function AdminCreatennouncementItem({
             Submit
           </Button>
         </div>
-
+        {successMessage && <SuccessMessage message={successMessage} />}{" "}
         <div className={styles.formContainer}>
           <div>
             <FormField
@@ -62,6 +82,7 @@ export default function AdminCreatennouncementItem({
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
             />
+            {subjectError && <ValidationError message={subjectError} />}
           </div>
 
           <div>
@@ -73,6 +94,7 @@ export default function AdminCreatennouncementItem({
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             />
+            {subjectError && <ValidationError message={detailsError} />}
           </div>
         </div>
       </div>

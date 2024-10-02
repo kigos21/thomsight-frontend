@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./LocationManagement.module.scss";
-import {
-  IconAlertCircle,
-  IconEdit,
-  IconPlus,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconEdit, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
 import ErrorPage from "../../../pages/ErrorPage";
