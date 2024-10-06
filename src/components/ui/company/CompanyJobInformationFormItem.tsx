@@ -8,6 +8,7 @@ import styles from "./CompanyJobInformationFormItem.module.scss";
 import { useCompanies } from "../../../contexts/CompaniesContext";
 import Spinner from "../Spinner";
 import { addJob } from "../../../api/companyCRUD";
+import SuccessMessage from "../../form/SuccessMessage";
 
 interface CompanyJobInformationFormItemProps {
   jobTitle: string;
@@ -22,7 +23,7 @@ export default function CompanyJobInformationFormItem({
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState<boolean>(false);
   const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [creating, setCreating] = useState(false);
@@ -42,6 +43,7 @@ export default function CompanyJobInformationFormItem({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setCreating(true);
+    setSuccess(false);
     try {
       const newJob = await addJob(slug || "", {
         title: jobTitle,
@@ -55,7 +57,7 @@ export default function CompanyJobInformationFormItem({
       updateCompany(updatedCompany);
       createJob(newJob);
 
-      setSuccess("Job posted successfully!");
+      setSuccess(true);
       setJobTitle("");
       setJobDescription("");
     } catch (err) {
@@ -68,6 +70,7 @@ export default function CompanyJobInformationFormItem({
   return (
     <div className={`${styles.container}`}>
       {creating && <Spinner message="Creating job..." />}
+      {success && <SuccessMessage message="Created job successfully" />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
