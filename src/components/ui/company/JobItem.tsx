@@ -7,7 +7,6 @@ export default function JobItem({
   classNames,
   style,
   jobTitle,
-  companyName,
   jobDescription,
 }: JobItemProps) {
   return (
@@ -16,7 +15,6 @@ export default function JobItem({
         <div className={styles.jobDetailsContainer}>
           <div className={styles.jobSubjectContainer}>
             <p className={styles.jobTitle}>{jobTitle}</p>
-            <p className={styles.companyName}>{companyName}</p>
           </div>
           <p className={styles.jobDescription}>{jobDescription}</p>
         </div>

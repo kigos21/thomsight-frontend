@@ -1,7 +1,7 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
-import { Job } from "../../../pages/company/CompanyManageInformationJobs";
 
 import styles from "./CompanyJobs.module.scss";
+import { Job } from "../../../types/types";
 
 interface CompanyJobsProps {
   jobs: Job[];
@@ -12,7 +12,7 @@ const CompanyJobs: React.FunctionComponent<CompanyJobsProps> = ({ jobs }) => {
     <div className={styles.container}>
       {jobs.map((job) => (
         <div className={styles.jobItem}>
-          <p className={styles.jobName}>{job.name}</p>
+          <p className={styles.jobName}>{job.title}</p>
           <p className={styles.jobDescription}>{job.description}</p>
 
           <div className={styles.buttons}>
