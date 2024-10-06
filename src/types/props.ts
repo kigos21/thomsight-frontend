@@ -78,7 +78,7 @@ export type FormFieldProps = {
   classNames?: string;
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
-  required: true | false;
+  required?: true | false;
   value?: string;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
   onChange?: (
