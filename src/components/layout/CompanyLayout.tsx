@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import NavbarCompany from "../ui/NavbarCompany";
 import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
@@ -14,6 +14,7 @@ export default function CompanyRoot() {
   const { loading, error, getCompanyBySlug } = useCompanies();
   const { user } = useUser();
   const company = getCompanyBySlug(slug || "");
+  const location = useLocation();
 
   if (loading) {
     return <Spinner message="Please wait while we render relevant data!" />;
@@ -25,64 +26,42 @@ export default function CompanyRoot() {
 
   const basePath = slug ? `/company/${slug}` : "/company";
 
-  const elements: React.ReactNode[] = [
-    <Link to={`${basePath}`} key="overviewCompany">
-      Overview
-    </Link>,
-    <Link to={`${basePath}#reviews`} key="reviewCompany">
-      Review
-    </Link>,
-    <Link to={`${basePath}/jobs`} key="jobsCompany">
-      Jobs
-    </Link>,
-    <Link to={`${basePath}/forum`} key="discussionforumCompany">
-      Discussion Forum
-    </Link>,
-    <Link to={`${basePath}/interview-tips`} key="interviewtipsCompany">
-      Interview Tips
-    </Link>,
-  ];
+  const isManagePath = location.pathname.includes("/manage");
+  let elements: React.ReactNode[];
+  if (!isManagePath) {
+    elements = [
+      <Link to={`${basePath}`} key="overviewCompany">
+        Overview
+      </Link>,
+      <Link to={`${basePath}#reviews`} key="reviewCompany">
+        Review
+      </Link>,
+      <Link to={`${basePath}/jobs`} key="jobsCompany">
+        Jobs
+      </Link>,
+      <Link to={`${basePath}/forum`} key="discussionforumCompany">
+        Discussion&nbsp;Forum
+      </Link>,
+      <Link to={`${basePath}/interview-tips`} key="interviewtipsCompany">
+        Interview&nbsp;Tips
+      </Link>,
+    ];
+  } else {
+    // Check if accessing user is authorized
+    if (company?.posted_by !== user?.id) {
+      return <Navigate to="/companies" replace />;
+    }
 
-  if (user?.role === "Rep" && company?.posted_by === user?.id) {
-    elements.push(
+    elements = [
       <Link to={`${basePath}/manage/info`} key="overviewmanageinfoCompany">
-        Manage Overview
+        Manage&nbsp;Overview
       </Link>,
       <Link to={`${basePath}/manage/jobs`} key="jobinfomanageinfoCompany">
-        Manage Jobs
-      </Link>
-    );
+        Manage&nbsp;Jobs
+      </Link>,
+    ];
   }
-  // let elements: React.ReactNode[];
 
-  // if (true) {
-  //   elements = [
-  //     <Link to="/company" key="overviewCompany">
-  //       Overview
-  //     </Link>,
-  //     <Link to="/company#reviews" key="reviewCompany">
-  //       Review
-  //     </Link>,
-  //     <Link to="/company/jobs" key="jobsCompany">
-  //       Jobs
-  //     </Link>,
-  //     <Link to="/company/forum" key="discussionforumCompany">
-  //       Discussion&nbsp;Forum
-  //     </Link>,
-  //     <Link to="/company/interview-tips" key="interviewtipsCompany">
-  //       Interview&nbsp;Tips
-  //     </Link>,
-  //   ];
-  // } else if (false) {
-  //   elements = [
-  //     <Link to="/manage/overview" key="overviewmanageinfoCompany">
-  //       Overview
-  //     </Link>,
-  //     <Link to="/manage/jobs" key="jobinfomanageinfoCompany">
-  //       Job&nbsp;Info
-  //     </Link>,
-  //   ];
-  // }
   return (
     <div className={styles.container}>
       <CompanyDetails />
