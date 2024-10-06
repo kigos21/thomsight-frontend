@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
 import Spinner from "./Spinner";
-import NavDropdown from "./NavDropdown";
 
 interface NavbarAppProps {
   links: JSX.Element[];
@@ -71,32 +70,19 @@ export default function NavbarApp({ links }: NavbarAppProps) {
           <IconMenu2 size={30} stroke={1.5} className={styles.hamburgerIcon} />
         </button>
 
+        {/* Profile button */}
+        <NavLink to={"/"} className={styles.profileGroup}>
+          <span>{user ? user.name : "User"}</span>
+          <IconUser size={30} stroke={1.5} />
+        </NavLink>
         {/* <Link to={"/"} className={styles.profileGroup}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
         </Link> */}
-        {/* <div className={styles.profileGroup} onClick={handleProfileClick}>
+        <div className={styles.profileGroup} onClick={handleProfileClick}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
-        </div> */}
-        <NavDropdown
-          items={[
-            {
-              label: "Logout",
-              onClick: handleProfileClick,
-            },
-            {
-              label: "View Profile",
-              link: "/profile",
-            },
-          ]}
-          label={
-            <div className={styles.profileGroup}>
-              <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
-              <IconUser size={30} stroke={1.5} />
-            </div>
-          }
-        />
+        </div>
       </nav>
     </PaddedContainer>
   );
