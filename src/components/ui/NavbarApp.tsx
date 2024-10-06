@@ -71,10 +71,10 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </button>
 
         {/* Profile button */}
-        <NavLink to={"/"} className={styles.profileGroup}>
+        {/* <NavLink to={"/"} className={styles.profileGroup}>
           <span>{user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
-        </NavLink>
+        </NavLink> */}
         {/* <Link to={"/"} className={styles.profileGroup}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />

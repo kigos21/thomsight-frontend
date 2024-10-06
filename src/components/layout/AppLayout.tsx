@@ -14,8 +14,8 @@ export default function AppRoot() {
   switch (user?.role) {
     case "Student":
       links = [
-        <NavLink to="/" key="homeUser">
-          Home
+        <NavLink to="/companies" key="homeUser">
+          Companies
         </NavLink>,
         <NavLink to="/interview-guide" key="interviewTipsUser">
           Interview Tips
@@ -33,8 +33,8 @@ export default function AppRoot() {
       const companySlug = userCompany ? userCompany.slug : null;
 
       links = [
-        <NavLink to="/" key="homeCompany">
-          Home
+        <NavLink to="/companies" key="homeCompany">
+          Companies
         </NavLink>,
         <NavLink to="/announcements" key="announcementsCompany">
           Announcements
@@ -56,8 +56,8 @@ export default function AppRoot() {
 
     case "Admin":
       links = [
-        <NavLink to="/" key="homeAdmin">
-          Home
+        <NavLink to="/companies" key="homeAdmin">
+          Companies
         </NavLink>,
         <NavLink to="/tokens" key="tokensAdmin">
           Tokens
