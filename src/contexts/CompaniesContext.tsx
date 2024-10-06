@@ -9,6 +9,7 @@ interface CompaniesContextType {
   error: string | null;
   getCompanyBySlug: (slug: string) => Company | undefined;
   updateCompany: (updatedCompany: Company) => void;
+  createJob: (newJob: Job) => void;
 }
 
 const CompaniesContext = createContext<CompaniesContextType | undefined>(
@@ -66,6 +67,13 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const createJob = (newJob: Job) => {
+    setJobs((prevJobs) => {
+      if (!prevJobs) return [newJob];
+      return [...prevJobs, newJob];
+    });
+  };
+
   return (
     <CompaniesContext.Provider
       value={{
@@ -75,6 +83,7 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
         error,
         getCompanyBySlug,
         updateCompany,
+        createJob,
       }}
     >
       {children}

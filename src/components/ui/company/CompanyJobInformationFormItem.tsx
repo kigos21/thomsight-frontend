@@ -2,7 +2,6 @@ import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import FormField from "../../form/FormField";
 import { useState } from "react";
-import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 
 import styles from "./CompanyJobInformationFormItem.module.scss";
@@ -24,7 +23,7 @@ export default function CompanyJobInformationFormItem({
   const [jobDescription, setJobDescription] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const { getCompanyBySlug, updateCompany } = useCompanies();
+  const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [creating, setCreating] = useState(false);
 
@@ -54,6 +53,7 @@ export default function CompanyJobInformationFormItem({
         jobs: [...(company?.jobs || []), newJob],
       };
       updateCompany(updatedCompany);
+      createJob(newJob);
 
       setSuccess("Job posted successfully!");
       setJobTitle("");
