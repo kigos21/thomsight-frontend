@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom";
 
 import styles from "./CompanyJobInformationFormItem.module.scss";
 import { useCompanies } from "../../../contexts/CompaniesContext";
+import Spinner from "../Spinner";
+import { addJob } from "../../../api/companyCRUD";
 
 interface CompanyJobInformationFormItemProps {
   jobTitle: string;
@@ -16,8 +18,6 @@ interface CompanyJobInformationFormItemProps {
 export default function CompanyJobInformationFormItem({
   classNames,
   style,
-  jobTitle,
-  jobDescription,
 }: CompanyJobInformationFormItemProps) {
   const { slug } = useParams<{ slug: string }>();
   const [jobTitle, setJobTitle] = useState("");
@@ -26,6 +26,7 @@ export default function CompanyJobInformationFormItem({
   const [success, setSuccess] = useState("");
   const { getCompanyBySlug, updateCompany } = useCompanies();
   const company = getCompanyBySlug(slug || "");
+  const [creating, setCreating] = useState(false);
 
   const handleJobTitleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,33 +42,32 @@ export default function CompanyJobInformationFormItem({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCreating(true);
     try {
-      const response = await axiosInstance.post(
-        `/api/company/${slug}/jobs/create`,
-        {
-          title: jobTitle,
-          description: jobDescription,
-        }
-      );
-      if (response.status === 201) {
-        const newJob = response.data;
-        const updatedCompany = {
-          ...company!,
-          jobs: [...(company?.jobs || []), newJob],
-        };
-        updateCompany(updatedCompany);
+      const newJob = await addJob(slug || "", {
+        title: jobTitle,
+        description: jobDescription,
+      });
 
-        setSuccess("Job posted successfully!");
-        setJobTitle("");
-        setJobDescription("");
-      }
+      const updatedCompany = {
+        ...company!,
+        jobs: [...(company?.jobs || []), newJob],
+      };
+      updateCompany(updatedCompany);
+
+      setSuccess("Job posted successfully!");
+      setJobTitle("");
+      setJobDescription("");
     } catch (err) {
       setError("An error occurred while posting the job.");
+    } finally {
+      setCreating(false);
     }
   };
 
   return (
     <div className={`${styles.container}`}>
+      {creating && <Spinner message="Creating job..." />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
@@ -97,7 +97,6 @@ export default function CompanyJobInformationFormItem({
               classNames={styles.formFieldBio}
               type="textarea"
               placeholder="Enter Job Description"
-              required={true}
               onChange={handleJobDescriptionChange}
               value={jobDescription}
             ></FormField>

@@ -56,3 +56,18 @@ export const deleteLocation = async (slug: string, locationId: number) => {
     console.error("Error deleting location: " + error);
   }
 };
+
+export const addJob = async (
+  slug: string,
+  jobData: { title: string; description: string }
+) => {
+  try {
+    const response = await axiosInstance.post(
+      `/api/company/${slug}/jobs/create`,
+      jobData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error creating job: " + error);
+  }
+};
