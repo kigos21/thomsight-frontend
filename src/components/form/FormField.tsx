@@ -12,6 +12,7 @@ const FormField: React.FC<FormFieldProps> = ({
   classNames,
   editIcon,
   onChange,
+  name,
 }) => (
   <div className={styles.formGroup}>
     {icon && icon}
@@ -19,6 +20,7 @@ const FormField: React.FC<FormFieldProps> = ({
       <textarea
         placeholder={placeholder}
         required={required}
+        name={name}
         value={value}
         className={`${styles.formField} ${classNames}`}
         onChange={onChange}
@@ -28,6 +30,7 @@ const FormField: React.FC<FormFieldProps> = ({
         type={type}
         placeholder={placeholder}
         required={required}
+        name={name}
         value={value}
         className={`${styles.formField} ${classNames}`}
         onChange={onChange}

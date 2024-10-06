@@ -3,16 +3,26 @@ import Button from "../Button";
 import FormField from "../../form/FormField";
 
 import styles from "./CompanyJobInformationFormItem.module.scss";
+import { Job } from "../../../types/types";
 
 interface CompanyJobInformationFormItemProps {
-  jobTitle: string;
-  jobDescription: string;
+  job: Job;
+  onSave: () => void;
+  onChange: (job: Job) => void;
 }
 
 export default function CompanyJobInformationFormItem({
-  jobTitle,
-  jobDescription,
+  job,
+  onSave,
+  onChange,
 }: CompanyJobInformationFormItemProps) {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    onChange({ ...job, [name]: value }); // Update job state based on input change
+  };
+
   return (
     <div className={`${styles.container}`}>
       <StyledBox paddedContainerClass={styles.styledBox}>
@@ -22,9 +32,11 @@ export default function CompanyJobInformationFormItem({
             <FormField
               classNames={styles.formField}
               type="text"
+              name="title"
               placeholder="Enter Job Title"
               required={true}
-              value={jobTitle}
+              value={job.title}
+              onChange={handleInputChange}
             ></FormField>
           </div>
 
@@ -33,9 +45,11 @@ export default function CompanyJobInformationFormItem({
             <FormField
               classNames={styles.formFieldBio}
               type="textarea"
+              name="description"
               placeholder="Enter Job Description"
               required={true}
-              value={jobDescription}
+              value={job.description}
+              onChange={handleInputChange}
             ></FormField>
           </div>
 
@@ -43,6 +57,7 @@ export default function CompanyJobInformationFormItem({
             color="primary"
             roundness="rounded"
             classNames={styles.button}
+            onClick={onSave}
           >
             Submit
           </Button>

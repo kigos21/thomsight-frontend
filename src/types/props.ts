@@ -78,6 +78,7 @@ export type FormFieldProps = {
   classNames?: string;
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
+  name?: string;
   required: true | false;
   value?: string;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
