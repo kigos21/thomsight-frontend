@@ -1,8 +1,10 @@
 import { AnnouncementItemProps } from "../../../types/props";
 import StyledBox from "../../layout/StyledBox";
 import { IconTrash, IconEdit } from "@tabler/icons-react";
+import { useState } from "react";
 
 import styles from "./AnnouncementItem.module.scss";
+import DeletePopUp from "../company/DeletePopUp";
 
 export default function AnnouncementItem({
   classNames,
@@ -10,11 +12,28 @@ export default function AnnouncementItem({
   announcementHeader,
   date,
   announcementDescription,
+  id,
+  onDelete,
 }: AnnouncementItemProps) {
+  const [isDeletePopupVisible, setDeletePopupVisible] = useState(false);
+
   const handleIconClick = () => {
-    //click handling logic
     console.log("Icon clicked!");
   };
+
+  const handleDeleteClick = () => {
+    setDeletePopupVisible(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await onDelete(id);
+      setDeletePopupVisible(false);
+    } catch (error) {
+      console.error("Error deleting announcement:", error);
+    }
+  };
+
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
       <div className={styles.detailsContainer}>
@@ -26,7 +45,7 @@ export default function AnnouncementItem({
           <button onClick={handleIconClick} className={styles.iconButton}>
             <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
           </button>
-          <button onClick={handleIconClick} className={styles.iconButton}>
+          <button onClick={handleDeleteClick} className={styles.iconButton}>
             <IconTrash size={25} stroke={1.5} className={styles.iconDelete} />
           </button>
         </div>
@@ -34,6 +53,14 @@ export default function AnnouncementItem({
       <StyledBox paddedContainerClass={styles.styledBox}>
         <p className={styles.description}>{announcementDescription}</p>
       </StyledBox>
+
+      <DeletePopUp
+        isVisible={isDeletePopupVisible}
+        onClose={() => setDeletePopupVisible(false)}
+        onDelete={handleDelete}
+        heading="Delete Announcement"
+        details="Are you sure you want to delete this announcement?"
+      />
     </div>
   );
 }

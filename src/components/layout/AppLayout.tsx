@@ -1,6 +1,6 @@
 import styles from "./AppLayout.module.scss";
 
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import NavbarApp from "../ui/NavbarApp";
 import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
@@ -15,12 +15,12 @@ export default function AppRoot() {
   switch (user?.role) {
     case "Student":
       links = [
-        <Link to="/" key="homeUser">
+        <NavLink to="/" key="homeUser">
           Home
-        </Link>,
-        <Link to="/interview-guide" key="interviewTipsUser">
+        </NavLink>,
+        <NavLink to="/interview-guide" key="interviewTipsUser">
           Interview Tips
-        </Link>,
+        </NavLink>,
         <NavDropdown
           key="resumeUser"
           label={"Resume"}
@@ -42,44 +42,44 @@ export default function AppRoot() {
       const companySlug = userCompany ? userCompany.slug : null;
 
       links = [
-        <Link to="/" key="homeCompany">
+        <NavLink to="/" key="homeCompany">
           Home
-        </Link>,
-        <Link to="/announcements" key="announcementsCompany">
+        </NavLink>,
+        <NavLink to="/announcements" key="announcementsCompany">
           Announcements
-        </Link>,
-        <Link to={`/company/${companySlug}`} key="overviewCompany">
+        </NavLink>,
+        <NavLink to={`/company/${companySlug}`} key="overviewCompany">
           {" "}
           {/* Assuming companyId is part of the user object */}
           Overview
-        </Link>,
-        <Link
+        </NavLink>,
+        <NavLink
           to={`/company/${companySlug}/manage/info`}
           key="manageinfoCompany"
         >
           Manage Info
-        </Link>,
+        </NavLink>,
       ];
       break;
     }
 
     case "Admin":
       links = [
-        <Link to="/" key="homeAdmin">
+        <NavLink to="/" key="homeAdmin">
           Home
-        </Link>,
-        <Link to="/tokens" key="tokensAdmin">
+        </NavLink>,
+        <NavLink to="/tokens" key="tokensAdmin">
           Tokens
-        </Link>,
-        <Link to="/announcements" key="announcementsAdmin">
+        </NavLink>,
+        <NavLink to="/announcements" key="announcementsAdmin">
           Announcements
-        </Link>,
-        <Link to="/tokens/companies" key="companiesAdmin">
+        </NavLink>,
+        <NavLink to="/tokens/companies" key="companiesAdmin">
           Companies
-        </Link>,
-        <Link to="/reports" key="reportsAdmin">
+        </NavLink>,
+        <NavLink to="/reports" key="reportsAdmin">
           Reports
-        </Link>,
+        </NavLink>,
       ];
       break;
 

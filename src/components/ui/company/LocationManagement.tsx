@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./LocationManagement.module.scss";
 import { IconEdit, IconPlus, IconTrash } from "@tabler/icons-react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
 import ErrorPage from "../../../pages/ErrorPage";
 import { useCompanies } from "../../../contexts/CompaniesContext";
@@ -11,16 +11,28 @@ import {
   updateLocation,
   deleteLocation,
 } from "../../../api/companyCRUD";
+import DeletePopUp from "./DeletePopUp";
+import ValidationError from "../../form/ValidationError";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [locations, setLocations] = useState<Location[]>([]);
+  const { getCompanyBySlug, loading, error } = useCompanies();
+  const company = getCompanyBySlug(slug || "");
+  const [createErrorMessage, setCreateErrorMessage] = useState<string | null>(
+    null
+  );
+  const [editErrorMessage, setEditErrorMessage] = useState<string | null>(null);
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
   const [newLocation, setNewLocation] = useState("");
-  const { getCompanyBySlug, loading, error } = useCompanies();
-  const company = getCompanyBySlug(slug || ""); // Provide a fallback
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [locationToDelete, setLocationToDelete] = useState<number | null>(null);
+
+  const [createLoading, setCreateLoading] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   useEffect(() => {
     if (company) {
@@ -33,14 +45,23 @@ const LocationManagement: React.FC = () => {
   if (error) return <ErrorPage />;
 
   const handleAddLocation = async () => {
-    if (newLocation && slug) {
+    if (!newLocation.trim()) {
+      setCreateErrorMessage("Location cannot be blank.");
+      return;
+    }
+
+    setCreateLoading(true);
+
+    if (slug) {
       const response = await addLocation(slug, newLocation);
       if (response) {
         setLocations([...locations, response]);
         setNewLocation("");
         setShowAddForm(false);
+        setCreateErrorMessage(null);
       }
     }
+    setCreateLoading(false);
   };
 
   const handleEditLocation = (location: Location) => {
@@ -49,6 +70,13 @@ const LocationManagement: React.FC = () => {
   };
 
   const handleUpdateLocation = async () => {
+    if (editingLocation && !editingLocation.address.trim()) {
+      setEditErrorMessage("Location address cannot be blank.");
+      return;
+    }
+
+    setUpdateLoading(true);
+
     if (editingLocation && slug) {
       const response = await updateLocation(
         slug,
@@ -63,14 +91,23 @@ const LocationManagement: React.FC = () => {
         );
         setShowEditDialog(false);
         setEditingLocation(null);
+        setEditErrorMessage(null);
       }
+      setUpdateLoading(false);
     }
   };
 
-  const handleDeleteLocation = async (id: number) => {
-    if (slug) {
-      await deleteLocation(slug, id);
-      setLocations(locations.filter((loc) => loc.id !== id));
+  const handleDeleteClick = (locationId: number) => {
+    setLocationToDelete(locationId);
+    setShowDeletePopup(true);
+  };
+
+  const handleDeleteLocation = async () => {
+    if (locationToDelete && slug) {
+      await deleteLocation(slug, locationToDelete);
+      setLocations(locations.filter((loc) => loc.id !== locationToDelete));
+      setShowDeletePopup(false);
+      setLocationToDelete(null);
     }
   };
 
@@ -80,6 +117,8 @@ const LocationManagement: React.FC = () => {
 
   return (
     <div className={styles.locationManagement}>
+      {createLoading && <Spinner message="Creating location..." />}
+      {updateLoading && <Spinner message="Updating location..." />}
       <div className={styles.sectionHeading}>
         <h3>Company Location</h3>
         <button
@@ -101,7 +140,11 @@ const LocationManagement: React.FC = () => {
             className={styles.inputText}
           />
           <button
-            onClick={() => setShowAddForm(false)}
+            onClick={() => {
+              setShowAddForm(false);
+              setNewLocation("");
+              setCreateErrorMessage(null);
+            }}
             className={styles.cancelButton}
           >
             Cancel
@@ -111,11 +154,15 @@ const LocationManagement: React.FC = () => {
           </button>
         </div>
       )}
+      {createErrorMessage && <ValidationError message={createErrorMessage} />}
 
       {showEditDialog && editingLocation && (
         <div
           className={styles.dialogBackdrop}
-          onClick={() => setShowEditDialog(false)}
+          onClick={() => {
+            setShowEditDialog(false);
+            setEditErrorMessage(null);
+          }}
         >
           <div
             className={styles.editDialog}
@@ -133,9 +180,15 @@ const LocationManagement: React.FC = () => {
                   })
                 }
               />
+              {editErrorMessage && (
+                <ValidationError message={editErrorMessage} />
+              )}
               <div className={styles.saveAndCancelButtons}>
                 <button
-                  onClick={() => setShowEditDialog(false)}
+                  onClick={() => {
+                    setShowEditDialog(false);
+                    setEditErrorMessage(null);
+                  }}
                   className={styles.cancelButton}
                 >
                   Cancel
@@ -164,13 +217,23 @@ const LocationManagement: React.FC = () => {
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => handleDeleteLocation(location.id)}
+              onClick={() => handleDeleteClick(location.id)}
             >
               <IconTrash />
             </button>
           </div>
         ))}
       </div>
+
+      {showDeletePopup && (
+        <DeletePopUp
+          isVisible={showDeletePopup}
+          onClose={() => setShowDeletePopup(false)}
+          onDelete={handleDeleteLocation}
+          heading="Delete Location"
+          details="Are you sure you want to delete this location?"
+        />
+      )}
     </div>
   );
 };

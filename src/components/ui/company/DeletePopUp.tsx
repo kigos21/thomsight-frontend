@@ -1,18 +1,28 @@
-import React from 'react';
+import React from "react";
 import styles from "./DeletePopUp.module.scss";
-import { DeletePopUpProps } from '../../../types/props';
+import { DeletePopUpProps } from "../../../types/props";
 
-const DeletePopUp: React.FC<DeletePopUpProps> = ({ isVisible, onClose }) => {
+const DeletePopUp: React.FC<DeletePopUpProps> = ({
+  isVisible,
+  onClose,
+  onDelete,
+  heading,
+  details,
+}) => {
   if (!isVisible) return null;
 
   return (
     <div className={styles.deletePopUpOverlay}>
       <div className={styles.deletePopUp}>
-        <h2 className={styles.heading}>Delete Post</h2>
-        <p>Are you sure you want to delete this post?</p>
+        <h2 className={styles.heading}>{heading}</h2>
+        <p>{details}</p>
         <div className={styles.buttonGroup}>
-          <button className={styles.deleteButton}>Delete</button>
-          <button className={styles.cancelButton} onClick={onClose}>Cancel</button>
+          <button className={styles.deleteButton} onClick={onDelete}>
+            Delete
+          </button>
+          <button className={styles.cancelButton} onClick={onClose}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>

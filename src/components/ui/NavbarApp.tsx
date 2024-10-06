@@ -3,7 +3,7 @@ import logo from "../../assets/thomsight-logo.svg";
 
 import PaddedContainer from "../layout/PaddedContainer";
 import { IconUser, IconMenu2 } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
@@ -56,7 +56,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
             {links.length > 0 &&
               links.map((link, i) => <li key={i}>{link}</li>)}
             <li>
-              <Link to={"/"}>Profile</Link>
+              <NavLink to={"/"}>Profile</NavLink>
             </li>
           </ul>
         </div>
@@ -71,6 +71,10 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </button>
 
         {/* Profile button */}
+        <NavLink to={"/"} className={styles.profileGroup}>
+          <span>{user ? user.name : "User"}</span>
+          <IconUser size={30} stroke={1.5} />
+        </NavLink>
         {/* <Link to={"/"} className={styles.profileGroup}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />

@@ -50,6 +50,7 @@ import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnounceme
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
 import LoginExternalPage from "./pages/auth/LoginExternalPage.tsx";
+import LandingPage from "./pages/auth/LandingPage.tsx";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import PrivateRoute from "./contexts/PrivateRoute.tsx";
 import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
@@ -174,7 +175,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "tokens/companies",
+        path: "companies",
         element: (
           <PrivateRoute
             element={<AdminCompanyAccount />}
@@ -321,6 +322,10 @@ const router = createBrowserRouter([
       {
         path: "/data-privacy",
         element: <DataPrivacy />,
+      },
+      {
+        path: "/thomsight",
+        element: <LandingPage />,
       },
     ],
   },
