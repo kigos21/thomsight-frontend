@@ -9,7 +9,6 @@ import { Job } from "../../../types/types";
 import { useCompanies } from "../../../contexts/CompaniesContext";
 import Spinner from "../Spinner";
 import { addJob, updateJob } from "../../../api/companyCRUD";
-import SuccessMessage from "../../form/SuccessMessage";
 
 interface CompanyJobInformationFormItemProps {
   job: Job;
@@ -61,13 +60,14 @@ export default function CompanyJobInformationFormItem({
         const updatedCompany = {
           ...company!,
           jobs:
-            company?.jobs.map((j) => (j.id === job.id ? updatedJob : j)) || [],
+            company?.jobs?.map((j) => (j.id === job.id ? updatedJob : j)) || [],
         };
         updateCompany(updatedCompany);
       }
       onSave();
     } catch (err) {
       setError("An error occurred while saving the job." + err);
+      console.log(error);
     } finally {
       setCreating(false);
     }
