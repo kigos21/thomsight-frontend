@@ -1,19 +1,20 @@
-import { CompanyJobInformationFormItemProps } from "../../../types/props";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import FormField from "../../form/FormField";
 
 import styles from "./CompanyJobInformationFormItem.module.scss";
 
+interface CompanyJobInformationFormItemProps {
+  jobTitle: string;
+  jobDescription: string;
+}
+
 export default function CompanyJobInformationFormItem({
-  classNames,
-  style,
   jobTitle,
-  tags,
   jobDescription,
 }: CompanyJobInformationFormItemProps) {
   return (
-    <div className={`${styles.container} ${classNames}`} style={style}>
+    <div className={`${styles.container}`}>
       <StyledBox paddedContainerClass={styles.styledBox}>
         <div className={styles.formContainer}>
           <div>
@@ -23,16 +24,7 @@ export default function CompanyJobInformationFormItem({
               type="text"
               placeholder="Enter Job Title"
               required={true}
-            ></FormField>
-          </div>
-
-          <div>
-            <p className={styles.formTitle}>Tags</p>
-            <FormField
-              classNames={styles.formField}
-              type="text"
-              placeholder="Enter Tags"
-              required={true}
+              value={jobTitle}
             ></FormField>
           </div>
 
@@ -43,6 +35,7 @@ export default function CompanyJobInformationFormItem({
               type="textarea"
               placeholder="Enter Job Description"
               required={true}
+              value={jobDescription}
             ></FormField>
           </div>
 

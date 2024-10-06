@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.jobItem {
+  display: flex;
+  align-items: flex-start;
+
+  padding: 1rem 1.5rem;
+  background-color: var(--neutral-0);
+  border-radius: 1.5rem;
+
+  gap: 2rem;
+
+  &:hover .editButton,
+  &:hover .deleteButton {
+    opacity: 100%;
+  }
+}
+
+.jobName {
+  flex: 4;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.jobDescription {
+  flex: 8;
+  font-size: 0.9rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.editButton {
+  opacity: 50%;
+
+  &:hover {
+    color: var(--secondary-color);
+  }
+}
+
+.deleteButton {
+  opacity: 50%;
+
+  &:hover {
+    color: var(--secondary-color);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .jobItem {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
