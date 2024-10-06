@@ -87,3 +87,11 @@ export const updateJob = async (
     console.error("Error updating job: " + error);
   }
 };
+
+export const deleteJob = async (slug: string, jobId: number) => {
+  try {
+    await axiosInstance.delete(`/api/company/${slug}/job/${jobId}/delete`);
+  } catch (error) {
+    console.error("Error deleting job: " + error);
+  }
+};

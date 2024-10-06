@@ -9,13 +9,19 @@ import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import { useUser } from "../../contexts/UserContext";
+import DeletePopUp from "../../components/ui/company/DeletePopUp";
+import { deleteJob } from "../../api/companyCRUD";
+import Spinner from "../../components/ui/Spinner";
 
 export default function CompanyManageInformationJobs() {
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug } = useCompanies();
+  const { getCompanyBySlug, updateCompany } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [jobs, setJobs] = useState<Job[]>(company?.jobs || []);
   const { user } = useUser();
+  const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
+  const [jobToDelete, setJobToDelete] = useState<number | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const [currentJob, setCurrentJob] = useState<Job>({
     id: 0, // IGNORE THIS WHEN CREATING NEW JOB, only useful when editing exising Job
@@ -65,8 +71,34 @@ export default function CompanyManageInformationJobs() {
     setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
   };
 
-  const handleDelete = (id: number) => {
-    setJobs(jobs.filter((job) => job.id !== id));
+  const handleDelete = async () => {
+    if (jobToDelete !== null) {
+      setDeleteLoading(true);
+      try {
+        if (slug && jobToDelete) {
+          await deleteJob(slug, jobToDelete);
+          const updatedJobs = jobs.filter((job) => job.id !== jobToDelete);
+          setJobs(updatedJobs);
+          setSuccessMessage("Deleted job successfully");
+
+          if (company) {
+            updateCompany({ ...company, jobs: updatedJobs });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to delete job", error);
+        setSuccessMessage("Failed to delete job.");
+      } finally {
+        setDeleteLoading(false);
+        setDeleteConfirm(false);
+        setJobToDelete(null);
+      }
+    }
+  };
+
+  const handleDeleteClick = (id: number) => {
+    setJobToDelete(id);
+    setDeleteConfirm(true);
   };
 
   const handleChange = (updatedJob: Job) => {
@@ -80,6 +112,7 @@ export default function CompanyManageInformationJobs() {
 
   return (
     <div className={styles.container}>
+      {deleteLoading && <Spinner message="Deleting..." />}
       <div className={styles.titleContainer}>
         <h2>Job Information</h2>
         <Button
@@ -104,7 +137,21 @@ export default function CompanyManageInformationJobs() {
         />
       )}
 
-      <CompanyJobs jobs={jobs} onEdit={handleEdit} onDelete={handleDelete} />
+      <CompanyJobs
+        jobs={jobs}
+        onEdit={handleEdit}
+        onDelete={handleDeleteClick}
+      />
+
+      {deleteConfirm && (
+        <DeletePopUp
+          isVisible={deleteConfirm}
+          onClose={() => setDeleteConfirm(false)}
+          onDelete={handleDelete}
+          heading="Delete Job"
+          details="Are you sure you want to delete this job?"
+        />
+      )}
     </div>
   );
 }
