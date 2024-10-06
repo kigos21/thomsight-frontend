@@ -42,7 +42,7 @@ export type Location = {
 
 export type Job = {
   id: number;
-  company_id: number;
+  company_id: number | undefined;
   title: string;
   description: string;
 };

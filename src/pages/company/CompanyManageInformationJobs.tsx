@@ -8,16 +8,18 @@ import { Job } from "../../types/types";
 import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import SuccessMessage from "../../components/form/SuccessMessage";
+import { useUser } from "../../contexts/UserContext";
 
 export default function CompanyManageInformationJobs() {
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [jobs, setJobs] = useState<Job[]>(company?.jobs || []);
+  const { user } = useUser();
 
   const [currentJob, setCurrentJob] = useState<Job>({
     id: 0, // IGNORE THIS WHEN CREATING NEW JOB, only useful when editing exising Job
-    company_id: 1, // current company_id of logged in representative
+    company_id: user?.id, // current company_id of logged in representative
     title: "",
     description: "",
   });
