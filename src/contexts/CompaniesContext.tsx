@@ -1,0 +1,73 @@
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { fetchCompanies, fetchJobs } from "../api/companyData";
+import { Company, Job } from "../types/types";
+
+interface CompaniesContextType {
+  companies: Company[] | null;
+  jobs: Job[] | null;
+  loading: boolean;
+  error: string | null;
+  getCompanyBySlug: (slug: string) => Company | undefined;
+}
+
+const CompaniesContext = createContext<CompaniesContextType | undefined>(
+  undefined
+);
+
+export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [companies, setCompanies] = useState<Company[] | null>(null);
+  const [jobs, setJobs] = useState<Job[] | null>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadCompanies = async () => {
+      try {
+        const companiesData = await fetchCompanies();
+        setCompanies(companiesData);
+      } catch (err) {
+        console.log(err);
+        setError("Failed to load companies.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const loadJobs = async () => {
+      try {
+        const jobsData = await fetchJobs();
+        setJobs(jobsData);
+      } catch (err) {
+        console.log(err);
+        setError("Failed to load jobs.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCompanies();
+    loadJobs();
+  }, []);
+
+  const getCompanyBySlug = (slug: string) => {
+    if (companies) return companies.find((company) => company.slug === slug);
+  };
+
+  return (
+    <CompaniesContext.Provider
+      value={{ companies, jobs, loading, error, getCompanyBySlug }}
+    >
+      {children}
+    </CompaniesContext.Provider>
+  );
+};
+
+export const useCompanies = () => {
+  const context = useContext(CompaniesContext);
+  if (context === undefined) {
+    throw new Error("useCompanies must be used within a CompaniesProvider");
+  }
+  return context;
+};

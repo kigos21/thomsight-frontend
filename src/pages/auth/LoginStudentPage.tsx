@@ -5,47 +5,30 @@ import FormField from "../../components/form/FormField";
 import { IconLock, IconMail } from "@tabler/icons-react";
 import googleIcon from "../../assets/google-logo.png";
 import { handleGoogleLogin } from "../../api/googleLogin";
-import axios from "axios";
+import { login } from "../../api/authUser";
+import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
 
 export default function LoginStudentPage() {
-  axios.defaults.withCredentials = true;
-  axios.defaults.withXSRFToken = true;
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      await axios.get("http://localhost:8000/sanctum/csrf-cookie");
-
-      const response = await axios.post("http://localhost:8000/api/login", {
-        email,
-        password,
-      });
-
-      console.log("Login successful", response.data);
+      await login(email, password);
       window.location.href = "http://localhost:5173/";
     } catch (err) {
-      setError("Invalid credentials or server error");
+      setError("Invalid credentials");
       console.error("Login failed", err);
-    }
-  };
-
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await axios.get("http://localhost:8000/sanctum/csrf-cookie");
-
-      await axios.get("http://localhost:8000/api/logout", {});
-      console.log("Logout successful");
-    } catch (err) {
-      console.error("Logout failed", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,11 +56,13 @@ export default function LoginStudentPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <a href="/forgot-password">Forgot Password?</a>
+            {loading && <Spinner message="Please wait while we log you in!" />}
             <Button
               color="primary"
               roundness="rounded"
               classNames={styles.button}
               type="submit"
+              disabled={loading}
             >
               Login
             </Button>
