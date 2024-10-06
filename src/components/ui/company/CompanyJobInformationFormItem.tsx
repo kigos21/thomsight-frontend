@@ -59,7 +59,7 @@ export default function CompanyJobInformationFormItem({
       setJobTitle("");
       setJobDescription("");
     } catch (err) {
-      setError("An error occurred while posting the job.");
+      setError("An error occurred while posting the job." + err);
     } finally {
       setCreating(false);
     }

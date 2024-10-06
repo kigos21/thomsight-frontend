@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import NavbarCompany from "../ui/NavbarCompany";
 import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
