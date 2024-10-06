@@ -8,6 +8,7 @@ interface CompaniesContextType {
   loading: boolean;
   error: string | null;
   getCompanyBySlug: (slug: string) => Company | undefined;
+  updateCompany: (updatedCompany: Company) => void;
 }
 
 const CompaniesContext = createContext<CompaniesContextType | undefined>(
@@ -55,9 +56,26 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
     if (companies) return companies.find((company) => company.slug === slug);
   };
 
+  const updateCompany = (updatedCompany: Company) => {
+    setCompanies((prevCompanies) => {
+      if (!prevCompanies) return null;
+
+      return prevCompanies.map((company) =>
+        company.slug === updatedCompany.slug ? updatedCompany : company
+      );
+    });
+  };
+
   return (
     <CompaniesContext.Provider
-      value={{ companies, jobs, loading, error, getCompanyBySlug }}
+      value={{
+        companies,
+        jobs,
+        loading,
+        error,
+        getCompanyBySlug,
+        updateCompany,
+      }}
     >
       {children}
     </CompaniesContext.Provider>
