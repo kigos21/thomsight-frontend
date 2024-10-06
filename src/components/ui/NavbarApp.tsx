@@ -2,12 +2,13 @@ import styles from "./NavbarApp.module.scss";
 import logo from "../../assets/thomsight-logo.svg";
 
 import PaddedContainer from "../layout/PaddedContainer";
-import { IconUser, IconMenu2 } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
 import Spinner from "./Spinner";
+import ProfileDropdown from "./ProfileDropdown";
 
 interface NavbarAppProps {
   links: JSX.Element[];
@@ -17,7 +18,11 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
   const { user, loading } = useUser();
 
-  const handleProfileClick = async () => {
+  const handleProfileClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+
     try {
       await logout();
       window.location.href = "http://localhost:5173/login";
@@ -71,18 +76,19 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </button>
 
         {/* Profile button */}
-        <NavLink to={"/"} className={styles.profileGroup}>
-          <span>{user ? user.name : "User"}</span>
-          <IconUser size={30} stroke={1.5} />
-        </NavLink>
+        <ProfileDropdown
+          username={user ? user.name : "User"}
+          onLogout={handleProfileClick}
+        />
+
         {/* <Link to={"/"} className={styles.profileGroup}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
         </Link> */}
-        <div className={styles.profileGroup} onClick={handleProfileClick}>
+        {/* <div className={styles.profileGroup} onClick={handleProfileClick}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>
           <IconUser size={30} stroke={1.5} />
-        </div>
+        </div> */}
       </nav>
     </PaddedContainer>
   );
