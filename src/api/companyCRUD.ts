@@ -71,3 +71,19 @@ export const addJob = async (
     console.error("Error creating job: " + error);
   }
 };
+
+export const updateJob = async (
+  slug: string,
+  jobId: number,
+  jobData: { title: string; description: string }
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/company/${slug}/job/${jobId}/edit`,
+      jobData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating job: " + error);
+  }
+};

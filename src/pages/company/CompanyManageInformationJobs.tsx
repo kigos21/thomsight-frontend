@@ -5,28 +5,15 @@ import styles from "./CompanyManageInformationJobs.module.scss";
 import CompanyJobs from "../../components/ui/company/CompanyJobs";
 import { useState } from "react";
 import { Job } from "../../types/types";
+import { useParams } from "react-router-dom";
+import { useCompanies } from "../../contexts/CompaniesContext";
+import SuccessMessage from "../../components/form/SuccessMessage";
 
 export default function CompanyManageInformationJobs() {
-  const [jobs, setJobs] = useState<Job[]>([
-    {
-      id: 1,
-      company_id: 1,
-      title: "Java Developer",
-      description: "Lorem ipsum dolor sit amet consectetur...",
-    },
-    {
-      id: 2,
-      company_id: 1,
-      title: "C++ Developer",
-      description: "Lorem ipsum dolor sit amet consectetur...",
-    },
-    {
-      id: 3,
-      company_id: 1,
-      title: "React Developer",
-      description: "Short description",
-    },
-  ]);
+  const { slug } = useParams<{ slug: string }>();
+  const { getCompanyBySlug } = useCompanies();
+  const company = getCompanyBySlug(slug || "");
+  const [jobs, setJobs] = useState<Job[]>(company?.jobs || []);
 
   const [currentJob, setCurrentJob] = useState<Job>({
     id: 0, // IGNORE THIS WHEN CREATING NEW JOB, only useful when editing exising Job
@@ -38,13 +25,23 @@ export default function CompanyManageInformationJobs() {
   // State to control the visibility of the form
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   const handleAdd = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scrolling
+    });
     // Reset to a clean state for adding a new job and show the form
     setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
     setIsFormVisible(true); // Show the form
   };
 
   const handleEdit = (job: Job) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scrolling
+    });
     // Populate the form with the job data to be edited and show the form
     setCurrentJob(job);
     setIsFormVisible(true); // Show the form
@@ -54,9 +51,11 @@ export default function CompanyManageInformationJobs() {
     if (currentJob.id === 0) {
       // Adding a new job
       setJobs([...jobs, { ...currentJob, id: jobs.length + 1 }]);
+      setSuccessMessage("Created job successfully");
     } else {
       // Updating an existing job
       setJobs(jobs.map((job) => (job.id === currentJob.id ? currentJob : job)));
+      setSuccessMessage("Updated job successfully");
     }
 
     // Hide the form after saving
@@ -90,6 +89,8 @@ export default function CompanyManageInformationJobs() {
           Add Job
         </Button>
       </div>
+
+      {successMessage && <SuccessMessage message={successMessage} />}
 
       {/* Conditionally render the form based on isFormVisible */}
       {isFormVisible && (
