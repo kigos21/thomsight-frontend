@@ -35,14 +35,19 @@ export default function CompanyManageInformationJobs() {
     description: "",
   });
 
+  // State to control the visibility of the form
+  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+
   const handleAdd = () => {
-    // Reset to a clean state for adding a new job
+    // Reset to a clean state for adding a new job and show the form
     setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
+    setIsFormVisible(true); // Show the form
   };
 
   const handleEdit = (job: Job) => {
-    // Populate the form with the job data to be edited
+    // Populate the form with the job data to be edited and show the form
     setCurrentJob(job);
+    setIsFormVisible(true); // Show the form
   };
 
   const handleSave = () => {
@@ -53,7 +58,9 @@ export default function CompanyManageInformationJobs() {
       // Updating an existing job
       setJobs(jobs.map((job) => (job.id === currentJob.id ? currentJob : job)));
     }
-    // Reset the form after save
+
+    // Hide the form after saving
+    setIsFormVisible(false);
     setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
   };
 
@@ -63,6 +70,11 @@ export default function CompanyManageInformationJobs() {
 
   const handleChange = (updatedJob: Job) => {
     setCurrentJob(updatedJob); // Update current job with new input values
+  };
+
+  const handleCancel = () => {
+    setIsFormVisible(false);
+    setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
   };
 
   return (
@@ -79,11 +91,15 @@ export default function CompanyManageInformationJobs() {
         </Button>
       </div>
 
-      <CompanyJobInformationFormItem
-        job={currentJob}
-        onSave={handleSave}
-        onChange={handleChange}
-      />
+      {/* Conditionally render the form based on isFormVisible */}
+      {isFormVisible && (
+        <CompanyJobInformationFormItem
+          job={currentJob}
+          onSave={handleSave}
+          onChange={handleChange}
+          onCancel={handleCancel}
+        />
+      )}
 
       <CompanyJobs jobs={jobs} onEdit={handleEdit} onDelete={handleDelete} />
     </div>

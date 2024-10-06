@@ -9,12 +9,14 @@ interface CompanyJobInformationFormItemProps {
   job: Job;
   onSave: () => void;
   onChange: (job: Job) => void;
+  onCancel: () => void;
 }
 
 export default function CompanyJobInformationFormItem({
   job,
   onSave,
   onChange,
+  onCancel,
 }: CompanyJobInformationFormItemProps) {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -53,14 +55,25 @@ export default function CompanyJobInformationFormItem({
             ></FormField>
           </div>
 
-          <Button
-            color="primary"
-            roundness="rounded"
-            classNames={styles.button}
-            onClick={onSave}
-          >
-            Submit
-          </Button>
+          <div className={styles.buttonGroup}>
+            <Button
+              color="secondary"
+              roundness="rounded"
+              classNames={styles.button}
+              onClick={onCancel}
+              style={{ backgroundColor: "var(--neutral-2)" }}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.button}
+              onClick={onSave}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </StyledBox>
     </div>
