@@ -9,10 +9,11 @@ import Spinner from "../../components/ui/Spinner";
 import { useUser } from "../../contexts/UserContext";
 import { updateCompanyInfo } from "../../api/companyCRUD";
 import ValidationError from "../../components/form/ValidationError";
+import SuccessMessage from "../../components/form/SuccessMessage";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug, loading, error } = useCompanies();
+  const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
   const company = getCompanyBySlug(slug as string);
   const { user } = useUser();
 
@@ -37,6 +38,7 @@ export default function CompanyManageInformationCompany() {
   const [industryError, setIndustryError] = useState<string>("");
 
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (company) {
@@ -63,6 +65,7 @@ export default function CompanyManageInformationCompany() {
     setDescriptionError("");
     setSizeError("");
     setIndustryError("");
+    setSuccess(false);
 
     if (description.trim() === "") {
       setDescriptionError("Description cannot be blank");
@@ -92,6 +95,15 @@ export default function CompanyManageInformationCompany() {
       };
 
       await updateCompanyInfo(slug, updatedData);
+
+      const updatedCompany = {
+        ...company,
+        description,
+        industry,
+        size,
+      };
+      updateCompany(updatedCompany);
+      setSuccess(true);
     } catch (error) {
       console.error("Error updating company data:", error);
     } finally {
@@ -105,6 +117,7 @@ export default function CompanyManageInformationCompany() {
   return (
     <div className={styles.container}>
       <h2>Company Information</h2>
+      {success && <SuccessMessage message="Updated successfully" />}
       {isUpdating && <Spinner message="Updating..." />}{" "}
       {/* COMPANY DESCRIPTION */}
       <div>
@@ -119,6 +132,7 @@ export default function CompanyManageInformationCompany() {
                   setIsEditDesc(false);
                   setDescription(originalDescription);
                   setDescriptionError("");
+                  setSuccess(false);
                 }}
               >
                 Cancel
@@ -133,6 +147,7 @@ export default function CompanyManageInformationCompany() {
               onClick={() => {
                 setIsEditDesc(true);
                 setOriginalDescription(description);
+                setSuccess(false);
               }}
             >
               <IconEdit />
@@ -171,6 +186,7 @@ export default function CompanyManageInformationCompany() {
                   setIsEditCompanySize(false);
                   setCompanySize(originalSize);
                   setSizeError("");
+                  setSuccess(false);
                 }}
               >
                 Cancel
@@ -185,6 +201,7 @@ export default function CompanyManageInformationCompany() {
               onClick={() => {
                 setIsEditCompanySize(true);
                 setOriginalSize(size);
+                setSuccess(false);
               }}
             >
               <IconEdit />
@@ -220,6 +237,7 @@ export default function CompanyManageInformationCompany() {
                   setIsEditIndustry(false);
                   setIndustry(originalIndustry);
                   setIndustryError("");
+                  setSuccess(false);
                 }}
               >
                 Cancel
@@ -234,6 +252,7 @@ export default function CompanyManageInformationCompany() {
               onClick={() => {
                 setIsEditIndustry(true);
                 setOriginalIndustry(industry);
+                setSuccess(false);
               }}
             >
               <IconEdit />

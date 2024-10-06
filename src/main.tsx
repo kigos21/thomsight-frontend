@@ -69,7 +69,7 @@ const router = createBrowserRouter([
     children: [
       // Home
       {
-        index: true,
+        path: "companies",
         element: <UserHomePage />,
       },
 
@@ -324,7 +324,7 @@ const router = createBrowserRouter([
         element: <DataPrivacy />,
       },
       {
-        path: "/thomsight",
+        index: true,
         element: <LandingPage />,
       },
     ],

@@ -23,7 +23,7 @@ export default function LoginStudentPage() {
 
     try {
       await login(email, password);
-      window.location.href = "http://localhost:5173/";
+      window.location.href = "http://localhost:5173/companies";
     } catch (err) {
       setError("Invalid credentials");
       console.error("Login failed", err);

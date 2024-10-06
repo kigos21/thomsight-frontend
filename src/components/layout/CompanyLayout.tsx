@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import NavbarCompany from "../ui/NavbarCompany";
 import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
@@ -11,8 +11,7 @@ import Spinner from "../ui/Spinner";
 
 export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
-  const { user } = useUser();
-  const { loading, error, getCompanyBySlug } = useCompanies();
+  const { loading, error } = useCompanies();
 
   if (loading) {
     return <Spinner message="Please wait while we render relevant data!" />;
@@ -21,8 +20,6 @@ export default function CompanyRoot() {
   if (!slug || slug.trim() === "" || error) {
     return <ErrorPage />;
   }
-
-  const company = getCompanyBySlug(slug || "");
 
   const basePath = slug ? `/company/${slug}` : "/company";
 
@@ -43,17 +40,6 @@ export default function CompanyRoot() {
       Interview Tips
     </Link>,
   ];
-
-  if (user?.role === "Rep" && company?.posted_by === user?.id) {
-    elements.push(
-      <Link to={`${basePath}/manage/info`} key="overviewmanageinfoCompany">
-        Manage Overview
-      </Link>,
-      <Link to={`${basePath}/manage/jobs`} key="jobinfomanageinfoCompany">
-        Manage Jobs
-      </Link>
-    );
-  }
   // let elements: React.ReactNode[];
 
   // if (true) {
