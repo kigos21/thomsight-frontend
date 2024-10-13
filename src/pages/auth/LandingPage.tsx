@@ -2,6 +2,7 @@ import styles from "./LandingPage.module.scss";
 
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import Button from "../../components/ui/Button";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -20,14 +21,16 @@ const LandingPage = () => {
             </p>
           </div>
           <div className={styles.buttonContainer}>
-            <Button
-              color="secondary"
-              roundness="sm-rounded"
-              classNames={styles.button}
-              type="submit"
-            >
-              REGISTER NOW!
-            </Button>
+            <Link to="/register">
+              <Button
+                color="secondary"
+                roundness="sm-rounded"
+                classNames={styles.button}
+                type="button"
+              >
+                REGISTER NOW!
+              </Button>
+            </Link>
           </div>
         </div>
         <div className={styles.rightContainer}></div>

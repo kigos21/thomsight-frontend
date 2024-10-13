@@ -17,17 +17,21 @@ interface NavbarAppProps {
 export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
   const { user, loading } = useUser();
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   const handleProfileClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    setLogoutLoading(true);
 
     try {
       await logout();
       window.location.href = "http://localhost:5173/login";
     } catch (err) {
       console.error("Logout failed", err);
+    } finally {
+      setLogoutLoading(false);
     }
   };
 
@@ -36,6 +40,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
       {loading && (
         <Spinner message="Please wait while we render relevant data!" />
       )}
+      {logoutLoading && <Spinner message="Logging out..." />}
       <nav className={styles.container}>
         <div className={styles.brand}>
           <img className={styles.brandImage} src={logo} alt="Thomsight logo" />

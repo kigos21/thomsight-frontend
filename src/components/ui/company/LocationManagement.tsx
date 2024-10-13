@@ -13,11 +13,12 @@ import {
 } from "../../../api/companyCRUD";
 import DeletePopUp from "./DeletePopUp";
 import ValidationError from "../../form/ValidationError";
+import SuccessMessage from "../../form/SuccessMessage";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [locations, setLocations] = useState<Location[]>([]);
-  const { getCompanyBySlug, loading, error } = useCompanies();
+  const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [createErrorMessage, setCreateErrorMessage] = useState<string | null>(
     null
@@ -31,8 +32,12 @@ const LocationManagement: React.FC = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [locationToDelete, setLocationToDelete] = useState<number | null>(null);
 
-  const [createLoading, setCreateLoading] = useState(false);
-  const [updateLoading, setUpdateLoading] = useState(false);
+  const [createLoading, setCreateLoading] = useState<boolean>(false);
+  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [createSuccess, setCreateSuccess] = useState<boolean>(false);
+  const [updateSuccess, setUpdateSuccess] = useState<boolean>(false);
+  const [deleteSuccess, setDeleteSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (company) {
@@ -51,14 +56,23 @@ const LocationManagement: React.FC = () => {
     }
 
     setCreateLoading(true);
+    setCreateSuccess(false);
+    setUpdateSuccess(false);
+    setDeleteSuccess(false);
 
     if (slug) {
       const response = await addLocation(slug, newLocation);
       if (response) {
+        const updatedCompany = {
+          ...company!,
+          locations: [...locations, response],
+        };
+        updateCompany(updatedCompany);
         setLocations([...locations, response]);
         setNewLocation("");
         setShowAddForm(false);
         setCreateErrorMessage(null);
+        setCreateSuccess(true);
       }
     }
     setCreateLoading(false);
@@ -76,6 +90,9 @@ const LocationManagement: React.FC = () => {
     }
 
     setUpdateLoading(true);
+    setCreateSuccess(false);
+    setUpdateSuccess(false);
+    setDeleteSuccess(false);
 
     if (editingLocation && slug) {
       const response = await updateLocation(
@@ -84,14 +101,16 @@ const LocationManagement: React.FC = () => {
         editingLocation.address
       );
       if (response) {
-        setLocations(
-          locations.map((loc) =>
-            loc.id === editingLocation.id ? response : loc
-          )
+        const updatedLocations = locations.map((loc) =>
+          loc.id === editingLocation.id ? response : loc
         );
+        const updatedCompany = { ...company!, locations: updatedLocations };
+        updateCompany(updatedCompany);
+        setLocations(updatedLocations);
         setShowEditDialog(false);
         setEditingLocation(null);
         setEditErrorMessage(null);
+        setUpdateSuccess(true);
       }
       setUpdateLoading(false);
     }
@@ -103,11 +122,22 @@ const LocationManagement: React.FC = () => {
   };
 
   const handleDeleteLocation = async () => {
+    setDeleteLoading(true);
+    setCreateSuccess(false);
+    setUpdateSuccess(false);
+    setDeleteSuccess(false);
     if (locationToDelete && slug) {
       await deleteLocation(slug, locationToDelete);
-      setLocations(locations.filter((loc) => loc.id !== locationToDelete));
+      const updatedLocations = locations.filter(
+        (loc) => loc.id !== locationToDelete
+      );
+      const updatedCompany = { ...company!, locations: updatedLocations };
+      updateCompany(updatedCompany);
+      setLocations(updatedLocations);
       setShowDeletePopup(false);
       setLocationToDelete(null);
+      setDeleteLoading(false);
+      setDeleteSuccess(true);
     }
   };
 
@@ -119,11 +149,26 @@ const LocationManagement: React.FC = () => {
     <div className={styles.locationManagement}>
       {createLoading && <Spinner message="Creating location..." />}
       {updateLoading && <Spinner message="Updating location..." />}
+      {deleteLoading && <Spinner message="Deleting locaiton..." />}
+      {createSuccess && (
+        <SuccessMessage message="Location created successfully" />
+      )}
+      {updateSuccess && (
+        <SuccessMessage message="Location updated successfully" />
+      )}
+      {deleteSuccess && (
+        <SuccessMessage message="Location deleted successfully" />
+      )}
       <div className={styles.sectionHeading}>
         <h3>Company Location</h3>
         <button
           className={styles.addLocationButton}
-          onClick={() => setShowAddForm(true)}
+          onClick={() => {
+            setCreateSuccess(false);
+            setUpdateSuccess(false);
+            setDeleteSuccess(false);
+            setShowAddForm(true);
+          }}
         >
           <IconPlus stroke={1.5} size={20} />
           <p>Add Location</p>
@@ -211,13 +256,23 @@ const LocationManagement: React.FC = () => {
             {location.address}
             <button
               className={styles.editButton}
-              onClick={() => handleEditLocation(location)}
+              onClick={() => {
+                setCreateSuccess(false);
+                setUpdateSuccess(false);
+                setDeleteSuccess(false);
+                handleEditLocation(location);
+              }}
             >
               <IconEdit />
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => handleDeleteClick(location.id)}
+              onClick={() => {
+                setCreateSuccess(false);
+                setUpdateSuccess(false);
+                setDeleteSuccess(false);
+                handleDeleteClick(location.id);
+              }}
             >
               <IconTrash />
             </button>

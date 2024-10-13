@@ -1,7 +1,7 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
-import { Job } from "../../../types/types";
 
 import styles from "./CompanyJobs.module.scss";
+import { Job } from "../../../types/types";
 
 interface CompanyJobsProps {
   jobs: Job[];
