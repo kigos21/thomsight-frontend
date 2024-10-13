@@ -26,7 +26,7 @@ export default function CompanyRoot() {
 
   const basePath = slug ? `/company/${slug}` : "/company";
 
-  const isManagePath = location.pathname.includes("/manage");
+  const isManagePath = location.pathname.includes("/manage/");
   let elements: React.ReactNode[];
   if (!isManagePath) {
     elements = [
