@@ -5,8 +5,21 @@ import styles from "./UserCompanyOverview.module.scss";
 import Button from "../../components/ui/Button";
 import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
+import { useState } from "react";
+import CompanyReviewForm from "../../components/ui/company/CompanyReviewForm";
+
+type Review = {
+  rating: string;
+  description: string;
+};
 
 export default function UserCompanyOverview() {
+  const [isAddingReview, setIsAddingReview] = useState<boolean>(true);
+  const [review, setReview] = useState({
+    rating: "",
+    description: "",
+  });
+
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug } = useCompanies();
   const company = getCompanyBySlug(slug as string);
@@ -14,6 +27,19 @@ export default function UserCompanyOverview() {
   if (!company) {
     return <div></div>;
   }
+
+  const handleSave = () => {
+    console.log("Save");
+  };
+
+  const handleChange = (updatedReview: Review) => {
+    setReview(updatedReview);
+  };
+
+  const handleCancel = () => {
+    setIsAddingReview(false);
+    setReview({ rating: "", description: "" });
+  };
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -30,10 +56,19 @@ export default function UserCompanyOverview() {
                 color="primary"
                 roundness="rounded"
                 classNames={styles.replyButton}
+                onClick={() => setIsAddingReview(true)}
               >
                 Write a Review
               </Button>
             </div>
+            {isAddingReview && (
+              <CompanyReviewForm
+                review={review}
+                onSave={handleSave}
+                onChange={handleChange}
+                onCancel={handleCancel}
+              />
+            )}
             <ReviewItem
               internName="John Doe Villarin"
               rating="5.0"
