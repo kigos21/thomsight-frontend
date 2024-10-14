@@ -7,6 +7,7 @@ import styles from "./CompanyTokenPage.module.scss";
 import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ValidationError from "../../components/form/ValidationError";
 
 export default function CompanyTokenPage() {
   const [token, setToken] = useState<string>("");
@@ -36,7 +37,7 @@ export default function CompanyTokenPage() {
       }
     } catch (error) {
       console.error("Error validating token:", error);
-      setError("Something went wrong. Please try again later.");
+      setError("Invalid token. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -55,7 +56,6 @@ export default function CompanyTokenPage() {
               value={token}
               onChange={handleTokenChange}
             />
-            {error && <p className={styles.errorMessage}>{error}</p>}
           </form>
           <Button
             color="primary"
@@ -67,6 +67,7 @@ export default function CompanyTokenPage() {
             {loading ? "Validating..." : "Validate"}
           </Button>
         </div>
+        {error && <ValidationError message={error} />}
       </div>
     </PaddedContainer>
   );
