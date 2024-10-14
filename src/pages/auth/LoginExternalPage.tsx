@@ -9,7 +9,7 @@ const LoginExternalPage = () => {
   return (
     <PaddedContainer>
       <div className={styles.container}>
-        <h1>Login with your Account</h1>
+        <h1 className={styles.header}>Login with your Account</h1>
         <div className={styles.formContainer}>
           <form className={styles.form}>
             <FormField
@@ -24,7 +24,9 @@ const LoginExternalPage = () => {
               placeholder="Password"
               required={true}
             />
-            <a href="/forgot-password">Forgot Password?</a>
+            <a className={styles.forgotPassword} href="/forgot-password">
+              Forgot Password?
+            </a>
             <Button
               color="primary"
               roundness="rounded"

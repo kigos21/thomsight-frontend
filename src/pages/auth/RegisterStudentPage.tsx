@@ -12,7 +12,7 @@ export default function StudentRegisterPage() {
     <PaddedContainer>
       <AuthContentContainer>
         <div className={styles.container}>
-          <h1>Register your Account</h1>
+          <h1 className={styles.header}>Register your Account</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
               <FormField

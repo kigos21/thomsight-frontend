@@ -10,7 +10,7 @@ export default function PreRegisterPage() {
     <PaddedContainer classNames={styles.background}>
       <AuthContentContainer>
         <div className={styles.container}>
-          <h1>Are you a student or an alumni?</h1>
+          <h1 className={styles.h1}>Are you a student or an alumni?</h1>
           <div className={styles.buttonContainer}>
             <Link to={"/register/student"}>
               <Button

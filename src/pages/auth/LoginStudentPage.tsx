@@ -55,7 +55,9 @@ export default function LoginStudentPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <a href="/forgot-password">Forgot Password?</a>
+            <a className={styles.forgotPassword} href="/forgot-password">
+              Forgot Password?
+            </a>
             {loading && <Spinner message="Please wait while we log you in!" />}
             <Button
               color="primary"

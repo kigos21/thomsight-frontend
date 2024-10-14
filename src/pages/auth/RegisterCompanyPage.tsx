@@ -18,7 +18,7 @@ export default function CompanyRegisterPage() {
     <PaddedContainer>
       <AuthContentContainer>
         <div className={styles.container}>
-          <h1>Register your Company</h1>
+          <h1 className={styles.header}>Register your Company</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
               {/* Company Name Field */}
