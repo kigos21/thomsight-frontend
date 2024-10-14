@@ -25,14 +25,15 @@ export default function CompanyTokenPage() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const isValid = await validateToken(tokenInput);
-
     if (isValid) {
       setToken(tokenInput);
       navigate("/register/company");
     } else {
       setError("Invalid token. Please try again.");
     }
+    setLoading(false);
   };
 
   return (
