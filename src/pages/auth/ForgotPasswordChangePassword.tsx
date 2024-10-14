@@ -12,7 +12,7 @@ export default function ForgotPasswordChangePassword() {
     <PaddedContainer>
       <AuthContentContainer>
         <div className={styles.container}>
-          <h1>Password Recovery</h1>
+          <h1 className={styles.header}>Password Recovery</h1>
           <div className={styles.formContainer}>
             <form className={styles.form}>
               {/* Password Field */}

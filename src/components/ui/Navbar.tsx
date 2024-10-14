@@ -35,7 +35,9 @@ export default function Navbar() {
   return (
     <PaddedContainer style={{ marginBottom: "50px" }}>
       <nav className={styles.container}>
-        <h1 className={styles.heading}>Thomsight</h1>
+        <Link to="/" className={styles.headingLink}>
+          <h1 className={styles.heading}>Thomsight</h1>
+        </Link>
         <img src={logo} alt="Logo" className={styles.logo} />
         {button}
       </nav>

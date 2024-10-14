@@ -1,49 +1,102 @@
-.buttonContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-
-  max-width: 420px;
-  width: 100%;
-
-  margin-top: 2.5rem;
-}
-
-.button {
-  width: 100%;
-  padding: 1.2rem 2.4rem;
-  font-size: 1.2rem;
-}
-
 .textContainer {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  h1 {
+    font-size: 2.25rem;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.4;
+  }
+
+  p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--black);
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    h1 {
+      font-size: 2.1rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--black);
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    h1 {
+      font-size: 2rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--black);
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .button {
-    padding: 1.1rem 2.2rem;
-    font-size: 1.1rem;
-  }
-
   .textContainer {
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    h1 {
+      font-size: 1.75rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--black);
+    }
   }
 }
 
 @media screen and (max-width: 480px) {
-  .buttonContainer {
-    gap: 0.6rem;
-    margin-top: 1.5rem;
-  }
-
-  .button {
-    padding: 1rem 2rem;
-    font-size: 1rem;
-  }
-
   .textContainer {
-    gap: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    h1 {
+      font-size: 1.5rem;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.4;
+    }
+
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--black);
+    }
   }
 }

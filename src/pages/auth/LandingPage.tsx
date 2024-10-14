@@ -21,14 +21,14 @@ const LandingPage = () => {
             </p>
           </div>
           <div className={styles.buttonContainer}>
-            <Link to="/register">
+            <Link to="/login">
               <Button
                 color="secondary"
                 roundness="sm-rounded"
                 classNames={styles.button}
                 type="button"
               >
-                REGISTER NOW!
+                LOGIN NOW!
               </Button>
             </Link>
           </div>
