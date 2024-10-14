@@ -18,13 +18,3 @@ export const logout = async () => {
   await axiosInstance.get("/sanctum/csrf-cookie");
   return await axiosInstance.post("/logout");
 };
-
-// const handleLogout = async (e: React.FormEvent) => {
-//   e.preventDefault();
-//   try {
-//     await logout();
-//     console.log("Logout successful");
-//   } catch (err) {
-//     console.error("Logout failed", err);
-//   }
-// };
