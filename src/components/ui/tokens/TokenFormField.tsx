@@ -67,12 +67,12 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
         onBlur={handleBlur}
         value={email}
       />
+      {error && <ValidationError message={error} />}
       {editIcon && (
         <span className={styles.editIcon} onClick={handleEditClick}>
           {editIcon}
         </span>
       )}
-      {error && <ValidationError message={error} />}
     </div>
   );
 };
