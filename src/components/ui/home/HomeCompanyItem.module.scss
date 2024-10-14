@@ -1,8 +1,12 @@
 .container {
   background-color: var(--neutral-0);
-  border-radius: 1.875rem;
+  border-radius: 1.875rem !important;
   height: 190px;
   overflow: visible;
+
+  :hover {
+    cursor: pointer;
+  }
 }
 
 .paddedContainer {
@@ -25,7 +29,10 @@
 }
 
 .coreInfoSection {
+  display: flex;
+  flex-direction: column;
   flex: 7;
+  gap: 8px;
 }
 
 .about {
@@ -40,6 +47,13 @@
 .companyName {
   font-size: 1.25rem;
   margin-bottom: 0.25rem;
+  display: inline !important;
+  transition: all 0.125s ease;
+
+  &:hover {
+    font-weight: 500;
+    border-bottom: 1px solid black;
+  }
 }
 
 .location {

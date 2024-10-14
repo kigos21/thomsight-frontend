@@ -21,7 +21,9 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
       />
 
       <div className={styles.coreInfoSection}>
-        <p className={styles.companyName}>{name}</p>
+        <div>
+          <p className={styles.companyName}>{name}</p>
+        </div>
         <div className={styles.locationSection}>
           {locations && locations.length > 0 ? (
             <p className={styles.location}>
