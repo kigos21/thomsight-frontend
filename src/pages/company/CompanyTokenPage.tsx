@@ -8,38 +8,30 @@ import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ValidationError from "../../components/form/ValidationError";
+import { validateToken } from "../../api/validateToken";
+import { useToken } from "../../contexts/TokenContext";
 
 export default function CompanyTokenPage() {
-  const [token, setToken] = useState<string>("");
+  const [tokenInput, setTokenInput] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setToken } = useToken();
 
   const handleTokenChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setToken(e.target.value);
+    setTokenInput(e.target.value);
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
-    setError(null);
+    const isValid = await validateToken(tokenInput);
 
-    try {
-      const response = await axiosInstance.post("/api/validate-token", {
-        token,
-      });
-
-      if (response.data.valid) {
-        navigate("/register/company");
-      } else {
-        setError("Invalid token. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error validating token:", error);
+    if (isValid) {
+      setToken(tokenInput);
+      navigate("/register/company");
+    } else {
       setError("Invalid token. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -53,7 +45,7 @@ export default function CompanyTokenPage() {
               type={"input"}
               placeholder={"Enter Token"}
               required={true}
-              value={token}
+              value={tokenInput}
               onChange={handleTokenChange}
             />
           </form>

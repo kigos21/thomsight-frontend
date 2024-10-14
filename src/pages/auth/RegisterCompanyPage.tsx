@@ -12,8 +12,20 @@ import {
 } from "@tabler/icons-react";
 
 import styles from "./RegisterCompanyPage.module.scss";
+import { useEffect } from "react";
+import { useToken } from "../../contexts/TokenContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CompanyRegisterPage() {
+  const { token } = useToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/register/token");
+    }
+  }, [token, navigate]);
+
   return (
     <PaddedContainer>
       <AuthContentContainer>

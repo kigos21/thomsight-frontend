@@ -54,6 +54,7 @@ import LandingPage from "./pages/auth/LandingPage.tsx";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import PrivateRoute from "./contexts/PrivateRoute.tsx";
 import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
+import { TokenProvider } from "./contexts/TokenContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -258,7 +259,11 @@ const router = createBrowserRouter([
    * AUTH GROUP
    */
   {
-    element: <AuthLayout />,
+    element: (
+      <TokenProvider>
+        <AuthLayout />
+      </TokenProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       /**
