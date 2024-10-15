@@ -9,11 +9,14 @@ import { Announcement } from "../../types/types";
 
 import styles from "./AdminViewAnnouncements.module.scss";
 import Spinner from "../../components/ui/Spinner";
+import SuccessMessage from "../../components/form/SuccessMessage";
 
 export default function AdminViewAnnouncements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>("");
+  const [deleteLoading, setDeleteLoading] = useState<string>("");
+  const [deleteSuccess, setDeleteSuccess] = useState<string>("");
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -31,13 +34,17 @@ export default function AdminViewAnnouncements() {
   }, []);
 
   const handleDelete = async (id: number) => {
+    setDeleteLoading("Deleting announcement...");
     try {
       await deleteAnnouncement(id);
       setAnnouncements((prevAnnouncements) =>
         prevAnnouncements.filter((announcement) => announcement.id !== id)
       );
-    } catch (err) {
-      setError("Failed to delete announcement.");
+      setDeleteSuccess("Deleted announcement successfully");
+    } catch (error) {
+      setError("Failed to delete announcement." + error);
+    } finally {
+      setDeleteLoading("");
     }
   };
 
@@ -57,6 +64,8 @@ export default function AdminViewAnnouncements() {
             </Button>
           </Link>
         </div>
+        {deleteSuccess && <SuccessMessage message={deleteSuccess} />}
+        {deleteLoading && <Spinner message={deleteLoading} />}
 
         {loading ? (
           <Spinner message="Fetching announcements..." />
