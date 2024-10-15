@@ -39,18 +39,23 @@
 
 .editButton {
   opacity: 50%;
-
-  &:hover {
-    color: var(--secondary-color);
-  }
 }
 
 .deleteButton {
   opacity: 50%;
+}
 
-  &:hover {
-    color: var(--secondary-color);
-  }
+.iconEdit,
+.iconDelete {
+  transition: all 0.3s ease;
+}
+
+.iconEdit:hover {
+  color: var(--blue-6);
+}
+
+.iconDelete:hover {
+  color: var(--red-6);
 }
 
 @media screen and (max-width: 425px) {

@@ -150,7 +150,7 @@ export default function CompanyManageInformationCompany() {
                 setSuccess(false);
               }}
             >
-              <IconEdit />
+              <IconEdit className={styles.iconEdit} />
             </button>
           )}
         </div>
@@ -204,7 +204,7 @@ export default function CompanyManageInformationCompany() {
                 setSuccess(false);
               }}
             >
-              <IconEdit />
+              <IconEdit className={styles.iconEdit} />
             </button>
           )}
         </div>
@@ -255,7 +255,7 @@ export default function CompanyManageInformationCompany() {
                 setSuccess(false);
               }}
             >
-              <IconEdit />
+              <IconEdit className={styles.iconEdit} />
             </button>
           )}
         </div>

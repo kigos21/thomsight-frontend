@@ -97,7 +97,7 @@ export default function CompanyDetails() {
                   type="text"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  className={styles.inputText}
+                  className={styles.inputTextCompanyName}
                 />
               ) : (
                 <p className={styles.companyName}>{companyName}</p>
@@ -128,7 +128,7 @@ export default function CompanyDetails() {
                     setIsEditName(true);
                   }}
                 >
-                  <IconEdit />
+                  <IconEdit className={styles.iconEdit} />
                 </button>
               )}
             </div>
@@ -140,7 +140,7 @@ export default function CompanyDetails() {
                   type="text"
                   value={companyEmail}
                   onChange={(e) => setCompanyEmail(e.target.value)}
-                  className={styles.inputText}
+                  className={styles.inputTextEmail}
                 />
               ) : (
                 <p>{companyEmail}</p>
@@ -172,7 +172,7 @@ export default function CompanyDetails() {
                     setIsEditEmail(true);
                   }}
                 >
-                  <IconEdit />
+                  <IconEdit className={styles.iconEdit} />
                 </button>
               )}
             </div>

@@ -31,10 +31,18 @@
   gap: 0.25rem;
   align-items: center;
   color: var(--white);
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem;
-  padding-left: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.7rem 1.15rem;
   border-radius: 99px;
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
+
+  &:active {
+    background-color: var(--blue-9);
+  }
 
   p {
     line-height: 0.8;
@@ -103,6 +111,19 @@
 .saveAndCancelButtons {
   display: flex;
   gap: 0.25rem;
+}
+
+.iconEdit,
+.iconDelete {
+  transition: all 0.3s ease;
+}
+
+.iconEdit:hover {
+  color: var(--blue-6);
+}
+
+.iconDelete:hover {
+  color: var(--red-6);
 }
 
 .inputText {

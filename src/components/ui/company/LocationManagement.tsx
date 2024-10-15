@@ -263,7 +263,7 @@ const LocationManagement: React.FC = () => {
                 handleEditLocation(location);
               }}
             >
-              <IconEdit />
+              <IconEdit className={styles.iconEdit} />
             </button>
             <button
               className={styles.deleteButton}
@@ -274,7 +274,7 @@ const LocationManagement: React.FC = () => {
                 handleDeleteClick(location.id);
               }}
             >
-              <IconTrash />
+              <IconTrash className={styles.iconDelete} />
             </button>
           </div>
         ))}

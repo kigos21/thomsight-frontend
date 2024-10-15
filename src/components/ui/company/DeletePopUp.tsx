@@ -17,11 +17,11 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
         <h2 className={styles.heading}>{heading}</h2>
         <p>{details}</p>
         <div className={styles.buttonGroup}>
-          <button className={styles.deleteButton} onClick={onDelete}>
-            Delete
-          </button>
           <button className={styles.cancelButton} onClick={onClose}>
             Cancel
+          </button>
+          <button className={styles.deleteButton} onClick={onDelete}>
+            Delete
           </button>
         </div>
       </div>

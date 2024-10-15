@@ -23,13 +23,13 @@ const CompanyJobs: React.FunctionComponent<CompanyJobsProps> = ({
 
           <div className={styles.buttons}>
             <button className={styles.editButton} onClick={() => onEdit(job)}>
-              <IconEdit />
+              <IconEdit className={styles.iconEdit} />
             </button>
             <button
               className={styles.deleteButton}
               onClick={() => onDelete(job.id)}
             >
-              <IconTrash />
+              <IconTrash className={styles.iconDelete} />
             </button>
           </div>
         </div>
