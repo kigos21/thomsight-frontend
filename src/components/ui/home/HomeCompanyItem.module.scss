@@ -48,7 +48,9 @@
   font-size: 1.25rem;
   margin-bottom: 0.25rem;
   display: inline !important;
-  transition: all 0.125s ease;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 125ms;
 
   &:hover {
     font-weight: 500;

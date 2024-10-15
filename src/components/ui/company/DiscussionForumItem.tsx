@@ -27,7 +27,7 @@ export default function DiscussionForumItem({
 
             <div className={styles.replyButtonContainer}>
               <Button
-                color="primary"
+                color="black"
                 roundness="rounded"
                 classNames={styles.replyButton}
               >

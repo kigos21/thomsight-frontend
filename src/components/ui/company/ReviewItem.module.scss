@@ -57,12 +57,22 @@
   padding: 0rem 2rem;
 }
 
-.iconButton {
-  transition: 0.3s;
+.iconEdit,
+.iconDelete,
+.iconReport {
+  transition: all 0.3s ease;
 }
 
-.iconButton:hover {
+.iconEdit:hover {
   color: var(--blue-6);
+}
+
+.iconDelete:hover {
+  color: var(--red-6);
+}
+
+.iconReport:hover {
+  color: var(--neutral-9);
 }
 
 .replyButtonContainer {

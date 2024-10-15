@@ -80,16 +80,15 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
             <Button
               color="secondary"
               roundness="rounded"
-              classNames={styles.button}
+              classNames={styles.buttonCancel}
               onClick={onCancel}
-              style={{ backgroundColor: "var(--neutral-2)" }}
             >
               Cancel
             </Button>
             <Button
               color="primary"
               roundness="rounded"
-              classNames={styles.button}
+              classNames={styles.buttonSubmit}
               onClick={onSave}
             >
               Submit

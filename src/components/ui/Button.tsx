@@ -9,7 +9,12 @@ export default function Button({
   style,
   onClick,
 }: ButtonProps) {
-  const colorClass = color === "primary" ? styles.primary : styles.secondary;
+  const colorClass =
+    color === "primary"
+      ? styles.primary
+      : color === "secondary"
+        ? styles.secondary
+        : styles.black;
   const roundnessClass =
     roundness === "rounded" ? styles.rounded : styles.smRounded;
 

@@ -37,6 +37,14 @@
   }
 }
 
+.black {
+  background-color: var(--black);
+
+  &:hover {
+    background-color: hsl(0, 0%, 28%);
+  }
+}
+
 .smRounded {
   border-radius: 0.25rem;
 }
