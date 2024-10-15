@@ -4,7 +4,6 @@ import FormField from "../../components/form/FormField";
 import { IconKey } from "@tabler/icons-react";
 
 import styles from "./CompanyTokenPage.module.scss";
-import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ValidationError from "../../components/form/ValidationError";

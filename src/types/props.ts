@@ -105,6 +105,8 @@ export type TokenItemProps = {
   number: number; // Number to display
   token: string; // Token string to display
   email: string | null;
+  onDeleteToken: (tokenId: number) => void;
+  resetDeleteSuccess: () => void;
 };
 
 export type CompanyAccountsItemProps = {

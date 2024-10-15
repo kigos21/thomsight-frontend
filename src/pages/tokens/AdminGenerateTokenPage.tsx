@@ -16,6 +16,7 @@ export default function AdminGenerateTokenPage() {
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
   const [generateLoading, setGenerateLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [deleteSuccess, setDeleteSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -36,6 +37,7 @@ export default function AdminGenerateTokenPage() {
 
   const generateToken = async () => {
     setSuccess(false);
+    setDeleteSuccess(null);
     setGenerateLoading(true);
     try {
       const response = await axiosInstance.post("/api/tokens/create");
@@ -43,7 +45,7 @@ export default function AdminGenerateTokenPage() {
 
       setTokens((prevTokens) => [
         ...prevTokens,
-        { id: prevTokens.length + 1, token: newToken, email: "" },
+        { id: response.data.id, token: newToken, email: "" },
       ]);
 
       setSuccess(true);
@@ -52,6 +54,18 @@ export default function AdminGenerateTokenPage() {
     } finally {
       setGenerateLoading(false);
     }
+  };
+
+  const handleDeleteToken = (tokenId: number) => {
+    setTokens((prevTokens) =>
+      prevTokens.filter((token) => token.id !== tokenId)
+    );
+    setDeleteSuccess("Token deleted successfully");
+  };
+
+  const resetDeleteSuccess = () => {
+    setDeleteSuccess(null);
+    setSuccess(false);
   };
 
   return (
@@ -66,6 +80,7 @@ export default function AdminGenerateTokenPage() {
       </div>
 
       {success && <SuccessMessage message="Token generated successfully" />}
+      {deleteSuccess && <SuccessMessage message={deleteSuccess} />}
 
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.companytokens}>
@@ -81,6 +96,8 @@ export default function AdminGenerateTokenPage() {
               number={index + 1}
               token={token.token}
               email={token.email}
+              onDeleteToken={handleDeleteToken}
+              resetDeleteSuccess={resetDeleteSuccess}
             />
           ))}
         </div>
