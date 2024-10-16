@@ -15,21 +15,28 @@ import styles from "./RegisterCompanyPage.module.scss";
 import { useEffect, useState } from "react";
 import { useToken } from "../../contexts/TokenContext";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../services/axiosInstance"; // For making API requests
-import Spinner from "../../components/ui/Spinner"; // Assuming you have a Spinner component
+import axiosInstance from "../../services/axiosInstance";
+import Spinner from "../../components/ui/Spinner";
+import ValidationError from "../../components/form/ValidationError";
 
 export default function CompanyRegisterPage() {
   const { token } = useToken(); // Assuming removeToken only removes it from context
   const navigate = useNavigate();
+  const [error, setError] = useState<string>("");
 
-  const [companyName, setCompanyName] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [companyName, setCompanyName] = useState<string>("");
+  const [companyNameError, setCompanyNameError] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [nameError, setNameError] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
+  const [phone, setPhone] = useState<number | null>();
+  const [phoneError, setPhoneError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!token) {
@@ -39,12 +46,51 @@ export default function CompanyRegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
+    let isValid = true;
+
+    setCompanyNameError("");
+    setNameError("");
+    setEmailError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+    setPhoneError("");
+
+    if (companyName.length > 100) {
+      setCompanyNameError("Company name must be less than 100 characters.");
+      isValid = false;
+    }
+
+    if (name.length > 100) {
+      setNameError("Name must be less than 100 characters.");
+      isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      isValid = false;
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        "Password must be at least 8 characters, include 1 special character, and have both uppercase and lowercase letters."
+      );
+      isValid = false;
+    }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
+      setConfirmPasswordError("Passwords do not match.");
+      isValid = false;
     }
+
+    if (!/^\d{11}$/.test(phone?.toString() || "")) {
+      setPhoneError("Phone number must be 11 digits.");
+      isValid = false;
+    }
+
+    if (!isValid) return;
 
     setLoading(true);
 
@@ -77,7 +123,7 @@ export default function CompanyRegisterPage() {
       navigate("/login/student");
     } catch (error) {
       console.error("Error registering company:", error);
-      setError("There was an error during registration. Please try again.");
+      setError("Account already exists!");
     } finally {
       setLoading(false);
     }
@@ -89,8 +135,8 @@ export default function CompanyRegisterPage() {
         {loading && <Spinner message="Registering your company..." />}
         <div className={styles.container}>
           <h1 className={styles.header}>Register your Company</h1>
-          {error && <p className={styles.error}>{error}</p>}
           <div className={styles.formContainer}>
+            {error && <ValidationError message={error} />}
             <form className={styles.form} onSubmit={handleSubmit}>
               {/* Company Name Field */}
               <FormField
@@ -107,6 +153,9 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setCompanyName(e.target.value)}
                 required
               />
+              {companyNameError && (
+                <ValidationError message={companyNameError} />
+              )}
 
               {/* Name Field */}
               <FormField
@@ -119,6 +168,7 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setName(e.target.value)}
                 required
               />
+              {nameError && <ValidationError message={nameError} />}
 
               {/* Email Field */}
               <FormField
@@ -131,6 +181,7 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              {emailError && <ValidationError message={emailError} />}
 
               {/* Password Field */}
               <FormField
@@ -143,6 +194,7 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              {passwordError && <ValidationError message={passwordError} />}
 
               {/* Confirm Password Field */}
               <FormField
@@ -155,6 +207,9 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
+              {confirmPasswordError && (
+                <ValidationError message={confirmPasswordError} />
+              )}
 
               {/* Phone Number Field */}
               <FormField
@@ -167,24 +222,7 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setPhone(e.target.value)}
                 required
               />
-
-              {/* Terms and Conditions Checkbox */}
-              <CheckboxWithLabel
-                id="terms"
-                label="I have read and agree to the website"
-                linkText="terms & conditions"
-                linkHref="#"
-                required
-              />
-
-              {/* Data Privacy Policy Checkbox */}
-              <CheckboxWithLabel
-                id="privacy"
-                label="By ticking this box, I agree that I have read the"
-                linkText="data privacy policy"
-                linkHref="#"
-                required
-              />
+              {phoneError && <ValidationError message={phoneError} />}
 
               <Button
                 type="submit"
