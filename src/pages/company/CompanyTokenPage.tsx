@@ -25,6 +25,7 @@ export default function CompanyTokenPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    setError("");
     const isValid = await validateToken(tokenInput);
     if (isValid) {
       setToken(tokenInput);
