@@ -96,11 +96,17 @@ export type TokenFormFieldProps = {
   required: boolean; // Simplified to boolean
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
   readOnly?: boolean; // Ensure this prop is optional
+  initialEmail?: string | null;
+  tokenId: number;
 };
 
 export type TokenItemProps = {
+  id: number;
   number: number; // Number to display
   token: string; // Token string to display
+  email: string | null;
+  onDeleteToken: (tokenId: number) => void;
+  resetDeleteSuccess: () => void;
 };
 
 export type CompanyAccountsItemProps = {

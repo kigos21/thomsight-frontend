@@ -8,8 +8,7 @@ import styles from "./CompanyJobInformationFormItem.module.scss";
 import { Job } from "../../../types/types";
 import { useCompanies } from "../../../contexts/CompaniesContext";
 import Spinner from "../Spinner";
-import { addJob } from "../../../api/companyCRUD";
-import SuccessMessage from "../../form/SuccessMessage";
+import { addJob, updateJob } from "../../../api/companyCRUD";
 
 interface CompanyJobInformationFormItemProps {
   job: Job;
@@ -31,48 +30,44 @@ export default function CompanyJobInformationFormItem({
     onChange({ ...job, [name]: value }); // Update job state based on input change
   };
   const { slug } = useParams<{ slug: string }>();
-  const [jobTitle, setJobTitle] = useState("");
-  const [jobDescription, setJobDescription] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState<boolean>(false);
   const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [creating, setCreating] = useState(false);
 
-  const handleJobTitleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setJobTitle(e.target.value);
-  };
-
-  const handleJobDescriptionChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setJobDescription(e.target.value);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setCreating(true);
-    setSuccess(false);
     try {
-      const newJob = await addJob(slug || "", {
-        title: jobTitle,
-        description: jobDescription,
-      });
+      if (job.id === 0) {
+        const newJob = await addJob(slug || "", {
+          title: job.title,
+          description: job.description,
+        });
 
-      const updatedCompany = {
-        ...company!,
-        jobs: [...(company?.jobs || []), newJob],
-      };
-      updateCompany(updatedCompany);
-      createJob(newJob);
+        const updatedCompany = {
+          ...company!,
+          jobs: [...(company?.jobs || []), newJob],
+        };
+        updateCompany(updatedCompany);
+        createJob(newJob);
+      } else {
+        const updatedJob = await updateJob(slug || "", job.id, {
+          title: job.title,
+          description: job.description,
+        });
 
-      setSuccess(true);
-      setJobTitle("");
-      setJobDescription("");
+        const updatedCompany = {
+          ...company!,
+          jobs:
+            company?.jobs?.map((j) => (j.id === job.id ? updatedJob : j)) || [],
+        };
+        updateCompany(updatedCompany);
+      }
+      onSave();
     } catch (err) {
-      setError("An error occurred while posting the job." + err);
+      setError("An error occurred while saving the job." + err);
+      console.log(error);
     } finally {
       setCreating(false);
     }
@@ -81,7 +76,6 @@ export default function CompanyJobInformationFormItem({
   return (
     <div className={`${styles.container}`}>
       {creating && <Spinner message="Creating job..." />}
-      {success && <SuccessMessage message="Created job successfully" />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
@@ -134,7 +128,7 @@ export default function CompanyJobInformationFormItem({
               color="primary"
               roundness="rounded"
               classNames={styles.button}
-              onClick={onSave}
+              type="submit"
             >
               Submit
             </Button>

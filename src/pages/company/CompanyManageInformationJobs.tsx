@@ -5,32 +5,27 @@ import styles from "./CompanyManageInformationJobs.module.scss";
 import CompanyJobs from "../../components/ui/company/CompanyJobs";
 import { useState } from "react";
 import { Job } from "../../types/types";
+import { useParams } from "react-router-dom";
+import { useCompanies } from "../../contexts/CompaniesContext";
+import SuccessMessage from "../../components/form/SuccessMessage";
+import { useUser } from "../../contexts/UserContext";
+import DeletePopUp from "../../components/ui/company/DeletePopUp";
+import { deleteJob } from "../../api/companyCRUD";
+import Spinner from "../../components/ui/Spinner";
 
 export default function CompanyManageInformationJobs() {
-  const [jobs, setJobs] = useState<Job[]>([
-    {
-      id: 1,
-      company_id: 1,
-      title: "Java Developer",
-      description: "Lorem ipsum dolor sit amet consectetur...",
-    },
-    {
-      id: 2,
-      company_id: 1,
-      title: "C++ Developer",
-      description: "Lorem ipsum dolor sit amet consectetur...",
-    },
-    {
-      id: 3,
-      company_id: 1,
-      title: "React Developer",
-      description: "Short description",
-    },
-  ]);
+  const { slug } = useParams<{ slug: string }>();
+  const { getCompanyBySlug, updateCompany } = useCompanies();
+  const company = getCompanyBySlug(slug || "");
+  const [jobs, setJobs] = useState<Job[]>(company?.jobs || []);
+  const { user } = useUser();
+  const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
+  const [jobToDelete, setJobToDelete] = useState<number | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const [currentJob, setCurrentJob] = useState<Job>({
     id: 0, // IGNORE THIS WHEN CREATING NEW JOB, only useful when editing exising Job
-    company_id: 1, // current company_id of logged in representative
+    company_id: user?.id, // current company_id of logged in representative
     title: "",
     description: "",
   });
@@ -38,13 +33,23 @@ export default function CompanyManageInformationJobs() {
   // State to control the visibility of the form
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   const handleAdd = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scrolling
+    });
     // Reset to a clean state for adding a new job and show the form
     setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
     setIsFormVisible(true); // Show the form
   };
 
   const handleEdit = (job: Job) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scrolling
+    });
     // Populate the form with the job data to be edited and show the form
     setCurrentJob(job);
     setIsFormVisible(true); // Show the form
@@ -54,9 +59,11 @@ export default function CompanyManageInformationJobs() {
     if (currentJob.id === 0) {
       // Adding a new job
       setJobs([...jobs, { ...currentJob, id: jobs.length + 1 }]);
+      setSuccessMessage("Created job successfully");
     } else {
       // Updating an existing job
       setJobs(jobs.map((job) => (job.id === currentJob.id ? currentJob : job)));
+      setSuccessMessage("Updated job successfully");
     }
 
     // Hide the form after saving
@@ -64,8 +71,34 @@ export default function CompanyManageInformationJobs() {
     setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
   };
 
-  const handleDelete = (id: number) => {
-    setJobs(jobs.filter((job) => job.id !== id));
+  const handleDelete = async () => {
+    if (jobToDelete !== null) {
+      setDeleteLoading(true);
+      try {
+        if (slug && jobToDelete) {
+          await deleteJob(slug, jobToDelete);
+          const updatedJobs = jobs.filter((job) => job.id !== jobToDelete);
+          setJobs(updatedJobs);
+          setSuccessMessage("Deleted job successfully");
+
+          if (company) {
+            updateCompany({ ...company, jobs: updatedJobs });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to delete job", error);
+        setSuccessMessage("Failed to delete job.");
+      } finally {
+        setDeleteLoading(false);
+        setDeleteConfirm(false);
+        setJobToDelete(null);
+      }
+    }
+  };
+
+  const handleDeleteClick = (id: number) => {
+    setJobToDelete(id);
+    setDeleteConfirm(true);
   };
 
   const handleChange = (updatedJob: Job) => {
@@ -79,6 +112,7 @@ export default function CompanyManageInformationJobs() {
 
   return (
     <div className={styles.container}>
+      {deleteLoading && <Spinner message="Deleting..." />}
       <div className={styles.titleContainer}>
         <h2>Job Information</h2>
         <Button
@@ -91,6 +125,8 @@ export default function CompanyManageInformationJobs() {
         </Button>
       </div>
 
+      {successMessage && <SuccessMessage message={successMessage} />}
+
       {/* Conditionally render the form based on isFormVisible */}
       {isFormVisible && (
         <CompanyJobInformationFormItem
@@ -101,7 +137,21 @@ export default function CompanyManageInformationJobs() {
         />
       )}
 
-      <CompanyJobs jobs={jobs} onEdit={handleEdit} onDelete={handleDelete} />
+      <CompanyJobs
+        jobs={jobs}
+        onEdit={handleEdit}
+        onDelete={handleDeleteClick}
+      />
+
+      {deleteConfirm && (
+        <DeletePopUp
+          isVisible={deleteConfirm}
+          onClose={() => setDeleteConfirm(false)}
+          onDelete={handleDelete}
+          heading="Delete Job"
+          details="Are you sure you want to delete this job?"
+        />
+      )}
     </div>
   );
 }
