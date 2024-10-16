@@ -116,11 +116,10 @@ export default function CompanyJobInformationFormItem({
 
           <div className={styles.buttonGroup}>
             <Button
-              color="secondary"
+              color="gray"
               roundness="rounded"
               classNames={styles.button}
               onClick={onCancel}
-              style={{ backgroundColor: "var(--neutral-2)" }}
             >
               Cancel
             </Button>

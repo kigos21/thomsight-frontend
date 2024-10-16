@@ -184,19 +184,21 @@ const LocationManagement: React.FC = () => {
             placeholder="Enter new location"
             className={styles.inputText}
           />
-          <button
-            onClick={() => {
-              setShowAddForm(false);
-              setNewLocation("");
-              setCreateErrorMessage(null);
-            }}
-            className={styles.cancelButton}
-          >
-            Cancel
-          </button>
-          <button onClick={handleAddLocation} className={styles.saveButton}>
-            Add
-          </button>
+          <div className={styles.saveAndCancelButtons}>
+            <button
+              onClick={() => {
+                setShowAddForm(false);
+                setNewLocation("");
+                setCreateErrorMessage(null);
+              }}
+              className={styles.cancelButton}
+            >
+              Cancel
+            </button>
+            <button onClick={handleAddLocation} className={styles.saveButton}>
+              Add
+            </button>
+          </div>
         </div>
       )}
       {createErrorMessage && <ValidationError message={createErrorMessage} />}
@@ -228,19 +230,19 @@ const LocationManagement: React.FC = () => {
               {editErrorMessage && (
                 <ValidationError message={editErrorMessage} />
               )}
-              <div className={styles.saveAndCancelButtons}>
+              <div className={styles.saveAndCancelButtonsPopUp}>
                 <button
                   onClick={() => {
                     setShowEditDialog(false);
                     setEditErrorMessage(null);
                   }}
-                  className={styles.cancelButton}
+                  className={styles.cancelButtonPopUp}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdateLocation}
-                  className={styles.saveButton}
+                  className={styles.saveButtonPopUp}
                 >
                   Update
                 </button>

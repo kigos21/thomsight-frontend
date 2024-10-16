@@ -3,7 +3,7 @@ import { Company } from "./types";
 
 export type ButtonProps = {
   children: React.ReactNode;
-  color: "primary" | "secondary" | "black";
+  color: "primary" | "secondary" | "black" | "gray";
   roundness: "sm-rounded" | "rounded";
 
   classNames?: string;

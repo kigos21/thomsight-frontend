@@ -78,7 +78,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
 
           <div className={styles.buttonGroup}>
             <Button
-              color="secondary"
+              color="gray"
               roundness="rounded"
               classNames={styles.buttonCancel}
               onClick={onCancel}

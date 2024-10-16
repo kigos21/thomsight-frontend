@@ -45,6 +45,18 @@
   }
 }
 
+.gray {
+  background-color: var(--neutral-4);
+
+  &:hover {
+    background-color: var(--neutral-6);
+  }
+
+  &:active {
+    background-color: var(--neutral-8);
+  }
+}
+
 .smRounded {
   border-radius: 0.25rem;
 }
