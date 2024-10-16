@@ -85,7 +85,10 @@ export default function CompanyRegisterPage() {
       isValid = false;
     }
 
-    if (!/^\d{11}$/.test(phone?.toString() || "")) {
+    if (isNaN(Number(phone))) {
+      setPhoneError("Phone number must be a number.");
+      isValid = false;
+    } else if (!/^\d{11}$/.test(phone?.toString() || "")) {
       setPhoneError("Phone number must be 11 digits.");
       isValid = false;
     }
@@ -108,18 +111,12 @@ export default function CompanyRegisterPage() {
         posted_by: userId,
       };
 
-      // Step 2: Delete the token from the database
-      // await axiosInstance.delete(`/api/token`, {
-      //   data: { token }, // Send the token to be deleted
-      // });
+      await axiosInstance.delete(`/api/token/delete`, {
+        data: { token },
+      });
 
-      // Step 3: Remove the token from context
-      // removeToken();
-
-      // Step 4: Register company
       await axiosInstance.post("/api/company/create", companyData);
 
-      // Step 5: Redirect to dashboard or success page
       navigate("/login/student");
     } catch (error) {
       console.error("Error registering company:", error);
