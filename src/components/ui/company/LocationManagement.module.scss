@@ -37,7 +37,7 @@
   border-radius: 99px;
 
   &:hover {
-    background-color: var(--blue-8);
+    background-color: var(--blue-7);
   }
 
   &:active {
@@ -96,21 +96,39 @@
   background-color: var(--secondary-color);
   color: var(--white);
   padding: 0.5rem 1rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   border-radius: 99px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--blue-7);
+  }
+
+  &:active {
+    background-color: var(--blue-9);
+  }
 }
 
 .cancelButton {
   background-color: var(--red-6);
   color: var(--white);
   padding: 0.5rem 1rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   border-radius: 99px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
+    background-color: var(--red-9);
+  }
 }
 
 .saveAndCancelButtons {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .iconEdit,
@@ -133,8 +151,12 @@
 
 .addForm {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
   margin-bottom: 1rem;
+
+  input {
+    padding: 0.25rem;
+  }
 }
 
 .dialogBackdrop {
@@ -152,29 +174,69 @@
 
 .editDialog {
   background-color: var(--white);
+  text-align: center;
   padding: 2rem;
-  border-radius: 0.5rem;
-  width: 90%;
+  border-radius: 1.25rem;
+  width: 100%;
   max-width: 500px;
 
   h4 {
     margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
 
   .inputText {
     margin-bottom: 1rem;
-  }
-
-  button {
-    display: block;
-    width: 100%;
   }
 }
 
 .editForm input {
   display: block;
   width: 100%;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  padding: 0.25rem;
+}
+
+.saveButtonPopUp {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 99px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--blue-7);
+  }
+
+  &:active {
+    background-color: var(--blue-9);
+  }
+}
+
+.cancelButtonPopUp {
+  background-color: var(--red-6);
+  color: var(--white);
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 99px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
+    background-color: var(--red-9);
+  }
+}
+
+.saveAndCancelButtonsPopUp {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
 }
 
 @media (max-width: 768px) {

@@ -50,12 +50,16 @@
 }
 
 .buttonCancel {
-  background-color: var(--neutral-5);
+  background-color: var(--neutral-4);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 
   &:hover {
-    background-color: var(--neutral-7);
+    background-color: var(--neutral-6);
+  }
+
+  &:active {
+    background-color: var(--neutral-8);
   }
 }

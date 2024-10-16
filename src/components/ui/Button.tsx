@@ -14,7 +14,9 @@ export default function Button({
       ? styles.primary
       : color === "secondary"
         ? styles.secondary
-        : styles.black;
+        : color === "black"
+          ? styles.black
+          : styles.gray;
   const roundnessClass =
     roundness === "rounded" ? styles.rounded : styles.smRounded;
 
