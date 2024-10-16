@@ -89,7 +89,6 @@ export default function CompanyRegisterPage() {
         {loading && <Spinner message="Registering your company..." />}
         <div className={styles.container}>
           <h1 className={styles.header}>Register your Company</h1>
-          <h1>Register your Company</h1>
           {error && <p className={styles.error}>{error}</p>}
           <div className={styles.formContainer}>
             <form className={styles.form} onSubmit={handleSubmit}>
