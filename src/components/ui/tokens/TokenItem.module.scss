@@ -1,27 +1,33 @@
 .tokenItem {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 2rem;
-    width: 100%;
-  }
-  
-  .number {
-    width: 1%;
-  }
-  
-  .token {
-    width: 20%;
-  }
-  
-  .tokenformfield {
-    width: 60%;
-  }
-  
-  .trashIcon {
-    cursor: pointer;
-    color: var(--red-6); 
-    align-items: center;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  width: 100%;
+}
+
+.number {
+  width: 1%;
+}
+
+.token {
+  width: 20%;
+}
+
+.tokenformfield {
+  width: 60%;
+}
+
+.trashIcon {
+  cursor: pointer;
+  color: var(--red-6);
+  align-items: center;
+}
+
+.iconHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
+}
