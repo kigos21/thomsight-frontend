@@ -24,12 +24,17 @@
   gap: 10px;
 }
 
-.iconButton {
-  transition: 0.3s;
+.iconEdit,
+.iconDelete {
+  transition: all 0.3s ease;
+}
 
-  &:hover {
-    color: var(--blue-6);
-  }
+.iconEdit:hover {
+  color: var(--blue-6);
+}
+
+.iconDelete:hover {
+  color: var(--red-6);
 }
 
 .styledBox {

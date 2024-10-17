@@ -69,14 +69,23 @@ export default function AdminGenerateTokenPage() {
   };
 
   return (
-    <PaddedContainer>
+    <PaddedContainer classNames={styles.paddedContainer}>
       {fetchLoading && <Spinner message="Fetching tokens..." />}
       {generateLoading && <Spinner message="Generating token..." />}
       <div className={styles.title}>
-        <h1>Tokens</h1>
-        <Button classNames={styles.button} onClick={generateToken}>
-          <IconPlus /> Generate Token
-        </Button>
+        <div className={styles.titleRight}>
+          <h1>Tokens</h1>
+        </div>
+        <div className={styles.titleLeft}>
+          <Button
+            color="secondary"
+            roundness="rounded"
+            classNames={styles.button}
+            onClick={generateToken}
+          >
+            <IconPlus /> Generate Token
+          </Button>
+        </div>
       </div>
 
       {success && <SuccessMessage message="Token generated successfully" />}
@@ -85,9 +94,13 @@ export default function AdminGenerateTokenPage() {
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.companytokens}>
           <div className={styles.header}>
-            <p>#</p>
-            <p>Token</p>
-            <p>Company</p>
+            <div className={styles.tokenContainer}>
+              <p>#</p>
+              <p>Token</p>
+            </div>
+            <div className={styles.companyContainer}>
+              <p>Company</p>
+            </div>
           </div>
           {tokens.map((token, index) => (
             <TokenItem

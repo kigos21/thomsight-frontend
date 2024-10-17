@@ -61,10 +61,10 @@ const ReportsInterviewTips = () => {
             <div className={styles.thirdCol}>
               <div className={styles.actionsButtonGroup}>
                 <button className={styles.btnCheck}>
-                  <IconCheck />
+                  <IconCheck className={styles.iconCheck} />
                 </button>
                 <button className={styles.btnDismiss}>
-                  <IconX />
+                  <IconX className={styles.iconX} />
                 </button>
               </div>
             </div>

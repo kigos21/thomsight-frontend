@@ -66,7 +66,7 @@ export default function AppRoot() {
     case "Admin":
       links = [
         <NavLink to="/companies" key="homeAdmin">
-          Companies
+          Home
         </NavLink>,
         <NavLink to="/tokens" key="tokensAdmin">
           Tokens
