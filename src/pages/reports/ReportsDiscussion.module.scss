@@ -77,10 +77,19 @@
 }
 
 .btnCheck {
-  background-color: var(--green-5);
+  background-color: var(--green-6);
   padding: 0.125rem;
   border-radius: 4px;
   color: var(--black);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--green-7);
+  }
+
+  &:active {
+    background-color: var(--green-9);
+  }
 }
 
 .btnDismiss {
@@ -88,4 +97,13 @@
   padding: 0.125rem;
   border-radius: 4px;
   color: var(--black);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
+    background-color: var(--red-9);
+  }
 }
