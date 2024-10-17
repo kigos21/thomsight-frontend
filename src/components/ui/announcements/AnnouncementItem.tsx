@@ -43,10 +43,10 @@ export default function AnnouncementItem({
         </div>
         <div className={styles.iconContainer}>
           <button onClick={handleIconClick} className={styles.iconButton}>
-            <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
+            <IconEdit className={styles.iconEdit} />
           </button>
           <button onClick={handleDeleteClick} className={styles.iconButton}>
-            <IconTrash size={25} stroke={1.5} className={styles.iconDelete} />
+            <IconTrash className={styles.iconDelete} />
           </button>
         </div>
       </div>

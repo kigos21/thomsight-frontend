@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TokenItemProps } from "../../../types/props";
 import styles from "./TokenItem.module.scss";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconTrash, IconMail } from "@tabler/icons-react";
 import TokenFormField from "./TokenFormField";
 import DeletePopUp from "../company/DeletePopUp";
 import Spinner from "../Spinner";
@@ -51,7 +51,10 @@ const TokenItem: React.FC<TokenItemProps> = ({
         initialEmail={email}
         tokenId={id}
       />
-      <IconTrash className={styles.trashIcon} onClick={handleDeleteClick} />
+      <div className={styles.iconHolder}>
+        <IconMail className={styles.mailIcon} />
+        <IconTrash className={styles.trashIcon} onClick={handleDeleteClick} />
+      </div>
       {deleteConfirm && (
         <DeletePopUp
           isVisible={deleteConfirm}
