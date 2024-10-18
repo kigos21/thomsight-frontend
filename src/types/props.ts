@@ -156,3 +156,14 @@ export interface DismissPopUpProps {
   heading: string;
   details: string;
 }
+
+export interface DisplayProfileProps {
+  isVisible: boolean;
+  onClose: () => void;
+  firstName: string;
+  lastName: string;
+  bio: string;
+  profileLink: string;
+  phoneNumber: string;
+  email: string;
+}

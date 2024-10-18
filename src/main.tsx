@@ -55,6 +55,7 @@ import { UserProvider } from "./contexts/UserContext.tsx";
 import PrivateRoute from "./contexts/PrivateRoute.tsx";
 import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
 import { TokenProvider } from "./contexts/TokenContext.tsx";
+// import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -328,6 +329,19 @@ const router = createBrowserRouter([
         path: "/data-privacy",
         element: <DataPrivacy />,
       },
+      // {
+      //   path: "/displayprofile",
+      //   element: <DisplayProfile 
+      //               isVisible={true} 
+      //               onClose={() => {}} 
+      //               firstName="John Rupert" 
+      //               lastName="Azarias" 
+      //               bio="I am a software developer" 
+      //               profileLink="https://www.linkedin.com/in/john-rupert-azarias-93b1b1200/" 
+      //               phoneNumber="09123456789" 
+      //               email="johnrupertazarias@gmail.com" 
+      //            />,
+      // },
       {
         index: true,
         element: <LandingPage />,
