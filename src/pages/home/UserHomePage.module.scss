@@ -107,7 +107,7 @@
 }
 
 .paginationButton {
-  background-color: #007bff; // Change to your preferred color
+  background-color: var(--black); // Change to your preferred color
   color: white;
   border: none;
   padding: 10px 15px;
@@ -120,12 +120,11 @@
     transform 0.3s ease;
 
   &:hover {
-    background-color: #0056b3; // Darker shade on hover
     transform: scale(1.05);
   }
 
   &.active {
-    background-color: #0056b3; // Active page color
+    background-color: var(--black); // Active page color
     font-weight: bold;
   }
 
