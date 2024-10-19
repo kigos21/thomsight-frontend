@@ -78,7 +78,12 @@ const router = createBrowserRouter([
       // Announcements
       {
         path: "announcements",
-        element: <AdminViewAnnouncements />,
+        element: (
+          <PrivateRoute
+            element={<AdminViewAnnouncements />}
+            allowedRoles={["Admin", "Rep"]}
+          />
+        ),
       },
       {
         path: "announcements/create",

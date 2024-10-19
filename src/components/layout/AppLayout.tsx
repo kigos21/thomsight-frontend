@@ -14,6 +14,7 @@ export default function AppRoot() {
 
   switch (user?.role) {
     case "Student":
+    case "Alumni":
       links = [
         <NavLink to="/companies" key="homeUser">
           Companies
