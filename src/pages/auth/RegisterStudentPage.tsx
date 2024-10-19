@@ -86,7 +86,7 @@ export default function StudentRegisterPage() {
 
       localStorage.setItem(
         "registrationSuccess",
-        "Your account has been created successfully!"
+        "Your account has been created successfully! Please verify your email before logging in."
       );
       navigate("/login/student");
     } catch (error) {

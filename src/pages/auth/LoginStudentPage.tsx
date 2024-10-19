@@ -10,6 +10,7 @@ import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
 import SuccessMessage from "../../components/form/SuccessMessage";
+import { useLocation } from "react-router-dom";
 
 export default function LoginStudentPage() {
   const [email, setEmail] = useState("");
@@ -17,18 +18,27 @@ export default function LoginStudentPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const verified = params.get("verified");
     const registrationMessage = localStorage.getItem("registrationSuccess");
     const passwordResetMessage = localStorage.getItem("resetPasswordSuccess");
+    if (verified === "1") {
+      setSuccessMessage(
+        "Your email has been successfully verified! You can now log in."
+      );
+    }
     if (registrationMessage) {
       setSuccessMessage(registrationMessage);
       localStorage.removeItem("registrationSuccess");
-    } else if (passwordResetMessage) {
+    }
+    if (passwordResetMessage) {
       setSuccessMessage(passwordResetMessage);
       localStorage.removeItem("resetPasswordSuccess");
     }
-  }, []);
+  }, [location]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
