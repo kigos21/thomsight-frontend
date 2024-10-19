@@ -34,12 +34,13 @@ export default function LoginStudentPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
+    setSuccessMessage("");
 
     try {
       await login(email, password);
       window.location.href = "http://localhost:5173/companies";
     } catch (err) {
-      setError("Invalid credentials");
+      setError(err.response.data.message);
       console.error("Login failed", err);
     } finally {
       setLoading(false);

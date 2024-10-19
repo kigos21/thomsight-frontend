@@ -10,7 +10,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import ValidationError from "../../components/form/ValidationError";
-import SuccessMessage from "../../components/form/SuccessMessage";
 import Spinner from "../../components/ui/Spinner";
 
 export default function ForgotPasswordChangePassword() {
@@ -21,7 +20,6 @@ export default function ForgotPasswordChangePassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
   const [loading, setLoading] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
