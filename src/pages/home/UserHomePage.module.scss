@@ -97,3 +97,45 @@
     border-bottom-left-radius: 999px;
   }
 }
+
+//pagination
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.paginationButton {
+  background-color: #007bff; // Change to your preferred color
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3; // Darker shade on hover
+    transform: scale(1.05);
+  }
+
+  &.active {
+    background-color: #0056b3; // Active page color
+    font-weight: bold;
+  }
+
+  &.disabled {
+    background-color: #ccc; // Disable color
+    cursor: not-allowed;
+    pointer-events: none; // Prevent click
+  }
+
+  &:focus {
+    outline: none; // Remove default focus outline
+  }
+}

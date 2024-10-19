@@ -4,15 +4,17 @@ import PaddedContainer from "../../components/layout/PaddedContainer";
 import HomeCompanyItem from "../../components/ui/home/HomeCompanyItem";
 import Spinner from "../../components/ui/Spinner";
 import { useState } from "react";
-
-import styles from "./UserHomePage.module.scss";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import { useNavigate } from "react-router-dom";
+
+import styles from "./UserHomePage.module.scss";
 
 export default function UserHomePage() {
   const { companies, jobs, loading, error } = useCompanies();
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
   const navigate = useNavigate();
 
   const jobOptions = jobs
@@ -38,8 +40,26 @@ export default function UserHomePage() {
           company.name.toLowerCase().includes(searchQuery.toLowerCase())
         ) || [];
 
+  const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+  const paginatedCompanies = filteredCompanies.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const handleCompanyClick = (slug: string) => {
     navigate(`/company/${slug}`);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   return (
@@ -61,9 +81,9 @@ export default function UserHomePage() {
 
       <h1 className={styles.h1}>Companies</h1>
 
-      {filteredCompanies && (
+      {paginatedCompanies.length > 0 ? (
         <div className={styles.itemContainer}>
-          {filteredCompanies.map((company) => (
+          {paginatedCompanies.map((company) => (
             <div
               key={company.id}
               onClick={() => handleCompanyClick(company.slug)}
@@ -72,7 +92,56 @@ export default function UserHomePage() {
             </div>
           ))}
         </div>
+      ) : (
+        <div>No companies found.</div>
       )}
+
+      <div className={styles.pagination}>
+        <button
+          className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          &#60; Previous
+        </button>
+        <button
+          className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+          onClick={() => setCurrentPage(1)}
+          disabled={currentPage === 1}
+        >
+          First
+        </button>
+
+        {Array.from({ length: totalPages }, (_, index) => index + 1)
+          .slice(
+            Math.max(currentPage - 2, 0),
+            Math.min(currentPage + 1, totalPages)
+          )
+          .map((page) => (
+            <button
+              key={page}
+              className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          ))}
+
+        <button
+          className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+          onClick={() => setCurrentPage(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          Last
+        </button>
+        <button
+          className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next &#62;
+        </button>
+      </div>
     </PaddedContainer>
   );
 }
