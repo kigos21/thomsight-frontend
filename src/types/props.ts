@@ -148,3 +148,22 @@ export interface ReportFormProps {
 export type HomeCompanyItemProps = {
   company: Company;
 };
+
+export interface DismissPopUpProps {
+  isVisible: boolean;
+  onClose: () => void;
+  onDismiss: () => void;
+  heading: string;
+  details: string;
+}
+
+export interface DisplayProfileProps {
+  isVisible: boolean;
+  onClose: () => void;
+  firstName: string;
+  lastName: string;
+  bio: string;
+  profileLink: string;
+  phoneNumber: string;
+  email: string;
+}
