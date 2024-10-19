@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     element: (
       <UserProvider>
         <CompaniesProvider>
-          <AppLayout />
+          <PrivateRoute element={<AppLayout />} />
         </CompaniesProvider>
       </UserProvider>
     ),
@@ -78,12 +78,7 @@ const router = createBrowserRouter([
       // Announcements
       {
         path: "announcements",
-        element: (
-          <PrivateRoute
-            element={<AdminViewAnnouncements />}
-            allowedRoles={["Admin"]}
-          />
-        ),
+        element: <AdminViewAnnouncements />,
       },
       {
         path: "announcements/create",
@@ -215,7 +210,12 @@ const router = createBrowserRouter([
       // CV Review
       {
         path: "cv-review",
-        element: <CVLayout />,
+        element: (
+          <PrivateRoute
+            element={<CVLayout />}
+            allowedRoles={["Student", "Alumni"]}
+          />
+        ),
         children: [
           {
             index: true,
@@ -251,7 +251,12 @@ const router = createBrowserRouter([
       // Notifications
       {
         path: "/notifications",
-        element: <CompanyNotification />,
+        element: (
+          <PrivateRoute
+            element={<CompanyNotification />}
+            allowedRoles={["Rep"]}
+          />
+        ),
       },
     ],
   },
