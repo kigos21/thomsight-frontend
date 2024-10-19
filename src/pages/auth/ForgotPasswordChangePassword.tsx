@@ -6,7 +6,7 @@ import FormField from "../../components/form/FormField"; // Reusing FormField co
 import { IconLock } from "@tabler/icons-react";
 
 import styles from "./ForgotPasswordChangePassword.module.scss";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import ValidationError from "../../components/form/ValidationError";
@@ -24,18 +24,16 @@ export default function ForgotPasswordChangePassword() {
   const [success, setSuccess] = useState<string>("");
   const [loading, setLoading] = useState<string>("");
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setEmail(params.get("email") || "");
   }, [location]);
 
-  console.log(token);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let isValid = true;
-    setSuccess("");
     setError("");
     setPasswordError("");
     setConfirmPasswordError("");
@@ -65,7 +63,11 @@ export default function ForgotPasswordChangePassword() {
         password_confirmation: confirmPassword,
       });
 
-      setSuccess("Password has been successfully reset");
+      localStorage.setItem(
+        "resetPasswordSuccess",
+        "Password has been successfully reset"
+      );
+      navigate("/login/student");
     } catch (err) {
       setError("There was an issue resetting your password." + err);
     } finally {
@@ -80,7 +82,6 @@ export default function ForgotPasswordChangePassword() {
           {loading && <Spinner message={loading} />}
           <h1 className={styles.header}>Password Recovery</h1>
           <div className={styles.formContainer}>
-            {success && <SuccessMessage message={success} />}
             {error && <ValidationError message={error} />}
             <form className={styles.form} onSubmit={handleSubmit}>
               {/* Password Field */}

@@ -84,6 +84,10 @@ export default function StudentRegisterPage() {
         phone,
       });
 
+      localStorage.setItem(
+        "registrationSuccess",
+        "Your account has been created successfully!"
+      );
       navigate("/login/student");
     } catch (error) {
       console.error("Error registering user:", error);

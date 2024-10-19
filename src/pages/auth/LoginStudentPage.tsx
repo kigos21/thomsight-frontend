@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
@@ -9,12 +9,26 @@ import { login } from "../../api/authUser";
 import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
+import SuccessMessage from "../../components/form/SuccessMessage";
 
 export default function LoginStudentPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const registrationMessage = localStorage.getItem("registrationSuccess");
+    const passwordResetMessage = localStorage.getItem("resetPasswordSuccess");
+    if (registrationMessage) {
+      setSuccessMessage(registrationMessage);
+      localStorage.removeItem("registrationSuccess");
+    } else if (passwordResetMessage) {
+      setSuccessMessage(passwordResetMessage);
+      localStorage.removeItem("resetPasswordSuccess");
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +51,7 @@ export default function LoginStudentPage() {
       <div className={styles.container}>
         <h1>Login with your Account</h1>
         <div className={styles.formContainer}>
+          {successMessage && <SuccessMessage message={successMessage} />}
           <form className={styles.form} onSubmit={handleLogin}>
             {error && <div className={styles.error}>{error}</div>}
             <FormField
