@@ -318,7 +318,7 @@ const router = createBrowserRouter([
         element: <ForgotPasswordEmail />,
       },
       {
-        path: "/forgot-password/change-password",
+        path: "/forgot-password/change-password/:token",
         element: <ForgotPasswordChangePassword />,
       },
       {
@@ -331,15 +331,15 @@ const router = createBrowserRouter([
       },
       // {
       //   path: "/displayprofile",
-      //   element: <DisplayProfile 
-      //               isVisible={true} 
-      //               onClose={() => {}} 
-      //               firstName="John Rupert" 
-      //               lastName="Azarias" 
-      //               bio="I am a software developer" 
-      //               profileLink="https://www.linkedin.com/in/john-rupert-azarias-93b1b1200/" 
-      //               phoneNumber="09123456789" 
-      //               email="johnrupertazarias@gmail.com" 
+      //   element: <DisplayProfile
+      //               isVisible={true}
+      //               onClose={() => {}}
+      //               firstName="John Rupert"
+      //               lastName="Azarias"
+      //               bio="I am a software developer"
+      //               profileLink="https://www.linkedin.com/in/john-rupert-azarias-93b1b1200/"
+      //               phoneNumber="09123456789"
+      //               email="johnrupertazarias@gmail.com"
       //            />,
       // },
       {

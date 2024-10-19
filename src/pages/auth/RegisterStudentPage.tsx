@@ -99,6 +99,7 @@ export default function StudentRegisterPage() {
           <h1 className={styles.header}>Register your Account</h1>
           {loading && <Spinner message="Registering student..." />}
           <div className={styles.formContainer}>
+            {error && <ValidationError message={error} />}
             <form className={styles.form} onSubmit={handleSubmit}>
               {/* Name Field */}
               <FormField
