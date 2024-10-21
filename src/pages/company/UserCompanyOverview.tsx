@@ -12,6 +12,7 @@ import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import ValidationError from "../../components/form/ValidationError";
 import { containsBadWords } from "../../badWordsFilter";
+import { useUser } from "../../contexts/UserContext";
 
 type Review = {
   id?: number;
@@ -22,6 +23,7 @@ type Review = {
 };
 
 export default function UserCompanyOverview() {
+  const { user } = useUser();
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false);
   const [review, setReview] = useState({
     rating: "",
@@ -129,14 +131,16 @@ export default function UserCompanyOverview() {
           <div className={styles.reviewContainer}>
             <div className={styles.reviewHeaderContainer}>
               <h2 className={styles.titleHeader}>Reviews</h2>
-              <Button
-                color="primary"
-                roundness="rounded"
-                classNames={styles.replyButton}
-                onClick={() => setIsAddingReview(true)}
-              >
-                Write a Review
-              </Button>
+              {user?.role === "Alumni" && (
+                <Button
+                  color="primary"
+                  roundness="rounded"
+                  classNames={styles.replyButton}
+                  onClick={() => setIsAddingReview(true)}
+                >
+                  Write a Review
+                </Button>
+              )}
             </div>
             {success && <SuccessMessage message={success} />}
             {error && <ValidationError message={error} />}

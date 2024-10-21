@@ -12,30 +12,61 @@ const customBadWords = [
   "hayop",
   "bastard",
   "peste",
-  // Add more words as needed
+  "ulol",
+  "tarantado",
+  "hinayupak",
+  "lintik",
+  "demonyo",
+  "salot",
+  "lecheng",
+  "putik",
+  "inutil",
+  "lapastangan",
+  "walang hiya",
+  "punyeta",
+  "hudas",
+  "yawa",
+  "burat",
+  "titi",
+  "kupal",
+  "unggoy",
+  "kupal",
+  "gunggong",
+  "ulupong",
+  "buwisit",
+  "tite",
+  "tang ina",
+  "puke",
+  "kantot",
+  "kantutan",
+  "kantotan",
+  "torjak",
+  "dede",
+  "pepe",
+  "puday",
+  "bilat",
+  "tae",
+
+  // Add more as needed
 ];
 
 customBadWords.forEach((word) => filter.addWords(word));
 
 export const containsBadWords = (text: string): boolean => {
-  // Check if the text contains any filtered words
   if (filter.isProfane(text)) {
-    return true; // Detected a bad word
+    return true;
   }
 
-  // Check for variations or misspellings (basic example)
   const lowerCaseText = text.toLowerCase();
 
-  // Iterate through custom bad words to check for variations
   for (const word of customBadWords) {
-    // Allow variations like "bobo", "bobos", etc.
-    const regex = new RegExp(`\\b${word}\\w*\\b`); // Matches the word and any variations
+    const regex = new RegExp(`\\b${word}\\w*\\b`);
     if (regex.test(lowerCaseText)) {
-      return true; // Detected a variation
+      return true;
     }
   }
 
-  return false; // No bad words found
+  return false;
 };
 
 export default filter;
