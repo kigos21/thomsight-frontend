@@ -56,8 +56,8 @@ export type DiscussionForumItemProps = {
 };
 
 export type ReviewItemProps = {
-  internName: string;
-  date: string;
+  internName: string | undefined;
+  date: string | number | Date;
   rating: string; //not sure kasi number to eh?
   reviewDescription: string;
 

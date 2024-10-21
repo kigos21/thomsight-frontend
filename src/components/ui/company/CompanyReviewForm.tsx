@@ -1,10 +1,8 @@
-import { useState } from "react";
 import FormField from "../../form/FormField";
-import SuccessMessage from "../../form/SuccessMessage";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
-import Spinner from "../Spinner";
 import styles from "./CompanyReviewForm.module.scss";
+import ValidationError from "../../form/ValidationError";
 
 interface Review {
   rating: string;
@@ -16,6 +14,9 @@ interface CompanyReviewFormProps {
   onSave: () => void;
   onChange: (review: Review) => void;
   onCancel: () => void;
+  error: string;
+  ratingError: string;
+  descriptionError: string;
 }
 
 const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
@@ -23,6 +24,8 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
   onSave,
   onChange,
   onCancel,
+  ratingError,
+  descriptionError,
 }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -31,23 +34,12 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
     onChange({ ...review, [name]: value }); // Update review state based on input change
   };
 
-  // const { slug } = useParams<{ slug: string }>();
-  const [reviewRating, setReviewRating] = useState("");
-  const [reviewDescription, setReviewDescription] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState<boolean>(false);
-  // const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
-  // const company = getCompanyBySlug(slug || "");
-  const [creating, setCreating] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };
 
   return (
     <div className={`${styles.container}`}>
-      {creating && <Spinner message="Creating job..." />}
-      {success && <SuccessMessage message="Created job successfully" />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
@@ -61,6 +53,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               value={review.rating}
               onChange={handleInputChange}
             ></FormField>
+            {ratingError && <ValidationError message={ratingError} />}
           </div>
 
           <div>
@@ -74,6 +67,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               value={review.description}
               onChange={handleInputChange}
             ></FormField>
+            {descriptionError && <ValidationError message={descriptionError} />}
           </div>
 
           <div className={styles.buttonGroup}>

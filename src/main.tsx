@@ -177,7 +177,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "companies",
+        path: "tokens/companies",
         element: (
           <PrivateRoute
             element={<AdminCompanyAccount />}
