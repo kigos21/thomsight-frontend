@@ -11,6 +11,7 @@ import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import ValidationError from "../../components/form/ValidationError";
+import { containsBadWords } from "../../badWordsFilter";
 
 type Review = {
   id?: number;
@@ -64,6 +65,11 @@ export default function UserCompanyOverview() {
     setDescriptionError("");
     setSuccess("");
     let isValid = true;
+
+    if (containsBadWords(review.description)) {
+      setDescriptionError("Your review contains inappropriate language.");
+      isValid = false;
+    }
 
     const ratingValue = parseInt(review.rating, 10);
     if (!ratingValue || ratingValue < 1 || ratingValue > 5) {
