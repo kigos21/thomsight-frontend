@@ -15,10 +15,38 @@ type Review = {
 
 export default function UserCompanyOverview() {
   const [isAddingReview, setIsAddingReview] = useState<boolean>(true);
-  const [review, setReview] = useState({
+  const [reviewForm, setReviewForm] = useState({
     rating: "",
     description: "",
   });
+
+  // SAMPLE DATA
+  const [reviewData, setReviewData] = useState([
+    {
+      id: 1,
+      internName: "John Doe Villarin",
+      rating: "5",
+      date: "01/27/2024",
+      reviewDescription:
+        "I loved the experience! Learned a lot and grew professionally.",
+    },
+    {
+      id: 2,
+      internName: "Jane Smith",
+      rating: "4",
+      date: "02/10/2024",
+      reviewDescription:
+        "Great environment, fantastic mentors. Would definitely recommend.",
+    },
+    {
+      id: 3,
+      internName: "Alex Johnson",
+      rating: "4",
+      date: "03/05/2024",
+      reviewDescription:
+        "Challenging tasks but rewarding experience. Improved my skills significantly.",
+    },
+  ]);
 
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug } = useCompanies();
@@ -33,12 +61,32 @@ export default function UserCompanyOverview() {
   };
 
   const handleChange = (updatedReview: Review) => {
-    setReview(updatedReview);
+    setReviewForm(updatedReview);
   };
 
   const handleCancel = () => {
     setIsAddingReview(false);
-    setReview({ rating: "", description: "" });
+    setReviewForm({ rating: "", description: "" });
+  };
+
+  const handleReviewChange = (
+    id: number,
+    updatedRating: string,
+    updatedDescription: string
+  ) => {
+    const newReviews = reviewData.map((review) => {
+      if (review.id != id) {
+        return review;
+      }
+
+      return {
+        ...review,
+        rating: updatedRating,
+        reviewDescription: updatedDescription,
+      };
+    });
+
+    setReviewData(newReviews);
   };
 
   return (
@@ -63,18 +111,31 @@ export default function UserCompanyOverview() {
             </div>
             {isAddingReview && (
               <CompanyReviewForm
-                review={review}
+                review={reviewForm}
                 onSave={handleSave}
                 onChange={handleChange}
                 onCancel={handleCancel}
               />
             )}
-            <ReviewItem
-              internName="John Doe Villarin"
-              rating="5.0"
-              date="01/27/2024"
-              reviewDescription="i love the experience i love the experience i love the experience i love the experience i love the experience"
-            ></ReviewItem>
+            {reviewData.map((review) => (
+              <ReviewItem
+                key={review.id}
+                internName={review.internName}
+                rating={review.rating}
+                date={review.date}
+                reviewDescription={review.reviewDescription}
+                onReviewChange={(updatedReview: {
+                  rating: string;
+                  description: string;
+                }) =>
+                  handleReviewChange(
+                    review.id,
+                    updatedReview.rating,
+                    updatedReview.description
+                  )
+                }
+              />
+            ))}
           </div>
         </div>
         <div className={styles.rightcontainer}>

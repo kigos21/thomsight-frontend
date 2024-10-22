@@ -1,9 +1,15 @@
 import { ReviewItemProps } from "../../../types/props";
-import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
+import {
+  IconFlagFilled,
+  IconTrash,
+  IconEdit,
+  IconStarFilled,
+} from "@tabler/icons-react";
 import ButtonReview from "../ButtonReview";
 
 import styles from "./ReviewItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
+import { FormEvent, useRef, useState } from "react";
 
 export default function ReviewItem({
   classNames,
@@ -12,10 +18,42 @@ export default function ReviewItem({
   date,
   rating,
   reviewDescription,
+  onReviewChange,
 }: ReviewItemProps) {
+  // Local state for editing
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [tempReview, setTempReview] = useState<{
+    rating: string;
+    description: string;
+  }>({ rating: rating, description: reviewDescription });
+
+  const ratingRef = useRef<HTMLFormElement>(null);
+
   const handleIconClick = () => {
     //click handling logic
     console.log("Icon clicked!");
+  };
+
+  const handleEditClick = () => {
+    setIsEditing((state) => !state);
+  };
+
+  const handleSaveClick = () => {
+    if (ratingRef.current && !ratingRef.current!.checkValidity()) {
+      ratingRef.current.reportValidity(); // This will display the native validation error messages
+      return;
+    }
+    onReviewChange(tempReview);
+    setIsEditing(false);
+  };
+
+  const handleCancelClick = () => {
+    setTempReview({ rating: rating, description: reviewDescription }); // Reset the temp description to discard changes
+    setIsEditing(false);
+  };
+
+  const handleRatingSubmit = (e: FormEvent) => {
+    e.preventDefault();
   };
 
   return (
@@ -26,7 +64,30 @@ export default function ReviewItem({
             <div className={styles.reviewerDetails}>
               <p className={styles.internName}>{internName}</p>
               <div className={styles.verticalDivider}></div>
-              <h2 className={styles.rating}>{rating}</h2>
+              {!isEditing ? (
+                <div className={styles.ratingContainer}>
+                  <h2 className={styles.rating}>{rating}</h2>
+                  <IconStarFilled width={16} />
+                </div>
+              ) : (
+                <form onSubmit={(e) => handleRatingSubmit(e)} ref={ratingRef}>
+                  <input
+                    className={styles.ratingTextfield}
+                    type="number"
+                    name="rating"
+                    id="rating"
+                    placeholder="5"
+                    value={tempReview.rating}
+                    onChange={(e) =>
+                      setTempReview((current) => {
+                        return { ...current, rating: e.target.value };
+                      })
+                    }
+                    min="1"
+                    max="5"
+                  />
+                </form>
+              )}
             </div>
             <p className={styles.date}>{date}</p>
 
@@ -66,10 +127,36 @@ export default function ReviewItem({
             </div>
           </div>
 
-          <p className={styles.reviewDescription}>{reviewDescription}</p>
+          {isEditing ? (
+            <div className={styles.editReviewDescriptionSection}>
+              <textarea
+                className={styles.descriptionTextarea}
+                value={tempReview.description}
+                onChange={(e) =>
+                  setTempReview((current) => {
+                    return { ...current, description: e.target.value };
+                  })
+                }
+                rows={5}
+              />
+              <div className={styles.editButtons}>
+                <button
+                  onClick={handleCancelClick}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+                <button onClick={handleSaveClick} className={styles.saveButton}>
+                  Save
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p className={styles.reviewDescription}>{reviewDescription}</p>
+          )}
 
           <div className={styles.iconContainer}>
-            <button onClick={handleIconClick} className={styles.iconButton}>
+            <button onClick={handleEditClick} className={styles.iconButton}>
               <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
             </button>
             <button onClick={handleIconClick} className={styles.iconButton}>

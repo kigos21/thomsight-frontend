@@ -60,6 +60,10 @@ export type ReviewItemProps = {
   date: string;
   rating: string; //not sure kasi number to eh?
   reviewDescription: string;
+  onReviewChange: (updatedReview: {
+    rating: string;
+    description: string;
+  }) => void;
 
   classNames?: string;
   style?: React.CSSProperties;
