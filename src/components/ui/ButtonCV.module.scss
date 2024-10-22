@@ -16,28 +16,40 @@
 }
 
 .delete {
-  background-color: var(--red-8);
+  background-color: var(--red-6);
   color: var(--white);
 
   &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
     background-color: var(--red-9);
   }
 }
 
 .acceptRequest {
-  background-color: var(--green-8);
+  background-color: var(--green-7);
   color: var(--white);
 
   &:hover {
+    background-color: var(--green-8);
+  }
+
+  &:active {
     background-color: var(--green-9);
   }
 }
 
 .review {
-  background-color: var(--blue-8);
+  background-color: var(--secondary-color);
   color: var(--white);
 
   &:hover {
+    background-color: var(--blue-8);
+  }
+
+  &:active {
     background-color: var(--blue-9);
   }
 }
@@ -50,13 +62,21 @@
   &:hover {
     background-color: var(--green-0);
   }
+
+  &:active {
+    background-color: var(--green-1);
+  }
 }
 
 .cancel {
-  background-color: var(--red-8);
+  background-color: var(--red-6);
   color: var(--white);
 
   &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
     background-color: var(--red-9);
   }
 }

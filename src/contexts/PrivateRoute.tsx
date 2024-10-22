@@ -15,9 +15,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   const { user, loading } = useUser();
 
   if (loading) {
-    return (
-      <Spinner message="Please wait while we check if you are allowed here!" />
-    );
+    return <Spinner message="Loading page..." />;
   }
 
   if (!user) {
@@ -25,7 +23,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/companies" replace />;
   }
 
   return <>{element}</>;

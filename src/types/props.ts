@@ -57,8 +57,8 @@ export type DiscussionForumItemProps = {
 };
 
 export type ReviewItemProps = {
-  internName: string;
-  date: string;
+  internName: string | undefined;
+  date: string | number | Date;
   rating: string; //not sure kasi number to eh?
   reviewDescription: string;
   onReviewChange: (updatedReview: {
@@ -153,3 +153,22 @@ export interface ReportFormProps {
 export type HomeCompanyItemProps = {
   company: Company;
 };
+
+export interface DismissPopUpProps {
+  isVisible: boolean;
+  onClose: () => void;
+  onDismiss: () => void;
+  heading: string;
+  details: string;
+}
+
+export interface DisplayProfileProps {
+  isVisible: boolean;
+  onClose: () => void;
+  firstName: string;
+  lastName: string;
+  bio: string;
+  profileLink: string;
+  phoneNumber: string;
+  email: string;
+}

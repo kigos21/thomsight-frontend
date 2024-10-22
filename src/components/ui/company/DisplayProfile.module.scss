@@ -1,0 +1,57 @@
+.profileOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--black-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profilePopup {
+    background-color: var(--neutral-0);
+    padding: 2rem;
+    border-radius: 1.25rem;
+    width: 400px;
+    box-shadow: 0 4px 8px var(--black-overlay);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+  }
+  
+  .heading {
+    margin-top: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center; 
+    align-self: center; 
+  }
+  
+  p {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .closeButton {
+    background-color: var(--black);
+    color: white;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem; 
+    align-self: center;
+
+    &:hover {
+      background-color: hsl(0, 0%, 28%);
+    }
+
+    &:active {
+      background-color: var(--black);
+    }
+  }

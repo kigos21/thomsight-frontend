@@ -14,9 +14,10 @@ export default function AppRoot() {
 
   switch (user?.role) {
     case "Student":
+    case "Alumni":
       links = [
         <NavLink to="/companies" key="homeUser">
-          Companies
+          Home
         </NavLink>,
         <NavLink to="/interview-guide" key="interviewTipsUser">
           Interview Tips
@@ -43,7 +44,7 @@ export default function AppRoot() {
 
       links = [
         <NavLink to="/companies" key="homeCompany">
-          Companies
+          Home
         </NavLink>,
         <NavLink to="/announcements" key="announcementsCompany">
           Announcements

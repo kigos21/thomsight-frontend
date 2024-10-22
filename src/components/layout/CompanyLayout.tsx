@@ -48,9 +48,9 @@ export default function CompanyRoot() {
     ];
   } else {
     // Check if accessing user is authorized
-    // if (company?.posted_by !== user?.id) {
-    //   return <Navigate to="/companies" replace />;
-    // }
+    if (company?.posted_by !== user?.id) {
+      return <Navigate to="/companies" replace />;
+    }
 
     elements = [
       <Link to={`${basePath}/manage/info`} key="overviewmanageinfoCompany">

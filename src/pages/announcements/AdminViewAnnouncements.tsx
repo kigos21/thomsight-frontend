@@ -10,6 +10,7 @@ import { Announcement } from "../../types/types";
 import styles from "./AdminViewAnnouncements.module.scss";
 import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
+import { useUser } from "../../contexts/UserContext";
 
 export default function AdminViewAnnouncements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -17,6 +18,7 @@ export default function AdminViewAnnouncements() {
   const [error, setError] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<string>("");
   const [deleteSuccess, setDeleteSuccess] = useState<string>("");
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -53,16 +55,18 @@ export default function AdminViewAnnouncements() {
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>Announcements</h2>
-          <Link to={"/announcements/create"}>
-            <Button
-              classNames={styles.announcementButton}
-              color="secondary"
-              roundness="rounded"
-            >
-              <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />
-              Create Announcement
-            </Button>
-          </Link>
+          {user?.role === "Admin" && (
+            <Link to={"/announcements/create"}>
+              <Button
+                classNames={styles.announcementButton}
+                color="secondary"
+                roundness="rounded"
+              >
+                <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />
+                Create Announcement
+              </Button>
+            </Link>
+          )}
         </div>
         {deleteSuccess && <SuccessMessage message={deleteSuccess} />}
         {deleteLoading && <Spinner message={deleteLoading} />}

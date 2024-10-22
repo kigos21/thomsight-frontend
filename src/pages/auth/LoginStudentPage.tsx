@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
@@ -9,23 +9,48 @@ import { login } from "../../api/authUser";
 import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
+import SuccessMessage from "../../components/form/SuccessMessage";
+import { useLocation } from "react-router-dom";
 
 export default function LoginStudentPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const verified = params.get("verified");
+    const registrationMessage = localStorage.getItem("registrationSuccess");
+    const passwordResetMessage = localStorage.getItem("resetPasswordSuccess");
+    if (verified === "1") {
+      setSuccessMessage(
+        "Your email has been successfully verified! You can now log in."
+      );
+    }
+    if (registrationMessage) {
+      setSuccessMessage(registrationMessage);
+      localStorage.removeItem("registrationSuccess");
+    }
+    if (passwordResetMessage) {
+      setSuccessMessage(passwordResetMessage);
+      localStorage.removeItem("resetPasswordSuccess");
+    }
+  }, [location]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+    setSuccessMessage("");
 
     try {
       await login(email, password);
       window.location.href = "http://localhost:5173/companies";
     } catch (err) {
-      setError("Invalid credentials");
+      setError(err.response.data.message);
       console.error("Login failed", err);
     } finally {
       setLoading(false);
@@ -37,6 +62,7 @@ export default function LoginStudentPage() {
       <div className={styles.container}>
         <h1>Login with your Account</h1>
         <div className={styles.formContainer}>
+          {successMessage && <SuccessMessage message={successMessage} />}
           <form className={styles.form} onSubmit={handleLogin}>
             {error && <div className={styles.error}>{error}</div>}
             <FormField

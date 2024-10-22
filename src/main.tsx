@@ -55,6 +55,7 @@ import { UserProvider } from "./contexts/UserContext.tsx";
 import PrivateRoute from "./contexts/PrivateRoute.tsx";
 import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
 import { TokenProvider } from "./contexts/TokenContext.tsx";
+// import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
     element: (
       <UserProvider>
         <CompaniesProvider>
-          <AppLayout />
+          <PrivateRoute element={<AppLayout />} />
         </CompaniesProvider>
       </UserProvider>
     ),
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute
             element={<AdminViewAnnouncements />}
-            allowedRoles={["Admin"]}
+            allowedRoles={["Admin", "Rep"]}
           />
         ),
       },
@@ -176,7 +177,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "companies",
+        path: "tokens/companies",
         element: (
           <PrivateRoute
             element={<AdminCompanyAccount />}
@@ -214,7 +215,12 @@ const router = createBrowserRouter([
       // CV Review
       {
         path: "cv-review",
-        element: <CVLayout />,
+        element: (
+          <PrivateRoute
+            element={<CVLayout />}
+            allowedRoles={["Student", "Alumni"]}
+          />
+        ),
         children: [
           {
             index: true,
@@ -250,7 +256,12 @@ const router = createBrowserRouter([
       // Notifications
       {
         path: "/notifications",
-        element: <CompanyNotification />,
+        element: (
+          <PrivateRoute
+            element={<CompanyNotification />}
+            allowedRoles={["Rep"]}
+          />
+        ),
       },
     ],
   },
@@ -317,7 +328,7 @@ const router = createBrowserRouter([
         element: <ForgotPasswordEmail />,
       },
       {
-        path: "/forgot-password/change-password",
+        path: "/forgot-password/change-password/:token",
         element: <ForgotPasswordChangePassword />,
       },
       {
@@ -328,6 +339,19 @@ const router = createBrowserRouter([
         path: "/data-privacy",
         element: <DataPrivacy />,
       },
+      // {
+      //   path: "/displayprofile",
+      //   element: <DisplayProfile
+      //               isVisible={true}
+      //               onClose={() => {}}
+      //               firstName="John Rupert"
+      //               lastName="Azarias"
+      //               bio="I am a software developer"
+      //               profileLink="https://www.linkedin.com/in/john-rupert-azarias-93b1b1200/"
+      //               phoneNumber="09123456789"
+      //               email="johnrupertazarias@gmail.com"
+      //            />,
+      // },
       {
         index: true,
         element: <LandingPage />,

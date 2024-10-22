@@ -9,6 +9,7 @@ import {
   IconMail,
   IconPhone,
   IconBuildings,
+  IconUser,
 } from "@tabler/icons-react";
 
 import styles from "./RegisterCompanyPage.module.scss";
@@ -98,6 +99,7 @@ export default function CompanyRegisterPage() {
     setLoading(true);
 
     try {
+      await axiosInstance.get("/sanctum/csrf-cookie");
       const userResponse = await axiosInstance.post("/api/register-rep", {
         name,
         email,
@@ -157,7 +159,7 @@ export default function CompanyRegisterPage() {
               {/* Name Field */}
               <FormField
                 icon={
-                  <IconMail size={35} stroke={1.5} className={styles.icon} />
+                  <IconUser size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="text"
                 placeholder="Name"
