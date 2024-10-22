@@ -25,38 +25,10 @@ type Review = {
 export default function UserCompanyOverview() {
   const { user } = useUser();
   const [isAddingReview, setIsAddingReview] = useState<boolean>(false);
-  const [reviewForm, setReviewForm] = useState({
+  const [review, setReview] = useState({
     rating: "",
     description: "",
   });
-
-  // SAMPLE DATA
-  const [reviewData, setReviewData] = useState([
-    {
-      id: 1,
-      internName: "John Doe Villarin",
-      rating: "5",
-      date: "01/27/2024",
-      reviewDescription:
-        "I loved the experience! Learned a lot and grew professionally.",
-    },
-    {
-      id: 2,
-      internName: "Jane Smith",
-      rating: "4",
-      date: "02/10/2024",
-      reviewDescription:
-        "Great environment, fantastic mentors. Would definitely recommend.",
-    },
-    {
-      id: 3,
-      internName: "Alex Johnson",
-      rating: "4",
-      date: "03/05/2024",
-      reviewDescription:
-        "Challenging tasks but rewarding experience. Improved my skills significantly.",
-    },
-  ]);
 
   const [error, setError] = useState<string>("");
   const [ratingError, setRatingError] = useState<string>("");
@@ -127,7 +99,8 @@ export default function UserCompanyOverview() {
       setLoading("Refetching reviews...");
       const response = await axiosInstance.get(`/api/company/${slug}/reviews`);
       setReviews(response.data);
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
       } else {
@@ -139,32 +112,24 @@ export default function UserCompanyOverview() {
   };
 
   const handleChange = (updatedReview: Review) => {
-    setReviewForm(updatedReview);
+    setReview(updatedReview);
   };
 
   const handleCancel = () => {
     setIsAddingReview(false);
-    setReviewForm({ rating: "", description: "" });
+    setReview({ rating: "", description: "" });
   };
 
   const handleReviewChange = (
-    id: number,
+    id: number | undefined,
     updatedRating: string,
     updatedDescription: string
   ) => {
-    const newReviews = reviewData.map((review) => {
-      if (review.id != id) {
-        return review;
-      }
+    // HOW TO ACTUALLY HANDLE REVIEW CHANGE?
+    console.log(
+      JSON.stringify({ id, updatedRating, updatedDescription }, null, 2)
+    );
 
-      return {
-        ...review,
-        rating: updatedRating,
-        reviewDescription: updatedDescription,
-      };
-    });
-
-    setReviewData(newReviews);
     setError("");
   };
 
@@ -195,7 +160,7 @@ export default function UserCompanyOverview() {
             {error && <ValidationError message={error} />}
             {isAddingReview && (
               <CompanyReviewForm
-                review={reviewForm}
+                review={review}
                 onSave={handleSave}
                 onChange={handleChange}
                 onCancel={handleCancel}
@@ -204,13 +169,13 @@ export default function UserCompanyOverview() {
                 descriptionError={descriptionError}
               />
             )}
-            {reviewData.map((review) => (
+            {reviews.map((review) => (
               <ReviewItem
                 key={review.id}
-                internName={review.internName}
+                internName={review.posted_by}
                 rating={review.rating}
                 date={review.date}
-                reviewDescription={review.reviewDescription}
+                reviewDescription={review.description}
                 onReviewChange={(updatedReview: {
                   rating: string;
                   description: string;

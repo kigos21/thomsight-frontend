@@ -90,7 +90,7 @@ export default function ReviewItem({
                 </form>
               )}
             </div>
-            <p className={styles.date}>{date}</p>
+            {date && <p className={styles.date}>{date.toString()}</p>}
 
             <div className={styles.replyButtonContainer}>
               <ButtonReview classNames={`${styles.replyButton} ${styles.up}`}>
