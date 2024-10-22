@@ -27,6 +27,7 @@ export default function ReviewItem({
     description: string;
   }>({ rating: rating, description: reviewDescription });
 
+  // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
 
   const handleIconClick = () => {

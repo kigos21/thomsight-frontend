@@ -12,6 +12,44 @@ export default function UserCompanyDiscussionForum() {
     description: "",
   });
 
+  const [postData, setPostData] = useState([
+    {
+      id: 1,
+      internName: "Jane Smith",
+      date: "02/10/2024",
+      description:
+        "Completed front-end development tasks for the dashboard module. Resolved several UI bugs and improved performance.",
+    },
+    {
+      id: 2,
+      internName: "Mark Tan",
+      date: "02/12/2024",
+      description:
+        "Worked on API integration for user authentication. Successfully implemented login/logout features using OAuth.",
+    },
+    {
+      id: 3,
+      internName: "Emily Garcia",
+      date: "02/15/2024",
+      description:
+        "Refactored the payment service module, optimizing the database queries and reducing response time by 30%.",
+    },
+    {
+      id: 4,
+      internName: "Michael Reyes",
+      date: "02/18/2024",
+      description:
+        "Collaborated with the design team to revamp the user profile page. Added user-friendly input validations and feedback messages.",
+    },
+    {
+      id: 5,
+      internName: "Anna Cruz",
+      date: "02/20/2024",
+      description:
+        "Developed a new feature allowing users to export data reports in CSV format. Tested and deployed to staging environment.",
+    },
+  ]);
+
   const handleSave = () => {
     console.log("Post Saved");
     console.log(JSON.stringify(postForm, null, 2));
@@ -29,6 +67,20 @@ export default function UserCompanyDiscussionForum() {
     setPostForm({ description: "" });
   };
 
+  const handleDescriptionChange = (id: number, updatedDescription: string) => {
+    const newPosts = postData.map((post) => {
+      if (post.id != id) {
+        return post;
+      }
+
+      return {
+        ...post,
+        description: updatedDescription,
+      };
+    });
+
+    setPostData(newPosts);
+  };
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
@@ -55,11 +107,17 @@ export default function UserCompanyDiscussionForum() {
           )}
 
           <div className={styles.discussionContainer}>
-            <DiscussionForumItem
-              internName="John Doe"
-              date="01/27/2024"
-              discussionForumDescription="i love the experience i love the experience i love the experience i love the experience i love the experience"
-            />
+            {postData.map((post) => (
+              <DiscussionForumItem
+                key={post.id}
+                internName={post.internName}
+                date={post.date}
+                description={post.description}
+                onDescriptionChange={(updatedDescription: string) =>
+                  handleDescriptionChange(post.id, updatedDescription)
+                }
+              />
+            ))}
           </div>
         </div>
         <div className={styles.rightcontainer}>

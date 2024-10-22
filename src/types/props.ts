@@ -49,7 +49,8 @@ export type InterviewTipsItemProps = {
 export type DiscussionForumItemProps = {
   internName: string;
   date: string;
-  discussionForumDescription: string;
+  description: string;
+  onDescriptionChange: (updatedDescription: string) => void;
 
   classNames?: string;
   style?: React.CSSProperties;

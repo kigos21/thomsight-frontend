@@ -4,17 +4,36 @@ import Button from "../Button";
 
 import styles from "./DiscussionForumItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
+import { useState } from "react";
 
 export default function DiscussionForumItem({
   classNames,
   style,
   internName,
   date,
-  discussionForumDescription,
+  description,
+  onDescriptionChange,
 }: DiscussionForumItemProps) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [tempDescription, setTempDescription] = useState<string>(description);
+
   const handleIconClick = () => {
     //click handling logic
     console.log("Icon clicked!");
+  };
+
+  const handleEditClick = () => {
+    setIsEditing((state) => !state);
+  };
+
+  const handleSaveClick = () => {
+    onDescriptionChange(tempDescription);
+    setIsEditing(false);
+  };
+
+  const handleCancelClick = () => {
+    setTempDescription(description);
+    setIsEditing(false);
   };
 
   return (
@@ -46,12 +65,32 @@ export default function DiscussionForumItem({
             </div>
           </div>
 
-          <p className={styles.discussionForumDescription}>
-            {discussionForumDescription}
-          </p>
+          {isEditing ? (
+            <div className={styles.editDescriptionSection}>
+              <textarea
+                className={styles.descriptionTextarea}
+                value={tempDescription}
+                onChange={(e) => setTempDescription(e.target.value)}
+                rows={5}
+              />
+              <div className={styles.editButtons}>
+                <button
+                  onClick={handleCancelClick}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+                <button onClick={handleSaveClick} className={styles.saveButton}>
+                  Save
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p className={styles.discussionForumDescription}>{description}</p>
+          )}
 
           <div className={styles.iconContainer}>
-            <button onClick={handleIconClick} className={styles.iconButton}>
+            <button onClick={handleEditClick} className={styles.iconButton}>
               <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
             </button>
             <button onClick={handleIconClick} className={styles.iconButton}>
