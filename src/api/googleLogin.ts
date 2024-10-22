@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export const handleGoogleLogin = (): void => {
   window.location.href = "http://127.0.0.1:8000/auth/redirect";
 };

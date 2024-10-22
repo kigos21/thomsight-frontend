@@ -1,4 +1,4 @@
-import React, { CSSProperties, ChangeEvent } from "react";
+import React, { CSSProperties } from "react";
 import { Company } from "./types";
 
 export type ButtonProps = {
@@ -102,7 +102,7 @@ export type TokenFormFieldProps = {
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
   readOnly?: boolean; // Ensure this prop is optional
   initialEmail?: string | null;
-  tokenId: number;
+  tokenId?: number;
 };
 
 export type TokenItemProps = {
@@ -134,7 +134,7 @@ export interface AdminCreatennouncementItemProps {
   classNames?: string;
   style?: CSSProperties;
   subject: string;
-  detail: string;
+  details: string;
 }
 
 export interface DeletePopUpProps {

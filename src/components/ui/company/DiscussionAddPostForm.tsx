@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormField from "../../form/FormField";
 import SuccessMessage from "../../form/SuccessMessage";
 import StyledBox from "../../layout/StyledBox";
@@ -39,6 +39,15 @@ const DiscussionAddPostForm: React.FunctionComponent<
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };
+
+  // PAKIBURA NETO, NEED KO LANG ICONSOLE LOG FOR NOW, MAARTE LINTER
+  useEffect(() => {
+    console.log(error);
+    console.log(setError(""));
+    console.log(setSuccess(false));
+    console.log(setCreating(false));
+  }, []);
+  // END OF PAKIBURA
 
   return (
     <div className={`${styles.container}`}>

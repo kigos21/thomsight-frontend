@@ -1,4 +1,4 @@
-import { AnnouncementItemProps } from "../../../types/props";
+// import { AnnouncementItemProps } from "../../../types/props";
 import StyledBox from "../../layout/StyledBox";
 import { IconTrash, IconEdit } from "@tabler/icons-react";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export default function AnnouncementItem({
   announcementDescription,
   id,
   onDelete,
-}: AnnouncementItemProps) {
+}: any) {
   const [isDeletePopupVisible, setDeletePopupVisible] = useState(false);
 
   const handleIconClick = () => {

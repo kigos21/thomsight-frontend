@@ -49,7 +49,7 @@ export default function LoginStudentPage() {
     try {
       await login(email, password);
       window.location.href = "http://localhost:5173/companies";
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response.data.message);
       console.error("Login failed", err);
     } finally {

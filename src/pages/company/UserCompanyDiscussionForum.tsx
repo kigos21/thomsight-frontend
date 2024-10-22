@@ -81,6 +81,7 @@ export default function UserCompanyDiscussionForum() {
 
     setPostData(newPosts);
   };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
