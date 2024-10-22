@@ -6,25 +6,39 @@ import { useCompanies } from "../../../contexts/CompaniesContext.tsx";
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { IconChevronDown, IconEdit } from "@tabler/icons-react";
+import { updateCompanyDetails } from "../../../api/companyCRUD.ts";
+import { useUser } from "../../../contexts/UserContext.tsx";
+import Spinner from "../Spinner.tsx";
+import ErrorPage from "../../../pages/ErrorPage.tsx";
+import SuccessMessage from "../../form/SuccessMessage.tsx";
+import ValidationError from "../../form/ValidationError.tsx";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug } = useCompanies();
+  const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
   const company = getCompanyBySlug(slug as string);
   const location = useLocation();
+  const { user } = useUser();
 
   const [isEditName, setIsEditName] = useState(false);
   const [isEditEmail, setIsEditEmail] = useState(false);
 
-  const [companyName, setCompanyName] = useState(company!.name);
-  const [companyEmail, setCompanyEmail] = useState(company!.email);
+  const [companyName, setCompanyName] = useState(company!.name || "");
+  const [companyEmail, setCompanyEmail] = useState(company!.email || "");
 
-  const [originalCompanyName, setOriginalCompanyName] = useState(company!.name);
-  const [originalCompanyEmail, setOriginalCompanyEmail] = useState(
-    company!.email
+  const [originalCompanyName, setOriginalCompanyName] = useState(
+    company!.name || ""
   );
+  const [originalCompanyEmail, setOriginalCompanyEmail] = useState(
+    company!.email || ""
+  );
+
+  const [isUpdating, setIsUpdating] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+
+  const [detailsError, setDetailsError] = useState<string>("");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -42,14 +56,63 @@ export default function CompanyDetails() {
     };
   }, []);
 
-  const handleSaveUpdates = () => {
-    setIsEditName(false);
-    setIsEditEmail(false);
-  };
-
-  if (!company) {
-    return <div></div>;
+  if (loading)
+    return <Spinner message="Please wait while we render relevant data!" />;
+  if (error) return <ErrorPage />;
+  if (!company) return <div></div>;
+  if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
+    return <ErrorPage />;
   }
+
+  const handleSaveUpdates = async () => {
+    let isValid = true;
+
+    setSuccess("");
+    setDetailsError("");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (companyName.trim() === "" || companyEmail.trim() === "") {
+      setDetailsError("Details cannot be blank");
+      isValid = false;
+    }
+
+    if (!emailRegex.test(companyEmail)) {
+      setDetailsError("Invalid email format");
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
+    setIsUpdating("Updating details...");
+
+    try {
+      if (!slug) {
+        throw new Error("Slug is undefined");
+      }
+
+      const updatedData = {
+        name: companyName,
+        email: companyEmail,
+      };
+
+      await updateCompanyDetails(slug, updatedData);
+
+      const updatedCompany = {
+        ...company,
+        name: companyName,
+        email: companyEmail,
+      };
+      updateCompany(updatedCompany);
+      setSuccess("Updated details successfully");
+    } catch (error) {
+      console.error("Error updating company details:", error);
+    } finally {
+      setIsUpdating("");
+      setIsEditName(false);
+      setIsEditEmail(false);
+    }
+  };
 
   const firstLocation =
     company.locations!.length > 0 ? company.locations![0] : null;
@@ -63,6 +126,9 @@ export default function CompanyDetails() {
   if (location.pathname.includes("/manage/")) {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
+        {success && <SuccessMessage message={success} />}
+        {isUpdating && <Spinner message={isUpdating} />}
+        {detailsError && <ValidationError message={detailsError} />}
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <img src={logo} alt="Logo" />
@@ -126,6 +192,8 @@ export default function CompanyDetails() {
                   onClick={() => {
                     setOriginalCompanyName(companyName);
                     setIsEditName(true);
+                    setDetailsError("");
+                    setSuccess("");
                   }}
                 >
                   <IconEdit className={styles.iconEdit} />
@@ -170,6 +238,8 @@ export default function CompanyDetails() {
                   onClick={() => {
                     setOriginalCompanyEmail(companyEmail);
                     setIsEditEmail(true);
+                    setDetailsError("");
+                    setSuccess("");
                   }}
                 >
                   <IconEdit className={styles.iconEdit} />
@@ -177,14 +247,20 @@ export default function CompanyDetails() {
               )}
             </div>
 
-            {/* Temporary location placeholder */}
-            {firstLocation ? (
-              <div>
-                <p>{firstLocation.address}</p>
-              </div>
-            ) : (
-              <p>No location data available.</p>
-            )}
+            <div className={styles.locationsContainer}>
+              {company?.locations && company.locations.length > 0 ? (
+                <p className={styles.locations}>
+                  {company.locations.map((location, index) => (
+                    <span key={index}>
+                      {location.address}
+                      {index < company.locations.length - 1 && " | "}
+                    </span>
+                  ))}
+                </p>
+              ) : (
+                <p>No location data available.</p>
+              )}
+            </div>
           </div>
         </div>
       </PaddedContainer>
@@ -204,14 +280,20 @@ export default function CompanyDetails() {
           <div className={styles.detailsHolder}>
             <p className={styles.companyName}>{company.name}</p>
             <p>{company.email}</p>
-            {/* temporary location placeholder */}
-            {firstLocation ? (
-              <div>
-                <p>{firstLocation.address}</p>
-              </div>
-            ) : (
-              <p>No location data available.</p>
-            )}
+            <div className={styles.locationsContainer}>
+              {company?.locations && company.locations.length > 0 ? (
+                <p className={styles.locations}>
+                  {company.locations.map((location, index) => (
+                    <span key={index}>
+                      {location.address}
+                      {index < company.locations.length - 1 && " | "}
+                    </span>
+                  ))}
+                </p>
+              ) : (
+                <p>No location data available.</p>
+              )}
+            </div>
           </div>
         </div>
       </PaddedContainer>
