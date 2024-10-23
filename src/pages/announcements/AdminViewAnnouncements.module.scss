@@ -29,6 +29,8 @@
 
   @media (max-width: 480px) {
     gap: 10px;
+    padding-bottom: 6px;
+    border-bottom: 0.5px solid var(--muted-black);
   }
 }
 
