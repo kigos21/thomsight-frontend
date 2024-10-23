@@ -69,9 +69,9 @@ export default function CompanyDetails() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   if (!company) return <div></div>;
-  if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
-    return <ErrorPage />;
-  }
+  // if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
+  //   return <ErrorPage />;
+  // }
 
   const handleSaveUpdates = async () => {
     let isValid = true;
