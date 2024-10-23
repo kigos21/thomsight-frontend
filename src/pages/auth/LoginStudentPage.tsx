@@ -50,9 +50,9 @@ export default function LoginStudentPage() {
       await login(email, password);
       // window.location.href = "http://localhost:5173/companies";
       window.location.href = "https://thomsight.com/companies";
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       setError(err.response.data.message);
-      console.error("Login failed", err);
     } finally {
       setLoading(false);
     }

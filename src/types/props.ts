@@ -30,7 +30,7 @@ export type StyledBoxProps = {
 
 export type JobItemProps = {
   jobTitle: string;
-  companyName: string;
+  companyName: string | undefined;
   jobDescription: string;
 
   classNames?: string;

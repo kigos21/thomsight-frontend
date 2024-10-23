@@ -34,11 +34,20 @@ export default function CompanyDetails() {
   const [originalCompanyEmail, setOriginalCompanyEmail] = useState(
     company!.email || ""
   );
+  const [locations, setLocations] = useState(company?.locations || []);
 
   const [isUpdating, setIsUpdating] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
   const [detailsError, setDetailsError] = useState<string>("");
+
+  useEffect(() => {
+    if (company) {
+      setCompanyName(company!.name || "");
+      setCompanyEmail(company!.email || "");
+      setLocations(company!.locations || []);
+    }
+  }, [company]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -113,9 +122,6 @@ export default function CompanyDetails() {
       setIsEditEmail(false);
     }
   };
-
-  const firstLocation =
-    company.locations!.length > 0 ? company.locations![0] : null;
 
   /**
    * We want to separate the rendering of edit options away from the read-only.
@@ -248,12 +254,12 @@ export default function CompanyDetails() {
             </div>
 
             <div className={styles.locationsContainer}>
-              {company?.locations && company.locations.length > 0 ? (
+              {locations.length > 0 ? (
                 <p className={styles.locations}>
-                  {company.locations.map((location, index) => (
+                  {locations.map((location, index) => (
                     <span key={index}>
                       {location.address}
-                      {index < company.locations.length - 1 && " | "}
+                      {index < locations.length - 1 && " | "}
                     </span>
                   ))}
                 </p>
@@ -281,12 +287,12 @@ export default function CompanyDetails() {
             <p className={styles.companyName}>{company.name}</p>
             <p>{company.email}</p>
             <div className={styles.locationsContainer}>
-              {company?.locations && company.locations.length > 0 ? (
+              {locations.length > 0 ? (
                 <p className={styles.locations}>
-                  {company.locations.map((location, index) => (
+                  {locations.map((location, index) => (
                     <span key={index}>
                       {location.address}
-                      {index < company.locations.length - 1 && " | "}
+                      {index < locations.length - 1 && " | "}
                     </span>
                   ))}
                 </p>
