@@ -18,8 +18,10 @@ const CompanyJobs: React.FunctionComponent<CompanyJobsProps> = ({
     <div className={styles.container}>
       {jobs.map((job) => (
         <div className={styles.jobItem}>
-          <p className={styles.jobName}>{job.title}</p>
-          <p className={styles.jobDescription}>{job.description}</p>
+          <div className={styles.jobHeading}>
+            <p className={styles.jobName}>{job.title}</p>
+            <p className={styles.jobDescription}>{job.description}</p>
+          </div>
 
           <div className={styles.buttons}>
             <button className={styles.editButton} onClick={() => onEdit(job)}>
