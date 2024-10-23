@@ -27,8 +27,8 @@ export default function NavbarApp({ links }: NavbarAppProps) {
 
     try {
       await logout();
-      // window.location.href = "http://localhost:5173/login";
-      window.location.href = "https://thomsight.com/login";
+      window.location.href = "http://localhost:5173/login";
+      // window.location.href = "https://thomsight.com/login";
     } catch (err) {
       console.error("Logout failed", err);
     } finally {
