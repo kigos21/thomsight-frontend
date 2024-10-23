@@ -38,8 +38,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   return (
     <div className={styles.profileDropdown} ref={dropdownRef}>
       <button className={styles.profileGroup} onClick={toggleDropdown}>
-        <span>{username}</span>
-        <IconUser size={30} />
+        <span className={styles.username}>{username}</span>
+        <IconUser className={styles.icon} />
       </button>
       {isOpen && (
         <div className={styles.dropdownContent}>

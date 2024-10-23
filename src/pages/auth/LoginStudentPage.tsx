@@ -48,8 +48,9 @@ export default function LoginStudentPage() {
 
     try {
       await login(email, password);
-      window.location.href = "http://localhost:5173/companies";
-    } catch (err: any) {
+      // window.location.href = "http://localhost:5173/companies";
+      window.location.href = "https://thomsight.com/companies";
+    } catch (err) {
       setError(err.response.data.message);
       console.error("Login failed", err);
     } finally {

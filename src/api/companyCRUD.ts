@@ -19,6 +19,24 @@ export const updateCompanyInfo = async (
   }
 };
 
+export const updateCompanyDetails = async (
+  slug: string,
+  updatedData: {
+    name: string;
+    email: string;
+  }
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/company/${slug}/update`,
+      updatedData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating company data: " + error);
+  }
+};
+
 export const addLocation = async (slug: string, address: string) => {
   try {
     const response = await axiosInstance.post(

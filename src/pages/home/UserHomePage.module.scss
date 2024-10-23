@@ -98,6 +98,18 @@
   }
 }
 
+@media screen and (max-width: 360px) {
+  .paginationButton {
+    padding: 7.5px 12.5px !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .paginationButton {
+    padding: 5px 10px !important;
+  }
+}
+
 //pagination
 .pagination {
   display: flex;
