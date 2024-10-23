@@ -7,7 +7,6 @@ import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { IconChevronDown, IconEdit } from "@tabler/icons-react";
 import { updateCompanyDetails } from "../../../api/companyCRUD.ts";
-import { useUser } from "../../../contexts/UserContext.tsx";
 import Spinner from "../Spinner.tsx";
 import ErrorPage from "../../../pages/ErrorPage.tsx";
 import SuccessMessage from "../../form/SuccessMessage.tsx";
@@ -20,7 +19,6 @@ export default function CompanyDetails() {
   const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
   const company = getCompanyBySlug(slug as string);
   const location = useLocation();
-  const { user } = useUser();
 
   const [isEditName, setIsEditName] = useState(false);
   const [isEditEmail, setIsEditEmail] = useState(false);

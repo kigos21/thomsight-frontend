@@ -19,7 +19,7 @@ const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [locations, setLocations] = useState<Location[]>([]);
   const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
-  const company = getCompanyBySlug(slug || "");
+  const company = getCompanyBySlug(slug as string);
   const [createErrorMessage, setCreateErrorMessage] = useState<string | null>(
     null
   );
@@ -141,9 +141,9 @@ const LocationManagement: React.FC = () => {
     }
   };
 
-  if (!slug) {
-    return <ErrorPage />;
-  }
+  // if (!slug) {
+  //   return <ErrorPage />;
+  // }
 
   return (
     <div className={styles.locationManagement}>
