@@ -10,7 +10,7 @@ import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
 import SuccessMessage from "../../components/form/SuccessMessage";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginStudentPage() {
   const [email, setEmail] = useState("");
@@ -19,6 +19,7 @@ export default function LoginStudentPage() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -49,7 +50,7 @@ export default function LoginStudentPage() {
     try {
       await login(email, password);
       // window.location.href = "http://localhost:5173/companies";
-      window.location.href = "https://thomsight.com/companies";
+      navigate("/companies");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.response.data.message);

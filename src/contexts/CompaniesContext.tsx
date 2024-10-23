@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchCompanies, fetchJobs } from "../api/companyData";
 import { Company, Job } from "../types/types";
+import axiosInstance from "../services/axiosInstance";
+import Spinner from "../components/ui/Spinner";
 
 interface CompaniesContextType {
   companies: Company[] | null;
@@ -27,6 +29,7 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const loadCompanies = async () => {
       try {
+        await axiosInstance.get("/sanctum/csrf-cookie");
         const companiesData = await fetchCompanies();
         setCompanies(companiesData);
       } catch (err) {
@@ -39,6 +42,7 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const loadJobs = async () => {
       try {
+        await axiosInstance.get("/sanctum/csrf-cookie");
         const jobsData = await fetchJobs();
         setJobs(jobsData);
       } catch (err) {
@@ -73,6 +77,10 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
       return [...prevJobs, newJob];
     });
   };
+
+  if (loading) {
+    return <Spinner message="Loading..." />; // You can customize this as needed
+  }
 
   return (
     <CompaniesContext.Provider
