@@ -2,7 +2,6 @@ import PaddedContainer from "../../components/layout/PaddedContainer";
 import AuthContentContainer from "../../components/ui/auth/AuthContentContainer";
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
-import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
 
 import {
   IconLock,
@@ -35,7 +34,7 @@ export default function CompanyRegisterPage() {
   const [passwordError, setPasswordError] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
-  const [phone, setPhone] = useState<number | null>();
+  const [phone, setPhone] = useState<string>();
   const [phoneError, setPhoneError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 

@@ -11,8 +11,7 @@
 
 .reviewContainer {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  gap: 2rem;
 }
 
 .replyButtonContainer {
@@ -22,8 +21,8 @@
 .reviewSubjectContainer {
   display: flex;
   flex-direction: column;
+  flex: 0;
   gap: 10px;
-  width: 25%;
 }
 
 .reviewerDetails {
@@ -54,7 +53,6 @@
   text-align: left;
   font-size: 0.875rem;
   font-weight: 400;
-  padding: 0rem 2rem;
 }
 
 .iconEdit,
@@ -101,6 +99,68 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.editReviewDescriptionSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.saveButton {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 99px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--blue-7);
+  }
+
+  &:active {
+    background-color: var(--blue-9);
+  }
+}
+
+.cancelButton {
+  background-color: var(--red-6);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 99px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
+    background-color: var(--red-9);
+  }
+}
+
+.ratingTextfield {
+  width: 2rem;
+  text-align: center;
+  height: 100%;
+}
+
+.ratingContainer {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.descriptionTextarea {
+  resize: none;
 }
 
 @media screen and (max-width: 768px) {

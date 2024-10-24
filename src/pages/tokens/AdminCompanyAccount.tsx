@@ -10,7 +10,10 @@ export default function AdminCompanyAccount() {
     <PaddedContainer>
       <div className={styles.title}>
         <h1>Company Accounts</h1>
-        <SortButton classNames={styles.button}></SortButton>
+        {/* <SortButton classNames={styles.button}></SortButton> */}
+        <SortButton
+          onSort={(option: string) => console.log(option)}
+        ></SortButton>
       </div>
 
       <StyledBox classNames={styles.styledbox}>

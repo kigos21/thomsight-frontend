@@ -1,4 +1,4 @@
-import { NotificationItemProps } from "../../../types/props";
+// import { NotificationItemProps } from "../../../types/props";
 import PaddedContainer from "../../layout/PaddedContainer";
 
 import styles from "./NotificationItem.module.scss";
@@ -8,7 +8,7 @@ export default function NotificationItem({
   style,
   notificationHeader,
   notificationDescription,
-}: NotificationItemProps) {
+}: any) {
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
       <PaddedContainer classNames={styles.paddedContainer}>

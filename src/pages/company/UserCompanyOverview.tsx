@@ -29,6 +29,7 @@ export default function UserCompanyOverview() {
     rating: "",
     description: "",
   });
+
   const [error, setError] = useState<string>("");
   const [ratingError, setRatingError] = useState<string>("");
   const [descriptionError, setDescriptionError] = useState<string>("");
@@ -98,7 +99,8 @@ export default function UserCompanyOverview() {
       setLoading("Refetching reviews...");
       const response = await axiosInstance.get(`/api/company/${slug}/reviews`);
       setReviews(response.data);
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
       } else {
@@ -116,6 +118,18 @@ export default function UserCompanyOverview() {
   const handleCancel = () => {
     setIsAddingReview(false);
     setReview({ rating: "", description: "" });
+  };
+
+  const handleReviewChange = (
+    id: number | undefined,
+    updatedRating: string,
+    updatedDescription: string
+  ) => {
+    // HOW TO ACTUALLY HANDLE REVIEW CHANGE?
+    console.log(
+      JSON.stringify({ id, updatedRating, updatedDescription }, null, 2)
+    );
+
     setError("");
   };
 
@@ -160,8 +174,18 @@ export default function UserCompanyOverview() {
                 key={review.id}
                 internName={review.posted_by}
                 rating={review.rating}
-                date={new Date(review.date).toLocaleDateString()}
+                date={review.date}
                 reviewDescription={review.description}
+                onReviewChange={(updatedReview: {
+                  rating: string;
+                  description: string;
+                }) =>
+                  handleReviewChange(
+                    review.id,
+                    updatedReview.rating,
+                    updatedReview.description
+                  )
+                }
               />
             ))}
           </div>

@@ -1,4 +1,4 @@
-import React, { CSSProperties, ChangeEvent } from "react";
+import React, { CSSProperties } from "react";
 import { Company } from "./types";
 
 export type ButtonProps = {
@@ -49,7 +49,8 @@ export type InterviewTipsItemProps = {
 export type DiscussionForumItemProps = {
   internName: string;
   date: string;
-  discussionForumDescription: string;
+  description: string;
+  onDescriptionChange: (updatedDescription: string) => void;
 
   classNames?: string;
   style?: React.CSSProperties;
@@ -57,9 +58,13 @@ export type DiscussionForumItemProps = {
 
 export type ReviewItemProps = {
   internName: string | undefined;
-  date: string | number | Date;
+  date: string | number | Date | undefined;
   rating: string; //not sure kasi number to eh?
   reviewDescription: string;
+  onReviewChange: (updatedReview: {
+    rating: string;
+    description: string;
+  }) => void;
 
   classNames?: string;
   style?: React.CSSProperties;
@@ -97,7 +102,7 @@ export type TokenFormFieldProps = {
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
   readOnly?: boolean; // Ensure this prop is optional
   initialEmail?: string | null;
-  tokenId: number;
+  tokenId?: number;
 };
 
 export type TokenItemProps = {
@@ -129,7 +134,7 @@ export interface AdminCreatennouncementItemProps {
   classNames?: string;
   style?: CSSProperties;
   subject: string;
-  detail: string;
+  details: string;
 }
 
 export interface DeletePopUpProps {

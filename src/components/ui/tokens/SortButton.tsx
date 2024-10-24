@@ -1,7 +1,7 @@
 import styles from "./SortButton.module.scss";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
-import { SortButtonProps } from "../../types/props";
+import { SortButtonProps } from "../../../types/props";
 
 const SortButton = ({ onSort }: SortButtonProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -13,7 +13,11 @@ const SortButton = ({ onSort }: SortButtonProps) => {
 
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as Node | null;
-    if (dropdownRef.current && target && !dropdownRef.current.contains(target)) {
+    if (
+      dropdownRef.current &&
+      target &&
+      !dropdownRef.current.contains(target)
+    ) {
       setIsOpen(false);
     }
   };
@@ -40,7 +44,12 @@ const SortButton = ({ onSort }: SortButtonProps) => {
 
   return (
     <div className={styles.buttonContainer}>
-      <button type="button" className={styles.sortButton} onClick={handleClick} ref={dropdownRef}>
+      <button
+        type="button"
+        className={styles.sortButton}
+        onClick={handleClick}
+        ref={dropdownRef}
+      >
         Sort by
         <IconChevronDown size={20} stroke={1.5} className={styles.chevron} />
         {isOpen && menu}
