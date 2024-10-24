@@ -24,6 +24,7 @@ export default function ForgotPasswordEmail() {
 
     try {
       setLoading("Sending email...");
+      await axiosInstance.get("/sanctum/csrf-cookie");
       await axiosInstance.post("/forgot-password", {
         email,
       });
