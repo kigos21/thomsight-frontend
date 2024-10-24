@@ -8,6 +8,19 @@ import { useUser } from "../../contexts/UserContext";
 import ErrorPage from "../../pages/ErrorPage";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import Spinner from "../ui/Spinner";
+import {
+  IconHome,
+  IconMessageCircle2,
+  IconBriefcase,
+  IconStars,
+  IconBulb,
+} from "@tabler/icons-react";
+
+// Define the type for navigation links
+interface NavLink {
+  path: string;
+  icon: JSX.Element;
+}
 
 export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
@@ -25,8 +38,45 @@ export default function CompanyRoot() {
   }
 
   const basePath = slug ? `/company/${slug}` : "/company";
-
   const isManagePath = location.pathname.includes("/manage/");
+
+  // Define bottomNavLinks based on path type
+  const bottomNavLinks: NavLink[] = !isManagePath
+    ? [
+        {
+          path: `${basePath}`,
+          icon: <IconHome stroke={2} className={styles.bottomNavIcon} />,
+        },
+        {
+          path: `${basePath}#reviews`,
+          icon: <IconStars stroke={2} className={styles.bottomNavIcon} />,
+        },
+        {
+          path: `${basePath}/jobs`,
+          icon: <IconBriefcase stroke={2} className={styles.bottomNavIcon} />,
+        },
+        {
+          path: `${basePath}/forum`,
+          icon: (
+            <IconMessageCircle2 stroke={2} className={styles.bottomNavIcon} />
+          ),
+        },
+        {
+          path: `${basePath}/interview-tips`,
+          icon: <IconBulb stroke={2} className={styles.bottomNavIcon} />,
+        },
+      ]
+    : [
+        {
+          path: `${basePath}/manage/info`,
+          icon: <IconHome stroke={2} className={styles.bottomNavIcon} />,
+        },
+        {
+          path: `${basePath}/manage/jobs`,
+          icon: <IconBriefcase stroke={2} className={styles.bottomNavIcon} />,
+        },
+      ];
+
   let elements: React.ReactNode[];
   if (!isManagePath) {
     elements = [
@@ -47,7 +97,6 @@ export default function CompanyRoot() {
       </Link>,
     ];
   } else {
-    // Check if accessing user is authorized
     if (company?.posted_by !== user?.id) {
       return <Navigate to="/companies" replace />;
     }
@@ -69,6 +118,21 @@ export default function CompanyRoot() {
       <PaddedContainer>
         <Outlet />
       </PaddedContainer>
+
+      <div className={styles.bottomNav}>
+        <ul className={styles.bottomNavList}>
+          {bottomNavLinks.map((link) => (
+            <li key={link.path}>
+              <Link
+                to={link.path}
+                className={`${location.pathname === link.path ? styles.bottomNavIconActive : ""}`}
+              >
+                {link.icon}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
