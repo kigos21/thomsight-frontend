@@ -4,7 +4,6 @@ import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
 import { IconLock, IconMail } from "@tabler/icons-react";
 import googleIcon from "../../assets/google-logo.png";
-import { handleGoogleLogin } from "../../api/googleLogin";
 import { login } from "../../api/authUser";
 import Spinner from "../../components/ui/Spinner";
 
@@ -49,13 +48,19 @@ export default function LoginStudentPage() {
 
     try {
       await login(email, password);
-      // window.location.href = "http://localhost:5173/companies";
       navigate("/companies");
     } catch (err: any) {
       setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    console.log("Google Log In");
+    // window.location.href = "http://localhost:8000/auth/google";
+    window.location.href = "https://api.thomsight.com/auth/google";
+    // navigate("/companies");
   };
 
   return (

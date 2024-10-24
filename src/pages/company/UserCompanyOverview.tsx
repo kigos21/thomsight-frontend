@@ -174,7 +174,11 @@ export default function UserCompanyOverview() {
                 key={review.id}
                 internName={review.posted_by}
                 rating={review.rating}
-                date={review.date}
+                date={
+                  review.date
+                    ? new Date(review.date).toLocaleDateString()
+                    : "N/A"
+                }
                 reviewDescription={review.description}
                 onReviewChange={(updatedReview: {
                   rating: string;
