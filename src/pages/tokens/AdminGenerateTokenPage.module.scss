@@ -52,6 +52,10 @@
     gap: 15px;
     padding: 0 2rem;
   }
+
+  @media (max-width: 480px) {
+    padding: 0 0.75rem;
+  }
 }
 
 .companytokens {

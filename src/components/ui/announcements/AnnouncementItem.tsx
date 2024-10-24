@@ -2,7 +2,7 @@
 import StyledBox from "../../layout/StyledBox";
 import { IconTrash, IconEdit } from "@tabler/icons-react";
 import { useState } from "react";
-
+import { useUser } from "../../../contexts/UserContext";
 import styles from "./AnnouncementItem.module.scss";
 import DeletePopUp from "../company/DeletePopUp";
 
@@ -34,6 +34,8 @@ export default function AnnouncementItem({
     }
   };
 
+  const { user } = useUser();
+
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
       <div className={styles.detailsContainer}>
@@ -41,14 +43,16 @@ export default function AnnouncementItem({
           <p className={styles.header}>{announcementHeader}</p>
           <p className={styles.date}>{date}</p>
         </div>
-        <div className={styles.iconContainer}>
-          <button onClick={handleIconClick} className={styles.iconButton}>
-            <IconEdit className={styles.iconEdit} />
-          </button>
-          <button onClick={handleDeleteClick} className={styles.iconButton}>
-            <IconTrash className={styles.iconDelete} />
-          </button>
-        </div>
+        {user?.role === "Admin" && (
+          <div className={styles.iconContainer}>
+            <button onClick={handleIconClick} className={styles.iconButton}>
+              <IconEdit className={styles.iconEdit} />
+            </button>
+            <button onClick={handleDeleteClick} className={styles.iconButton}>
+              <IconTrash className={styles.iconDelete} />
+            </button>
+          </div>
+        )}
       </div>
       <StyledBox paddedContainerClass={styles.styledBox}>
         <p className={styles.description}>{announcementDescription}</p>

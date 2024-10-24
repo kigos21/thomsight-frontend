@@ -41,3 +41,34 @@
     background-color: #f1f1f1;
   }
 }
+
+.icon {
+  width: 30px;
+  height: auto;
+}
+
+@media screen and (max-width: 480px) {
+  .profileGroup {
+    span {
+      margin-right: 4px;
+    }
+  }
+  .username {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .profileGroup {
+    span {
+      margin-right: 0px;
+    }
+  }
+  .username {
+    font-size: 0.65rem;
+  }
+  .icon {
+    width: 20px;
+    height: auto;
+  }
+}

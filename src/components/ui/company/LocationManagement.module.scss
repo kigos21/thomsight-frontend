@@ -33,11 +33,11 @@
   color: var(--white);
   font-size: 1rem;
   font-weight: 600;
-  padding: 0.7rem 1.15rem;
+  padding: 0.825rem 1.15rem 0.825rem 0.9rem;
   border-radius: 99px;
 
   &:hover {
-    background-color: var(--blue-7);
+    background-color: var(--blue-8);
   }
 
   &:active {
@@ -46,6 +46,10 @@
 
   p {
     line-height: 0.8;
+  }
+  @media (max-width: 480px) {
+    padding: 0.775rem 1.05rem 0.775rem 0.8rem;
+    font-size: 0.85rem;
   }
 }
 
