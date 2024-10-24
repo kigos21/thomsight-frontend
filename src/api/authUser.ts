@@ -11,10 +11,19 @@ export const login = async (
   password: string
 ): Promise<LoginResponse> => {
   await axiosInstance.get("/sanctum/csrf-cookie");
-  return await axiosInstance.post("/login", { email, password });
+  try {
+    const response = await axiosInstance.post("/login", {
+      email,
+      password,
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Login failed:", error);
+    throw error;
+  }
 };
 
 export const logout = async () => {
-  await axiosInstance.get("/sanctum/csrf-cookie");
   return await axiosInstance.post("/logout");
 };

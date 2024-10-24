@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 
 export const fetchUserData = async (): Promise<User | null> => {
   try {
-    await axiosInstance.get("/sanctum/csrf-cookie");
-
     const response = await axiosInstance.get("/api/profile");
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);
@@ -22,6 +21,7 @@ export const useUserData = () => {
     const getUserData = async () => {
       try {
         const data = await fetchUserData();
+        console.log(data);
         setUser(data);
         setLoading(false);
       } catch (error) {

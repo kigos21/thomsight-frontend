@@ -1,6 +1,8 @@
+import { useGoogleLogin } from "@react-oauth/google";
+
 export const handleGoogleLogin = (): void => {
   // window.location.href = "http://127.0.0.1:8000/auth/redirect";
-  window.location.href = "https://thomsight.com/auth/redirect";
+  window.location.href = "https://api.thomsight.com/auth/redirect";
 };
 
 // export const useGoogleData = (): void => {

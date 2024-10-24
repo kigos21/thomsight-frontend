@@ -3,7 +3,7 @@ import logo from "../../assets/thomsight-logo.svg";
 
 import PaddedContainer from "../layout/PaddedContainer";
 import { IconMenu2 } from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
@@ -18,6 +18,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
   const { user, loading } = useUser();
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleProfileClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -27,8 +28,8 @@ export default function NavbarApp({ links }: NavbarAppProps) {
 
     try {
       await logout();
-      window.location.href = "http://localhost:5173/login";
-      // window.location.href = "https://thomsight.com/login";
+      // window.location.href = "http://localhost:5173/login";
+      navigate("/login");
     } catch (err) {
       console.error("Logout failed", err);
     } finally {

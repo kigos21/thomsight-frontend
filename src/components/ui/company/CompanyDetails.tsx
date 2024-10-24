@@ -7,7 +7,6 @@ import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { IconChevronDown, IconEdit } from "@tabler/icons-react";
 import { updateCompanyDetails } from "../../../api/companyCRUD.ts";
-import { useUser } from "../../../contexts/UserContext.tsx";
 import Spinner from "../Spinner.tsx";
 import ErrorPage from "../../../pages/ErrorPage.tsx";
 import SuccessMessage from "../../form/SuccessMessage.tsx";
@@ -20,7 +19,6 @@ export default function CompanyDetails() {
   const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
   const company = getCompanyBySlug(slug as string);
   const location = useLocation();
-  const { user } = useUser();
 
   const [isEditName, setIsEditName] = useState(false);
   const [isEditEmail, setIsEditEmail] = useState(false);
@@ -34,11 +32,20 @@ export default function CompanyDetails() {
   const [originalCompanyEmail, setOriginalCompanyEmail] = useState(
     company!.email || ""
   );
+  const [locations, setLocations] = useState(company?.locations || []);
 
   const [isUpdating, setIsUpdating] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
   const [detailsError, setDetailsError] = useState<string>("");
+
+  useEffect(() => {
+    if (company) {
+      setCompanyName(company!.name || "");
+      setCompanyEmail(company!.email || "");
+      setLocations(company!.locations || []);
+    }
+  }, [company]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,9 +67,9 @@ export default function CompanyDetails() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   if (!company) return <div></div>;
-  if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
-    return <ErrorPage />;
-  }
+  // if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
+  //   return <ErrorPage />;
+  // }
 
   const handleSaveUpdates = async () => {
     let isValid = true;
@@ -113,9 +120,6 @@ export default function CompanyDetails() {
       setIsEditEmail(false);
     }
   };
-
-  const firstLocation =
-    company.locations!.length > 0 ? company.locations![0] : null;
 
   /**
    * We want to separate the rendering of edit options away from the read-only.
@@ -248,12 +252,12 @@ export default function CompanyDetails() {
             </div>
 
             <div className={styles.locationsContainer}>
-              {company?.locations && company.locations.length > 0 ? (
+              {locations.length > 0 ? (
                 <p className={styles.locations}>
-                  {company.locations.map((location, index) => (
+                  {locations.map((location, index) => (
                     <span key={index}>
                       {location.address}
-                      {index < company.locations.length - 1 && " | "}
+                      {index < locations.length - 1 && " | "}
                     </span>
                   ))}
                 </p>
@@ -281,12 +285,12 @@ export default function CompanyDetails() {
             <p className={styles.companyName}>{company.name}</p>
             <p>{company.email}</p>
             <div className={styles.locationsContainer}>
-              {company?.locations && company.locations.length > 0 ? (
+              {locations.length > 0 ? (
                 <p className={styles.locations}>
-                  {company.locations.map((location, index) => (
+                  {locations.map((location, index) => (
                     <span key={index}>
                       {location.address}
-                      {index < company.locations.length - 1 && " | "}
+                      {index < locations.length - 1 && " | "}
                     </span>
                   ))}
                 </p>

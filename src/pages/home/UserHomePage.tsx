@@ -34,10 +34,10 @@ export default function UserHomePage() {
       ? companies.filter(
           (company) =>
             company.jobs?.some((job) => selectedJobs.includes(job.title)) &&
-            company.name.toLowerCase().includes(searchQuery.toLowerCase())
+            company.name?.toLowerCase().includes(searchQuery.toLowerCase())
         )
       : companies?.filter((company) =>
-          company.name.toLowerCase().includes(searchQuery.toLowerCase())
+          company.name?.toLowerCase().includes(searchQuery.toLowerCase())
         ) || [];
 
   const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
