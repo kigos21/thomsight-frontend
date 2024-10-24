@@ -10,7 +10,7 @@ import { useCompanies } from "../../contexts/CompaniesContext";
 import Spinner from "../ui/Spinner";
 import {
   IconHome,
-  IconMessageCircle2,
+  IconBubbleText,
   IconBriefcase,
   IconStars,
   IconBulb,
@@ -57,9 +57,7 @@ export default function CompanyRoot() {
         },
         {
           path: `${basePath}/forum`,
-          icon: (
-            <IconMessageCircle2 stroke={2} className={styles.bottomNavIcon} />
-          ),
+          icon: <IconBubbleText stroke={2} className={styles.bottomNavIcon} />,
         },
         {
           path: `${basePath}/interview-tips`,
