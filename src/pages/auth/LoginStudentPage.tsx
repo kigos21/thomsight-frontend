@@ -51,7 +51,6 @@ export default function LoginStudentPage() {
       await login(email, password);
       // window.location.href = "http://localhost:5173/companies";
       navigate("/companies");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.response.data.message);
     } finally {

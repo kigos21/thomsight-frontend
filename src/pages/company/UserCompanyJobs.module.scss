@@ -1,16 +1,24 @@
 .paddedContainer {
   padding: 0rem 2rem;
 
-  @media (max-width: 1024px) {
-    padding: 0 3rem;
+  @media (max-width: 768px) {
+    padding: 0 1.25rem;
   }
 
-  @media (max-width: 768px) {
-    padding: 0 1.5rem;
+  @media (max-width: 480px) {
+    padding: 1rem;
   }
 }
 
 .boxContainer {
   margin-bottom: 1rem;
   padding: 0 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0 1.25rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+  }
 }
