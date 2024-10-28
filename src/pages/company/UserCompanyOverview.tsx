@@ -141,6 +141,12 @@ export default function UserCompanyOverview() {
     setError("");
   };
 
+  const handleReviewDelete = (id: number | undefined) => {
+    setReviews((prevReviews) =>
+      prevReviews.filter((review) => review.id !== id)
+    );
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -158,7 +164,10 @@ export default function UserCompanyOverview() {
                   color="primary"
                   roundness="rounded"
                   classNames={styles.replyButton}
-                  onClick={() => setIsAddingReview(true)}
+                  onClick={() => {
+                    setIsAddingReview(true);
+                    setSuccess("");
+                  }}
                 >
                   Write a Review
                 </Button>
@@ -201,6 +210,7 @@ export default function UserCompanyOverview() {
                   )
                 }
                 setSuccess={setSuccess}
+                onReviewDelete={handleReviewDelete}
               />
             ))}
           </div>

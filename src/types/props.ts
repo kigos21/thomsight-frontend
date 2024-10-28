@@ -71,6 +71,7 @@ export type ReviewItemProps = {
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
   id: number | undefined;
   posted_by: string | undefined;
+  onReviewDelete: (id: number | undefined) => void;
 };
 
 export type PaddedContainerProps = {

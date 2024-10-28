@@ -14,6 +14,7 @@ import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
 import { useUser } from "../../../contexts/UserContext";
+import DeletePopUp from "./DeletePopUp";
 
 export default function ReviewItem({
   classNames,
@@ -26,6 +27,7 @@ export default function ReviewItem({
   setSuccess,
   id,
   posted_by,
+  onReviewDelete,
 }: ReviewItemProps) {
   // Local state for editing
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -36,6 +38,7 @@ export default function ReviewItem({
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
   const { user } = useUser();
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
 
   // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
@@ -88,6 +91,26 @@ export default function ReviewItem({
 
   const handleRatingSubmit = (e: FormEvent) => {
     e.preventDefault();
+  };
+
+  const handleDeleteClick = () => {
+    setSuccess("");
+    setShowDeletePopup(true);
+  };
+
+  const handleDeleteReview = async () => {
+    try {
+      setLoading("Deleting review...");
+      await axiosInstance.delete(`/api/company/${slug}/review/${id}/delete`);
+      if (onReviewDelete) {
+        onReviewDelete(id);
+      }
+      setSuccess("Deleted review successfully");
+    } catch (err) {
+      console.error("Error deleting review:" + err);
+    } finally {
+      setLoading("");
+    }
   };
 
   return (
@@ -200,7 +223,10 @@ export default function ReviewItem({
                     className={styles.iconEdit}
                   />
                 </button>
-                <button onClick={handleIconClick} className={styles.iconButton}>
+                <button
+                  onClick={handleDeleteClick}
+                  className={styles.iconButton}
+                >
                   <IconTrash
                     size={25}
                     stroke={1.5}
@@ -219,6 +245,16 @@ export default function ReviewItem({
           </div>
         </div>
       </StyledBox>
+
+      {showDeletePopup && (
+        <DeletePopUp
+          isVisible={showDeletePopup}
+          onClose={() => setShowDeletePopup(false)}
+          onDelete={handleDeleteReview}
+          heading="Delete Review"
+          details="Are you sure you want to delete this review?"
+        />
+      )}
     </div>
   );
 }
