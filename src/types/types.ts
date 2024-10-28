@@ -6,6 +6,7 @@ export type User = {
   role: UserRole;
   profile_info?: string;
   status: UserStatus;
+  phone_number: number;
 };
 
 export enum UserRole {

@@ -11,8 +11,14 @@ import {
 } from "@tabler/icons-react";
 
 import styles from "./ProfileManagement.module.scss";
+import { useUser } from "../../contexts/UserContext";
+import { useState } from "react";
 
 export default function ProfileManagement() {
+  const { user } = useUser();
+  const [name, setName] = useState<string | undefined>(user?.name || "");
+  const [phone, setPhone] = useState<number | null>(user?.phone_number || null);
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <StyledBox classNames={styles.styledBox}>
@@ -21,7 +27,7 @@ export default function ProfileManagement() {
           <IconUser size={100} stroke={2} className={styles.headerIcon} />
           <div className={styles.nameContainer}>
             <div>
-              <p className={styles.name}>Yung name ni user na editable</p>
+              <p className={styles.name}>{name}</p>
             </div>
             <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
           </div>
@@ -39,12 +45,12 @@ export default function ProfileManagement() {
               placeholder="Your Bio"
               required={true}
             />
-            <FormField
+            {/* <FormField
               icon={<IconUser size={35} stroke={1.5} className={styles.icon} />}
               type="text"
               placeholder="Profile Link"
               required={true}
-            />
+            /> */}
             <FormField
               icon={
                 <IconPhone size={35} stroke={1.5} className={styles.icon} />
@@ -52,6 +58,7 @@ export default function ProfileManagement() {
               type="tel"
               placeholder="Phone Number"
               required={true}
+              value={phone}
             />
             <FormField
               icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}

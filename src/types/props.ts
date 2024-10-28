@@ -85,7 +85,7 @@ export type FormFieldProps = {
   placeholder: string;
   name?: string;
   required?: true | false;
-  value?: string;
+  value?: string | number | null | undefined;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
