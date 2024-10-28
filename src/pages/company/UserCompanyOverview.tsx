@@ -14,7 +14,7 @@ import ValidationError from "../../components/form/ValidationError";
 import { containsBadWords } from "../../badWordsFilter";
 import { useUser } from "../../contexts/UserContext";
 
-type Review = {
+export type Review = {
   id?: number;
   rating: string;
   description: string;
@@ -125,11 +125,18 @@ export default function UserCompanyOverview() {
     updatedRating: string,
     updatedDescription: string
   ) => {
-    // HOW TO ACTUALLY HANDLE REVIEW CHANGE?
-    console.log(
-      JSON.stringify({ id, updatedRating, updatedDescription }, null, 2)
+    // // HOW TO ACTUALLY HANDLE REVIEW CHANGE?
+    // console.log(
+    //   JSON.stringify({ id, updatedRating, updatedDescription }, null, 2)
+    // );
+    setReviews((currentReviews) =>
+      currentReviews.map((rev) =>
+        rev.id === id
+          ? { ...rev, rating: updatedRating, description: updatedDescription }
+          : rev
+      )
     );
-
+    setSuccess("Review updated successfully");
     setError("");
   };
 
@@ -172,6 +179,7 @@ export default function UserCompanyOverview() {
             {reviews.map((review) => (
               <ReviewItem
                 key={review.id}
+                id={review.id}
                 internName={review.posted_by}
                 rating={review.rating}
                 date={
@@ -190,6 +198,7 @@ export default function UserCompanyOverview() {
                     updatedReview.description
                   )
                 }
+                setSuccess={setSuccess}
               />
             ))}
           </div>

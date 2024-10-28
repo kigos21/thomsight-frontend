@@ -10,6 +10,9 @@ import ButtonReview from "../ButtonReview";
 import styles from "./ReviewItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
 import { FormEvent, useRef, useState } from "react";
+import axiosInstance from "../../../services/axiosInstance";
+import { useParams } from "react-router-dom";
+import Spinner from "../Spinner";
 
 export default function ReviewItem({
   classNames,
@@ -19,6 +22,8 @@ export default function ReviewItem({
   rating,
   reviewDescription,
   onReviewChange,
+  setSuccess,
+  id,
 }: ReviewItemProps) {
   // Local state for editing
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -26,9 +31,33 @@ export default function ReviewItem({
     rating: string;
     description: string;
   }>({ rating: rating, description: reviewDescription });
+  const { slug } = useParams<{ slug: string }>();
+  const [loading, setLoading] = useState<string>("");
 
   // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
+
+  const updateReview = async () => {
+    const updatedReview = {
+      rating: tempReview.rating,
+      description: tempReview.description,
+    };
+
+    try {
+      setLoading("Updating review...");
+      await axiosInstance.put(
+        `/api/company/${slug}/review/${id}/update`,
+        updatedReview
+      );
+      setSuccess("Review updated successfully");
+      onReviewChange(updatedReview);
+    } catch (error) {
+      console.error("Error updating review:", error);
+      // setError("Could not update review. Please try again.");
+    } finally {
+      setLoading("");
+    }
+  };
 
   const handleIconClick = () => {
     //click handling logic
@@ -36,15 +65,16 @@ export default function ReviewItem({
   };
 
   const handleEditClick = () => {
+    setSuccess("");
     setIsEditing((state) => !state);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     if (ratingRef.current && !ratingRef.current!.checkValidity()) {
       ratingRef.current.reportValidity(); // This will display the native validation error messages
       return;
     }
-    onReviewChange(tempReview);
+    await updateReview();
     setIsEditing(false);
   };
 
@@ -59,6 +89,7 @@ export default function ReviewItem({
 
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
+      {loading && <Spinner message={loading} />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <div className={styles.reviewContainer}>
           <div className={styles.reviewSubjectContainer}>
