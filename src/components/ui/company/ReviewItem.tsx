@@ -28,6 +28,7 @@ export default function ReviewItem({
   id,
   posted_by,
   onReviewDelete,
+  setError,
 }: ReviewItemProps) {
   // Local state for editing
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -59,7 +60,7 @@ export default function ReviewItem({
       onReviewChange(updatedReview);
     } catch (error) {
       console.error("Error updating review:", error);
-      // setError("Could not update review. Please try again.");
+      setError("Could not update review. Please try again.");
     } finally {
       setLoading("");
     }

@@ -9,6 +9,7 @@ import axiosInstance from "../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import ValidationError from "../../components/form/ValidationError";
 import Spinner from "../../components/ui/Spinner";
+import SuccessMessage from "../../components/form/SuccessMessage";
 
 interface Post {
   id: number;
@@ -25,6 +26,7 @@ export default function UserCompanyDiscussionForum() {
   const [error, setError] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
 
   const [postData, setPostData] = useState<Post[]>([]);
 
@@ -74,11 +76,9 @@ export default function UserCompanyDiscussionForum() {
 
       setPostData((prevPosts) => [...prevPosts, savedPost]);
 
-      console.log("Post Saved");
-      console.log(JSON.stringify(savedPost, null, 2));
-
       setIsAddingPost(false);
       setPostForm({ description: "" });
+      setSuccess("Created discussion successfully");
     } catch (error) {
       console.error("Error saving post:", error);
       setError("An error occurred while saving the post.");
@@ -122,12 +122,17 @@ export default function UserCompanyDiscussionForum() {
               color="primary"
               roundness="rounded"
               classNames={styles.replyButton}
-              onClick={() => setIsAddingPost(true)} // Show form on button click
+              onClick={() => {
+                setIsAddingPost(true);
+                setError("");
+                setSuccess("");
+              }} // Show form on button click
             >
               Add Post
             </Button>
           </div>
           {error && <ValidationError message={error} />}
+          {success && <SuccessMessage message={success} />}
 
           {isAddingPost && (
             <DiscussionAddPostForm
@@ -142,12 +147,16 @@ export default function UserCompanyDiscussionForum() {
             {postData.map((post) => (
               <DiscussionForumItem
                 key={post.id}
+                id={post.id}
                 internName={post.internName}
                 date={post.date}
                 description={post.description}
                 onDescriptionChange={(updatedDescription: string) =>
                   handleDescriptionChange(post.id, updatedDescription)
                 }
+                setSuccess={setSuccess}
+                setLoading={setLoading}
+                setError={setError}
               />
             ))}
           </div>

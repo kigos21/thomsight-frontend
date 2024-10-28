@@ -211,6 +211,7 @@ export default function UserCompanyOverview() {
                 }
                 setSuccess={setSuccess}
                 onReviewDelete={handleReviewDelete}
+                setError={setError}
               />
             ))}
           </div>

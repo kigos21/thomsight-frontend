@@ -5,6 +5,8 @@ import Button from "../Button";
 import styles from "./DiscussionForumItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
 import { useState } from "react";
+import axiosInstance from "../../../services/axiosInstance";
+import { useParams } from "react-router-dom";
 
 export default function DiscussionForumItem({
   classNames,
@@ -13,12 +15,16 @@ export default function DiscussionForumItem({
   date,
   description,
   onDescriptionChange,
+  id,
+  setSuccess,
+  setLoading,
+  setError,
 }: DiscussionForumItemProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
+  const { slug } = useParams<{ slug: string }>();
 
   const handleIconClick = () => {
-    //click handling logic
     console.log("Icon clicked!");
   };
 
@@ -26,9 +32,22 @@ export default function DiscussionForumItem({
     setIsEditing((state) => !state);
   };
 
-  const handleSaveClick = () => {
-    onDescriptionChange(tempDescription);
-    setIsEditing(false);
+  const handleSaveClick = async () => {
+    try {
+      setLoading("Updating discussion...");
+      await axiosInstance.put(`/api/company/${slug}/discussions/${id}/update`, {
+        description: tempDescription,
+      });
+
+      onDescriptionChange(tempDescription);
+      setIsEditing(false);
+      setSuccess("Updated discussion successfully");
+    } catch (error) {
+      console.error("Error updating the discussion:", error);
+      setError("Could not update discussion. Please try again.");
+    } finally {
+      setLoading("");
+    }
   };
 
   const handleCancelClick = () => {

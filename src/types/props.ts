@@ -54,6 +54,10 @@ export type DiscussionForumItemProps = {
 
   classNames?: string;
   style?: React.CSSProperties;
+  id: number;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  setLoading: React.Dispatch<React.SetStateAction<string>>;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type ReviewItemProps = {
@@ -72,6 +76,7 @@ export type ReviewItemProps = {
   id: number | undefined;
   posted_by: string | undefined;
   onReviewDelete: (id: number | undefined) => void;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type PaddedContainerProps = {
