@@ -32,6 +32,8 @@ export default function DiscussionForumItem({
   };
 
   const handleEditClick = () => {
+    setError("");
+    setSuccess("");
     setIsEditing((state) => !state);
   };
 
