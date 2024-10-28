@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useUserData } from "../api/userData";
 import { User } from "../types/types";
 import Spinner from "../components/ui/Spinner";
@@ -6,6 +6,7 @@ import Spinner from "../components/ui/Spinner";
 interface UserContextType {
   user: User | null;
   loading: boolean;
+  setUser: (user: User | null) => void;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(
@@ -15,14 +16,21 @@ export const UserContext = createContext<UserContextType | undefined>(
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { user, loading } = useUserData();
+  const { user: initialUser, loading: initialLoading } = useUserData();
+  const [user, setUser] = useState<User | null>(initialUser);
+  const [loading, setLoading] = useState(initialLoading);
+
+  useEffect(() => {
+    setUser(initialUser);
+    setLoading(initialLoading);
+  }, [initialUser, initialLoading]);
 
   if (loading) {
-    return <Spinner message="Loading..." />; // You can customize this as needed
+    return <Spinner message="Loading..." />;
   }
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user, loading, setUser }}>
       {children}
     </UserContext.Provider>
   );
