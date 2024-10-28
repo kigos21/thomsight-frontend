@@ -96,6 +96,7 @@ export default function ReviewItem({
 
   const handleDeleteClick = () => {
     setSuccess("");
+    setError("");
     setShowDeletePopup(true);
   };
 
@@ -109,8 +110,10 @@ export default function ReviewItem({
       setSuccess("Deleted review successfully");
     } catch (err) {
       console.error("Error deleting review:" + err);
+      setError("Could not delete review. Please try again.");
     } finally {
       setLoading("");
+      setShowDeletePopup(false);
     }
   };
 

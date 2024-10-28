@@ -111,6 +111,10 @@ export default function UserCompanyDiscussionForum() {
     setPostData(newPosts);
   };
 
+  const handleDiscussionDelete = (id: number | undefined) => {
+    setPostData((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -157,6 +161,7 @@ export default function UserCompanyDiscussionForum() {
                 setSuccess={setSuccess}
                 setLoading={setLoading}
                 setError={setError}
+                onDiscussionDelete={handleDiscussionDelete}
               />
             ))}
           </div>

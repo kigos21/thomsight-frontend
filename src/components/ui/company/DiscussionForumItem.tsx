@@ -7,6 +7,7 @@ import StyledBox from "../../layout/StyledBox";
 import { useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
+import DeletePopUp from "./DeletePopUp";
 
 export default function DiscussionForumItem({
   classNames,
@@ -19,10 +20,12 @@ export default function DiscussionForumItem({
   setSuccess,
   setLoading,
   setError,
+  onDiscussionDelete,
 }: DiscussionForumItemProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
   const { slug } = useParams<{ slug: string }>();
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
 
   const handleIconClick = () => {
     console.log("Icon clicked!");
@@ -35,7 +38,7 @@ export default function DiscussionForumItem({
   const handleSaveClick = async () => {
     try {
       setLoading("Updating discussion...");
-      await axiosInstance.put(`/api/company/${slug}/discussions/${id}/update`, {
+      await axiosInstance.put(`/api/company/${slug}/discussion/${id}/update`, {
         description: tempDescription,
       });
 
@@ -53,6 +56,31 @@ export default function DiscussionForumItem({
   const handleCancelClick = () => {
     setTempDescription(description);
     setIsEditing(false);
+  };
+
+  const handleDeleteClick = () => {
+    setSuccess("");
+    setError("");
+    setShowDeletePopup(true);
+  };
+
+  const handleDeleteDiscussion = async () => {
+    try {
+      setLoading("Deleting review...");
+      await axiosInstance.delete(
+        `/api/company/${slug}/discussion/${id}/delete`
+      );
+      if (onDiscussionDelete) {
+        onDiscussionDelete(id);
+      }
+      setSuccess("Deleted discussion successfully");
+    } catch (err) {
+      console.error("Error deleting review:" + err);
+      setError("Could not delete discussion. Please try again.");
+    } finally {
+      setLoading("");
+      setShowDeletePopup(false);
+    }
   };
 
   return (
@@ -112,7 +140,7 @@ export default function DiscussionForumItem({
             <button onClick={handleEditClick} className={styles.iconButton}>
               <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
             </button>
-            <button onClick={handleIconClick} className={styles.iconButton}>
+            <button onClick={handleDeleteClick} className={styles.iconButton}>
               <IconTrash size={25} stroke={1.5} className={styles.iconDelete} />
             </button>
             <button onClick={handleIconClick} className={styles.iconButton}>
@@ -125,6 +153,16 @@ export default function DiscussionForumItem({
           </div>
         </div>
       </StyledBox>
+
+      {showDeletePopup && (
+        <DeletePopUp
+          isVisible={showDeletePopup}
+          onClose={() => setShowDeletePopup(false)}
+          onDelete={handleDeleteDiscussion}
+          heading="Delete Discussion"
+          details="Are you sure you want to delete this discussion? Please note that all replies in your discussion will be deleted as well."
+        />
+      )}
     </div>
   );
 }

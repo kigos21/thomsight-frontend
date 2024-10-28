@@ -126,10 +126,6 @@ export default function UserCompanyOverview() {
     updatedRating: string,
     updatedDescription: string
   ) => {
-    // // HOW TO ACTUALLY HANDLE REVIEW CHANGE?
-    // console.log(
-    //   JSON.stringify({ id, updatedRating, updatedDescription }, null, 2)
-    // );
     setReviews((currentReviews) =>
       currentReviews.map((rev) =>
         rev.id === id
