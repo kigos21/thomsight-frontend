@@ -56,6 +56,7 @@ import PrivateRoute from "./contexts/PrivateRoute.tsx";
 import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
 import { TokenProvider } from "./contexts/TokenContext.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -272,9 +273,11 @@ const router = createBrowserRouter([
    */
   {
     element: (
-      <TokenProvider>
-        <AuthLayout />
-      </TokenProvider>
+      <AuthProvider>
+        <TokenProvider>
+          <AuthLayout />
+        </TokenProvider>
+      </AuthProvider>
     ),
     errorElement: <ErrorPage />,
     children: [

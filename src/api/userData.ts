@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 export const fetchUserData = async (): Promise<User | null> => {
   try {
     const response = await axiosInstance.get("/api/profile");
-    // console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);
