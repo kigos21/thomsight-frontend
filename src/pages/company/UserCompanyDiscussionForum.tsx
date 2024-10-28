@@ -3,59 +3,88 @@ import DiscussionForumItem from "../../components/ui/company/DiscussionForumItem
 import Button from "../../components/ui/Button";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyDiscussionForum.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DiscussionAddPostForm from "../../components/ui/company/DiscussionAddPostForm";
+import axiosInstance from "../../services/axiosInstance";
+import { useParams } from "react-router-dom";
+import ValidationError from "../../components/form/ValidationError";
+import Spinner from "../../components/ui/Spinner";
+
+interface Post {
+  id: number;
+  internName: string;
+  date: string;
+  description: string;
+}
 
 export default function UserCompanyDiscussionForum() {
   const [isAddingPost, setIsAddingPost] = useState<boolean>(false); // To control the form visibility
   const [postForm, setPostForm] = useState({
     description: "",
   });
+  const [error, setError] = useState<string>("");
+  const { slug } = useParams<{ slug: string }>();
+  const [loading, setLoading] = useState<string>("");
 
-  const [postData, setPostData] = useState([
-    {
-      id: 1,
-      internName: "Jane Smith",
-      date: "02/10/2024",
-      description:
-        "Completed front-end development tasks for the dashboard module. Resolved several UI bugs and improved performance.",
-    },
-    {
-      id: 2,
-      internName: "Mark Tan",
-      date: "02/12/2024",
-      description:
-        "Worked on API integration for user authentication. Successfully implemented login/logout features using OAuth.",
-    },
-    {
-      id: 3,
-      internName: "Emily Garcia",
-      date: "02/15/2024",
-      description:
-        "Refactored the payment service module, optimizing the database queries and reducing response time by 30%.",
-    },
-    {
-      id: 4,
-      internName: "Michael Reyes",
-      date: "02/18/2024",
-      description:
-        "Collaborated with the design team to revamp the user profile page. Added user-friendly input validations and feedback messages.",
-    },
-    {
-      id: 5,
-      internName: "Anna Cruz",
-      date: "02/20/2024",
-      description:
-        "Developed a new feature allowing users to export data reports in CSV format. Tested and deployed to staging environment.",
-    },
-  ]);
+  const [postData, setPostData] = useState<Post[]>([]);
 
-  const handleSave = () => {
-    console.log("Post Saved");
-    console.log(JSON.stringify(postForm, null, 2));
-    // Add logic to handle the save
-    setIsAddingPost(false);
-    setPostForm({ description: "" });
+  useEffect(() => {
+    const fetchDiscussions = async () => {
+      try {
+        setLoading("Loading discussions...");
+        const response = await axiosInstance.get(
+          `/api/company/${slug}/discussions`
+        );
+        const discussions = response.data.map((discussion: any) => ({
+          id: discussion.id,
+          internName: discussion.internName,
+          date: discussion.date,
+          description: discussion.description,
+        }));
+        setPostData(discussions);
+      } catch (error) {
+        console.error("Error fetching discussions:", error);
+      } finally {
+        setLoading("");
+      }
+    };
+
+    fetchDiscussions();
+  }, [slug]);
+
+  const handleSave = async () => {
+    if (postForm.description.trim() === "") {
+      setError("Post description cannot be blank.");
+      return;
+    }
+
+    const newPost = {
+      description: postForm.description,
+    };
+
+    try {
+      setLoading("Creating discussion...");
+      const response = await axiosInstance.post(
+        `/api/company/${slug}/discussions/create`,
+        newPost
+      );
+
+      const savedPost = response.data;
+      console.log(savedPost);
+
+      setPostData((prevPosts) => [...prevPosts, savedPost]);
+
+      console.log("Post Saved");
+      console.log(JSON.stringify(savedPost, null, 2));
+
+      setIsAddingPost(false);
+      setPostForm({ description: "" });
+    } catch (error) {
+      console.error("Error saving post:", error);
+      setError("An error occurred while saving the post.");
+    } finally {
+      setLoading("");
+    }
   };
 
   const handleChange = (updatedPost: { description: string }) => {
@@ -84,6 +113,7 @@ export default function UserCompanyDiscussionForum() {
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
+      {loading && <Spinner message={loading} />}
       <div className={styles.container}>
         <div className={styles.leftcontainer}>
           <div className={styles.titleButtonContainer}>
@@ -97,6 +127,7 @@ export default function UserCompanyDiscussionForum() {
               Add Post
             </Button>
           </div>
+          {error && <ValidationError message={error} />}
 
           {isAddingPost && (
             <DiscussionAddPostForm
