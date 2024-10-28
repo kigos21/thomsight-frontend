@@ -20,6 +20,7 @@ export type Review = {
   description: string;
   posted_by?: string;
   date?: string | number | Date;
+  poster_name?: string;
 };
 
 export default function UserCompanyOverview() {
@@ -180,7 +181,8 @@ export default function UserCompanyOverview() {
               <ReviewItem
                 key={review.id}
                 id={review.id}
-                internName={review.posted_by}
+                internName={review.poster_name}
+                posted_by={review.posted_by}
                 rating={review.rating}
                 date={
                   review.date

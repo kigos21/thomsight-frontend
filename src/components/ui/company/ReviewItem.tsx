@@ -13,6 +13,7 @@ import { FormEvent, useRef, useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
+import { useUser } from "../../../contexts/UserContext";
 
 export default function ReviewItem({
   classNames,
@@ -24,6 +25,7 @@ export default function ReviewItem({
   onReviewChange,
   setSuccess,
   id,
+  posted_by,
 }: ReviewItemProps) {
   // Local state for editing
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -33,6 +35,7 @@ export default function ReviewItem({
   }>({ rating: rating, description: reviewDescription });
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
+  const { user } = useUser();
 
   // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
@@ -188,12 +191,24 @@ export default function ReviewItem({
           )}
 
           <div className={styles.iconContainer}>
-            <button onClick={handleEditClick} className={styles.iconButton}>
-              <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
-            </button>
-            <button onClick={handleIconClick} className={styles.iconButton}>
-              <IconTrash size={25} stroke={1.5} className={styles.iconDelete} />
-            </button>
+            {user?.id == posted_by && (
+              <div>
+                <button onClick={handleEditClick} className={styles.iconButton}>
+                  <IconEdit
+                    size={25}
+                    stroke={1.5}
+                    className={styles.iconEdit}
+                  />
+                </button>
+                <button onClick={handleIconClick} className={styles.iconButton}>
+                  <IconTrash
+                    size={25}
+                    stroke={1.5}
+                    className={styles.iconDelete}
+                  />
+                </button>
+              </div>
+            )}
             <button onClick={handleIconClick} className={styles.iconButton}>
               <IconFlagFilled
                 size={25}

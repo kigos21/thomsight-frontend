@@ -70,6 +70,7 @@ export type ReviewItemProps = {
   style?: React.CSSProperties;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
   id: number | undefined;
+  posted_by: string | undefined;
 };
 
 export type PaddedContainerProps = {
