@@ -10,6 +10,12 @@
   }
 }
 
+.tipHeaderContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .boxContainer {
   margin-bottom: 1rem;
   padding: 0 2rem;

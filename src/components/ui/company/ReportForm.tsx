@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import styles from "./ReportForm.module.scss";
-import { ReportFormProps } from '../../../types/props';
+import { ReportFormProps } from "../../../types/props";
 
 const ReportForm: React.FC<ReportFormProps> = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
@@ -33,7 +33,9 @@ const ReportForm: React.FC<ReportFormProps> = ({ isVisible, onClose }) => {
             placeholder="Please describe the issue..."
             rows={4}
           ></textarea>
-          <button type="submit" className={styles.submitButton}>Submit Report</button>
+          <button type="submit" className={styles.submitButton}>
+            Submit Report
+          </button>
         </form>
       </div>
     </div>

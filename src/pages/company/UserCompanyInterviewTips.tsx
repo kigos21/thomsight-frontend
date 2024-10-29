@@ -1,11 +1,35 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import InterviewTipsItem from "../../components/ui/company/InterviewTipsItem";
 import styles from "./UserCompanyInterviewTips.module.scss";
+import { useUser } from "../../contexts/UserContext";
+import { useEffect, useState } from "react";
+import SuccessMessage from "../../components/form/SuccessMessage";
+
+import Button from "../../components/ui/Button";
 
 export default function UserCompanyInterviewTips() {
+  const { user } = useUser();
+  const [isAddingReview, setIsAddingTips] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string>("");
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
-      <h2>Interview Tips</h2>
+      <div className={styles.tipHeaderContainer}>
+        <h2>Interview Tips</h2>
+        {user?.role === "Alumni" && (
+          <Button
+            color="primary"
+            roundness="rounded"
+            classNames={styles.replyButton}
+            onClick={() => {
+              setIsAddingTips(true);
+              setSuccess("");
+            }}
+          >
+            Add Tip
+          </Button>
+        )}
+      </div>
       <div className={styles.informationContainer}>
         <p>
           Welcome to the Interview Tips and Guidance Page. Here, you'll find

@@ -311,12 +311,12 @@ const router = createBrowserRouter([
       /**
        * Route Group for Login
        */
+      // {
+      //   path: "/login",
+      //   element: <PreLoginPage />,
+      // },
       {
         path: "/login",
-        element: <PreLoginPage />,
-      },
-      {
-        path: "/login/student",
         element: <LoginStudentPage />,
       },
       {
