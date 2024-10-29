@@ -26,7 +26,7 @@
 }
 
 .subtitle {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .items {
@@ -34,11 +34,14 @@
   flex-direction: column;
   margin-bottom: 1rem;
   color: var(--black);
-  gap: 0.4rem;
+
+  p {
+    margin-bottom: 0.75rem;
+  }
 }
 
 .videoContainer {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 
   iframe {
     width: 100%;
@@ -48,6 +51,16 @@
 
   p {
     margin-top: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .videoContainer {
+    iframe {
+      width: 100%;
+      height: 400px; /* or whatever height you prefer */
+      border: none;
+    }
   }
 }
 
@@ -67,6 +80,14 @@
 
   .items {
     margin-bottom: 0.75rem;
+  }
+
+  .videoContainer {
+    iframe {
+      width: 100%;
+      height: 300px; /* or whatever height you prefer */
+      border: none;
+    }
   }
 }
 
@@ -88,5 +109,13 @@
 
   .items {
     margin-bottom: 0.5rem;
+  }
+
+  .videoContainer {
+    iframe {
+      width: 100%;
+      height: 160px; /* or whatever height you prefer */
+      border: none;
+    }
   }
 }
