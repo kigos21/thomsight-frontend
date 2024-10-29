@@ -34,45 +34,59 @@
   flex-direction: column;
   margin-bottom: 1rem;
   color: var(--black);
-  gap: .4rem;
+  gap: 0.4rem;
+}
+
+.videoContainer {
+  margin-top: 2.5rem;
+
+  iframe {
+    width: 100%;
+    height: 500px; /* or whatever height you prefer */
+    border: none;
+  }
+
+  p {
+    margin-top: 0.75rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .styledbox {
-      margin: 0 1rem;
-      padding: 1.5rem;
+    margin: 0 1rem;
+    padding: 1.5rem;
   }
 
   .title {
-      margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .subtitle {
-      margin-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
   .items {
-      margin-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .styledbox {
-      margin: 0 0.5rem;
-      padding: 1rem;
+    margin: 0 0.5rem;
+    padding: 1rem;
   }
 
   .title {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
   }
 
   .subtitle {
-      margin-bottom: 0.5rem;
-      font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
   }
 
   .items {
-      margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 }

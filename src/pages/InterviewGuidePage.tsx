@@ -12,7 +12,6 @@ export default function InterviewGuidePage() {
 
         <div className={styles.container}>
           <h1 className={styles.title}>Interview Tips</h1>
-
           {/* #1 */}
           <h2 className={styles.subtitle}>
             1. Prepare for the day of the interview
@@ -27,7 +26,6 @@ export default function InterviewGuidePage() {
               the position.
             </a>
           </div>
-
           {/* #2 */}
           <h2 className={styles.subtitle}>
             2. Establish a rapport with the hiring manager
@@ -43,7 +41,6 @@ export default function InterviewGuidePage() {
               interview.
             </a>
           </div>
-
           {/* #3 */}
           <h2 className={styles.subtitle}>
             3. Highlight relevant skills and milestones that apply to the
@@ -58,7 +55,6 @@ export default function InterviewGuidePage() {
               accomplishments can be applied to their company.
             </a>
           </div>
-
           {/* #4 */}
           <h2 className={styles.subtitle}>
             4. Prepare for behavioral interview questions
@@ -73,7 +69,6 @@ export default function InterviewGuidePage() {
               interview to answer these questions effectively.
             </a>
           </div>
-
           {/* #5 */}
           <h2 className={styles.subtitle}>
             5. Make sure that you have a complete understanding of the question
@@ -86,7 +81,6 @@ export default function InterviewGuidePage() {
               question.
             </a>
           </div>
-
           {/* #6 */}
           <h2 className={styles.subtitle}>
             6. Shorten your responses unless asked to elaborate
@@ -100,7 +94,6 @@ export default function InterviewGuidePage() {
               courtesy of the interview process.
             </a>
           </div>
-
           {/* #7 */}
           <h2 className={styles.subtitle}>7. Stay positive</h2>
           <div className={styles.items}>
@@ -113,7 +106,6 @@ export default function InterviewGuidePage() {
               the position.
             </a>
           </div>
-
           {/* #8 */}
           <h2 className={styles.subtitle}>
             8. Bring a physical portfolio of past work
@@ -128,7 +120,6 @@ export default function InterviewGuidePage() {
               you learned from it.
             </a>
           </div>
-
           {/* #9 */}
           <h2 className={styles.subtitle}>9. Maintain your confidence</h2>
           <div className={styles.items}>
@@ -139,7 +130,6 @@ export default function InterviewGuidePage() {
               while knowing the expectations on the day of the interview.
             </a>
           </div>
-
           {/* #10 */}
           <h2 className={styles.subtitle}>
             10. Send a thank you note following the interview
@@ -151,6 +141,18 @@ export default function InterviewGuidePage() {
               interest in the role and what you learned from the content of
               their responses to the questions you asked them.
             </a>
+          </div>
+          <div className={styles.videoContainer}>
+            <iframe
+              src="https://www.youtube.com/embed/HG68Ymazo18?si=hIMpsiVKOO-XScuY"
+              title="Interview Tips Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            <p>
+              Video by Indeed on YouTube (used under Creative Commons License).
+            </p>
           </div>
         </div>
       </StyledBox>
