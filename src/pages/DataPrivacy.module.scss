@@ -1,7 +1,7 @@
 .textContainer {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.35rem;
 
   h1 {
     font-size: 2.25rem;
@@ -15,13 +15,28 @@
     font-weight: 400;
     color: var(--black);
   }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+}
+
+.contentHolder {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+  gap: 0.35rem;
+
+  p {
+    margin-bottom: 1.25rem;
+  }
 }
 
 @media screen and (max-width: 1366px) {
   .textContainer {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.35rem;
 
     h1 {
       font-size: 2.1rem;
@@ -35,6 +50,10 @@
       font-weight: 400;
       color: var(--black);
     }
+
+    h2 {
+      font-size: 1.65rem;
+    }
   }
 }
 
@@ -42,7 +61,7 @@
   .textContainer {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.35rem;
 
     h1 {
       font-size: 2rem;
@@ -56,6 +75,10 @@
       font-weight: 400;
       color: var(--black);
     }
+
+    h2 {
+      font-size: 1.55rem;
+    }
   }
 }
 
@@ -63,7 +86,7 @@
   .textContainer {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.35rem;
 
     h1 {
       font-size: 1.75rem;
@@ -77,6 +100,10 @@
       font-weight: 400;
       color: var(--black);
     }
+
+    h2 {
+      font-size: 1.35rem;
+    }
   }
 }
 
@@ -84,7 +111,7 @@
   .textContainer {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.35rem;
 
     h1 {
       font-size: 1.5rem;
@@ -97,6 +124,10 @@
       font-size: 0.9rem;
       font-weight: 400;
       color: var(--black);
+    }
+
+    h2 {
+      font-size: 1.15rem;
     }
   }
 }
