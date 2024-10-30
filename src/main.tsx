@@ -18,7 +18,6 @@ import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
 import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
 import CompanyTokenPage from "./pages/company/CompanyTokenPage.tsx";
 import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
-import PreLoginPage from "./pages/auth/PreLoginPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
 import UserHomePage from "./pages/home/UserHomePage.tsx";
 import UserCompanyJobs from "./pages/company/UserCompanyJobs.tsx";

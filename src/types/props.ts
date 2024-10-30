@@ -59,6 +59,7 @@ export type DiscussionForumItemProps = {
   setLoading: React.Dispatch<React.SetStateAction<string>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
   onDiscussionDelete: (id: number | undefined) => void;
+  posted_by: number;
 };
 
 export type ReviewItemProps = {

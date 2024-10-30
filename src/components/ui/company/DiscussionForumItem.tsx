@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import DeletePopUp from "./DeletePopUp";
 import { containsBadWords } from "../../../badWordsFilter";
 import ValidationError from "../../form/ValidationError";
+import { useUser } from "../../../contexts/UserContext";
 
 export default function DiscussionForumItem({
   classNames,
@@ -23,12 +24,14 @@ export default function DiscussionForumItem({
   setLoading,
   setError,
   onDiscussionDelete,
+  posted_by,
 }: DiscussionForumItemProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
   const { slug } = useParams<{ slug: string }>();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
   const [descriptionError, setDescriptionError] = useState<string>("");
+  const { user } = useUser();
 
   const handleIconClick = () => {
     console.log("Icon clicked!");
@@ -150,12 +153,20 @@ export default function DiscussionForumItem({
           )}
 
           <div className={styles.iconContainer}>
-            <button onClick={handleEditClick} className={styles.iconButton}>
-              <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
-            </button>
-            <button onClick={handleDeleteClick} className={styles.iconButton}>
-              <IconTrash size={25} stroke={1.5} className={styles.iconDelete} />
-            </button>
+            {user?.id === posted_by && (
+              <button onClick={handleEditClick} className={styles.iconButton}>
+                <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
+              </button>
+            )}
+            {user?.id === posted_by && (
+              <button onClick={handleDeleteClick} className={styles.iconButton}>
+                <IconTrash
+                  size={25}
+                  stroke={1.5}
+                  className={styles.iconDelete}
+                />
+              </button>
+            )}
             <button onClick={handleIconClick} className={styles.iconButton}>
               <IconFlagFilled
                 size={25}

@@ -17,6 +17,7 @@ interface Post {
   internName: string;
   date: string;
   description: string;
+  posted_by: number;
 }
 
 export default function UserCompanyDiscussionForum() {
@@ -38,11 +39,12 @@ export default function UserCompanyDiscussionForum() {
         const response = await axiosInstance.get(
           `/api/company/${slug}/discussions`
         );
-        const discussions = response.data.map((discussion: any) => ({
+        const discussions = response.data.map((discussion: Post) => ({
           id: discussion.id,
           internName: discussion.internName,
           date: discussion.date,
           description: discussion.description,
+          posted_by: discussion.posted_by,
         }));
         setPostData(discussions);
       } catch (error) {
@@ -167,6 +169,7 @@ export default function UserCompanyDiscussionForum() {
                 setLoading={setLoading}
                 setError={setError}
                 onDiscussionDelete={handleDiscussionDelete}
+                posted_by={post.posted_by}
               />
             ))}
           </div>
