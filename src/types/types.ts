@@ -54,3 +54,14 @@ export type Announcement = {
   content: string;
   updated_at: Date;
 };
+
+export type FeedbackReport = {
+  id: number;
+  poster_name: string;
+  posted_date: string;
+  rating: number;
+  review: string;
+  reporter_name: string;
+  report_date: string;
+  reason: string;
+};
