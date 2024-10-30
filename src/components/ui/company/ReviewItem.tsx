@@ -42,6 +42,12 @@ export default function ReviewItem({
   const { user } = useUser();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
   const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
+  const [selectedReportOption, setSelectedReportOption] = useState<
+    string | null
+  >(null);
+  const [reportDescription, setReportDescription] = useState<string>("");
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [reportSuccess, setReportSuccess] = useState<string | null>(null);
 
   // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
@@ -75,7 +81,7 @@ export default function ReviewItem({
 
   const handleSaveClick = async () => {
     if (ratingRef.current && !ratingRef.current!.checkValidity()) {
-      ratingRef.current.reportValidity(); // This will display the native validation error messages
+      ratingRef.current.reportValidity();
       return;
     }
     await updateReview();
@@ -83,7 +89,7 @@ export default function ReviewItem({
   };
 
   const handleCancelClick = () => {
-    setTempReview({ rating: rating, description: reviewDescription }); // Reset the temp description to discard changes
+    setTempReview({ rating: rating, description: reviewDescription });
     setIsEditing(false);
   };
 
@@ -118,6 +124,41 @@ export default function ReviewItem({
     setSuccess("");
     setError("");
     setShowReportPopup(true);
+  };
+
+  const handleSubmitReport = async (e: FormEvent) => {
+    e.preventDefault();
+    setReportError(null);
+    setReportSuccess(null);
+
+    if (!selectedReportOption) {
+      setReportError("Please select an issue type.");
+      return;
+    }
+    if (!reportDescription) {
+      setReportError("Please fill out the reason");
+      return;
+    }
+
+    setLoading("Submitting report...");
+    try {
+      const response = await axiosInstance.post(`/api/report/feedback/${id}`, {
+        id,
+        issue: selectedReportOption,
+        reason: reportDescription,
+      });
+      if (response.status === 200) {
+        setReportSuccess("Report submitted successfully.");
+        setSelectedReportOption(null);
+        setReportDescription("");
+      }
+    } catch (error) {
+      setReportError(
+        "There was an error submitting the report. Please try again." + error
+      );
+    } finally {
+      setLoading("");
+    }
   };
 
   return (
@@ -260,7 +301,14 @@ export default function ReviewItem({
         <ReportForm
           isVisible={showReportPopup}
           onClose={() => setShowReportPopup(false)}
-          id={id}
+          selectedOption={selectedReportOption}
+          setSelectedOption={setSelectedReportOption}
+          description={reportDescription}
+          setDescription={setReportDescription}
+          handleSubmit={handleSubmitReport}
+          error={reportError}
+          successMessage={reportSuccess}
+          loading={loading === "Submitting report..."}
         ></ReportForm>
       )}
     </div>

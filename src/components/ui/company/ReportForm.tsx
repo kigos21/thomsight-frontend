@@ -1,58 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./ReportForm.module.scss";
 import { ReportFormProps } from "../../../types/props";
-import axiosInstance from "../../../services/axiosInstance"; // Adjust path as needed
 import ValidationError from "../../form/ValidationError";
 import SuccessMessage from "../../form/SuccessMessage";
 
-const ReportForm: React.FC<ReportFormProps> = ({ isVisible, onClose, id }) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [description, setDescription] = useState<string>("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
+const ReportForm: React.FC<ReportFormProps> = ({
+  isVisible,
+  onClose,
+  selectedOption,
+  setSelectedOption,
+  description,
+  setDescription,
+  handleSubmit,
+  error,
+  successMessage,
+  loading,
+}) => {
   if (!isVisible) return null;
 
   const handleCheckboxChange = (value: string) => {
-    setSelectedOption((prevValue) => (prevValue === value ? null : value));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSuccessMessage("");
-    setError("");
-
-    if (!selectedOption) {
-      setError("Please select an issue type.");
-      return;
-    }
-    if (!description) {
-      setError("Please fill out the reason");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await axiosInstance.post(`/api/report/feedback/${id}`, {
-        id,
-        issue: selectedOption,
-        reason: description,
-      });
-      if (response.status === 200) {
-        setSuccessMessage("Report submitted successfully.");
-        setSelectedOption(null);
-        setDescription("");
-      }
-    } catch (error) {
-      setError(
-        "There was an error submitting the report. Please try again." + error
-      );
-    } finally {
-      setLoading(false);
-    }
+    setSelectedOption(value === selectedOption ? "" : value);
   };
 
   return (

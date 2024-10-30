@@ -159,7 +159,14 @@ export interface DeletePopUpProps {
 export interface ReportFormProps {
   isVisible: boolean;
   onClose: () => void;
-  id: number | undefined;
+  selectedOption: string | null;
+  setSelectedOption: (value: string) => void;
+  description: string;
+  setDescription: (value: string) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+  error: string | null;
+  successMessage: string | null;
+  loading: boolean;
 }
 
 export type HomeCompanyItemProps = {
