@@ -9,6 +9,7 @@ import styles from "./AdminCreateAnnouncementItem.module.scss";
 import Spinner from "../Spinner";
 import ValidationError from "../../form/ValidationError";
 import SuccessMessage from "../../form/SuccessMessage";
+import { containsBadWords } from "../../../badWordsFilter";
 
 export default function AdminCreatennouncementItem({
   classNames,
@@ -35,6 +36,14 @@ export default function AdminCreatennouncementItem({
     }
     if (details.trim() === "") {
       setDetailsError("Details cannot be blank");
+      isValid = false;
+    }
+    if (containsBadWords(subject)) {
+      setSubjectError("Subject contains foul language");
+      isValid = false;
+    }
+    if (containsBadWords(details)) {
+      setDetailsError("Details contains foul language");
       isValid = false;
     }
 
@@ -94,7 +103,7 @@ export default function AdminCreatennouncementItem({
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             />
-            {subjectError && <ValidationError message={detailsError} />}
+            {detailsError && <ValidationError message={detailsError} />}
           </div>
         </div>
       </div>

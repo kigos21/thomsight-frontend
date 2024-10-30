@@ -8,6 +8,8 @@ import { useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import DeletePopUp from "./DeletePopUp";
+import { containsBadWords } from "../../../badWordsFilter";
+import ValidationError from "../../form/ValidationError";
 
 export default function DiscussionForumItem({
   classNames,
@@ -26,6 +28,7 @@ export default function DiscussionForumItem({
   const [tempDescription, setTempDescription] = useState<string>(description);
   const { slug } = useParams<{ slug: string }>();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [descriptionError, setDescriptionError] = useState<string>("");
 
   const handleIconClick = () => {
     console.log("Icon clicked!");
@@ -38,6 +41,11 @@ export default function DiscussionForumItem({
   };
 
   const handleSaveClick = async () => {
+    setDescriptionError("");
+    if (containsBadWords(tempDescription)) {
+      setDescriptionError("New description contains foul language");
+      return;
+    }
     try {
       setLoading("Updating discussion...");
       await axiosInstance.put(`/api/company/${slug}/discussion/${id}/update`, {
@@ -116,6 +124,9 @@ export default function DiscussionForumItem({
 
           {isEditing ? (
             <div className={styles.editDescriptionSection}>
+              {descriptionError && (
+                <ValidationError message={descriptionError} />
+              )}
               <textarea
                 className={styles.descriptionTextarea}
                 value={tempDescription}

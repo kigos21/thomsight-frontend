@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import ValidationError from "../../components/form/ValidationError";
 import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
+import { containsBadWords } from "../../badWordsFilter";
 
 interface Post {
   id: number;
@@ -57,6 +58,10 @@ export default function UserCompanyDiscussionForum() {
   const handleSave = async () => {
     if (postForm.description.trim() === "") {
       setError("Post description cannot be blank.");
+      return;
+    }
+    if (containsBadWords(postForm.description)) {
+      setError("Post description contains foul language");
       return;
     }
 
