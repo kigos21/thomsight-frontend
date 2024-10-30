@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
 import { useUser } from "../../../contexts/UserContext";
 import DeletePopUp from "./DeletePopUp";
+import ReportForm from "./ReportForm";
 
 export default function ReviewItem({
   classNames,
@@ -40,6 +41,7 @@ export default function ReviewItem({
   const [loading, setLoading] = useState<string>("");
   const { user } = useUser();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
 
   // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
@@ -64,11 +66,6 @@ export default function ReviewItem({
     } finally {
       setLoading("");
     }
-  };
-
-  const handleIconClick = () => {
-    //click handling logic
-    console.log("Icon clicked!");
   };
 
   const handleEditClick = () => {
@@ -115,6 +112,12 @@ export default function ReviewItem({
       setLoading("");
       setShowDeletePopup(false);
     }
+  };
+
+  const handleReportClick = () => {
+    setSuccess("");
+    setError("");
+    setShowReportPopup(true);
   };
 
   return (
@@ -219,27 +222,20 @@ export default function ReviewItem({
 
           <div className={styles.iconContainer}>
             {user?.id == posted_by && (
-              <div>
-                <button onClick={handleEditClick} className={styles.iconButton}>
-                  <IconEdit
-                    size={25}
-                    stroke={1.5}
-                    className={styles.iconEdit}
-                  />
-                </button>
-                <button
-                  onClick={handleDeleteClick}
-                  className={styles.iconButton}
-                >
-                  <IconTrash
-                    size={25}
-                    stroke={1.5}
-                    className={styles.iconDelete}
-                  />
-                </button>
-              </div>
+              <button onClick={handleEditClick} className={styles.iconButton}>
+                <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
+              </button>
             )}
-            <button onClick={handleIconClick} className={styles.iconButton}>
+            {user?.id == posted_by && (
+              <button onClick={handleDeleteClick} className={styles.iconButton}>
+                <IconTrash
+                  size={25}
+                  stroke={1.5}
+                  className={styles.iconDelete}
+                />
+              </button>
+            )}
+            <button onClick={handleReportClick} className={styles.iconButton}>
               <IconFlagFilled
                 size={25}
                 stroke={1.5}
@@ -258,6 +254,14 @@ export default function ReviewItem({
           heading="Delete Review"
           details="Are you sure you want to delete this review?"
         />
+      )}
+
+      {showReportPopup && (
+        <ReportForm
+          isVisible={showReportPopup}
+          onClose={() => setShowReportPopup(false)}
+          id={id}
+        ></ReportForm>
       )}
     </div>
   );

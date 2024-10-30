@@ -159,6 +159,7 @@ export interface DeletePopUpProps {
 export interface ReportFormProps {
   isVisible: boolean;
   onClose: () => void;
+  id: number | undefined;
 }
 
 export type HomeCompanyItemProps = {
