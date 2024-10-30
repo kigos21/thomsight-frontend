@@ -4,13 +4,14 @@ import Button from "../Button";
 
 import styles from "./DiscussionForumItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import DeletePopUp from "./DeletePopUp";
 import { containsBadWords } from "../../../badWordsFilter";
 import ValidationError from "../../form/ValidationError";
 import { useUser } from "../../../contexts/UserContext";
+import ReportForm from "./ReportForm";
 
 export default function DiscussionForumItem({
   classNames,
@@ -32,10 +33,14 @@ export default function DiscussionForumItem({
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
   const [descriptionError, setDescriptionError] = useState<string>("");
   const { user } = useUser();
-
-  const handleIconClick = () => {
-    console.log("Icon clicked!");
-  };
+  const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
+  const [selectedReportOption, setSelectedReportOption] = useState<
+    string | null
+  >(null);
+  const [reportDescription, setReportDescription] = useState<string>("");
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [reportSuccess, setReportSuccess] = useState<string | null>(null);
+  const [reportLoading, setReportLoading] = useState<string>("");
 
   const handleEditClick = () => {
     setError("");
@@ -93,6 +98,50 @@ export default function DiscussionForumItem({
     } finally {
       setLoading("");
       setShowDeletePopup(false);
+    }
+  };
+
+  const handleReportClick = () => {
+    setSuccess("");
+    setError("");
+    setShowReportPopup(true);
+  };
+
+  const handleSubmitReport = async (e: FormEvent) => {
+    e.preventDefault();
+    setReportError(null);
+    setReportSuccess(null);
+
+    if (!selectedReportOption) {
+      setReportError("Please select an issue type.");
+      return;
+    }
+    if (!reportDescription) {
+      setReportError("Please fill out the reason");
+      return;
+    }
+
+    setReportLoading("Submitting report...");
+    try {
+      const response = await axiosInstance.post(
+        `/api/report/discussion/${id}`,
+        {
+          id,
+          issue: selectedReportOption,
+          reason: reportDescription,
+        }
+      );
+      if (response.status === 200) {
+        setReportSuccess("Report submitted successfully.");
+        setSelectedReportOption(null);
+        setReportDescription("");
+      }
+    } catch (error) {
+      setReportError(
+        "There was an error submitting the report. Please try again." + error
+      );
+    } finally {
+      setReportLoading("");
     }
   };
 
@@ -167,7 +216,7 @@ export default function DiscussionForumItem({
                 />
               </button>
             )}
-            <button onClick={handleIconClick} className={styles.iconButton}>
+            <button onClick={handleReportClick} className={styles.iconButton}>
               <IconFlagFilled
                 size={25}
                 stroke={1.5}
@@ -186,6 +235,21 @@ export default function DiscussionForumItem({
           heading="Delete Discussion"
           details="Are you sure you want to delete this discussion? Please note that all replies in your discussion will be deleted as well."
         />
+      )}
+
+      {showReportPopup && (
+        <ReportForm
+          isVisible={showReportPopup}
+          onClose={() => setShowReportPopup(false)}
+          selectedOption={selectedReportOption}
+          setSelectedOption={setSelectedReportOption}
+          description={reportDescription}
+          setDescription={setReportDescription}
+          handleSubmit={handleSubmitReport}
+          error={reportError}
+          successMessage={reportSuccess}
+          loading={reportLoading === "Submitting report..."}
+        ></ReportForm>
       )}
     </div>
   );

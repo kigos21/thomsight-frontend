@@ -65,3 +65,13 @@ export type FeedbackReport = {
   report_date: string;
   reason: string;
 };
+
+export type DiscussionReport = {
+  id: number;
+  poster_name: string;
+  posted_date: string;
+  description: string;
+  reporter_name: string;
+  report_date: string;
+  reason: string;
+};
