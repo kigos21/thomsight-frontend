@@ -10,11 +10,12 @@ const FormField: React.FC<FormFieldProps> = ({
   value,
   extraProps,
   classNames,
+  parentDivClassnames,
   editIcon,
   onChange,
   name,
 }) => (
-  <div className={styles.formGroup}>
+  <div className={`${styles.formGroup} ${parentDivClassnames}`}>
     {icon && icon}
     {type === "textarea" ? (
       <textarea

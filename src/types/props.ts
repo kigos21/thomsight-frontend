@@ -60,6 +60,8 @@ export type DiscussionForumItemProps = {
   setError: React.Dispatch<React.SetStateAction<string>>;
   onDiscussionDelete: (id: number | undefined) => void;
   posted_by: number;
+
+  handleReplyClick: () => void;
 };
 
 export type ReviewItemProps = {
@@ -92,6 +94,7 @@ export type FormFieldProps = {
   icon?: JSX.Element;
   editIcon?: JSX.Element;
   classNames?: string;
+  parentDivClassnames?: string;
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
   name?: string;

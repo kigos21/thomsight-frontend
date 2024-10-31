@@ -3,7 +3,7 @@ import DiscussionForumItem from "../../components/ui/company/DiscussionForumItem
 import Button from "../../components/ui/Button";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyDiscussionForum.module.scss";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import DiscussionAddPostForm from "../../components/ui/company/DiscussionAddPostForm";
 import axiosInstance from "../../services/axiosInstance";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,8 @@ import ValidationError from "../../components/form/ValidationError";
 import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import { containsBadWords } from "../../badWordsFilter";
+import FormField from "../../components/form/FormField";
+import { IconSend, IconX } from "@tabler/icons-react";
 
 interface Post {
   id: number;
@@ -25,12 +27,20 @@ export default function UserCompanyDiscussionForum() {
   const [postForm, setPostForm] = useState({
     description: "",
   });
+  const [reply, setReply] = useState<string>("");
+  const [activeReplyPostId, setActiveReplyPostId] = useState<number>(-1); // -1 if unset
   const [error, setError] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
   const [postData, setPostData] = useState<Post[]>([]);
+
+  const replies = [
+    "You should not bombard with something like this",
+    "That's the best way to do it imo",
+    "Whenever there's an opening, you should be just yoloing for it. I am a long ass reply. I am a long ass reply. I am a long ass reply. I am a long ass reply. I am a long ass reply. ",
+  ];
 
   useEffect(() => {
     const fetchDiscussions = async () => {
@@ -122,6 +132,10 @@ export default function UserCompanyDiscussionForum() {
     setPostData((prevPosts) => prevPosts.filter((post) => post.id !== id));
   };
 
+  const handleReplyChange = (value: string) => {
+    setReply(value);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -156,21 +170,73 @@ export default function UserCompanyDiscussionForum() {
 
           <div className={styles.discussionContainer}>
             {postData.map((post) => (
-              <DiscussionForumItem
-                key={post.id}
-                id={post.id}
-                internName={post.internName}
-                date={post.date}
-                description={post.description}
-                onDescriptionChange={(updatedDescription: string) =>
-                  handleDescriptionChange(post.id, updatedDescription)
+              <Fragment key={post.id}>
+                <DiscussionForumItem
+                  id={post.id}
+                  internName={post.internName}
+                  date={post.date}
+                  description={post.description}
+                  onDescriptionChange={(updatedDescription: string) =>
+                    handleDescriptionChange(post.id, updatedDescription)
+                  }
+                  setSuccess={setSuccess}
+                  setLoading={setLoading}
+                  setError={setError}
+                  onDiscussionDelete={handleDiscussionDelete}
+                  posted_by={post.posted_by}
+                  handleReplyClick={() =>
+                    setActiveReplyPostId(
+                      activeReplyPostId === post.id ? -1 : post.id
+                    )
+                  }
+                />
+                {
+                  <div className={styles.repliesContainer}>
+                    {replies.map((reply) => (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.25rem",
+                        }}
+                      >
+                        <div>
+                          <strong>username</strong> · 2 hrs ago
+                        </div>
+                        <div>{reply}</div>
+                      </div>
+                    ))}
+                  </div>
                 }
-                setSuccess={setSuccess}
-                setLoading={setLoading}
-                setError={setError}
-                onDiscussionDelete={handleDiscussionDelete}
-                posted_by={post.posted_by}
-              />
+                {activeReplyPostId === post.id && (
+                  <div className={styles.replyFormFieldContainer}>
+                    <FormField
+                      type={"text"}
+                      placeholder={"Add your reply..."}
+                      classNames={styles.replyFormField}
+                      parentDivClassnames={styles.formFieldParent}
+                      value={reply}
+                      onChange={(e) => handleReplyChange(e.target.value)}
+                    />
+                    <Button
+                      color={"black"}
+                      roundness={"sm-rounded"}
+                      classNames={styles.cancelReplyButton}
+                      onClick={() => setActiveReplyPostId(-1)}
+                    >
+                      <IconX />
+                    </Button>
+                    <Button
+                      color={"primary"}
+                      roundness={"sm-rounded"}
+                      classNames={styles.sendReplyButton}
+                      onClick={() => setActiveReplyPostId(-1)}
+                    >
+                      <IconSend />
+                    </Button>
+                  </div>
+                )}
+              </Fragment>
             ))}
           </div>
         </div>

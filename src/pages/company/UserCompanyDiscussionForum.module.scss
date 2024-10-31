@@ -48,3 +48,52 @@
   font-size: 1rem !important;
   font-weight: 700 !important;
 }
+
+.repliesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  margin-left: 1rem;
+
+  border-left: 1px solid var(--black);
+}
+
+.replyFormFieldContainer {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.replyFormField {
+  padding: 0.5rem 1rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancelReplyButton {
+  flex: 0;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sendReplyButton {
+  flex: 0;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formFieldParent {
+  display: block;
+  width: 100%;
+}

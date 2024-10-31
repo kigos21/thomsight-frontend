@@ -26,6 +26,7 @@ export default function DiscussionForumItem({
   setError,
   onDiscussionDelete,
   posted_by,
+  handleReplyClick,
 }: DiscussionForumItemProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
@@ -158,6 +159,7 @@ export default function DiscussionForumItem({
                 color="black"
                 roundness="rounded"
                 classNames={styles.replyButton}
+                onClick={handleReplyClick}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
