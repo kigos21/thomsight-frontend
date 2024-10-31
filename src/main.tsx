@@ -57,6 +57,7 @@ import { CompaniesProvider } from "./contexts/CompaniesContext.tsx";
 import { TokenProvider } from "./contexts/TokenContext.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
+import PostCVForm from "./pages/cv/PostCVForm.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -342,6 +343,12 @@ const router = createBrowserRouter([
       {
         path: "/data-privacy",
         element: <DataPrivacy />,
+      },
+      {
+        path: "/post-cv",
+        element: <PostCVForm onClose={function (): void {
+          throw new Error("Function not implemented.");
+        } } />,
       },
       // {
       //   path: "/displayprofile",
