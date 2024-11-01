@@ -65,7 +65,7 @@ export default function ForgotPasswordChangePassword() {
         "resetPasswordSuccess",
         "Password has been successfully reset"
       );
-      navigate("/login/student");
+      navigate("/login");
     } catch (err) {
       setError("There was an issue resetting your password." + err);
     } finally {

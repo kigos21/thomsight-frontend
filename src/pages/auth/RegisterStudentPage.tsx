@@ -88,7 +88,7 @@ export default function StudentRegisterPage() {
         "registrationSuccess",
         "Your account has been created successfully! Please verify your email before logging in."
       );
-      navigate("/login/student");
+      navigate("/login");
     } catch (error) {
       console.error("Error registering user:", error);
       setError("Account already exists!");

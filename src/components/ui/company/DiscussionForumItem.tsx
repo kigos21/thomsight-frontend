@@ -85,7 +85,7 @@ export default function DiscussionForumItem({
 
   const handleDeleteDiscussion = async () => {
     try {
-      setLoading("Deleting review...");
+      setLoading("Deleting discussion...");
       await axiosInstance.delete(
         `/api/company/${slug}/discussion/${id}/delete`
       );
@@ -94,7 +94,7 @@ export default function DiscussionForumItem({
       }
       setSuccess("Deleted discussion successfully");
     } catch (err) {
-      console.error("Error deleting review:" + err);
+      console.error("Error deleting discussion:" + err);
       setError("Could not delete discussion. Please try again.");
     } finally {
       setLoading("");

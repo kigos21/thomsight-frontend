@@ -1,6 +1,6 @@
 import styles from "./CVLayout.module.scss";
 
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import PaddedContainer from "./PaddedContainer";
 import Button from "../ui/Button";
 import {
@@ -14,6 +14,7 @@ import {
 
 const CVLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const helpText =
     "Listing: posted CVs by the community \n" +
@@ -95,7 +96,11 @@ const CVLayout = () => {
             <IconHelp className={styles.helpIcon} title={helpText} />
           </h1>
           {location.pathname === "/cv-review" && (
-            <Button color={"primary"} roundness={"rounded"}>
+            <Button
+              color={"primary"}
+              roundness={"rounded"}
+              onClick={() => navigate("/cv-review/post-cv")}
+            >
               Post CV
             </Button>
           )}

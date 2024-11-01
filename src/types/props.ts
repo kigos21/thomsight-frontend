@@ -39,9 +39,14 @@ export type JobItemProps = {
 
 export type InterviewTipsItemProps = {
   subjectHeading: string;
-  internName: string;
+  internName: string | undefined;
   tipDescription: string;
+  id: number | undefined;
 
+  onTipChange: (updatedReview: { title: string; description: string }) => void;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  onTipDelete: (id: number | undefined) => void;
+  setError: React.Dispatch<React.SetStateAction<string>>;
   classNames?: string;
   style?: React.CSSProperties;
 };

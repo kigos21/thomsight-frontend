@@ -89,10 +89,12 @@ export default function UserCompanyDiscussionForum() {
       );
 
       const savedPost = response.data;
-      console.log(savedPost);
+
+      if (/(@rep)\b/i.test(postForm.description)) {
+        notifyRepresentativeBySlug(postForm.description);
+      }
 
       setPostData((prevPosts) => [...prevPosts, savedPost]);
-
       setIsAddingPost(false);
       setPostForm({ description: "" });
       setSuccess("Created discussion successfully");
@@ -101,6 +103,17 @@ export default function UserCompanyDiscussionForum() {
       setError("An error occurred while saving the post.");
     } finally {
       setLoading("");
+    }
+  };
+
+  const notifyRepresentativeBySlug = async (description: string) => {
+    try {
+      await axiosInstance.post(`/api/company/${slug}/mention`, {
+        message: description,
+      });
+      console.log("success");
+    } catch (error) {
+      console.error("Error notifying representative:", error);
     }
   };
 
