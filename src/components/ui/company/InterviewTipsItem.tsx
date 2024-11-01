@@ -1,6 +1,10 @@
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import PaddedContainer from "../../layout/PaddedContainer";
 import styles from "./InterviewTipsItem.module.scss";
+import { useState } from "react";
+import DeletePopUp from "./DeletePopUp";
+import axiosInstance from "../../../services/axiosInstance";
+import { useParams } from "react-router-dom";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -11,8 +15,9 @@ export interface InterviewTipsItemProps {
   tipDescription: string;
   onTipChange?: (updatedTip: { title: string; description: string }) => void;
   onTipDelete?: (id: number | undefined) => void;
-  setSuccess?: (message: string) => void;
-  setError?: (message: string) => void;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  setLoading: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function InterviewTipsItem({
@@ -24,9 +29,13 @@ export default function InterviewTipsItem({
   tipDescription,
   onTipChange,
   onTipDelete,
-  // setSuccess,
-  // setError,
+  setSuccess,
+  setError,
+  setLoading,
 }: InterviewTipsItemProps) {
+  const { slug } = useParams<{ slug: string }>();
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+
   const handleEdit = () => {
     if (onTipChange) {
       // You might want to add a modal or form here to get the updated values
@@ -37,9 +46,26 @@ export default function InterviewTipsItem({
     }
   };
 
-  const handleDelete = () => {
-    if (onTipDelete) {
-      onTipDelete(id);
+  const handleDeleteClick = () => {
+    setSuccess("");
+    setError("");
+    setShowDeletePopup(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      setLoading("Deleting interview tip...");
+      await axiosInstance.delete(`/api/company/${slug}/tip/${id}/delete`);
+      if (onTipDelete) {
+        onTipDelete(id);
+      }
+      setSuccess("Deleted interview tip successfully");
+    } catch (err) {
+      console.error("Error deleting interview tip:" + err);
+      setError("Could not delete interview tip. Please try again.");
+    } finally {
+      setLoading("");
+      setShowDeletePopup(false);
     }
   };
 
@@ -64,7 +90,7 @@ export default function InterviewTipsItem({
               </button>
             )}
             {onTipDelete && (
-              <button onClick={handleDelete} className={styles.iconButton}>
+              <button onClick={handleDeleteClick} className={styles.iconButton}>
                 <IconTrash
                   size={25}
                   stroke={1.5}
@@ -81,6 +107,16 @@ export default function InterviewTipsItem({
             </button>
           </div>
         </div>
+
+        {showDeletePopup && (
+          <DeletePopUp
+            isVisible={showDeletePopup}
+            onClose={() => setShowDeletePopup(false)}
+            onDelete={handleDelete}
+            heading="Delete Interview Tip"
+            details="Are you sure you want to delete this interview tip?"
+          />
+        )}
       </PaddedContainer>
     </div>
   );

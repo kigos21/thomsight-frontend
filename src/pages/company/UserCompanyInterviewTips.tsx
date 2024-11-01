@@ -199,6 +199,7 @@ export default function UserCompanyInterviewTips() {
           onTipDelete={handleTipDelete}
           setSuccess={setSuccess}
           setError={setError}
+          setLoading={setLoading}
         />
       ))}
     </PaddedContainer>
