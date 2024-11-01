@@ -253,6 +253,10 @@ const router = createBrowserRouter([
             path: "view/:reviewId",
             element: <CVFeedbackView />,
           },
+          {
+            path: "post-cv",
+            element: <PostCVForm />,
+          },
         ],
       },
 
@@ -343,12 +347,6 @@ const router = createBrowserRouter([
       {
         path: "/data-privacy",
         element: <DataPrivacy />,
-      },
-      {
-        path: "/post-cv",
-        element: <PostCVForm onClose={function (): void {
-          throw new Error("Function not implemented.");
-        } } />,
       },
       // {
       //   path: "/displayprofile",
