@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./ButtonCV.module.scss";
 
 export type ButtonVariant =
@@ -12,9 +13,10 @@ export type ButtonVariant =
 interface ButtonCVProps {
   children?: React.ReactNode;
   variant?: ButtonVariant;
+  url: string;
 }
 
-const ButtonCV = ({ variant }: ButtonCVProps) => {
+const ButtonCV = ({ variant, url }: ButtonCVProps) => {
   let variantClassname: string;
   let buttonText: string;
 
@@ -63,9 +65,11 @@ const ButtonCV = ({ variant }: ButtonCVProps) => {
   const classNames = `${styles.button} ${variantClassname}`;
 
   return (
-    <button type="button" className={classNames}>
-      {buttonText}
-    </button>
+    <Link to={url}>
+      <button type="button" className={classNames}>
+        {buttonText}
+      </button>
+    </Link>
   );
 };
 
