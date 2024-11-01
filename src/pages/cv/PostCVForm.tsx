@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./PostCVForm.module.scss";
 
 interface PostCVFormProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
-const PostCVForm: React.FC<PostCVFormProps> = ({ onClose }) => {
+const PostCVForm: React.FC<PostCVFormProps> = () => {
   return (
     <div className={styles.formContainer}>
       <h2>Post Your CV</h2>
@@ -18,8 +18,8 @@ const PostCVForm: React.FC<PostCVFormProps> = ({ onClose }) => {
           <label htmlFor="cvFile">Upload CV</label>
           <input type="file" id="cvFile" name="cvFile" />
         </div>
-        <button type="button" className={styles.submitButton} onClick={onClose}>
-          Close
+        <button type="button" className={styles.submitButton}>
+          Submit
         </button>
       </form>
     </div>
