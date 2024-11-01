@@ -75,3 +75,14 @@ export type DiscussionReport = {
   report_date: string;
   reason: string;
 };
+
+export type TipReport = {
+  id: number;
+  poster_name: string;
+  posted_date: string;
+  title: string;
+  content: string;
+  reporter_name: string;
+  report_date: string;
+  reason: string;
+};

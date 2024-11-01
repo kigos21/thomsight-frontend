@@ -1,10 +1,11 @@
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import PaddedContainer from "../../layout/PaddedContainer";
 import styles from "./InterviewTipsItem.module.scss";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import DeletePopUp from "./DeletePopUp";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
+import ReportForm from "./ReportForm";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -35,6 +36,14 @@ export default function InterviewTipsItem({
 }: InterviewTipsItemProps) {
   const { slug } = useParams<{ slug: string }>();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
+  const [selectedReportOption, setSelectedReportOption] = useState<
+    string | null
+  >(null);
+  const [reportDescription, setReportDescription] = useState<string>("");
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [reportSuccess, setReportSuccess] = useState<string | null>(null);
+  const [reportLoading, setReportLoading] = useState<string>("");
 
   const handleEdit = () => {
     if (onTipChange) {
@@ -69,9 +78,45 @@ export default function InterviewTipsItem({
     }
   };
 
-  const handleReport = () => {
-    // Implement report functionality
-    console.log("Report clicked for tip:", id);
+  const handleReportClick = () => {
+    setSuccess("");
+    setError("");
+    setShowReportPopup(true);
+  };
+
+  const handleSubmitReport = async (e: FormEvent) => {
+    e.preventDefault();
+    setReportError(null);
+    setReportSuccess(null);
+
+    if (!selectedReportOption) {
+      setReportError("Please select an issue type.");
+      return;
+    }
+    if (!reportDescription) {
+      setReportError("Please fill out the reason");
+      return;
+    }
+
+    setReportLoading("Submitting report...");
+    try {
+      const response = await axiosInstance.post(`/api/report/tip/${id}`, {
+        id,
+        issue: selectedReportOption,
+        reason: reportDescription,
+      });
+      if (response.status === 200) {
+        setReportSuccess("Report submitted successfully.");
+        setSelectedReportOption(null);
+        setReportDescription("");
+      }
+    } catch (error) {
+      setReportError(
+        "There was an error submitting the report. Please try again." + error
+      );
+    } finally {
+      setReportLoading("");
+    }
   };
 
   return (
@@ -98,7 +143,7 @@ export default function InterviewTipsItem({
                 />
               </button>
             )}
-            <button onClick={handleReport} className={styles.iconButton}>
+            <button onClick={handleReportClick} className={styles.iconButton}>
               <IconFlagFilled
                 size={25}
                 stroke={1.5}
@@ -116,6 +161,21 @@ export default function InterviewTipsItem({
             heading="Delete Interview Tip"
             details="Are you sure you want to delete this interview tip?"
           />
+        )}
+
+        {showReportPopup && (
+          <ReportForm
+            isVisible={showReportPopup}
+            onClose={() => setShowReportPopup(false)}
+            selectedOption={selectedReportOption}
+            setSelectedOption={setSelectedReportOption}
+            description={reportDescription}
+            setDescription={setReportDescription}
+            handleSubmit={handleSubmitReport}
+            error={reportError}
+            successMessage={reportSuccess}
+            loading={reportLoading === "Submitting report..."}
+          ></ReportForm>
         )}
       </PaddedContainer>
     </div>
