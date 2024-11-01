@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./PostCVForm.module.scss";
+import Button from "../../components/ui/Button";
 
 interface PostCVFormProps {
   onClose?: () => void;
@@ -18,9 +19,14 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
           <label htmlFor="cvFile">Upload CV</label>
           <input type="file" id="cvFile" name="cvFile" />
         </div>
-        <button type="button" className={styles.submitButton}>
+        <Button
+          type="button"
+          color={"primary"}
+          roundness={"rounded"}
+          classNames={styles.submitButton}
+        >
           Submit
-        </button>
+        </Button>
       </form>
     </div>
   );
