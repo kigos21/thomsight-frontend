@@ -11,6 +11,7 @@ import SuccessMessage from "../../components/form/SuccessMessage";
 import ValidationError from "../../components/form/ValidationError";
 import { containsBadWords } from "../../badWordsFilter";
 import Button from "../../components/ui/Button";
+import Spinner from "../../components/ui/Spinner";
 
 export type Tip = {
   id?: number;
@@ -41,9 +42,7 @@ export default function UserCompanyInterviewTips() {
     const fetchInterviewTips = async () => {
       try {
         setLoading("Fetching interview tips...");
-        const response = await axiosInstance.get(
-          `/api/company/${slug}/interview-tips`
-        );
+        const response = await axiosInstance.get(`/api/company/${slug}/tips`);
         setTips(response.data);
       } catch (err) {
         console.error("Error fetching interview tips:", err);
@@ -90,17 +89,15 @@ export default function UserCompanyInterviewTips() {
 
     try {
       setLoading("Creating tips...");
-      await axiosInstance.post(`/api/company/${slug}/interview-tips/create`, {
+      await axiosInstance.post(`/api/company/${slug}/tips/create`, {
         title: tip.title,
-        description: tip.description,
+        content: tip.description,
       });
       setIsAddingTip(false);
       setTip({ title: "", description: "" });
       setSuccess("Tip created successfully");
       setLoading("Refetching tips...");
-      const response = await axiosInstance.get(
-        `/api/company/${slug}/interview-tips`
-      );
+      const response = await axiosInstance.get(`/api/company/${slug}/tips`);
       setTips(response.data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -145,6 +142,7 @@ export default function UserCompanyInterviewTips() {
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
+      {loading && <Spinner message={loading} />}
       <div className={styles.tipContainer}>
         <div className={styles.tipHeaderContainer}>
           <h2>Interview Tips</h2>
@@ -176,22 +174,6 @@ export default function UserCompanyInterviewTips() {
             descriptionError={descriptionError}
           />
         )}
-
-        {tips.map((tip) => (
-          <InterviewTipsItem
-            key={tip.id}
-            id={tip.id}
-            internName={tip.posted_by}
-            subjectHeading={tip.title}
-            tipDescription={tip.description}
-            onTipChange={(updatedTip) =>
-              handleTipChange(tip.id, updatedTip.title, updatedTip.description)
-            }
-            onTipDelete={handleTipDelete}
-            setSuccess={setSuccess}
-            setError={setError}
-          />
-        ))}
       </div>
 
       <div className={styles.informationContainer}>
@@ -203,6 +185,22 @@ export default function UserCompanyInterviewTips() {
           preparation and boost your confidence.
         </p>
       </div>
+
+      {tips.map((tip) => (
+        <InterviewTipsItem
+          key={tip.id}
+          id={tip.id}
+          internName={tip.posted_by}
+          subjectHeading={tip.title}
+          tipDescription={tip.description}
+          onTipChange={(updatedTip) =>
+            handleTipChange(tip.id, updatedTip.title, updatedTip.description)
+          }
+          onTipDelete={handleTipDelete}
+          setSuccess={setSuccess}
+          setError={setError}
+        />
+      ))}
     </PaddedContainer>
   );
 }
