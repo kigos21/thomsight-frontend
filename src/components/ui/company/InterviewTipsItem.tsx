@@ -45,14 +45,44 @@ export default function InterviewTipsItem({
   const [reportSuccess, setReportSuccess] = useState<string | null>(null);
   const [reportLoading, setReportLoading] = useState<string>("");
 
-  const handleEdit = () => {
+  // Local state for editing
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [tempTip, setTempTip] = useState<{
+    title: string;
+    description: string;
+  }>({
+    title: subjectHeading,
+    description: tipDescription,
+  });
+
+  const handleEditClick = () => {
+    setSuccess("");
+    setIsEditing((state) => !state);
+  };
+
+  const handleSaveClick = async () => {
     if (onTipChange) {
-      // You might want to add a modal or form here to get the updated values
-      onTipChange({
-        title: subjectHeading,
-        description: tipDescription,
-      });
+      setLoading("Updating tip...");
+      try {
+        await axiosInstance.put(
+          `/api/company/${slug}/tip/${id}/update`,
+          tempTip
+        );
+        setSuccess("Tip updated successfully");
+        onTipChange(tempTip);
+      } catch (error) {
+        console.error("Error updating tip:", error);
+        setError("Could not update tip. Please try again.");
+      } finally {
+        setLoading("");
+        setIsEditing(false);
+      }
     }
+  };
+
+  const handleCancelClick = () => {
+    setTempTip({ title: subjectHeading, description: tipDescription });
+    setIsEditing(false);
   };
 
   const handleDeleteClick = () => {
@@ -123,17 +153,57 @@ export default function InterviewTipsItem({
     <div className={`${styles.container} ${classNames || ""}`} style={style}>
       <PaddedContainer classNames={styles.paddedContainer}>
         <div className={styles.tipsDetailsContainer}>
-          <div className={styles.tipsSubjectContainer}>
-            <p className={styles.subjectHeading}>{subjectHeading}</p>
-            {internName && <p className={styles.internName}>{internName}</p>}
-          </div>
-          <p className={styles.jobDescription}>{tipDescription}</p>
+          {isEditing ? (
+            <div className={styles.editTipSection}>
+              <input
+                className={styles.titleInput}
+                type="text"
+                value={tempTip.title}
+                onChange={(e) =>
+                  setTempTip((current) => ({
+                    ...current,
+                    title: e.target.value,
+                  }))
+                }
+              />
+              <textarea
+                className={styles.descriptionTextarea}
+                value={tempTip.description}
+                onChange={(e) =>
+                  setTempTip((current) => ({
+                    ...current,
+                    description: e.target.value,
+                  }))
+                }
+                rows={5}
+              />
+              <div className={styles.editButtons}>
+                <button
+                  onClick={handleCancelClick}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+                <button onClick={handleSaveClick} className={styles.saveButton}>
+                  Save
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className={styles.tipsSubjectContainer}>
+                <p className={styles.subjectHeading}>{subjectHeading}</p>
+                {internName && (
+                  <p className={styles.internName}>{internName}</p>
+                )}
+              </div>
+              <p className={styles.jobDescription}>{tipDescription}</p>
+            </>
+          )}
           <div className={styles.iconContainer}>
-            {onTipChange && (
-              <button onClick={handleEdit} className={styles.iconButton}>
-                <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
-              </button>
-            )}
+            <button onClick={handleEditClick} className={styles.iconButton}>
+              <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
+            </button>
             {onTipDelete && (
               <button onClick={handleDeleteClick} className={styles.iconButton}>
                 <IconTrash
