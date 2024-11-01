@@ -45,6 +45,7 @@
   justify-content: center;
   align-items: center;
   color: black;
+  position: relative;
 }
 
 .fieldBio {
@@ -81,6 +82,8 @@
 
 .name {
   font-size: 1.2rem;
+  flex: 1;
+  margin-left: 30px;
 
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -88,17 +91,12 @@
 }
 
 .editIcon {
-  width: 45%;
-  color: black;
-  position: absolute;
-  transform: translateX(50%);
+  flex-grow: 0;
+  flex-shrink: 0;
 
-  @media (max-width: 768px) {
-    width: 60%;
-  }
-  @media (max-width: 480px) {
-    width: 80%;
-  }
+  justify-self: flex-end;
+  display: block;
+  margin-left: auto;
 }
 
 .title {
@@ -126,4 +124,34 @@
     height: 50px;
     font-size: 0.9rem;
   }
+}
+
+.formFieldParentDiv {
+  display: block;
+  width: 100%;
+  flex: 1;
+}
+
+.profileFormField {
+  text-align: center;
+}
+
+.cancelEditButton {
+  flex: 0;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rem;
+  aspect-ratio: 1/1;
+}
+
+.sendEditButton {
+  flex: 0;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rem;
+  aspect-ratio: 1/1;
 }

@@ -8,6 +8,8 @@ import {
   IconUser,
   IconBook2,
   IconEdit,
+  IconX,
+  IconCheck,
 } from "@tabler/icons-react";
 
 import styles from "./ProfileManagement.module.scss";
@@ -18,6 +20,13 @@ export default function ProfileManagement() {
   const { user } = useUser();
   const [name, setName] = useState<string | undefined>(user?.name || "");
   const [phone, setPhone] = useState<number | null>(user?.phone_number || null);
+  const [isEditingName, setIsEditingName] = useState<boolean>(false);
+  const [tempProfileName, setTempProfileName] = useState<string>(user!.name);
+
+  const handleConfirmClick = () => {
+    console.log("Name is saved! yaddda yadda");
+    setIsEditingName(false);
+  };
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -26,10 +35,53 @@ export default function ProfileManagement() {
           <h2 className={styles.title}>User Profile</h2>
           <IconUser size={100} stroke={2} className={styles.headerIcon} />
           <div className={styles.nameContainer}>
-            <div>
-              <p className={styles.name}>{name}</p>
-            </div>
-            <IconEdit size={35} stroke={1.5} className={styles.editIcon} />
+            {isEditingName ? (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.25rem",
+                  width: "100%",
+                  alignItems: "center",
+                }}
+              >
+                <FormField
+                  type={"text"}
+                  value={tempProfileName}
+                  onChange={(e) => setTempProfileName(e.target.value)}
+                  placeholder={"Profile name"}
+                  classNames={styles.profileFormField}
+                  parentDivClassnames={styles.formFieldParentDiv}
+                />
+                <Button
+                  color={"black"}
+                  roundness={"sm-rounded"}
+                  classNames={styles.cancelEditButton}
+                  onClick={() => setIsEditingName(false)}
+                >
+                  <IconX />
+                </Button>
+                <Button
+                  color={"primary"}
+                  roundness={"sm-rounded"}
+                  classNames={styles.sendEditButton}
+                  onClick={handleConfirmClick}
+                >
+                  <IconCheck />
+                </Button>
+              </div>
+            ) : (
+              <div
+                style={{ display: "flex", width: "100%", alignItems: "center" }}
+              >
+                <p className={styles.name}>{name}</p>
+                <IconEdit
+                  size={30}
+                  stroke={1.5}
+                  className={styles.editIcon}
+                  onClick={() => setIsEditingName(true)}
+                />
+              </div>
+            )}
           </div>
           <form className={styles.form}>
             <FormField
