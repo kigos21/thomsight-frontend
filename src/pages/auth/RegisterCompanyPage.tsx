@@ -118,7 +118,7 @@ export default function CompanyRegisterPage() {
 
       await axiosInstance.post("/api/company/create", companyData);
 
-      navigate("/login/student");
+      navigate("/login");
     } catch (error) {
       console.error("Error registering company:", error);
       setError("Account already exists!");
