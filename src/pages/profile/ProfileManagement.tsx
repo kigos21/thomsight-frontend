@@ -3,7 +3,6 @@ import Button from "../../components/ui/Button";
 import StyledBox from "../../components/layout/StyledBox";
 import FormField from "../../components/form/FormField";
 import {
-  IconLock,
   IconPhone,
   IconUser,
   IconBook2,
@@ -13,11 +12,13 @@ import {
 import styles from "./ProfileManagement.module.scss";
 import { useUser } from "../../contexts/UserContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileManagement() {
   const { user } = useUser();
   const [name, setName] = useState<string | undefined>(user?.name || "");
   const [phone, setPhone] = useState<number | null>(user?.phone_number || null);
+  const navigate = useNavigate();
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -52,27 +53,20 @@ export default function ProfileManagement() {
               required={true}
             /> */}
             <FormField
-              icon={
-                <IconPhone size={35} stroke={1.5} className={styles.icon} />
-              }
+              icon={<IconPhone size={35} stroke={1.5} className={styles.icon} />}
               type="tel"
               placeholder="Phone Number"
               required={true}
               value={phone}
             />
-            <FormField
-              icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
-              type="password"
-              placeholder="Your Password"
-              required={true}
-            />
-            <FormField
-              icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
-              type="password"
-              placeholder="Your New Password"
-              required={true}
-            />
-
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.button}
+              onClick={() => navigate("/profile/change-password/")}
+            >
+              Change Password
+            </Button>
             <Button
               color="primary"
               roundness="rounded"

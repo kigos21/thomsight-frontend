@@ -58,6 +58,7 @@ import { TokenProvider } from "./contexts/TokenContext.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 import PostCVForm from "./pages/cv/PostCVForm.tsx";
+import ChangePassword from "./pages/profile/ChangePassword.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -168,7 +169,10 @@ const router = createBrowserRouter([
         path: "profile",
         element: <ProfileManagement />,
       },
-
+      {
+        path: "/profile/change-password/",
+        element: <ChangePassword />,
+      },
       // Tokens
       {
         path: "tokens",
