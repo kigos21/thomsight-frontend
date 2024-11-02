@@ -8,6 +8,7 @@ import axiosInstance from "../../services/axiosInstance";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
+import ValidationError from "../../components/form/ValidationError";
 
 export default function AdminGenerateTokenPage() {
   const [tokens, setTokens] = useState<
@@ -15,8 +16,10 @@ export default function AdminGenerateTokenPage() {
   >([]);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
   const [generateLoading, setGenerateLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string>("");
   const [deleteSuccess, setDeleteSuccess] = useState<string | null>(null);
+  const [emailSuccess, setEmailSuccess] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -36,8 +39,10 @@ export default function AdminGenerateTokenPage() {
   }, []);
 
   const generateToken = async () => {
-    setSuccess(false);
+    setSuccess("");
     setDeleteSuccess(null);
+    setEmailSuccess("");
+    setError("");
     setGenerateLoading(true);
     try {
       const response = await axiosInstance.post("/api/tokens/create");
@@ -48,7 +53,7 @@ export default function AdminGenerateTokenPage() {
         { id: response.data.id, token: newToken, email: "" },
       ]);
 
-      setSuccess(true);
+      setSuccess("Token generated successfully");
     } catch (error) {
       console.error("Error generating token:", error);
     } finally {
@@ -65,7 +70,13 @@ export default function AdminGenerateTokenPage() {
 
   const resetDeleteSuccess = () => {
     setDeleteSuccess(null);
-    setSuccess(false);
+    setSuccess("");
+    setEmailSuccess("");
+    setError("");
+  };
+
+  const handleEmailSuccess = () => {
+    setEmailSuccess("Token emailed successfully");
   };
 
   return (
@@ -88,8 +99,10 @@ export default function AdminGenerateTokenPage() {
         </div>
       </div>
 
-      {success && <SuccessMessage message="Token generated successfully" />}
+      {success && <SuccessMessage message={success} />}
       {deleteSuccess && <SuccessMessage message={deleteSuccess} />}
+      {emailSuccess && <SuccessMessage message={emailSuccess} />}
+      {error && <ValidationError message={error} />}
 
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.companytokens}>
@@ -111,6 +124,9 @@ export default function AdminGenerateTokenPage() {
               email={token.email}
               onDeleteToken={handleDeleteToken}
               resetDeleteSuccess={resetDeleteSuccess}
+              handleEmailSuccess={handleEmailSuccess}
+              setError={setError}
+              setSuccess={setSuccess}
             />
           ))}
         </div>

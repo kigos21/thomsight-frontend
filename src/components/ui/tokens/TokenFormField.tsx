@@ -4,7 +4,6 @@ import styles from "./TokenFormField.module.scss";
 import { IconEdit } from "@tabler/icons-react";
 import axiosInstance from "../../../services/axiosInstance";
 import Spinner from "../Spinner";
-import ValidationError from "../../form/ValidationError";
 
 const TokenFormField: React.FC<TokenFormFieldProps> = ({
   icon,
@@ -17,14 +16,17 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
   readOnly: initialReadOnly = true, // Default to true if not provided
   initialEmail,
   tokenId,
+  setError,
+  setSuccess,
 }) => {
   const [isReadOnly, setIsReadOnly] = useState<boolean>(initialReadOnly);
   const [email, setEmail] = useState<string>(initialEmail || "");
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleEditClick = () => {
     setIsReadOnly(false); // Make the input editable when the edit icon is clicked
+    setSuccess("");
+    setError("");
   };
 
   const validateEmail = (email: string) => {
@@ -41,8 +43,9 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
       setLoading(true);
       try {
         await axiosInstance.put(`/api/tokens/${tokenId}/update`, { email });
-        setError(null);
+        setError("");
         setIsReadOnly(true);
+        setSuccess("Updated email successfully");
       } catch (error) {
         console.error("Error updating company:", error);
         setError("Error updating email. Please try again.");
@@ -67,7 +70,6 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
         onBlur={handleBlur}
         value={email}
       />
-      {error && <ValidationError message={error} />}
       {editIcon && (
         <span className={styles.editIcon} onClick={handleEditClick}>
           {editIcon}

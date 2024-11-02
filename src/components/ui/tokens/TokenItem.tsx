@@ -14,9 +14,13 @@ const TokenItem: React.FC<TokenItemProps> = ({
   email,
   onDeleteToken,
   resetDeleteSuccess,
+  handleEmailSuccess,
+  setError,
+  setSuccess,
 }) => {
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<string>("");
 
   const handleDeleteClick = () => {
     resetDeleteSuccess();
@@ -24,6 +28,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
   };
 
   const handleDelete = async () => {
+    resetDeleteSuccess();
     setDeleteLoading(true);
     try {
       await axiosInstance.delete(`api/tokens/${id}/delete`);
@@ -36,9 +41,31 @@ const TokenItem: React.FC<TokenItemProps> = ({
     }
   };
 
+  const handleMailClick = async () => {
+    resetDeleteSuccess();
+    if (!email) {
+      setError("No email provided.");
+      return;
+    }
+
+    try {
+      setLoading("Sending email...");
+      await axiosInstance.post("/api/tokens/email", {
+        email,
+        token,
+      });
+      handleEmailSuccess();
+    } catch (error) {
+      setError("Failed to send email" + error);
+    } finally {
+      setLoading("");
+    }
+  };
+
   return (
     <div className={styles.tokenItem}>
       {deleteLoading && <Spinner message="Deleting token..." />}
+      {loading && <Spinner message={loading} />}
       <span className={styles.number}>{number}</span>
       <span className={styles.token}>{token}</span>
       <TokenFormField
@@ -50,9 +77,11 @@ const TokenItem: React.FC<TokenItemProps> = ({
         editIcon={<IconEdit />} // Icon to make it editable
         initialEmail={email}
         tokenId={id}
+        setError={setError}
+        setSuccess={setSuccess}
       />
       <div className={styles.iconHolder}>
-        <IconMail className={styles.mailIcon} />
+        <IconMail className={styles.mailIcon} onClick={handleMailClick} />
         <IconTrash className={styles.trashIcon} onClick={handleDeleteClick} />
       </div>
       {deleteConfirm && (

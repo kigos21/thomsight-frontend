@@ -111,7 +111,6 @@ export default function UserCompanyDiscussionForum() {
       await axiosInstance.post(`/api/company/${slug}/mention`, {
         message: description,
       });
-      console.log("success");
     } catch (error) {
       console.error("Error notifying representative:", error);
     }

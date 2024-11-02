@@ -122,6 +122,8 @@ export type TokenFormFieldProps = {
   readOnly?: boolean; // Ensure this prop is optional
   initialEmail?: string | null;
   tokenId?: number;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type TokenItemProps = {
@@ -131,6 +133,9 @@ export type TokenItemProps = {
   email: string | null;
   onDeleteToken: (tokenId: number) => void;
   resetDeleteSuccess: () => void;
+  handleEmailSuccess: () => void;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type CompanyAccountsItemProps = {
