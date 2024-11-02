@@ -163,17 +163,6 @@ export default function UserCompanyInterviewTips() {
 
         {success && <SuccessMessage message={success} />}
         {error && <ValidationError message={error} />}
-        {isAddingTip && (
-          <CompanyInterviewTipForm
-            tip={tip}
-            onSave={handleSave}
-            onChange={handleChange}
-            onCancel={handleCancel}
-            error={error}
-            titleError={titleError}
-            descriptionError={descriptionError}
-          />
-        )}
       </div>
 
       <div className={styles.informationContainer}>
@@ -185,6 +174,18 @@ export default function UserCompanyInterviewTips() {
           preparation and boost your confidence.
         </p>
       </div>
+
+      {isAddingTip && (
+        <CompanyInterviewTipForm
+          tip={tip}
+          onSave={handleSave}
+          onChange={handleChange}
+          onCancel={handleCancel}
+          error={error}
+          titleError={titleError}
+          descriptionError={descriptionError}
+        />
+      )}
 
       {tips.map((tip) => (
         <InterviewTipsItem
