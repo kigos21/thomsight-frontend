@@ -4,9 +4,9 @@ export type User = {
   name: string;
   email_verified_at?: string;
   role: UserRole;
-  profile_info?: string;
+  bio?: string;
   status: UserStatus;
-  phone_number: number;
+  phone_number: string;
 };
 
 export enum UserRole {

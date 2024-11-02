@@ -7,6 +7,7 @@ interface UserContextType {
   user: User | null;
   loading: boolean;
   setUser: (user: User | null) => void;
+  updateUser: (updatedFields: Partial<User>) => void;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(
@@ -20,6 +21,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(initialUser);
   const [loading, setLoading] = useState(initialLoading);
 
+  const updateUser = (updatedFields: Partial<User>) => {
+    setUser((prevUser) =>
+      prevUser ? { ...prevUser, ...updatedFields } : prevUser
+    );
+  };
+
   useEffect(() => {
     setUser(initialUser);
     setLoading(initialLoading);
@@ -30,7 +37,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   return (
-    <UserContext.Provider value={{ user, loading, setUser }}>
+    <UserContext.Provider value={{ user, loading, setUser, updateUser }}>
       {children}
     </UserContext.Provider>
   );
