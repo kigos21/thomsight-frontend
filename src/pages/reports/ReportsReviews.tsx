@@ -51,10 +51,7 @@ const ReportsReviews = () => {
     }
   };
 
-  const handleDeleteDiscussionAndReport = async (
-    id: number,
-    reviewId: number
-  ) => {
+  const handleDeleteReviewAndReport = async (id: number, reviewId: number) => {
     try {
       setLoading("Deleting review...");
       await axiosInstance.delete(
@@ -131,7 +128,7 @@ const ReportsReviews = () => {
                 isVisible={showDeleteRRPopup}
                 onClose={() => setShowDeleteRRPopup(false)}
                 onDelete={() =>
-                  handleDeleteDiscussionAndReport(report.id, report.feedback_id)
+                  handleDeleteReviewAndReport(report.id, report.feedback_id)
                 }
                 heading="Delete Review"
                 details="Are you sure you want to delete this review?"

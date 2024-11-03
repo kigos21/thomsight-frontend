@@ -87,4 +87,5 @@ export type TipReport = {
   reporter_name: string;
   report_date: string;
   reason: string;
+  tip_id: number;
 };
