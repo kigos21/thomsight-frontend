@@ -14,12 +14,20 @@ import { containsBadWords } from "../../badWordsFilter";
 import FormField from "../../components/form/FormField";
 import { IconSend, IconX } from "@tabler/icons-react";
 
+interface Reply {
+  id: number;
+  username: string;
+  comment: string;
+  posted_at: string;
+}
+
 interface Post {
   id: number;
   internName: string;
   date: string;
   description: string;
   posted_by: number;
+  replies: Reply[];
 }
 
 export default function UserCompanyDiscussionForum() {
@@ -36,12 +44,6 @@ export default function UserCompanyDiscussionForum() {
 
   const [postData, setPostData] = useState<Post[]>([]);
 
-  const replies = [
-    "You should not bombard with something like this",
-    "That's the best way to do it imo",
-    "Whenever there's an opening, you should be just yoloing for it. I am a long ass reply. I am a long ass reply. I am a long ass reply. I am a long ass reply. I am a long ass reply. ",
-  ];
-
   useEffect(() => {
     const fetchDiscussions = async () => {
       try {
@@ -49,13 +51,7 @@ export default function UserCompanyDiscussionForum() {
         const response = await axiosInstance.get(
           `/api/company/${slug}/discussions`
         );
-        const discussions = response.data.map((discussion: Post) => ({
-          id: discussion.id,
-          internName: discussion.internName,
-          date: discussion.date,
-          description: discussion.description,
-          posted_by: discussion.posted_by,
-        }));
+        const discussions = response.data;
         setPostData(discussions);
       } catch (error) {
         console.error("Error fetching discussions:", error);
@@ -148,6 +144,37 @@ export default function UserCompanyDiscussionForum() {
     setReply(value);
   };
 
+  const handleAddReply = async (discussionId: number) => {
+    if (!reply.trim()) {
+      setError("Reply cannot be blank.");
+      return;
+    }
+
+    try {
+      setLoading("Adding reply...");
+      const response = await axiosInstance.post(
+        `/api/company/${slug}/discussions/${discussionId}/comments`,
+        { comment: reply }
+      );
+
+      const newReply = response.data;
+      setPostData((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === discussionId
+            ? { ...post, replies: [...post.replies, newReply] }
+            : post
+        )
+      );
+      setReply("");
+      setActiveReplyPostId(-1);
+    } catch (error) {
+      console.error("Error adding reply:", error);
+      setError("An error occurred while adding the reply.");
+    } finally {
+      setLoading("");
+    }
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -204,7 +231,7 @@ export default function UserCompanyDiscussionForum() {
                 />
                 {
                   <div className={styles.repliesContainer}>
-                    {replies.map((reply) => (
+                    {post.replies.map((reply) => (
                       <div
                         style={{
                           display: "flex",
@@ -213,9 +240,9 @@ export default function UserCompanyDiscussionForum() {
                         }}
                       >
                         <div>
-                          <strong>username</strong> · 2 hrs ago
+                          <strong>{reply.username}</strong> · {reply.posted_at}
                         </div>
-                        <div>{reply}</div>
+                        <div>{reply.comment}</div>
                       </div>
                     ))}
                   </div>
@@ -242,7 +269,7 @@ export default function UserCompanyDiscussionForum() {
                       color={"primary"}
                       roundness={"sm-rounded"}
                       classNames={styles.sendReplyButton}
-                      onClick={() => setActiveReplyPostId(-1)}
+                      onClick={() => handleAddReply(post.id)}
                     >
                       <IconSend />
                     </Button>
