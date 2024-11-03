@@ -3,7 +3,6 @@ import Button from "../../components/ui/Button";
 import StyledBox from "../../components/layout/StyledBox";
 import FormField from "../../components/form/FormField";
 import {
-  IconLock,
   IconPhone,
   IconUser,
   IconBook2,
@@ -18,6 +17,7 @@ import { FormEvent, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import ValidationError from "../../components/form/ValidationError";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileManagement() {
   const { user, updateUser } = useUser();
@@ -73,6 +73,7 @@ export default function ProfileManagement() {
       setIsSaving(false);
     }
   };
+  const navigate = useNavigate();
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -180,6 +181,14 @@ export default function ProfileManagement() {
               required={true}
             /> */}
 
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.button}
+              onClick={() => navigate("/profile/change-password/")}
+            >
+              Change Password
+            </Button>
             <Button
               color="primary"
               roundness="rounded"
