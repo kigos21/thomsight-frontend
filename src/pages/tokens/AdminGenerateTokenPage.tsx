@@ -79,6 +79,14 @@ export default function AdminGenerateTokenPage() {
     setEmailSuccess("Token emailed successfully");
   };
 
+  const updateTokenEmail = (tokenId: number, newEmail: string | null) => {
+    setTokens((prevTokens) =>
+      prevTokens.map((token) =>
+        token.id === tokenId ? { ...token, email: newEmail } : token
+      )
+    );
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {fetchLoading && <Spinner message="Fetching tokens..." />}
@@ -127,6 +135,9 @@ export default function AdminGenerateTokenPage() {
               handleEmailSuccess={handleEmailSuccess}
               setError={setError}
               setSuccess={setSuccess}
+              updateEmail={async (newEmail: string | null) => {
+                updateTokenEmail(token.id, newEmail);
+              }}
             />
           ))}
         </div>

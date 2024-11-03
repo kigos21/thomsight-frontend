@@ -18,6 +18,7 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
   tokenId,
   setError,
   setSuccess,
+  updateEmail,
 }) => {
   const [isReadOnly, setIsReadOnly] = useState<boolean>(initialReadOnly);
   const [email, setEmail] = useState<string>(initialEmail || "");
@@ -46,6 +47,7 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
         setError("");
         setIsReadOnly(true);
         setSuccess("Updated email successfully");
+        updateEmail(email);
       } catch (error) {
         console.error("Error updating company:", error);
         setError("Error updating email. Please try again.");

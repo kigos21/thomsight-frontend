@@ -17,6 +17,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
   handleEmailSuccess,
   setError,
   setSuccess,
+  updateEmail,
 }) => {
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
@@ -79,6 +80,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
         tokenId={id}
         setError={setError}
         setSuccess={setSuccess}
+        updateEmail={updateEmail}
       />
       <div className={styles.iconHolder}>
         <IconMail className={styles.mailIcon} onClick={handleMailClick} />

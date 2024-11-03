@@ -124,6 +124,7 @@ export type TokenFormFieldProps = {
   tokenId?: number;
   setError: React.Dispatch<React.SetStateAction<string>>;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  updateEmail: (newEmail: string | null) => void;
 };
 
 export type TokenItemProps = {
@@ -136,6 +137,7 @@ export type TokenItemProps = {
   handleEmailSuccess: () => void;
   setError: React.Dispatch<React.SetStateAction<string>>;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  updateEmail: (newEmail: string | null) => void;
 };
 
 export type CompanyAccountsItemProps = {
