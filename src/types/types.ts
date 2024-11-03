@@ -64,6 +64,7 @@ export type FeedbackReport = {
   reporter_name: string;
   report_date: string;
   reason: string;
+  feedback_id: number;
 };
 
 export type DiscussionReport = {

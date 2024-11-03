@@ -42,7 +42,6 @@ export default function UserCompanyDiscussionForum() {
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [postData, setPostData] = useState<Post[]>([]);
-  const [replies, setReplies] = useState<Reply[]>([]);
 
   useEffect(() => {
     const fetchDiscussions = async () => {
