@@ -41,8 +41,8 @@ export default function UserCompanyDiscussionForum() {
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
-
   const [postData, setPostData] = useState<Post[]>([]);
+  const [replies, setReplies] = useState<Reply[]>([]);
 
   useEffect(() => {
     const fetchDiscussions = async () => {
@@ -89,7 +89,6 @@ export default function UserCompanyDiscussionForum() {
       if (/(@rep)\b/i.test(postForm.description)) {
         notifyRepresentativeBySlug(postForm.description);
       }
-
       setPostData((prevPosts) => [...prevPosts, savedPost]);
       setIsAddingPost(false);
       setPostForm({ description: "" });
@@ -208,75 +207,79 @@ export default function UserCompanyDiscussionForum() {
           )}
 
           <div className={styles.discussionContainer}>
-            {postData.map((post) => (
-              <Fragment key={post.id}>
-                <DiscussionForumItem
-                  id={post.id}
-                  internName={post.internName}
-                  date={post.date}
-                  description={post.description}
-                  onDescriptionChange={(updatedDescription: string) =>
-                    handleDescriptionChange(post.id, updatedDescription)
+            {postData &&
+              postData.map((post) => (
+                <Fragment key={post.id}>
+                  <DiscussionForumItem
+                    id={post.id}
+                    internName={post.internName}
+                    date={post.date}
+                    description={post.description}
+                    onDescriptionChange={(updatedDescription: string) =>
+                      handleDescriptionChange(post.id, updatedDescription)
+                    }
+                    setSuccess={setSuccess}
+                    setLoading={setLoading}
+                    setError={setError}
+                    onDiscussionDelete={handleDiscussionDelete}
+                    posted_by={post.posted_by}
+                    handleReplyClick={() =>
+                      setActiveReplyPostId(
+                        activeReplyPostId === post.id ? -1 : post.id
+                      )
+                    }
+                  />
+                  {
+                    <div className={styles.repliesContainer}>
+                      {post.replies &&
+                        post.replies.map((reply) => (
+                          <div
+                            key={reply.id}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "0.25rem",
+                            }}
+                          >
+                            <div>
+                              <strong>{reply.username}</strong> ·{" "}
+                              {reply.posted_at}
+                            </div>
+                            <div>{reply.comment}</div>
+                          </div>
+                        ))}
+                    </div>
                   }
-                  setSuccess={setSuccess}
-                  setLoading={setLoading}
-                  setError={setError}
-                  onDiscussionDelete={handleDiscussionDelete}
-                  posted_by={post.posted_by}
-                  handleReplyClick={() =>
-                    setActiveReplyPostId(
-                      activeReplyPostId === post.id ? -1 : post.id
-                    )
-                  }
-                />
-                {
-                  <div className={styles.repliesContainer}>
-                    {post.replies.map((reply) => (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "0.25rem",
-                        }}
+                  {activeReplyPostId === post.id && (
+                    <div className={styles.replyFormFieldContainer}>
+                      <FormField
+                        type={"text"}
+                        placeholder={"Add your reply..."}
+                        classNames={styles.replyFormField}
+                        parentDivClassnames={styles.formFieldParent}
+                        value={reply}
+                        onChange={(e) => handleReplyChange(e.target.value)}
+                      />
+                      <Button
+                        color={"black"}
+                        roundness={"sm-rounded"}
+                        classNames={styles.cancelReplyButton}
+                        onClick={() => setActiveReplyPostId(-1)}
                       >
-                        <div>
-                          <strong>{reply.username}</strong> · {reply.posted_at}
-                        </div>
-                        <div>{reply.comment}</div>
-                      </div>
-                    ))}
-                  </div>
-                }
-                {activeReplyPostId === post.id && (
-                  <div className={styles.replyFormFieldContainer}>
-                    <FormField
-                      type={"text"}
-                      placeholder={"Add your reply..."}
-                      classNames={styles.replyFormField}
-                      parentDivClassnames={styles.formFieldParent}
-                      value={reply}
-                      onChange={(e) => handleReplyChange(e.target.value)}
-                    />
-                    <Button
-                      color={"black"}
-                      roundness={"sm-rounded"}
-                      classNames={styles.cancelReplyButton}
-                      onClick={() => setActiveReplyPostId(-1)}
-                    >
-                      <IconX />
-                    </Button>
-                    <Button
-                      color={"primary"}
-                      roundness={"sm-rounded"}
-                      classNames={styles.sendReplyButton}
-                      onClick={() => handleAddReply(post.id)}
-                    >
-                      <IconSend />
-                    </Button>
-                  </div>
-                )}
-              </Fragment>
-            ))}
+                        <IconX />
+                      </Button>
+                      <Button
+                        color={"primary"}
+                        roundness={"sm-rounded"}
+                        classNames={styles.sendReplyButton}
+                        onClick={() => handleAddReply(post.id)}
+                      >
+                        <IconSend />
+                      </Button>
+                    </div>
+                  )}
+                </Fragment>
+              ))}
           </div>
         </div>
         <div className={styles.rightcontainer}>

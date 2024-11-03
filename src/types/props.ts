@@ -164,7 +164,7 @@ export interface AdminCreatennouncementItemProps {
 export interface DeletePopUpProps {
   isVisible: boolean;
   onClose: () => void;
-  onDelete?: () => void;
+  onDelete?: (id?: number) => void;
   heading?: string;
   details?: string;
 }
