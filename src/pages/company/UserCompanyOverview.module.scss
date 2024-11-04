@@ -12,6 +12,11 @@
 .container {
   display: flex;
   flex-direction: row;
+
+  @media screen and (max-width: 910px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .leftcontainer {
@@ -20,6 +25,10 @@
   width: 65%;
   gap: 20px;
   padding: 0rem 2rem;
+
+  @media screen and (max-width: 910px) {
+    width: 100%;
+  }
 }
 
 .titleContainer {
@@ -33,11 +42,18 @@
     color: black;
     font-weight: 400;
   }
-}
 
-.titleHeader {
-  font-size: 1.75rem;
-  font-weight: 700;
+  @media screen and (max-width: 910px) {
+    padding: 0rem 0rem 0.75rem 0rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    p {
+      font-size: 0.875rem;
+      color: black;
+      font-weight: 400;
+    }
+  }
 }
 
 .reviewContainer {
@@ -55,12 +71,50 @@
 
 .rightcontainer {
   width: 35%;
-  padding: 0.4rem 2rem;
 
   p {
     font-size: 14px;
     padding: 0.4rem 0rem;
     color: black;
+  }
+
+  @media screen and (max-width: 910px) {
+    display: none;
+  }
+}
+
+.rightcontainerMobile {
+  display: none;
+
+  @media screen and (max-width: 910px) {
+    display: block;
+    width: 360px;
+
+    p {
+      font-size: 14px;
+      padding: 0.4rem 0rem;
+      color: black;
+    }
+
+    h5 {
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    display: block;
+    padding: 0.4rem 0rem;
+    width: 100%;
+
+    p {
+      font-size: 0.875rem;
+      padding: 0.4rem 0rem;
+      color: black;
+    }
+
+    h5 {
+      font-size: 0.9rem;
+    }
   }
 }
 

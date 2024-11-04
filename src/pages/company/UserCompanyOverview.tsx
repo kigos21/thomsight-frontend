@@ -152,6 +152,22 @@ export default function UserCompanyOverview() {
             <h2 className={styles.titleHeader}>Company Description</h2>
             <p>{company.description}</p>
           </div>
+
+          <div className={styles.rightcontainerMobile}>
+            <StyledBox paddedContainerClass={styles.styledBox}>
+              <div className={styles.noteContainer}>
+                <div className={styles.companySize}>
+                  <h5>Company Size</h5>
+                  <p>{company.size}</p>
+                </div>
+                <div className={styles.industry}>
+                  <h5>Industry</h5>
+                  <p>{company.industry}</p>
+                </div>
+              </div>
+            </StyledBox>
+          </div>
+
           <div className={styles.reviewContainer}>
             <div className={styles.reviewHeaderContainer}>
               <h2 className={styles.titleHeader}>Reviews</h2>
