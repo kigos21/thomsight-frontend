@@ -9,15 +9,29 @@ interface PostCVFormProps {
 const PostCVForm: React.FC<PostCVFormProps> = () => {
   return (
     <div className={styles.formContainer}>
-      <h2>Post Your CV</h2>
+      <h2 className={styles.h2}>Post Your CV</h2>
       <form>
         <div className={styles.formGroup}>
-          <label htmlFor="description">Description</label>
-          <textarea id="description" name="description" rows={4} />
+          <label htmlFor="description" className={styles.label}>
+            Description
+          </label>
+          <textarea
+            className={styles.textarea}
+            id="description"
+            name="description"
+            rows={4}
+          />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="cvFile">Upload CV</label>
-          <input type="file" id="cvFile" name="cvFile" />
+          <label htmlFor="cvFile" className={styles.label}>
+            Upload CV
+          </label>
+          <input
+            type="file"
+            id="cvFile"
+            name="cvFile"
+            className={styles.inputFile}
+          />
         </div>
         <Button
           type="button"
@@ -32,4 +46,4 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
   );
 };
 
-export default PostCVForm; 
+export default PostCVForm;
