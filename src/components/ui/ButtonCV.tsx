@@ -65,7 +65,10 @@ const ButtonCV = ({ variant, url }: ButtonCVProps) => {
   const classNames = `${styles.button} ${variantClassname}`;
 
   return (
-    <Link to={url}>
+    <Link
+      to={url}
+      style={{ marginTop: "auto", display: "block", width: "100%" }}
+    >
       <button type="button" className={classNames}>
         {buttonText}
       </button>
