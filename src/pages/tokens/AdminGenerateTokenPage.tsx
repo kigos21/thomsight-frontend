@@ -115,12 +115,12 @@ export default function AdminGenerateTokenPage() {
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.companytokens}>
           <div className={styles.header}>
-            <div className={styles.tokenContainer}>
+            <div className={styles.row}>
               <p>#</p>
               <p>Token</p>
-            </div>
-            <div className={styles.companyContainer}>
+              <p>Status</p>
               <p>Company</p>
+              <p>Actions</p>
             </div>
           </div>
           {tokens.map((token, index) => (

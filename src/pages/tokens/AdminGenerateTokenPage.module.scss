@@ -18,6 +18,7 @@
 .styledbox {
   border: 2px solid var(--neutral-1);
   max-width: 85%;
+  overflow-x: scroll;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1rem;
@@ -61,45 +62,25 @@
 .companytokens {
   display: flex;
   flex-direction: column;
+  min-width: 817px;
   margin-left: -3rem;
   margin-right: -3rem;
   margin-top: -2.8rem;
 }
 
 .header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 1rem 2rem;
-  gap: 7.5rem;
   border-bottom: 2px solid var(--neutral-1);
-}
-
-.tokenContainer {
-  display: flex;
-  flex-direction: row;
-}
-
-.header p {
-  margin: 0;
-}
-
-.header p:nth-child(1) {
-  text-align: left;
-}
-
-.header p:nth-child(2) {
-  text-align: left;
-  margin-left: 3rem;
-}
-
-.header p:nth-child(3) {
-  text-align: left;
-  margin-left: 13rem;
 }
 
 .tokenformfield {
   position: relative;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 80px 7rem 1fr 80px;
+  gap: 1rem;
 }
 
 @media screen and (max-width: 768px) {

@@ -6,6 +6,7 @@ import TokenFormField from "./TokenFormField";
 import DeletePopUp from "../company/DeletePopUp";
 import Spinner from "../Spinner";
 import axiosInstance from "../../../services/axiosInstance";
+import Status from "./Status";
 
 const TokenItem: React.FC<TokenItemProps> = ({
   id,
@@ -69,6 +70,9 @@ const TokenItem: React.FC<TokenItemProps> = ({
       {loading && <Spinner message={loading} />}
       <span className={styles.number}>{number}</span>
       <span className={styles.token}>{token}</span>
+      <span className={styles.status}>
+        <Status status="active" />
+      </span>
       <TokenFormField
         classNames={styles.tokenformfield}
         type="text"
