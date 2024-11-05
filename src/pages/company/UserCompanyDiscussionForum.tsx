@@ -193,6 +193,15 @@ export default function UserCompanyDiscussionForum() {
               Add Post
             </Button>
           </div>
+          <div className={styles.rightcontainerMobile}>
+            <StyledBox paddedContainerClass={styles.styledBox}>
+              <p className={styles.noteTitle}>Note</p>
+              <p>
+                No offensive and rude behavior is allowed. Please report them by
+                clicking the report button on the post.
+              </p>
+            </StyledBox>
+          </div>
           {error && <ValidationError message={error} />}
           {success && <SuccessMessage message={success} />}
 
