@@ -1,42 +1,42 @@
 .tokenItem {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0.5rem 2rem;
-    justify-content: space-between; 
-    width: 100%; 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 3fr auto;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  gap: 1rem;
+  width: 100%;
+}
+
+.token {
+  grid-column: 1 / 2;
+}
+
+.status {
+  grid-column: 2 / 3;
+}
+
+.expiration {
+  grid-column: 3 / 4;
+}
+
+.tokenformfield {
+  grid-column: 4 / 5;
+}
+
+.trashIcon {
+  grid-column: 5 / 6;
+  cursor: pointer;
+  color: var(--red-6);
+}
+
+.tokenItem p,
+.tokenItem input {
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .tokenItem {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
-  
-  .token {
-    width: 8%; 
-  }
-  
-  .expiration {
-    width: 8%; 
-  }
-  
-  .tokenformfield {
-    width: 50%;
-  }
-  
-  .trashIcon {
-    cursor: pointer;
-    color: var(--red-6);
-    margin-left: 1rem;
-  }
-  
-  .tokenItem p, .tokenItem input {
-    margin: 0;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .tokenItem {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-  
-    .token, .expiration, .tokenformfield {
-      width: 100%;
-    }
-  }
+}
