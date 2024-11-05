@@ -11,6 +11,7 @@ import Spinner from "../Spinner.tsx";
 import ErrorPage from "../../../pages/ErrorPage.tsx";
 import SuccessMessage from "../../form/SuccessMessage.tsx";
 import ValidationError from "../../form/ValidationError.tsx";
+import ChangePhotoPopup from "../ChangePhotoPopup.tsx";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -38,6 +39,8 @@ export default function CompanyDetails() {
   const [success, setSuccess] = useState<string>("");
 
   const [detailsError, setDetailsError] = useState<string>("");
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     if (company) {
@@ -149,7 +152,7 @@ export default function CompanyDetails() {
                     View Photo
                   </button>
                   <button
-                    onClick={() => console.log("You clicked on Change Photo!")}
+                    onClick={() => setIsPopupOpen(true)}
                     className={styles.dropdownItem}
                   >
                     Change Photo
@@ -267,6 +270,11 @@ export default function CompanyDetails() {
             </div>
           </div>
         </div>
+        <ChangePhotoPopup
+          isOpen={isPopupOpen}
+          onClose={() => setIsPopupOpen(false)}
+          onSave={(file) => console.log("Selected file:", file)}
+        />
       </PaddedContainer>
     );
 
