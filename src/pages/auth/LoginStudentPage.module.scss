@@ -84,13 +84,19 @@
     left: 1.4rem;
   }
 
-  .button {
+  .button,
+  .googleButton {
     padding: 1.1rem 2.2rem;
     font-size: 1.1rem;
   }
 
   .header {
     font-size: 1.85rem;
+  }
+
+  .googleIcon {
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -110,7 +116,13 @@
     width: 1.75rem;
   }
 
-  .button {
+  .googleIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .button,
+  .googleButton {
     padding: 1rem 2rem;
     font-size: 1rem;
   }
