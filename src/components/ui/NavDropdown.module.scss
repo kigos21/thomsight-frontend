@@ -42,3 +42,9 @@
 .hidden {
   display: none;
 }
+
+@media screen and (max-width: 1024px) {
+  .dropdownContainer {
+    justify-content: center;
+  }
+}
