@@ -7,11 +7,11 @@ import { User } from "../../types/types";
 
 import styles from "./AdminCompanyAccount.module.scss";
 import axiosInstance from "../../services/axiosInstance";
+import Spinner from "../../components/ui/Spinner";
 
 export default function AdminCompanyAccount() {
   const [repUsers, setRepUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -20,7 +20,6 @@ export default function AdminCompanyAccount() {
         const response = await axiosInstance.get("/api/users/role/rep");
         setRepUsers(response.data);
       } catch (err) {
-        setError("Failed to fetch users");
         console.error(err);
       } finally {
         setLoading("");
@@ -38,6 +37,7 @@ export default function AdminCompanyAccount() {
           onSort={(option: string) => console.log(option)}
         ></SortButton>
       </div>
+      {loading && <Spinner message={loading} />}
 
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.companytokens}>
