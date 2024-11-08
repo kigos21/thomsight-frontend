@@ -12,6 +12,9 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        // ------------------ URL FORMAT -----------------
+        // /cv-review/:id
+        url="/cv-review/1"
       />
 
       <CVCard
@@ -21,6 +24,7 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        url="/cv-review/1"
       />
 
       <CVCard
@@ -30,6 +34,7 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        url="/cv-review/1"
       />
 
       <CVCard
@@ -39,6 +44,7 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        url="/cv-review/1"
       />
 
       <CVCard
@@ -48,6 +54,7 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        url="/cv-review/1"
       />
 
       <CVCard
@@ -57,6 +64,7 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        url="/cv-review/1"
       />
 
       <CVCard
@@ -66,6 +74,7 @@ const CVToReview = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
         }
         buttonVariant="review"
+        url="/cv-review/1"
       />
     </div>
   );

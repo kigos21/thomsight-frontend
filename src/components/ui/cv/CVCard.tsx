@@ -7,6 +7,8 @@ interface CVCardProps {
   fileTitle: string;
   description: string;
   buttonVariant?: ButtonVariant;
+  url?: string;
+  onButtonClick?: () => void;
 }
 
 const CVCard = ({
@@ -14,7 +16,15 @@ const CVCard = ({
   fileTitle,
   description,
   buttonVariant,
+  url,
+  onButtonClick,
 }: CVCardProps) => {
+  const buttonElement = url ? (
+    <ButtonCV variant={buttonVariant} url={url} />
+  ) : (
+    <ButtonCV variant={buttonVariant} onButtonClick={onButtonClick} />
+  );
+
   return (
     <div className={styles.card}>
       <p className={styles.name}>{name}</p>
@@ -22,7 +32,8 @@ const CVCard = ({
         {fileTitle}
       </Link>
       <p className={styles.description}>{description}</p>
-      <ButtonCV variant={buttonVariant} />
+
+      {buttonElement}
     </div>
   );
 };

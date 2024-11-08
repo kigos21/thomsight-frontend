@@ -13,10 +13,11 @@ export type ButtonVariant =
 interface ButtonCVProps {
   children?: React.ReactNode;
   variant?: ButtonVariant;
-  url: string;
+  url?: string;
+  onButtonClick?: () => void;
 }
 
-const ButtonCV = ({ variant, url }: ButtonCVProps) => {
+const ButtonCV = ({ variant, url, onButtonClick }: ButtonCVProps) => {
   let variantClassname: string;
   let buttonText: string;
 
@@ -64,15 +65,28 @@ const ButtonCV = ({ variant, url }: ButtonCVProps) => {
 
   const classNames = `${styles.button} ${variantClassname}`;
 
+  if (url) {
+    return (
+      <Link
+        to={url}
+        style={{
+          marginTop: "auto",
+          display: "block",
+          width: "100%",
+          textDecoration: "none",
+        }}
+      >
+        <button type="button" className={classNames}>
+          {buttonText}
+        </button>
+      </Link>
+    );
+  }
+
   return (
-    <Link
-      to={url}
-      style={{ marginTop: "auto", display: "block", width: "100%" }}
-    >
-      <button type="button" className={classNames}>
-        {buttonText}
-      </button>
-    </Link>
+    <button type="button" className={classNames} onClick={onButtonClick}>
+      {buttonText}
+    </button>
   );
 };
 

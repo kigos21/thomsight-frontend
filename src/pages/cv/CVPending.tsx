@@ -12,6 +12,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -20,6 +21,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -28,6 +30,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -36,6 +39,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -44,6 +48,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -52,6 +57,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -60,6 +66,7 @@ const CVPending = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="accept-request"
+        onButtonClick={() => console.log("Accept request from a user")}
       />
     </div>
   );

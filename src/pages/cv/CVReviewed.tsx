@@ -12,6 +12,9 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        // ------------------ URL FORMAT -----------------
+        // /cv-review/view/:id
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -20,6 +23,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -28,6 +32,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -36,6 +41,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -44,6 +50,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -52,6 +59,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -60,6 +68,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -68,6 +77,7 @@ const CVReviewed = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="submitted"
+        url={"/cv-review/view/1"}
       />
     </div>
   );

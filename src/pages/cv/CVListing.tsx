@@ -11,6 +11,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="request-access"
+        onButtonClick={() => console.log("Request access to user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -19,6 +20,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="delete"
+        onButtonClick={() => console.log("Delete user CV post")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -27,6 +29,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="request-access"
+        onButtonClick={() => console.log("Request access to user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -35,6 +38,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="request-access"
+        onButtonClick={() => console.log("Request access to user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -43,6 +47,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="request-access"
+        onButtonClick={() => console.log("Request access to user")}
       />
       <CVCard
         name={"Jair T. Tongol"}
@@ -51,6 +56,7 @@ const CVListing = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="request-access"
+        onButtonClick={() => console.log("Request access to user")}
       />
     </div>
   );
