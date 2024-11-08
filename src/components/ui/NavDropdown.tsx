@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./NavDropdown.module.scss";
 import { IconChevronDown } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface NavDropdownProps {
   items: Item[];
@@ -18,16 +18,33 @@ const NavDropdown: React.FunctionComponent<NavDropdownProps> = ({
   items,
 }) => {
   const [showWindow, setShowWindow] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowWindow(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
-      <div className={styles.dropdownContainer}>
+      <div className={styles.dropdownContainer} ref={dropdownRef}>
         <p onClick={() => setShowWindow((state) => !state)}>
           {label} <IconChevronDown />
         </p>
 
         <div
-          className={`${styles.windowContainer} ${showWindow ? "" : styles.hidden}`}
+          className={`${styles.dropdownContent} ${showWindow ? "" : styles.hidden}`}
         >
           {items.map((item) => (
             <Link
@@ -37,6 +54,7 @@ const NavDropdown: React.FunctionComponent<NavDropdownProps> = ({
                 e.stopPropagation();
                 setShowWindow(false);
               }}
+              className={styles.dropdownItem}
             >
               {item.label}
             </Link>
