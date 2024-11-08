@@ -89,3 +89,11 @@ export type TipReport = {
   reason: string;
   tip_id: number;
 };
+
+export type CV = {
+  id: number;
+  name: string;
+  user_id: number;
+  description: string;
+  file: string;
+};
