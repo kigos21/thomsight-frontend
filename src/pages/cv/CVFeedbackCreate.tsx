@@ -30,6 +30,7 @@ const CVFeedbackCreate = () => {
         setHasAccess(accessResponse.data.allowed);
 
         if (accessResponse.data.allowed) {
+          setLoading("Getting details...");
           const pdfResponse = await axiosInstance.get(`/api/cv/${cvId}/pdf`);
           setPdfUrl(pdfResponse.data.pdfUrl);
         } else {
@@ -39,6 +40,8 @@ const CVFeedbackCreate = () => {
         console.error("Error checking access or fetching PDF:", err);
         setHasAccess(false);
         navigate("/cv-review/to-review");
+      } finally {
+        setLoading("");
       }
     };
 

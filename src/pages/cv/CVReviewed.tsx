@@ -1,84 +1,43 @@
 import styles from "./CVReviewed.module.scss";
 
 import CVCard from "../../components/ui/cv/CVCard";
+import { useEffect, useState } from "react";
+import { CV } from "../../types/types";
+import axiosInstance from "../../services/axiosInstance";
+import Spinner from "../../components/ui/Spinner";
 
 const CVReviewed = () => {
+  const [cvs, setCvs] = useState<CV[]>([]);
+  const [loading, setLoading] = useState<string>("Fetching CVs...");
+
+  useEffect(() => {
+    const fetchReviewedCVs = async () => {
+      try {
+        const response = await axiosInstance.get("/api/cvs/reviewed");
+        setCvs(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading("");
+      }
+    };
+
+    fetchReviewedCVs();
+  }, []);
+
   return (
     <div className={styles.rootContainer}>
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        // ------------------ URL FORMAT -----------------
-        // /cv-review/view/:id
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="submitted"
-        url={"/cv-review/view/1"}
-      />
+      {loading && <Spinner message={loading} />}
+      {cvs.map((cv) => (
+        <CVCard
+          key={cv.id}
+          name={cv.name}
+          fileTitle={cv.file}
+          description={cv.description}
+          buttonVariant="submitted"
+          url={`/cv-review/view/${cv.id}`}
+        />
+      ))}
     </div>
   );
 };
