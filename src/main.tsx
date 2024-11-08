@@ -249,7 +249,7 @@ const router = createBrowserRouter([
             element: <CVMyRequests />,
           },
           {
-            path: ":reviewId",
+            path: ":cvId",
             element: <CVFeedbackCreate />,
           },
           {
