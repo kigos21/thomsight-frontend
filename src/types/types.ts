@@ -22,14 +22,14 @@ export enum UserStatus {
 }
 
 export type Company = {
-  id: number;
+  id?: number;
   name?: string;
-  posted_by: number;
+  posted_by?: number;
   description?: string;
   industry?: string;
   size?: string;
   email?: string;
-  slug: string;
+  slug?: string;
   locations?: Location[];
   jobs?: Job[];
   image?: string;

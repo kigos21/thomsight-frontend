@@ -3,24 +3,25 @@ import styles from "./ChangePhotoPopup.module.scss";
 import axiosInstance from "../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import Spinner from "./Spinner";
+import { useCompanies } from "../../contexts/CompaniesContext";
 
 interface ChangePhotoPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onSave?: (file: File | null) => void;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
-  setLogo: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ChangePhotoPopup: React.FC<ChangePhotoPopupProps> = ({
   isOpen,
   onClose,
   setSuccess,
-  setLogo,
 }) => {
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
+  const { updateCompany, getCompanyBySlug } = useCompanies();
+  const company = getCompanyBySlug(slug as string);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -39,8 +40,12 @@ const ChangePhotoPopup: React.FC<ChangePhotoPopupProps> = ({
         `/api/company/${slug}/update-photo`,
         formData
       );
+      const updatedCompany = {
+        ...company,
+        image: response.data.photo,
+      };
       setSuccess("Successfully changed photo");
-      setLogo(response.data.photo);
+      updateCompany(updatedCompany);
     } catch (error) {
       console.error(error);
     } finally {

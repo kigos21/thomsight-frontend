@@ -281,7 +281,6 @@ export default function CompanyDetails() {
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
           setSuccess={setSuccess}
-          setLogo={setLogo}
         />
       </PaddedContainer>
     );
