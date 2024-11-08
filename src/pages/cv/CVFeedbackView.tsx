@@ -31,6 +31,7 @@ const CVFeedbackCreate = () => {
           setPdfUrl(response.data.pdfUrl);
           setRemark(response.data.remark);
           setRemarkedBy(response.data.remarkedBy);
+          console.log(pdfUrl);
         } else {
           navigate("/cv-review/reviewed");
         }
@@ -69,6 +70,19 @@ const CVFeedbackCreate = () => {
       ) : (
         <div>Loading PDF...</div>
       )}
+
+      <p className={styles.plink}>
+        If you cannot view the PDF file, you can open or download it from here:
+        <a
+          className={styles.dlPdf}
+          href={pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className={styles.downloadText}>View PDF</span>
+        </a>
+      </p>
+
       <div className={styles.headingGroup}>
         <h2>Remarks</h2>
         <IconCircleFilled size={4} className={styles.separator} />
