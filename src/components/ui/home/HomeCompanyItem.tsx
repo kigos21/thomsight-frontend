@@ -22,7 +22,7 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
 
       <div className={styles.coreInfoSection}>
         <div>
-          <p className={styles.companyName}>{name}</p>
+          <p className={styles.companyName}>{name || "No company name set"}</p>
         </div>
         <div className={styles.locationSection}>
           {locations && locations.length > 0 ? (
@@ -43,7 +43,7 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
         )}
       </div>
 
-      <div className={styles.about}>{description}</div>
+      <div className={styles.about}>{description || "No description set."}</div>
     </StyledBox>
   );
 };

@@ -290,8 +290,10 @@ export default function CompanyDetails() {
           </div>
 
           <div className={styles.detailsHolder}>
-            <p className={styles.companyName}>{company.name}</p>
-            <p>{company.email}</p>
+            <p className={styles.companyName}>
+              {company.name || "No company name set"}
+            </p>
+            <p>{company.email || "No contact email set"}</p>
             <div className={styles.locationsContainer}>
               {locations.length > 0 ? (
                 <p className={styles.locations}>
@@ -303,7 +305,7 @@ export default function CompanyDetails() {
                   ))}
                 </p>
               ) : (
-                <p>No location data available.</p>
+                <p>No locations available.</p>
               )}
             </div>
           </div>
