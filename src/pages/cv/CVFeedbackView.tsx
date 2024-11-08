@@ -1,18 +1,12 @@
 import { IconCircleFilled } from "@tabler/icons-react";
 
 import styles from "./CVFeedbackView.module.scss";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 
 const CVFeedbackCreate = () => {
-  const { setSuccess } = useOutletContext<{
-    setSuccess: (message: string) => void;
-  }>();
-  const { setError } = useOutletContext<{
-    setError: (message: string) => void;
-  }>();
   const { reviewId } = useParams<{ reviewId: string }>();
   const navigate = useNavigate();
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
