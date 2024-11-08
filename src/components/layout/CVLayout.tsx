@@ -20,11 +20,18 @@ const CVLayout = () => {
   const navigate = useNavigate();
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const successMessage = location.state?.successMessage;
 
   useEffect(() => {
     setSuccess("");
     setError("");
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (successMessage) {
+      setSuccess(successMessage);
+    }
+  }, [successMessage]);
 
   const helpText =
     "Listing: posted CVs by the community \n" +
