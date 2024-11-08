@@ -1,6 +1,6 @@
 import styles from "./CompanyDetails.module.scss";
 
-import logo from "../../../assets/thomsight-logo.svg";
+// import logo from "../../../assets/thomsight-logo.svg";
 import PaddedContainer from "../../layout/PaddedContainer";
 import { useCompanies } from "../../../contexts/CompaniesContext.tsx";
 import { useLocation, useParams } from "react-router-dom";
@@ -20,6 +20,7 @@ export default function CompanyDetails() {
   const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
   const company = getCompanyBySlug(slug as string);
   const location = useLocation();
+  const [logo, setLogo] = useState<string>("");
 
   const [isEditName, setIsEditName] = useState(false);
   const [isEditEmail, setIsEditEmail] = useState(false);
@@ -47,6 +48,7 @@ export default function CompanyDetails() {
       setCompanyName(company!.name || "");
       setCompanyEmail(company!.email || "");
       setLocations(company!.locations || []);
+      setLogo(company!.image || "");
     }
   }, [company]);
 
@@ -140,7 +142,12 @@ export default function CompanyDetails() {
           <div className={styles.imageContainer}>
             <img src={logo} alt="Logo" />
             <div className={styles.positionedButton} ref={dropdownRef}>
-              <button onClick={() => setIsDropdownOpen((state) => !state)}>
+              <button
+                onClick={() => {
+                  setIsDropdownOpen((state) => !state);
+                  setSuccess("");
+                }}
+              >
                 <IconChevronDown stroke={1.5} size={18} />
               </button>
               {isDropdownOpen && (
@@ -273,7 +280,8 @@ export default function CompanyDetails() {
         <ChangePhotoPopup
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
-          onSave={(file) => console.log("Selected file:", file)}
+          setSuccess={setSuccess}
+          setLogo={setLogo}
         />
       </PaddedContainer>
     );
