@@ -1,81 +1,43 @@
 import styles from "./CVToReview.module.scss";
 
 import CVCard from "../../components/ui/cv/CVCard";
+import { useEffect, useState } from "react";
+import { CV } from "../../types/types";
+import axiosInstance from "../../services/axiosInstance";
+import Spinner from "../../components/ui/Spinner";
 
 const CVToReview = () => {
+  const [cvs, setCvs] = useState<CV[]>([]);
+  const [loading, setLoading] = useState<string>("Fetching CVs...");
+
+  useEffect(() => {
+    const fetchAcceptedCVs = async () => {
+      try {
+        const response = await axiosInstance.get("/api/cvs/accepted");
+        setCvs(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading("");
+      }
+    };
+
+    fetchAcceptedCVs();
+  }, []);
+
   return (
     <div className={styles.rootContainer}>
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        // ------------------ URL FORMAT -----------------
-        // /cv-review/:id
-        url="/cv-review/1"
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        url="/cv-review/1"
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        url="/cv-review/1"
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        url="/cv-review/1"
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        url="/cv-review/1"
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        url="/cv-review/1"
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer Help me review my CV guys, I am applying for a Junior Developer "
-        }
-        buttonVariant="review"
-        url="/cv-review/1"
-      />
+      {loading && <Spinner message={loading} />}
+      {cvs.map((cv) => (
+        <CVCard
+          key={cv.id}
+          name={cv.name}
+          fileTitle={cv.file}
+          description={cv.description}
+          buttonVariant="review"
+          url={`/cv-review/${cv.id}`}
+        />
+      ))}
     </div>
   );
 };
