@@ -143,6 +143,8 @@ export default function UserCompanyDiscussionForum() {
   };
 
   const handleAddReply = async (discussionId: number) => {
+    setSuccess("");
+    setError("");
     if (!reply.trim()) {
       setError("Reply cannot be blank.");
       return;
@@ -150,19 +152,16 @@ export default function UserCompanyDiscussionForum() {
 
     try {
       setLoading("Adding reply...");
-      const response = await axiosInstance.post(
+      await axiosInstance.post(
         `/api/company/${slug}/discussions/${discussionId}/comments`,
         { comment: reply }
       );
-
-      const newReply = response.data;
-      setPostData((prevPosts) =>
-        prevPosts.map((post) =>
-          post.id === discussionId
-            ? { ...post, replies: [...post.replies, newReply] }
-            : post
-        )
+      setLoading("Loading discussions...");
+      const response = await axiosInstance.get(
+        `/api/company/${slug}/discussions`
       );
+      const discussions = response.data;
+      setPostData(discussions);
       setReply("");
       setActiveReplyPostId(-1);
     } catch (error) {
@@ -231,11 +230,13 @@ export default function UserCompanyDiscussionForum() {
                     setError={setError}
                     onDiscussionDelete={handleDiscussionDelete}
                     posted_by={post.posted_by}
-                    handleReplyClick={() =>
+                    handleReplyClick={() => {
                       setActiveReplyPostId(
                         activeReplyPostId === post.id ? -1 : post.id
-                      )
-                    }
+                      );
+                      setError("");
+                      setSuccess("");
+                    }}
                   />
                   {
                     <div className={styles.repliesContainer}>
