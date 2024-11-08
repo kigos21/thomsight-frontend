@@ -1,4 +1,4 @@
-import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
+import { Link, Navigate, NavLink, Outlet, useLocation } from "react-router-dom";
 import NavbarCompany from "../ui/NavbarCompany";
 import CompanyDetails from "../ui/company/CompanyDetails";
 import styles from "./CompanyLayout.module.scss";
@@ -44,11 +44,11 @@ export default function CompanyRoot() {
   const bottomNavLinks: NavLink[] = !isManagePath
     ? [
         {
-          path: `${basePath}`,
+          path: `${basePath}/overview`,
           icon: <IconHome stroke={2} className={styles.bottomNavIcon} />,
         },
         {
-          path: `${basePath}#reviews`,
+          path: `${basePath}/overview#reviews`,
           icon: <IconStars stroke={2} className={styles.bottomNavIcon} />,
         },
         {
@@ -78,21 +78,37 @@ export default function CompanyRoot() {
   let elements: React.ReactNode[];
   if (!isManagePath) {
     elements = [
-      <Link to={`${basePath}`} key="overviewCompany">
+      <NavLink
+        to={`${basePath}/overview`}
+        key="overviewCompany"
+        className={({ isActive }) => (isActive ? styles.activeLink : "")}
+      >
         Overview
-      </Link>,
-      <Link to={`${basePath}#reviews`} key="reviewCompany">
+      </NavLink>,
+      <NavLink to={`${basePath}/overview#reviews`} key="reviewCompany">
         Review
-      </Link>,
-      <Link to={`${basePath}/jobs`} key="jobsCompany">
+      </NavLink>,
+      <NavLink
+        to={`${basePath}/jobs`}
+        key="jobsCompany"
+        className={({ isActive }) => (isActive ? styles.activeLink : "")}
+      >
         Jobs
-      </Link>,
-      <Link to={`${basePath}/forum`} key="discussionforumCompany">
+      </NavLink>,
+      <NavLink
+        to={`${basePath}/forum`}
+        key="discussionforumCompany"
+        className={({ isActive }) => (isActive ? styles.activeLink : "")}
+      >
         Discussion&nbsp;Forum
-      </Link>,
-      <Link to={`${basePath}/interview-tips`} key="interviewtipsCompany">
+      </NavLink>,
+      <NavLink
+        to={`${basePath}/interview-tips`}
+        key="interviewtipsCompany"
+        className={({ isActive }) => (isActive ? styles.activeLink : "")}
+      >
         Interview&nbsp;Tips
-      </Link>,
+      </NavLink>,
     ];
   } else {
     if (company?.posted_by !== user?.id) {

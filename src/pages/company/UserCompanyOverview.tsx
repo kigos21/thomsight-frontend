@@ -170,7 +170,9 @@ export default function UserCompanyOverview() {
 
           <div className={styles.reviewContainer}>
             <div className={styles.reviewHeaderContainer}>
-              <h2 className={styles.titleHeader}>Reviews</h2>
+              <h2 className={styles.titleHeader} id="reviews">
+                Reviews
+              </h2>
               {user?.role === "Alumni" && (
                 <Button
                   color="primary"

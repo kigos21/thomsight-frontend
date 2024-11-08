@@ -16,10 +16,18 @@ export default function AppRoot() {
     case "Student":
     case "Alumni":
       links = [
-        <NavLink to="/companies" key="homeUser">
+        <NavLink
+          to="/companies"
+          key="homeUser"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Home
         </NavLink>,
-        <NavLink to="/interview-guide" key="interviewTipsUser">
+        <NavLink
+          to="/interview-guide"
+          key="interviewTipsUser"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Interview Tips
         </NavLink>,
         <NavDropdown
@@ -43,13 +51,25 @@ export default function AppRoot() {
       const companySlug = userCompany ? userCompany.slug : null;
 
       links = [
-        <NavLink to="/companies" key="homeCompany">
+        <NavLink
+          to="/companies"
+          key="homeCompany"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Home
         </NavLink>,
-        <NavLink to="/announcements" key="announcementsCompany">
+        <NavLink
+          to="/announcements"
+          key="announcementsCompany"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Announcements
         </NavLink>,
-        <NavLink to={`/company/${companySlug}`} key="overviewCompany">
+        <NavLink
+          to={`/company/${companySlug}`}
+          key="overviewCompany"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           {" "}
           {/* Assuming companyId is part of the user object */}
           Overview
@@ -57,6 +77,7 @@ export default function AppRoot() {
         <NavLink
           to={`/company/${companySlug}/manage/info`}
           key="manageinfoCompany"
+          className={({ isActive }) => (isActive ? styles.active : "")}
         >
           Manage Info
         </NavLink>,
@@ -66,19 +87,39 @@ export default function AppRoot() {
 
     case "Admin":
       links = [
-        <NavLink to="/companies" key="homeAdmin">
+        <NavLink
+          to="/companies"
+          key="homeAdmin"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Home
         </NavLink>,
-        <NavLink to="/tokens" key="tokensAdmin">
+        <NavLink
+          to="/tokens"
+          key="tokensAdmin"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Tokens
         </NavLink>,
-        <NavLink to="/announcements" key="announcementsAdmin">
+        <NavLink
+          to="/announcements"
+          key="announcementsAdmin"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Announcements
         </NavLink>,
-        <NavLink to="/tokens/companies" key="companiesAdmin">
+        <NavLink
+          to="/tokens/companies"
+          key="companiesAdmin"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Companies
         </NavLink>,
-        <NavLink to="/reports" key="reportsAdmin">
+        <NavLink
+          to="/reports"
+          key="reportsAdmin"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
           Reports
         </NavLink>,
       ];
