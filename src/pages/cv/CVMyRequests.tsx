@@ -12,6 +12,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="cancel"
+        onButtonClick={() => console.log("Cancel my request")}
       />
 
       <CVCard
@@ -21,6 +22,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="view-feedback"
+        url={"/cv-review/view/1"}
       />
 
       <CVCard
@@ -30,6 +32,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="cancel"
+        onButtonClick={() => console.log("Cancel my request")}
       />
 
       <CVCard
@@ -39,6 +42,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="view-feedback"
+        url={"/cv-review/view/1"}
       />
 
       <CVCard
@@ -48,6 +52,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="cancel"
+        onButtonClick={() => console.log("Cancel my request")}
       />
 
       <CVCard
@@ -57,6 +62,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="view-feedback"
+        url={"/cv-review/view/1"}
       />
 
       <CVCard
@@ -66,6 +72,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="cancel"
+        onButtonClick={() => console.log("Cancel my request")}
       />
 
       <CVCard
@@ -75,6 +82,7 @@ const CVMyRequests = () => {
           "Help me review my CV guys, I am applying for a Junior Developer position"
         }
         buttonVariant="view-feedback"
+        url={"/cv-review/view/1"}
       />
     </div>
   );

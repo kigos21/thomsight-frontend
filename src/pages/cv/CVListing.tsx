@@ -27,54 +27,7 @@ const CVListing = () => {
   return (
     <div className={styles.rootContainer}>
       {loading && <Spinner message="Loading CVs..." />}
-      {/* <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="request-access"
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="delete"
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="request-access"
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="request-access"
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="request-access"
-      />
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="request-access"
-      /> */}
+
       {cvs.map((cv) => (
         <CVCard
           key={cv.id}
@@ -82,6 +35,7 @@ const CVListing = () => {
           fileTitle={cv.file}
           description={cv.description}
           buttonVariant="request-access"
+          onButtonClick={() => console.log("Request access to user")}
         />
       ))}
     </div>
