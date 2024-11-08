@@ -11,10 +11,20 @@ import {
   IconList,
   IconOutbound,
 } from "@tabler/icons-react";
+import SuccessMessage from "../form/SuccessMessage";
+import { useEffect, useState } from "react";
+import ValidationError from "../form/ValidationError";
 
 const CVLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [success, setSuccess] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    setSuccess("");
+    setError("");
+  }, [location.pathname]);
 
   const helpText =
     "Listing: posted CVs by the community \n" +
@@ -105,8 +115,10 @@ const CVLayout = () => {
             </Button>
           )}
         </header>
+        {success && <SuccessMessage message={success} />}
+        {error && <ValidationError message={error} />}
         {/* MAIN CONTENT */}
-        <Outlet />
+        <Outlet context={{ setSuccess, setError }} />
       </PaddedContainer>
     </div>
   );

@@ -4,10 +4,17 @@ import styles from "./CVListing.module.scss";
 import { CV } from "../../types/types";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
+import { useOutletContext } from "react-router-dom";
 
 const CVListing = () => {
+  const { setSuccess } = useOutletContext<{
+    setSuccess: (message: string) => void;
+  }>();
+  const { setError } = useOutletContext<{
+    setError: (message: string) => void;
+  }>();
   const [cvs, setCvs] = useState<CV[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<string>("Fetching CVs...");
 
   useEffect(() => {
     const fetchCVs = async () => {
@@ -17,16 +24,30 @@ const CVListing = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false);
+        setLoading("");
       }
     };
 
     fetchCVs();
   }, []);
 
+  const handleRequestAccess = async (cvId: number) => {
+    setError("");
+    setSuccess("");
+    try {
+      setLoading("Requesting access...");
+      await axiosInstance.post(`/api/cv/${cvId}/request-access`);
+      setSuccess("Your request has been submitted.");
+    } catch (error: any) {
+      setError(error.response.data.message);
+    } finally {
+      setLoading("");
+    }
+  };
+
   return (
     <div className={styles.rootContainer}>
-      {loading && <Spinner message="Loading CVs..." />}
+      {loading && <Spinner message={loading} />}
 
       {cvs.map((cv) => (
         <CVCard
@@ -35,7 +56,7 @@ const CVListing = () => {
           fileTitle={cv.file}
           description={cv.description}
           buttonVariant="request-access"
-          onButtonClick={() => console.log("Request access to user")}
+          onButtonClick={() => handleRequestAccess(cv.id)}
         />
       ))}
     </div>
