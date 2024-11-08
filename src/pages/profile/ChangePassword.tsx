@@ -28,6 +28,12 @@ const ChangePassword = () => {
             placeholder="Your New Password"
             required={true}
           />
+          <FormField
+            icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
+            type="password"
+            placeholder="Confirm New Password"
+            required={true}
+          />
           <Button
             color="primary"
             roundness="rounded"
