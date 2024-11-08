@@ -42,7 +42,7 @@ export default function AdminCompanyAccount() {
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.companytokens}>
           <div className={styles.header}>
-            <p className={styles.token}>Company</p>
+            <p className={styles.token}>Token</p>
             <p className={styles.status}>Status</p>
             <p className={styles.expiresIn}>Expires In</p>
             <p className={styles.company}>Company</p>
