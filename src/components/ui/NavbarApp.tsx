@@ -3,8 +3,8 @@ import logo from "../../assets/thomsight-logo.svg";
 
 import PaddedContainer from "../layout/PaddedContainer";
 import { IconMenu2 } from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
 import Spinner from "./Spinner";
@@ -18,6 +18,23 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const [displayNav, setDisplayNav] = useState(false);
   const { user, loading, setUser } = useUser();
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileNavRef.current &&
+        !mobileNavRef.current.contains(event.target as Node)
+      ) {
+        setDisplayNav(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleProfileClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -42,15 +59,21 @@ export default function NavbarApp({ links }: NavbarAppProps) {
       )}
       {logoutLoading && <Spinner message="Logging out..." />}
       <nav className={styles.container}>
-        <div className={styles.brand}>
-          <img className={styles.brandImage} src={logo} alt="Thomsight logo" />
-          <div className={styles.brandTextContainer}>
-            <h2 className={styles.brandText}>Thomsight</h2>
-            <p className={styles.brandTextCics}>
-              College of Information and Computing Sciences
-            </p>
+        <Link to={"/"}>
+          <div className={styles.brand}>
+            <img
+              className={styles.brandImage}
+              src={logo}
+              alt="Thomsight logo"
+            />
+            <div className={styles.brandTextContainer}>
+              <h2 className={styles.brandText}>Thomsight</h2>
+              <p className={styles.brandTextCics}>
+                College of Information and Computing Sciences
+              </p>
+            </div>
           </div>
-        </div>
+        </Link>
 
         <ul className={styles.navList}>
           {links.map((link, i) => (
@@ -60,13 +83,19 @@ export default function NavbarApp({ links }: NavbarAppProps) {
 
         {/* Mobile Navigation Menu */}
         <div
+          ref={mobileNavRef}
           className={`${styles.mobileNavContainer} ${displayNav && styles.block}`}
         >
           <ul className={styles.mobileNavList}>
             {links.length > 0 &&
               links.map((link, i) => <li key={i}>{link}</li>)}
             <li>
-              <NavLink to={"/"}>Profile</NavLink>
+              <NavLink to={"/profile"} onClick={() => setDisplayNav(false)}>
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <button onClick={(e) => handleProfileClick(e)}>LOGOUT</button>
             </li>
           </ul>
         </div>
