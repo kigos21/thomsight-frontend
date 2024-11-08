@@ -203,6 +203,6 @@ export interface DisplayProfileProps {
   lastName: string;
   bio: string;
   profileLink: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   email: string;
 }

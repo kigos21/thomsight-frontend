@@ -6,7 +6,7 @@ import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
 import {
   IconLock,
   IconMail,
-  IconPhone,
+  // IconPhone,
   IconUser,
   IconCalendar,
 } from "@tabler/icons-react";
@@ -124,14 +124,14 @@ export default function RegisterAlumniPage() {
                 placeholder="Confirm Password"
                 required={true}
               />
-              <FormField
+              {/* <FormField
                 icon={
                   <IconPhone size={35} stroke={1.5} className={styles.icon} />
                 }
                 type="tel"
                 placeholder="Phone Number"
                 required={true}
-              />
+              /> */}
               <CheckboxWithLabel
                 id="terms"
                 label="I have read and agree to the website"

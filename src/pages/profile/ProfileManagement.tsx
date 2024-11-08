@@ -3,7 +3,7 @@ import Button from "../../components/ui/Button";
 import StyledBox from "../../components/layout/StyledBox";
 import FormField from "../../components/form/FormField";
 import {
-  IconPhone,
+  // IconPhone,
   IconUser,
   IconBook2,
   IconEdit,
@@ -22,14 +22,14 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileManagement() {
   const { user, updateUser } = useUser();
   const [name, setName] = useState<string | undefined>(user?.name || "");
-  const [phone, setPhone] = useState<string | null>(user?.phone_number || null);
+  // const [phone, setPhone] = useState<string | null>(user?.phone_number || null);
   const [bio, setBio] = useState<string>(user?.bio || "");
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [tempProfileName, setTempProfileName] = useState<string>(user!.name);
   const [isSaving, setIsSaving] = useState(false);
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [phoneError, setPhoneError] = useState<string>("");
+  // const [phoneError, setPhoneError] = useState<string>("");
   const [bioError, setBioError] = useState<string>("");
 
   const handleConfirmClick = () => {
@@ -41,15 +41,15 @@ export default function ProfileManagement() {
     e.preventDefault();
     setSuccess("");
     setError("");
-    setPhoneError("");
+    // setPhoneError("");
     setBioError("");
     setIsSaving(true);
 
-    if (!/^\d{11}$/.test(phone || "")) {
-      setPhoneError("Phone number must be 11 digits and contain only numbers.");
-      setIsSaving(false);
-      return;
-    }
+    // if (!/^\d{11}$/.test(phone || "")) {
+    //   setPhoneError("Phone number must be 11 digits and contain only numbers.");
+    //   setIsSaving(false);
+    //   return;
+    // }
 
     if (bio.length > 255) {
       setBioError("Bio must not exceed 255 characters.");
@@ -60,10 +60,11 @@ export default function ProfileManagement() {
     try {
       await axiosInstance.put("/api/update/profile", {
         name: tempProfileName,
-        phone_number: phone,
+        // phone_number: phone,
         bio,
       });
-      updateUser({ name, phone_number: phone || "", bio });
+      // updateUser({ name, phone_number: phone || "", bio });
+      updateUser({ name, bio });
       setName(tempProfileName);
       setIsEditingName(false);
       setSuccess("Profile updated successfully!");
@@ -158,7 +159,7 @@ export default function ProfileManagement() {
               placeholder="Profile Link"
               required={true}
             /> */}
-            {phoneError && <ValidationError message={phoneError} />}
+            {/* {phoneError && <ValidationError message={phoneError} />}
             <FormField
               icon={
                 <IconPhone size={35} stroke={1.5} className={styles.icon} />
@@ -167,7 +168,7 @@ export default function ProfileManagement() {
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-            />
+            /> */}
             {/* <FormField
               icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
               type="password"

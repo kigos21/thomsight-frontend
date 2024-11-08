@@ -6,7 +6,7 @@ import FormField from "../../components/form/FormField";
 import {
   IconLock,
   IconMail,
-  IconPhone,
+  // IconPhone,
   IconBuildings,
   IconUser,
 } from "@tabler/icons-react";
@@ -34,8 +34,8 @@ export default function CompanyRegisterPage() {
   const [passwordError, setPasswordError] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
-  const [phone, setPhone] = useState<string>();
-  const [phoneError, setPhoneError] = useState<string>("");
+  // const [phone, setPhone] = useState<string>();
+  // const [phoneError, setPhoneError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function CompanyRegisterPage() {
     setEmailError("");
     setPasswordError("");
     setConfirmPasswordError("");
-    setPhoneError("");
+    // setPhoneError("");
 
     if (companyName.length > 100) {
       setCompanyNameError("Company name must be less than 100 characters.");
@@ -85,13 +85,13 @@ export default function CompanyRegisterPage() {
       isValid = false;
     }
 
-    if (isNaN(Number(phone))) {
-      setPhoneError("Phone number must be a number.");
-      isValid = false;
-    } else if (!/^\d{11}$/.test(phone?.toString() || "")) {
-      setPhoneError("Phone number must be 11 digits.");
-      isValid = false;
-    }
+    // if (isNaN(Number(phone))) {
+    //   setPhoneError("Phone number must be a number.");
+    //   isValid = false;
+    // } else if (!/^\d{11}$/.test(phone?.toString() || "")) {
+    //   setPhoneError("Phone number must be 11 digits.");
+    //   isValid = false;
+    // }
 
     if (!isValid) return;
 
@@ -103,7 +103,7 @@ export default function CompanyRegisterPage() {
         name,
         email,
         password,
-        phone,
+        // phone,
       });
 
       const userId = userResponse.data.user_id;
@@ -210,7 +210,7 @@ export default function CompanyRegisterPage() {
               )}
 
               {/* Phone Number Field */}
-              <FormField
+              {/* <FormField
                 icon={
                   <IconPhone size={35} stroke={1.5} className={styles.icon} />
                 }
@@ -220,7 +220,7 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setPhone(e.target.value)}
                 required
               />
-              {phoneError && <ValidationError message={phoneError} />}
+              {phoneError && <ValidationError message={phoneError} />} */}
 
               <Button
                 type="submit"

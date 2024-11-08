@@ -3,7 +3,12 @@ import AuthContentContainer from "../../components/ui/auth/AuthContentContainer"
 import Button from "../../components/ui/Button";
 import FormField from "../../components/form/FormField";
 import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
-import { IconLock, IconMail, IconPhone, IconUser } from "@tabler/icons-react";
+import {
+  IconLock,
+  IconMail,
+  // IconPhone,
+  IconUser,
+} from "@tabler/icons-react";
 
 import styles from "./RegisterStudentPage.module.scss";
 import { useState } from "react";
@@ -24,8 +29,8 @@ export default function StudentRegisterPage() {
   const [passwordError, setPasswordError] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
-  const [phone, setPhone] = useState<string>();
-  const [phoneError, setPhoneError] = useState<string>("");
+  // const [phone, setPhone] = useState<string>();
+  // const [phoneError, setPhoneError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,7 +41,7 @@ export default function StudentRegisterPage() {
     setEmailError("");
     setPasswordError("");
     setConfirmPasswordError("");
-    setPhoneError("");
+    // setPhoneError("");
 
     if (name.length > 100) {
       setNameError("Name must be less than 100 characters.");
@@ -63,13 +68,13 @@ export default function StudentRegisterPage() {
       isValid = false;
     }
 
-    if (isNaN(Number(phone))) {
-      setPhoneError("Phone number must be a number.");
-      isValid = false;
-    } else if (!/^\d{11}$/.test(phone?.toString() || "")) {
-      setPhoneError("Phone number must be 11 digits.");
-      isValid = false;
-    }
+    // if (isNaN(Number(phone))) {
+    //   setPhoneError("Phone number must be a number.");
+    //   isValid = false;
+    // } else if (!/^\d{11}$/.test(phone?.toString() || "")) {
+    //   setPhoneError("Phone number must be 11 digits.");
+    //   isValid = false;
+    // }
 
     if (!isValid) return;
 
@@ -81,7 +86,7 @@ export default function StudentRegisterPage() {
         name,
         email,
         password,
-        phone,
+        // phone,
       });
 
       localStorage.setItem(
@@ -156,7 +161,7 @@ export default function StudentRegisterPage() {
                 <ValidationError message={confirmPasswordError} />
               )}
 
-              <FormField
+              {/* <FormField
                 icon={
                   <IconPhone size={35} stroke={1.5} className={styles.icon} />
                 }
@@ -166,7 +171,7 @@ export default function StudentRegisterPage() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              {phoneError && <ValidationError message={phoneError} />}
+              {phoneError && <ValidationError message={phoneError} />} */}
 
               <CheckboxWithLabel
                 id="terms"
