@@ -181,6 +181,7 @@ export default function UserCompanyOverview() {
                   onClick={() => {
                     setIsAddingReview(true);
                     setSuccess("");
+                    setError("");
                   }}
                 >
                   Write a Review

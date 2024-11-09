@@ -75,6 +75,7 @@ export default function ReviewItem({
   };
 
   const handleEditClick = () => {
+    setError("");
     setSuccess("");
     setIsEditing((state) => !state);
   };
