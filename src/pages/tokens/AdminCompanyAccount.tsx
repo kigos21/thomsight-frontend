@@ -39,72 +39,28 @@ export default function AdminCompanyAccount() {
       </div>
       {loading && <Spinner message={loading} />}
 
-      <StyledBox classNames={styles.styledbox}>
+      <StyledBox
+        classNames={styles.styledbox}
+        paddedContainerClass={styles.childClass}
+      >
         <div className={styles.companytokens}>
           <div className={styles.header}>
             <p className={styles.token}>Token</p>
             <p className={styles.status}>Status</p>
-            <p className={styles.expiresIn}>Expires In</p>
-            <p className={styles.company}>Company</p>
+            <p className={styles.expiresIn}>Expires&nbsp;In</p>
+            <p className={styles.company}>Email</p>
           </div>
           {repUsers.map((user) => (
-            <CompanyAccountsItem
-              key={user.id}
-              token="X7pL9kFg"
-              status="active"
-              expiration="1 month"
-            />
+            <>
+              <CompanyAccountsItem
+                key={user.id}
+                status="active"
+                companyName="WTW Accenture Philippines Corporated, LLC"
+                email="elijah.has.the.dept@gmail.com"
+                expiration="1 month"
+              />
+            </>
           ))}
-          {/* <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="1 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="inactive"
-            expiration="4 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="expiring"
-            expiration="6 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="10 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="13 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="16 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="1 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="1 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="1 month"
-          />
-          <CompanyAccountsItem
-            token="X7pL9kFg"
-            status="active"
-            expiration="1 month"
-          /> */}
         </div>
       </StyledBox>
     </PaddedContainer>
