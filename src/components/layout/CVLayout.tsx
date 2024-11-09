@@ -14,6 +14,7 @@ import {
 import SuccessMessage from "../form/SuccessMessage";
 import { useEffect, useState } from "react";
 import ValidationError from "../form/ValidationError";
+import { useUser } from "../../contexts/UserContext";
 
 const CVLayout = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const CVLayout = () => {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
   const successMessage = location.state?.successMessage;
+  const { user } = useUser();
 
   useEffect(() => {
     setSuccess("");
