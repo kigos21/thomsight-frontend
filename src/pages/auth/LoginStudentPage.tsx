@@ -23,12 +23,16 @@ export default function LoginStudentPage() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const verified = params.get("verified");
+    const changed = params.get("changed");
     const registrationMessage = localStorage.getItem("registrationSuccess");
     const passwordResetMessage = localStorage.getItem("resetPasswordSuccess");
     if (verified === "1") {
       setSuccessMessage(
         "Your email has been successfully verified! You can now log in."
       );
+    }
+    if (changed === "1") {
+      setSuccessMessage("Your password has been changed successfully.");
     }
     if (registrationMessage) {
       setSuccessMessage(registrationMessage);
