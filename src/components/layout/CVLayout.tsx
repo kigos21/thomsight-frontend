@@ -52,11 +52,18 @@ const CVLayout = () => {
       name: "Listing",
       icon: <IconList stroke={2} className={styles.bottomNavIcon} />,
     },
-    {
-      path: "/cv-review/pending",
-      name: "Pending",
-      icon: <IconHourglassHigh stroke={2} className={styles.bottomNavIcon} />,
-    },
+    ...(user!.role === "Student"
+      ? [
+          {
+            path: "/cv-review/pending",
+            name: "Pending",
+            icon: (
+              <IconHourglassHigh stroke={2} className={styles.bottomNavIcon} />
+            ),
+          },
+        ]
+      : []),
+
     {
       path: "/cv-review/to-review",
       name: "To Review",
@@ -114,7 +121,7 @@ const CVLayout = () => {
             CV and Resume Peer Review Center&nbsp;
             <IconHelp className={styles.helpIcon} title={helpText} />
           </h1>
-          {location.pathname === "/cv-review" && (
+          {location.pathname === "/cv-review" && user!.role === "Student" && (
             <Button
               color={"primary"}
               roundness={"rounded"}

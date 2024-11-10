@@ -234,7 +234,12 @@ const router = createBrowserRouter([
           },
           {
             path: "pending",
-            element: <CVPending />,
+            element: (
+              <PrivateRoute
+                element={<CVPending />}
+                allowedRoles={["Student"]}
+              />
+            ),
           },
           {
             path: "to-review",

@@ -59,7 +59,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
       )}
       {logoutLoading && <Spinner message="Logging out..." />}
       <nav className={styles.container}>
-        <Link to={"/"}>
+        <Link to={"/companies"}>
           <div className={styles.brand}>
             <img
               className={styles.brandImage}
