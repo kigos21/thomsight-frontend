@@ -75,9 +75,14 @@ export default function UserCompanyOverview() {
       isValid = false;
     }
 
-    const ratingValue = parseInt(review.rating, 10);
-    if (!ratingValue || ratingValue < 1 || ratingValue > 5) {
-      setRatingError("Rating must be a number between 1 and 5.");
+    const ratingValue = parseFloat(review.rating);
+    if (
+      isNaN(ratingValue) ||
+      !Number.isInteger(ratingValue) ||
+      ratingValue < 1 ||
+      ratingValue > 5
+    ) {
+      setRatingError("Rating must be an integer between 1 and 5.");
       isValid = false;
     }
 

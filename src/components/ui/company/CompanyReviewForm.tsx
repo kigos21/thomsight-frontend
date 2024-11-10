@@ -36,6 +36,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    onSave();
   };
 
   return (
@@ -83,7 +84,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               color="primary"
               roundness="rounded"
               classNames={styles.buttonSubmit}
-              onClick={onSave}
+              type="submit"
             >
               Submit
             </Button>
