@@ -10,12 +10,14 @@ import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import ValidationError from "../../components/form/ValidationError";
 import SuccessMessage from "../../components/form/SuccessMessage";
+import { useCompanies } from "../../contexts/CompaniesContext";
 
 export default function AdminCompanyAccount() {
   const [repUsers, setRepUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const { loadCompanies } = useCompanies();
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -42,6 +44,7 @@ export default function AdminCompanyAccount() {
       setLoading("Deleting company...");
       await axiosInstance.patch(`/api/company/${companyId}/soft-delete`);
       setSuccess("Company soft deleted successfully.");
+      loadCompanies();
       return true;
     } catch (error) {
       console.error("Error soft deleting company:", error);
@@ -61,6 +64,7 @@ export default function AdminCompanyAccount() {
       setLoading("Restoring company...");
       await axiosInstance.patch(`/api/company/${companyId}/restore`);
       setSuccess("Company restored successfully.");
+      loadCompanies();
       return true;
     } catch (error) {
       console.error("Error restoring company:", error);

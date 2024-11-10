@@ -12,6 +12,7 @@ interface CompaniesContextType {
   getCompanyBySlug: (slug: string) => Company | undefined;
   updateCompany: (updatedCompany: Company) => void;
   createJob: (newJob: Job) => void;
+  loadCompanies: () => void;
 }
 
 const CompaniesContext = createContext<CompaniesContextType | undefined>(
@@ -26,20 +27,20 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadCompanies = async () => {
-      try {
-        await axiosInstance.get("/sanctum/csrf-cookie");
-        const companiesData = await fetchCompanies();
-        setCompanies(companiesData);
-      } catch (err) {
-        console.log(err);
-        setError("Failed to load companies.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadCompanies = async () => {
+    try {
+      await axiosInstance.get("/sanctum/csrf-cookie");
+      const companiesData = await fetchCompanies();
+      setCompanies(companiesData);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to load companies.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     const loadJobs = async () => {
       try {
         await axiosInstance.get("/sanctum/csrf-cookie");
@@ -92,6 +93,7 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
         getCompanyBySlug,
         updateCompany,
         createJob,
+        loadCompanies,
       }}
     >
       {children}

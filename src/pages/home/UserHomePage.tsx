@@ -33,11 +33,14 @@ export default function UserHomePage() {
     selectedJobs.length > 0 && companies
       ? companies.filter(
           (company) =>
+            company.deleted_at === null &&
             company.jobs?.some((job) => selectedJobs.includes(job.title)) &&
             company.name?.toLowerCase().includes(searchQuery.toLowerCase())
         )
-      : companies?.filter((company) =>
-          company.name?.toLowerCase().includes(searchQuery.toLowerCase())
+      : companies?.filter(
+          (company) =>
+            company.deleted_at === null &&
+            company.name?.toLowerCase().includes(searchQuery.toLowerCase())
         ) || [];
 
   const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
@@ -46,7 +49,7 @@ export default function UserHomePage() {
     currentPage * itemsPerPage
   );
 
-  const handleCompanyClick = (slug: string) => {
+  const handleCompanyClick = (slug: string | undefined) => {
     navigate(`/company/${slug}`);
   };
 
@@ -61,6 +64,8 @@ export default function UserHomePage() {
       setCurrentPage((prev) => prev - 1);
     }
   };
+
+  console.log(filteredCompanies);
 
   return (
     <PaddedContainer classNames={styles.container}>
@@ -96,52 +101,54 @@ export default function UserHomePage() {
         <div>No companies found.</div>
       )}
 
-      <div className={styles.pagination}>
-        <button
-          className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          &#60; Previous
-        </button>
-        <button
-          className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-          onClick={() => setCurrentPage(1)}
-          disabled={currentPage === 1}
-        >
-          First
-        </button>
+      {filteredCompanies.length > 0 && totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            &#60; Previous
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            First
+          </button>
 
-        {Array.from({ length: totalPages }, (_, index) => index + 1)
-          .slice(
-            Math.max(currentPage - 2, 0),
-            Math.min(currentPage + 1, totalPages)
-          )
-          .map((page) => (
-            <button
-              key={page}
-              className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </button>
-          ))}
+          {Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(
+              Math.max(currentPage - 2, 0),
+              Math.min(currentPage + 1, totalPages)
+            )
+            .map((page) => (
+              <button
+                key={page}
+                className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </button>
+            ))}
 
-        <button
-          className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-          onClick={() => setCurrentPage(totalPages)}
-          disabled={currentPage === totalPages}
-        >
-          Last
-        </button>
-        <button
-          className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next &#62;
-        </button>
-      </div>
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            Last
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next &#62;
+          </button>
+        </div>
+      )}
     </PaddedContainer>
   );
 }
