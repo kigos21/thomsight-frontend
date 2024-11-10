@@ -16,6 +16,7 @@ export type ButtonProps = {
 export type ButtonReviewProps = {
   children: React.ReactNode;
   classNames?: string;
+  onClick?: () => void;
 };
 
 export type StyledBoxProps = {

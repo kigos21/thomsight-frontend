@@ -9,7 +9,7 @@ import ButtonReview from "../ButtonReview";
 
 import styles from "./ReviewItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
@@ -51,6 +51,41 @@ export default function ReviewItem({
 
   // Used for firing off HTML validation for rating input[type=number] element
   const ratingRef = useRef<HTMLFormElement>(null);
+
+  const [upvotes, setUpvotes] = useState<number>(0);
+  const [downvotes, setDownvotes] = useState<number>(0);
+  const [userVote, setUserVote] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchVotes = async () => {
+      const response = await axiosInstance.get(`/api/review/${id}/votes`);
+      setUpvotes(response.data.upvotes);
+      setDownvotes(response.data.downvotes);
+      setUserVote(response.data.userVote);
+    };
+
+    fetchVotes();
+  }, [id]);
+
+  const handleVote = async (voteType: "up" | "down") => {
+    try {
+      console.log("Hello");
+      await axiosInstance.post(`/api/review/${id}/vote`, {
+        vote: voteType,
+      });
+      console.log("Here");
+      if (voteType === "up") {
+        setUpvotes((prev) => (userVote === "up" ? prev - 1 : prev + 1));
+        setDownvotes((prev) => (userVote === "down" ? prev - 1 : prev));
+      } else {
+        setDownvotes((prev) => (userVote === "down" ? prev - 1 : prev + 1));
+        setUpvotes((prev) => (userVote === "up" ? prev - 1 : prev));
+      }
+      setUserVote(userVote === voteType ? null : voteType);
+    } catch (error) {
+      console.error("Error submitting vote:", error);
+    }
+  };
 
   const updateReview = async () => {
     const updatedReview = {
@@ -199,7 +234,10 @@ export default function ReviewItem({
             {date && <p className={styles.date}>{date.toString()}</p>}
 
             <div className={styles.replyButtonContainer}>
-              <ButtonReview classNames={`${styles.replyButton} ${styles.up}`}>
+              <ButtonReview
+                classNames={`${styles.replyButton} ${styles.up} ${userVote === "up" ? styles.active : ""}`}
+                onClick={() => handleVote("up")}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -213,9 +251,12 @@ export default function ReviewItem({
                     d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"
                   />
                 </svg>
-                ###
+                {upvotes}
               </ButtonReview>
-              <ButtonReview classNames={`${styles.replyButton} ${styles.down}`}>
+              <ButtonReview
+                classNames={`${styles.replyButton} ${styles.down} ${userVote === "down" ? styles.active : ""}`}
+                onClick={() => handleVote("down")}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -229,7 +270,7 @@ export default function ReviewItem({
                     d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"
                   />
                 </svg>
-                ###
+                {downvotes}
               </ButtonReview>
             </div>
           </div>
