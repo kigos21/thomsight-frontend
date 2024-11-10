@@ -7,6 +7,7 @@ export type User = {
   bio?: string;
   status: UserStatus;
   phone_number?: string;
+  company?: Company | undefined;
 };
 
 export enum UserRole {
@@ -33,6 +34,7 @@ export type Company = {
   locations?: Location[];
   jobs?: Job[];
   image?: string;
+  deleted_at?: Date;
 };
 
 export type Location = {

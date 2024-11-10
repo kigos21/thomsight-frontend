@@ -8,10 +8,14 @@ import { User } from "../../types/types";
 import styles from "./AdminCompanyAccount.module.scss";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
+import ValidationError from "../../components/form/ValidationError";
+import SuccessMessage from "../../components/form/SuccessMessage";
 
 export default function AdminCompanyAccount() {
   const [repUsers, setRepUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -28,6 +32,45 @@ export default function AdminCompanyAccount() {
 
     fetchRepUsers();
   }, []);
+
+  const handleSoftDelete = async (
+    companyId: number | undefined
+  ): Promise<boolean> => {
+    setError("");
+    setSuccess("");
+    try {
+      setLoading("Deleting company...");
+      await axiosInstance.patch(`/api/company/${companyId}/soft-delete`);
+      setSuccess("Company soft deleted successfully.");
+      return true;
+    } catch (error) {
+      console.error("Error soft deleting company:", error);
+      setError("There was a problem deleting the company.");
+      return false;
+    } finally {
+      setLoading("");
+    }
+  };
+
+  const handleRestore = async (
+    companyId: number | undefined
+  ): Promise<boolean> => {
+    setError("");
+    setSuccess("");
+    try {
+      setLoading("Restoring company...");
+      await axiosInstance.patch(`/api/company/${companyId}/restore`);
+      setSuccess("Company restored successfully.");
+      return true;
+    } catch (error) {
+      console.error("Error restoring company:", error);
+      setError("There was a problem restoring the company.");
+      return false;
+    } finally {
+      setLoading("");
+    }
+  };
+
   return (
     <PaddedContainer>
       <div className={styles.title}>
@@ -37,6 +80,8 @@ export default function AdminCompanyAccount() {
           onSort={(option: string) => console.log(option)}
         ></SortButton>
       </div>
+      {error && <ValidationError message={error} />}
+      {success && <SuccessMessage message={success} />}
       {loading && <Spinner message={loading} />}
 
       <StyledBox
@@ -45,20 +90,26 @@ export default function AdminCompanyAccount() {
       >
         <div className={styles.companytokens}>
           <div className={styles.header}>
-            <p className={styles.token}>Token</p>
+            <p className={styles.token}>Company Name</p>
             <p className={styles.status}>Status</p>
             <p className={styles.expiresIn}>Expires&nbsp;In</p>
             <p className={styles.company}>Email</p>
           </div>
           {repUsers.map((user) => (
             <>
-              <CompanyAccountsItem
-                key={user.id}
-                status="active"
-                companyName="WTW Accenture Philippines Corporated, LLC"
-                email="elijah.has.the.dept@gmail.com"
-                expiration="1 month"
-              />
+              {user.company && (
+                <CompanyAccountsItem
+                  key={user.id}
+                  status="active"
+                  companyName={user.company.name}
+                  email={user.company.email}
+                  expiration="1 month"
+                  handleSoftDelete={handleSoftDelete}
+                  handleRestore={handleRestore}
+                  companyId={user.company.id}
+                  isTrashed={user.company.deleted_at !== null}
+                />
+              )}
             </>
           ))}
         </div>

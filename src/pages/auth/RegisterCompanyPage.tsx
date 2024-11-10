@@ -20,7 +20,7 @@ import Spinner from "../../components/ui/Spinner";
 import ValidationError from "../../components/form/ValidationError";
 
 export default function CompanyRegisterPage() {
-  const { token } = useToken(); // Assuming removeToken only removes it from context
+  const { token } = useToken();
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
 

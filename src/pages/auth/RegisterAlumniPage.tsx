@@ -91,7 +91,7 @@ export default function RegisterAlumniPage() {
 
     try {
       setLoading("Registering alumni...");
-      const response = await axiosInstance.post("/api/register-alumni", {
+      await axiosInstance.post("/api/register-alumni", {
         firstName,
         lastName,
         birthday,
