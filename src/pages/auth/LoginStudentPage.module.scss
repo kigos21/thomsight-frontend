@@ -50,7 +50,7 @@
   width: 100%;
   padding: 1.2rem 2.4rem;
   font-size: 1.2rem;
-  margin-top: 0.6rem;
+  // margin-top: 0.6rem;
   color: var(--black);
 
   background-color: white;
@@ -73,6 +73,20 @@
   top: 50%;
   left: 1.8rem;
   transform: translate(0, -50%);
+}
+
+.googleHeader {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 0;
+}
+
+.googleHeader::before,
+.googleHeader::after {
+  content: "";
+  border-bottom: 2px solid hsl(0, 0%, 60%); /* Adjust color as needed */
 }
 
 /* Media Queries */

@@ -22,7 +22,7 @@ const FormField: React.FC<FormFieldProps> = ({
         placeholder={placeholder}
         required={required}
         name={name}
-        value={value}
+        value={value ?? ""}
         className={`${styles.formField} ${classNames}`}
         onChange={onChange}
       />
@@ -32,7 +32,7 @@ const FormField: React.FC<FormFieldProps> = ({
         placeholder={placeholder}
         required={required}
         name={name}
-        value={value}
+        value={value ?? ""}
         className={`${styles.formField} ${classNames}`}
         onChange={onChange}
         {...extraProps}

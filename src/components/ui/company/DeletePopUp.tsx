@@ -20,7 +20,7 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
           <button className={styles.cancelButton} onClick={onClose}>
             Cancel
           </button>
-          <button className={styles.deleteButton} onClick={onDelete}>
+          <button className={styles.deleteButton} onClick={() => onDelete?.()}>
             Delete
           </button>
         </div>

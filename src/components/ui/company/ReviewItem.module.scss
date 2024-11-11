@@ -25,7 +25,30 @@
 }
 
 .replyButtonContainer {
-  padding: 0.8rem 0rem;
+  display: flex;
+  align-items: center;
+
+  .replyButton {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
+    &.up {
+    }
+
+    &.down {
+    }
+
+    .voteCount {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .active {
+  }
 }
 
 .reviewSubjectContainer {

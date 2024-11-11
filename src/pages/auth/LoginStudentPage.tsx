@@ -105,6 +105,10 @@ export default function LoginStudentPage() {
               Login
             </Button>
           </form>
+          <p className={styles.googleHeader}>
+            <span>Are you a student? Use Google to log in.</span>
+          </p>
+
           <Button
             color="primary"
             roundness="rounded"

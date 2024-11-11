@@ -16,6 +16,7 @@ export type ButtonProps = {
 export type ButtonReviewProps = {
   children: React.ReactNode;
   classNames?: string;
+  onClick?: () => void;
 };
 
 export type StyledBoxProps = {
@@ -146,6 +147,10 @@ export type CompanyAccountsItemProps = {
   status: "active" | "inactive" | "expiring";
   classNames?: string; // Optional classNames prop
   email?: string;
+  handleSoftDelete: (id: number | undefined) => Promise<boolean>;
+  handleRestore: (id: number | undefined) => Promise<boolean>;
+  companyId: number | undefined;
+  isTrashed: boolean;
 };
 
 export type StatusProps = {
