@@ -62,8 +62,8 @@ export default function LoginStudentPage() {
 
   const handleGoogleLogin = async () => {
     console.log("Google Log In");
-    window.location.href = "http://localhost:8000/auth/google";
-    // window.location.href = "https://api.thomsight.com/auth/google";
+    // window.location.href = "http://localhost:8000/auth/google";
+    window.location.href = "https://api.thomsight.com/auth/google";
     // navigate("/companies");
   };
 
