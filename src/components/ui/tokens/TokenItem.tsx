@@ -19,6 +19,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
   setError,
   setSuccess,
   updateEmail,
+  expiring,
 }) => {
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
@@ -71,7 +72,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
       <span className={styles.number}>{number}</span>
       <span className={styles.token}>{token}</span>
       <span className={styles.status}>
-        <Status status="active" />
+        {expiring ? <Status status="expiring" /> : <Status status="active" />}
       </span>
       <TokenFormField
         classNames={styles.tokenformfield}
