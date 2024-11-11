@@ -17,7 +17,7 @@ export default function AdminCompanyAccount() {
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { loadCompanies } = useCompanies();
+  // const { loadCompanies } = useCompanies();
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -44,7 +44,20 @@ export default function AdminCompanyAccount() {
       setLoading("Deleting company...");
       await axiosInstance.patch(`/api/company/${companyId}/soft-delete`);
       setSuccess("Company soft deleted successfully.");
-      loadCompanies();
+      setRepUsers((prevRepUsers) =>
+        prevRepUsers.map((user) => {
+          if (user.company && user.company.id === companyId) {
+            return {
+              ...user,
+              company: {
+                ...user.company,
+                deleted_at: new Date(),
+              },
+            };
+          }
+          return user;
+        })
+      );
       return true;
     } catch (error) {
       console.error("Error soft deleting company:", error);
@@ -64,7 +77,20 @@ export default function AdminCompanyAccount() {
       setLoading("Restoring company...");
       await axiosInstance.patch(`/api/company/${companyId}/restore`);
       setSuccess("Company restored successfully.");
-      loadCompanies();
+      setRepUsers((prevRepUsers) =>
+        prevRepUsers.map((user) => {
+          if (user.company && user.company.id === companyId) {
+            return {
+              ...user,
+              company: {
+                ...user.company,
+                deleted_at: undefined,
+              },
+            };
+          }
+          return user;
+        })
+      );
       return true;
     } catch (error) {
       console.error("Error restoring company:", error);
@@ -104,7 +130,7 @@ export default function AdminCompanyAccount() {
               {user.company && (
                 <CompanyAccountsItem
                   key={user.id}
-                  status="active"
+                  status={user.company.deleted_at ? "inactive" : "active"}
                   companyName={user.company.name}
                   email={user.company.email}
                   expiration="1 month"
