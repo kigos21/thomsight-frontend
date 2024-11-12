@@ -49,7 +49,7 @@ export default function FAQsPage() {
           </div>
           <div className={styles.items}>
             <h2 className={styles.subtitle}>10. Is this platform accessible to all students of University of Santo Tomas?</h2>
-            <p className={styles.paragraph}>No, this platform is only accessible to specifically the Collage of Information and Computing Sciences (CICS) students along with the alumni of the same university and of course the company representatives and the adminstrator.</p>
+            <p className={styles.paragraph}>No, this platform is only accessible to specifically the College of Information and Computing Sciences (CICS) students along with the alumni of the same university and of course the company representatives and the adminstrator.</p>
           </div>
         </div>
       </StyledBox>
