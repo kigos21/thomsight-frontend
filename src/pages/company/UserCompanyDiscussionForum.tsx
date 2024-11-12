@@ -7,15 +7,14 @@ import { Fragment, useEffect, useState } from "react";
 import DiscussionAddPostForm from "../../components/ui/company/DiscussionAddPostForm";
 import axiosInstance from "../../services/axiosInstance";
 import { useParams } from "react-router-dom";
-import ValidationError from "../../components/form/ValidationError";
 import Spinner from "../../components/ui/Spinner";
-import SuccessMessage from "../../components/form/SuccessMessage";
 import { containsBadWords } from "../../badWordsFilter";
 import FormField from "../../components/form/FormField";
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import { IconSend, IconX } from "@tabler/icons-react";
 import { useUser } from "../../contexts/UserContext";
 import DisplayProfile from "../../components/ui/company/DisplayProfile";
+import { toast } from "react-toastify";
 
 interface Reply {
   id: number;
@@ -43,10 +42,8 @@ export default function UserCompanyDiscussionForum() {
 
   const [reply, setReply] = useState<string>("");
   const [activeReplyPostId, setActiveReplyPostId] = useState<number>(-1); // -1 if unset
-  const [error, setError] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
   const [postData, setPostData] = useState<Post[]>([]);
   const { user } = useUser();
   const [activeEditReplyId, setActiveEditReplyId] = useState<number | null>(
@@ -86,15 +83,15 @@ export default function UserCompanyDiscussionForum() {
 
   const handleSave = async () => {
     if (postForm.description.trim() === "") {
-      setError("Post description cannot be blank.");
+      toast.error("Post description cannot be blank.");
       return;
     }
     if (containsBadWords(postForm.description)) {
-      setError("Post description contains foul language");
+      toast.error("Post description contains foul language");
       return;
     }
     if (postForm.description.length > 2000) {
-      setError("Post description should be limited to 2000 characters.");
+      toast.error("Post description should be limited to 2000 characters.");
       return;
     }
 
@@ -117,10 +114,10 @@ export default function UserCompanyDiscussionForum() {
       setPostData((prevPosts) => [...prevPosts, savedPost]);
       setIsAddingPost(false);
       setPostForm({ description: "" });
-      setSuccess("Created discussion successfully");
+      toast.success("Created discussion successfully");
     } catch (error) {
       console.error("Error saving post:", error);
-      setError("An error occurred while saving the post.");
+      toast.error("An error occurred while saving the post.");
     } finally {
       setLoading("");
     }
@@ -132,6 +129,7 @@ export default function UserCompanyDiscussionForum() {
         message: description,
       });
     } catch (error) {
+      toast.error("Failed to notify representative");
       console.error("Error notifying representative:", error);
     }
   };
@@ -169,14 +167,12 @@ export default function UserCompanyDiscussionForum() {
   };
 
   const handleAddReply = async (discussionId: number) => {
-    setSuccess("");
-    setError("");
     if (!reply.trim()) {
-      setError("Comment cannot be blank.");
+      toast.error("Comment cannot be blank.");
       return;
     }
     if (reply.length > 500) {
-      setError("Comments should be limited to 500 characters.");
+      toast.error("Comments should be limited to 500 characters.");
       return;
     }
 
@@ -194,17 +190,16 @@ export default function UserCompanyDiscussionForum() {
       setPostData(discussions);
       setReply("");
       setActiveReplyPostId(-1);
+      toast.success("Replied successfully");
     } catch (error) {
       console.error("Error adding reply:", error);
-      setError("An error occurred while adding the reply.");
+      toast.error("An error occurred while adding the reply.");
     } finally {
       setLoading("");
     }
   };
 
   const handleReplyDelete = async (replyId: number, discussionId: number) => {
-    setSuccess("");
-    setError("");
     try {
       setLoading("Deleting reply...");
       await axiosInstance.delete(
@@ -217,18 +212,16 @@ export default function UserCompanyDiscussionForum() {
       );
       const discussions = response.data;
       setPostData(discussions);
-      setSuccess("Reply deleted successfully.");
+      toast.success("Reply deleted successfully.");
     } catch (error) {
       console.error("Error deleting reply:", error);
-      setError("An error occurred while deleting the reply.");
+      toast.error("An error occurred while deleting the reply.");
     } finally {
       setLoading("");
     }
   };
 
   const handleEditClick = (replyId: number, replyText: string) => {
-    setError("");
-    setSuccess("");
     if (activeEditReplyId === replyId) {
       setActiveEditReplyId(null);
       setEditedReplyText("");
@@ -239,10 +232,8 @@ export default function UserCompanyDiscussionForum() {
   };
 
   const handleSaveEdit = async (replyId: number) => {
-    setSuccess("");
-    setError("");
     if (editedReplyText.length > 500) {
-      setError("Comments should be limited to 500 characters");
+      toast.error("Comments should be limited to 500 characters");
       return;
     }
     try {
@@ -263,7 +254,7 @@ export default function UserCompanyDiscussionForum() {
       setEditedReplyText("");
     } catch (error) {
       console.error("Failed to save the reply:", error);
-      setError("Failed to update reply. Please try again.");
+      toast.error("Failed to update reply. Please try again.");
     } finally {
       setLoading("");
     }
@@ -282,8 +273,6 @@ export default function UserCompanyDiscussionForum() {
               classNames={styles.replyButton}
               onClick={() => {
                 setIsAddingPost(true);
-                setError("");
-                setSuccess("");
               }} // Show form on button click
             >
               Add Post
@@ -302,8 +291,6 @@ export default function UserCompanyDiscussionForum() {
               </p>
             </StyledBox>
           </div>
-          {error && <ValidationError message={error} />}
-          {success && <SuccessMessage message={success} />}
 
           {isAddingPost && (
             <DiscussionAddPostForm
@@ -326,17 +313,13 @@ export default function UserCompanyDiscussionForum() {
                     onDescriptionChange={(updatedDescription: string) =>
                       handleDescriptionChange(post.id, updatedDescription)
                     }
-                    setSuccess={setSuccess}
                     setLoading={setLoading}
-                    setError={setError}
                     onDiscussionDelete={handleDiscussionDelete}
                     posted_by={post.posted_by}
                     handleReplyClick={() => {
                       setActiveReplyPostId(
                         activeReplyPostId === post.id ? -1 : post.id
                       );
-                      setError("");
-                      setSuccess("");
                     }}
                     user_id={post.user_id}
                   />

@@ -9,10 +9,10 @@ import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import DeletePopUp from "./DeletePopUp";
 import { containsBadWords } from "../../../badWordsFilter";
-import ValidationError from "../../form/ValidationError";
 import { useUser } from "../../../contexts/UserContext";
 import ReportForm from "./ReportForm";
 import DisplayProfile from "./DisplayProfile";
+import { toast } from "react-toastify";
 
 export default function DiscussionForumItem({
   classNames,
@@ -22,9 +22,7 @@ export default function DiscussionForumItem({
   description,
   onDescriptionChange,
   id,
-  setSuccess,
   setLoading,
-  setError,
   onDiscussionDelete,
   posted_by,
   handleReplyClick,
@@ -34,33 +32,27 @@ export default function DiscussionForumItem({
   const [tempDescription, setTempDescription] = useState<string>(description);
   const { slug } = useParams<{ slug: string }>();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
-  const [descriptionError, setDescriptionError] = useState<string>("");
   const { user } = useUser();
   const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
   const [selectedReportOption, setSelectedReportOption] = useState<
     string | null
   >(null);
   const [reportDescription, setReportDescription] = useState<string>("");
-  const [reportError, setReportError] = useState<string | null>(null);
-  const [reportSuccess, setReportSuccess] = useState<string | null>(null);
   const [reportLoading, setReportLoading] = useState<string>("");
 
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
   const handleEditClick = () => {
-    setError("");
-    setSuccess("");
     setIsEditing((state) => !state);
   };
 
   const handleSaveClick = async () => {
-    setDescriptionError("");
     if (containsBadWords(tempDescription)) {
-      setDescriptionError("New description contains foul language");
+      toast.error("New description contains foul language");
       return;
     }
     if (tempDescription.length > 2000) {
-      setDescriptionError("Description should be limited to 2000 characters");
+      toast.error("Description should be limited to 2000 characters");
       return;
     }
     try {
@@ -71,10 +63,10 @@ export default function DiscussionForumItem({
 
       onDescriptionChange(tempDescription);
       setIsEditing(false);
-      setSuccess("Updated discussion successfully");
+      toast.success("Updated discussion successfully");
     } catch (error) {
       console.error("Error updating the discussion:", error);
-      setError("Could not update discussion. Please try again.");
+      toast.error("Could not update discussion. Please try again.");
     } finally {
       setLoading("");
     }
@@ -86,8 +78,6 @@ export default function DiscussionForumItem({
   };
 
   const handleDeleteClick = () => {
-    setSuccess("");
-    setError("");
     setShowDeletePopup(true);
   };
 
@@ -100,10 +90,10 @@ export default function DiscussionForumItem({
       if (onDiscussionDelete) {
         onDiscussionDelete(id);
       }
-      setSuccess("Deleted discussion successfully");
+      toast.success("Deleted discussion successfully");
     } catch (err) {
       console.error("Error deleting discussion:" + err);
-      setError("Could not delete discussion. Please try again.");
+      toast.error("Could not delete discussion. Please try again.");
     } finally {
       setLoading("");
       setShowDeletePopup(false);
@@ -111,22 +101,18 @@ export default function DiscussionForumItem({
   };
 
   const handleReportClick = () => {
-    setSuccess("");
-    setError("");
     setShowReportPopup(true);
   };
 
   const handleSubmitReport = async (e: FormEvent) => {
     e.preventDefault();
-    setReportError(null);
-    setReportSuccess(null);
 
     if (!selectedReportOption) {
-      setReportError("Please select an issue type.");
+      toast.error("Please select an issue type.");
       return;
     }
     if (!reportDescription) {
-      setReportError("Please fill out the reason");
+      toast.error("Please fill out the reason");
       return;
     }
 
@@ -141,14 +127,15 @@ export default function DiscussionForumItem({
         }
       );
       if (response.status === 200) {
-        setReportSuccess("Report submitted successfully.");
+        toast.success("Report submitted successfully.");
         setSelectedReportOption(null);
         setReportDescription("");
       }
     } catch (error) {
-      setReportError(
-        "There was an error submitting the report. Please try again." + error
+      toast.error(
+        "There was an error submitting the report. Please try again."
       );
+      console.error(error);
     } finally {
       setReportLoading("");
     }
@@ -191,9 +178,6 @@ export default function DiscussionForumItem({
 
           {isEditing ? (
             <div className={styles.editDescriptionSection}>
-              {descriptionError && (
-                <ValidationError message={descriptionError} />
-              )}
               <textarea
                 className={styles.descriptionTextarea}
                 value={tempDescription}
@@ -263,8 +247,6 @@ export default function DiscussionForumItem({
           description={reportDescription}
           setDescription={setReportDescription}
           handleSubmit={handleSubmitReport}
-          error={reportError}
-          successMessage={reportSuccess}
           loading={reportLoading === "Submitting report..."}
         ></ReportForm>
       )}

@@ -61,9 +61,7 @@ export type DiscussionForumItemProps = {
   classNames?: string;
   style?: React.CSSProperties;
   id: number;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
   setLoading: React.Dispatch<React.SetStateAction<string>>;
-  setError: React.Dispatch<React.SetStateAction<string>>;
   onDiscussionDelete: (id: number | undefined) => void;
   posted_by: number;
   user_id: number;
