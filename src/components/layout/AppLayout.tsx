@@ -109,7 +109,7 @@ export default function AppRoot() {
           Announcements
         </NavLink>,
         <NavLink
-          to="/tokens/companies"
+          to="/company-accounts"
           key="companiesAdmin"
           className={({ isActive }) => (isActive ? styles.active : "")}
         >
