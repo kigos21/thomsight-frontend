@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import { FeedbackReport } from "../../types/types";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
-import SuccessMessage from "../../components/form/SuccessMessage";
-import ValidationError from "../../components/form/ValidationError";
+import { toast } from "react-toastify";
 
 const ReportsReviews = () => {
   const [reports, setReports] = useState<FeedbackReport[]>([]);
@@ -15,8 +14,6 @@ const ReportsReviews = () => {
   const [showDeleteReportPopup, setShowDeleteReportPopup] =
     useState<boolean>(false);
   const [showDeleteRRPopup, setShowDeleteRRPopup] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -41,10 +38,10 @@ const ReportsReviews = () => {
     try {
       setLoading("Dismissing report...");
       await axiosInstance.delete(`/api/report/feedback/${id}/delete`);
-      setSuccess("Dismissed report");
+      toast.success("Dismissed report");
       setReports(reports.filter((report) => report.id !== id));
     } catch (error) {
-      setError("Error deleting report:" + error);
+      toast.error("Error deleting report:" + error);
     } finally {
       setLoading("");
       setShowDeleteReportPopup(false);
@@ -57,10 +54,10 @@ const ReportsReviews = () => {
       await axiosInstance.delete(
         `/api/report/feedback/${id}/delete/with-feedback`
       );
-      setSuccess("Deleted review successfully");
+      toast.success("Deleted review successfully");
       setReports(reports.filter((report) => report.feedback_id !== reviewId));
     } catch (error) {
-      setError("Error deleting review and report:" + error);
+      toast.error("Error deleting review and report:" + error);
       console.error(error);
     } finally {
       setLoading("");
@@ -71,8 +68,6 @@ const ReportsReviews = () => {
   return (
     <div>
       <h1 className={styles.heading}>Reviews</h1>
-      {success && <SuccessMessage message={success} />}
-      {error && <ValidationError message={error} />}
       <ReportsTable>
         {reports.map((report) => (
           <div key={report.id} className={styles.row}>

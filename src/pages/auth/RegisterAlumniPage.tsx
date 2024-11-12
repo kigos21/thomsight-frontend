@@ -12,22 +12,18 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import styles from "./RegisterAlumniPage.module.scss";
-import ValidationError from "../../components/form/ValidationError";
 import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
+import { toast } from "react-toastify";
 
 export default function RegisterAlumniPage() {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
-  const [birthdayError, setBirthdayError] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState<string>("");
 
@@ -35,7 +31,7 @@ export default function RegisterAlumniPage() {
     const dateRegex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/([12]\d{3})$/;
 
     if (!dateRegex.test(value)) {
-      setBirthdayError("Please enter valid date in dd/mm/yyyy format");
+      toast.error("Please enter valid date in dd/mm/yyyy format");
       return false;
     }
 
@@ -47,33 +43,31 @@ export default function RegisterAlumniPage() {
       date.getFullYear() === year;
 
     if (!isValidDate) {
-      setBirthdayError("Please enter a valid date");
+      toast.error("Please enter a valid date");
       return false;
     }
 
     if (date > new Date()) {
-      setBirthdayError("Birthday cannot be in the future");
+      toast.error("Birthday cannot be in the future");
       return false;
     }
 
-    setBirthdayError("");
     return true;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setError("");
     e.preventDefault();
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setPasswordError(
+      toast.error(
         "Password must be at least 8 characters, include 1 special character, and have both uppercase and lowercase letters."
       );
       return;
     }
 
     if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 
@@ -107,7 +101,7 @@ export default function RegisterAlumniPage() {
       // console.log(response);
     } catch (error) {
       console.error("Alumni not found in the records" + error);
-      setError("Alumni not found in the records.");
+      toast.error("Alumni not found in the records.");
     } finally {
       setLoading("");
     }
@@ -122,7 +116,6 @@ export default function RegisterAlumniPage() {
     <PaddedContainer>
       <AuthContentContainer>
         <div className={styles.container}>
-          {error && <ValidationError message={error} />}
           {loading && <Spinner message={loading} />}
           <h1 className={styles.header}>Register your Account</h1>
           <div className={styles.formContainer}>
@@ -175,7 +168,6 @@ export default function RegisterAlumniPage() {
                 }}
                 value={birthday}
               />
-              {birthdayError && <ValidationError message={birthdayError} />}
               <FormField
                 icon={
                   <IconMail size={35} stroke={1.5} className={styles.icon} />
@@ -196,7 +188,6 @@ export default function RegisterAlumniPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {passwordError && <ValidationError message={passwordError} />}
               <FormField
                 icon={
                   <IconLock size={35} stroke={1.5} className={styles.icon} />
@@ -207,9 +198,6 @@ export default function RegisterAlumniPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              {confirmPasswordError && (
-                <ValidationError message={confirmPasswordError} />
-              )}
               {/* <FormField
                 icon={
                   <IconPhone size={35} stroke={1.5} className={styles.icon} />

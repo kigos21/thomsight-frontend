@@ -12,7 +12,6 @@ import {
   IconHome,
   IconBubbleText,
   IconBriefcase,
-  IconStars,
   IconBulb,
 } from "@tabler/icons-react";
 

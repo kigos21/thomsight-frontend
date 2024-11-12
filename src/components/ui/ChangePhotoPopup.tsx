@@ -4,18 +4,17 @@ import axiosInstance from "../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import Spinner from "./Spinner";
 import { useCompanies } from "../../contexts/CompaniesContext";
+import { toast } from "react-toastify";
 
 interface ChangePhotoPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onSave?: (file: File | null) => void;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ChangePhotoPopup: React.FC<ChangePhotoPopupProps> = ({
   isOpen,
   onClose,
-  setSuccess,
 }) => {
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const { slug } = useParams<{ slug: string }>();
@@ -44,7 +43,7 @@ const ChangePhotoPopup: React.FC<ChangePhotoPopupProps> = ({
         ...company,
         image: response.data.photo,
       };
-      setSuccess("Successfully changed photo");
+      toast.success("Successfully changed photo");
       updateCompany(updatedCompany);
     } catch (error) {
       console.error(error);

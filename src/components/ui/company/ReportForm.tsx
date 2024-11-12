@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./ReportForm.module.scss";
 import { ReportFormProps } from "../../../types/props";
-import ValidationError from "../../form/ValidationError";
-import SuccessMessage from "../../form/SuccessMessage";
 
 const ReportForm: React.FC<ReportFormProps> = ({
   isVisible,
@@ -12,8 +10,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
   description,
   setDescription,
   handleSubmit,
-  error,
-  successMessage,
   loading,
 }) => {
   if (!isVisible) return null;
@@ -26,8 +22,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
     <div className={styles.reportFormOverlay} onClick={onClose}>
       <div className={styles.reportForm} onClick={(e) => e.stopPropagation()}>
         <h2 className={styles.heading}>Report Issue</h2>
-        {error && <ValidationError message={error} />}
-        {successMessage && <SuccessMessage message={successMessage} />}
         <form onSubmit={handleSubmit}>
           <div className={styles.checkboxGroup}>
             <label>

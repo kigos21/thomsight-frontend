@@ -2,7 +2,6 @@ import FormField from "../../form/FormField";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import styles from "./CompanyInterviewTipForm.module.scss";
-import ValidationError from "../../form/ValidationError";
 
 interface Tip {
   title: string;
@@ -14,14 +13,11 @@ interface CompanyInterviewTipFormProps {
   onSave: () => void;
   onChange: (review: Tip) => void;
   onCancel: () => void;
-  error: string;
-  titleError: string;
-  descriptionError: string;
 }
 
 const CompanyInterviewTipForm: React.FunctionComponent<
   CompanyInterviewTipFormProps
-> = ({ tip, onSave, onChange, onCancel, titleError, descriptionError }) => {
+> = ({ tip, onSave, onChange, onCancel }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -48,7 +44,6 @@ const CompanyInterviewTipForm: React.FunctionComponent<
               value={tip.title}
               onChange={handleInputChange}
             ></FormField>
-            {titleError && <ValidationError message={titleError} />}
           </div>
 
           <div>
@@ -62,7 +57,6 @@ const CompanyInterviewTipForm: React.FunctionComponent<
               value={tip.description}
               onChange={handleInputChange}
             ></FormField>
-            {descriptionError && <ValidationError message={descriptionError} />}
           </div>
 
           <div className={styles.buttonGroup}>

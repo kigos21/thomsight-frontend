@@ -17,25 +17,17 @@ import { useToken } from "../../contexts/TokenContext";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
-import ValidationError from "../../components/form/ValidationError";
+import { toast } from "react-toastify";
 
 export default function CompanyRegisterPage() {
   const { token } = useToken();
   const navigate = useNavigate();
-  const [error, setError] = useState<string>("");
 
   const [companyName, setCompanyName] = useState<string>("");
-  const [companyNameError, setCompanyNameError] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [nameError, setNameError] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
-  // const [phone, setPhone] = useState<string>();
-  // const [phoneError, setPhoneError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -46,55 +38,36 @@ export default function CompanyRegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let isValid = true;
-
-    setError("");
-    setCompanyNameError("");
-    setNameError("");
-    setEmailError("");
-    setPasswordError("");
-    setConfirmPasswordError("");
-    // setPhoneError("");
 
     if (companyName.length > 100) {
-      setCompanyNameError("Company name must be less than 100 characters.");
-      isValid = false;
+      toast.error("Company name must be less than 100 characters.");
+      return;
     }
 
     if (name.length > 100) {
-      setNameError("Name must be less than 100 characters.");
-      isValid = false;
+      toast.error("Name must be less than 100 characters.");
+      return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setEmailError("Please enter a valid email address.");
-      isValid = false;
+      toast.error("Please enter a valid email address.");
+      return;
     }
 
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setPasswordError(
+      toast.error(
         "Password must be at least 8 characters, include 1 special character, and have both uppercase and lowercase letters."
       );
-      isValid = false;
+      return;
     }
 
     if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match.");
-      isValid = false;
+      toast.error("Passwords do not match.");
+      return;
     }
-
-    // if (isNaN(Number(phone))) {
-    //   setPhoneError("Phone number must be a number.");
-    //   isValid = false;
-    // } else if (!/^\d{11}$/.test(phone?.toString() || "")) {
-    //   setPhoneError("Phone number must be 11 digits.");
-    //   isValid = false;
-    // }
-
-    if (!isValid) return;
 
     setLoading(true);
 
@@ -132,7 +105,7 @@ export default function CompanyRegisterPage() {
       navigate("/login");
     } catch (error) {
       console.error("Error registering company:", error);
-      setError("Account already exists!");
+      toast.error("Account already exists!");
     } finally {
       setLoading(false);
     }
@@ -145,7 +118,6 @@ export default function CompanyRegisterPage() {
         <div className={styles.container}>
           <h1 className={styles.header}>Register your Company</h1>
           <div className={styles.formContainer}>
-            {error && <ValidationError message={error} />}
             <form className={styles.form} onSubmit={handleSubmit}>
               {/* Company Name Field */}
               <FormField
@@ -162,9 +134,6 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setCompanyName(e.target.value)}
                 required
               />
-              {companyNameError && (
-                <ValidationError message={companyNameError} />
-              )}
 
               {/* Name Field */}
               <FormField
@@ -177,7 +146,6 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setName(e.target.value)}
                 required
               />
-              {nameError && <ValidationError message={nameError} />}
 
               {/* Email Field */}
               <FormField
@@ -190,7 +158,6 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              {emailError && <ValidationError message={emailError} />}
 
               {/* Password Field */}
               <FormField
@@ -203,7 +170,6 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              {passwordError && <ValidationError message={passwordError} />}
 
               {/* Confirm Password Field */}
               <FormField
@@ -216,22 +182,6 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              {confirmPasswordError && (
-                <ValidationError message={confirmPasswordError} />
-              )}
-
-              {/* Phone Number Field */}
-              {/* <FormField
-                icon={
-                  <IconPhone size={35} stroke={1.5} className={styles.icon} />
-                }
-                type="tel"
-                placeholder="Phone Number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-              {phoneError && <ValidationError message={phoneError} />} */}
 
               <Button
                 type="submit"

@@ -9,15 +9,13 @@ import { Announcement } from "../../types/types";
 
 import styles from "./AdminViewAnnouncements.module.scss";
 import Spinner from "../../components/ui/Spinner";
-import SuccessMessage from "../../components/form/SuccessMessage";
 import { useUser } from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default function AdminViewAnnouncements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("");
   const [deleteLoading, setDeleteLoading] = useState<string>("");
-  const [deleteSuccess, setDeleteSuccess] = useState<string>("");
   const { user } = useUser();
 
   useEffect(() => {
@@ -26,7 +24,8 @@ export default function AdminViewAnnouncements() {
         const data = await getAnnouncements();
         setAnnouncements(data);
       } catch (err) {
-        setError("Failed to load announcements." + err);
+        toast.error("Failed to load announcements.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -42,9 +41,9 @@ export default function AdminViewAnnouncements() {
       setAnnouncements((prevAnnouncements) =>
         prevAnnouncements.filter((announcement) => announcement.id !== id)
       );
-      setDeleteSuccess("Deleted announcement successfully");
+      toast.success("Deleted announcement successfully");
     } catch (error) {
-      setError("Failed to delete announcement." + error);
+      toast.error("Failed to delete announcement." + error);
     } finally {
       setDeleteLoading("");
     }
@@ -68,13 +67,10 @@ export default function AdminViewAnnouncements() {
             </Link>
           )}
         </div>
-        {deleteSuccess && <SuccessMessage message={deleteSuccess} />}
         {deleteLoading && <Spinner message={deleteLoading} />}
 
         {loading ? (
           <Spinner message="Fetching announcements..." />
-        ) : error ? (
-          <p>{error}</p>
         ) : announcements.length > 0 ? (
           announcements.map((announcement) => (
             <AnnouncementItem

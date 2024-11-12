@@ -4,15 +4,9 @@ import styles from "./CVListing.module.scss";
 import { CV } from "../../types/types";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
-import { useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CVListing = () => {
-  const { setSuccess } = useOutletContext<{
-    setSuccess: (message: string) => void;
-  }>();
-  const { setError } = useOutletContext<{
-    setError: (message: string) => void;
-  }>();
   const [cvs, setCvs] = useState<CV[]>([]);
   const [loading, setLoading] = useState<string>("Fetching CVs...");
 
@@ -32,30 +26,26 @@ const CVListing = () => {
   }, []);
 
   const handleRequestAccess = async (cvId: number) => {
-    setError("");
-    setSuccess("");
     try {
       setLoading("Requesting access...");
       await axiosInstance.post(`/api/cv/${cvId}/request-access`);
-      setSuccess("Your request has been submitted.");
+      toast.success("Your request has been submitted.");
     } catch (error: any) {
-      setError(error.response.data.message);
+      toast.error(error.response.data.message);
     } finally {
       setLoading("");
     }
   };
 
   const handleDeleteCV = async (cvId: number) => {
-    setError("");
-    setSuccess("");
     try {
       setLoading("Deleting CV...");
       const response = await axiosInstance.delete(`/api/cv/${cvId}/delete`);
       console.log(response);
       setCvs((prevCvs) => prevCvs.filter((cv) => cv.id !== cvId));
-      setSuccess("CV deleted successfully.");
+      toast.success("CV deleted successfully.");
     } catch (error: any) {
-      setError("Failed to delete CV.");
+      toast.error("Failed to delete CV.");
       console.error(error);
     } finally {
       setLoading("");

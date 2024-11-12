@@ -7,11 +7,11 @@ import { useState } from "react";
 import { Job } from "../../types/types";
 import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
-import SuccessMessage from "../../components/form/SuccessMessage";
 import { useUser } from "../../contexts/UserContext";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
 import { deleteJob } from "../../api/companyCRUD";
 import Spinner from "../../components/ui/Spinner";
+import { toast } from "react-toastify";
 
 export default function CompanyManageInformationJobs() {
   const { slug } = useParams<{ slug: string }>();
@@ -32,8 +32,6 @@ export default function CompanyManageInformationJobs() {
 
   // State to control the visibility of the form
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-
-  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleAdd = () => {
     window.scrollTo({
@@ -59,11 +57,11 @@ export default function CompanyManageInformationJobs() {
     if (currentJob.id === 0) {
       // Adding a new job
       setJobs([...jobs, { ...currentJob, id: jobs.length + 1 }]);
-      setSuccessMessage("Created job successfully");
+      toast.success("Created job successfully");
     } else {
       // Updating an existing job
       setJobs(jobs.map((job) => (job.id === currentJob.id ? currentJob : job)));
-      setSuccessMessage("Updated job successfully");
+      toast.success("Updated job successfully");
     }
 
     // Hide the form after saving
@@ -79,7 +77,7 @@ export default function CompanyManageInformationJobs() {
           await deleteJob(slug, jobToDelete);
           const updatedJobs = jobs.filter((job) => job.id !== jobToDelete);
           setJobs(updatedJobs);
-          setSuccessMessage("Deleted job successfully");
+          toast.success("Deleted job successfully");
 
           if (company) {
             updateCompany({ ...company, jobs: updatedJobs });
@@ -87,7 +85,7 @@ export default function CompanyManageInformationJobs() {
         }
       } catch (error) {
         console.error("Failed to delete job", error);
-        setSuccessMessage("Failed to delete job.");
+        toast.error("Failed to delete job.");
       } finally {
         setDeleteLoading(false);
         setDeleteConfirm(false);
@@ -124,8 +122,6 @@ export default function CompanyManageInformationJobs() {
           Add Job
         </Button>
       </div>
-
-      {successMessage && <SuccessMessage message={successMessage} />}
 
       {/* Conditionally render the form based on isFormVisible */}
       {isFormVisible && (

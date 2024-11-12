@@ -45,9 +45,7 @@ export type InterviewTipsItemProps = {
   id: number | undefined;
   poster_id: number;
   onTipChange: (updatedReview: { title: string; description: string }) => void;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
   onTipDelete: (id: number | undefined) => void;
-  setError: React.Dispatch<React.SetStateAction<string>>;
   classNames?: string;
   style?: React.CSSProperties;
 };
@@ -119,8 +117,6 @@ export type TokenFormFieldProps = {
   readOnly?: boolean; // Ensure this prop is optional
   initialEmail?: string | null;
   tokenId?: number;
-  setError: React.Dispatch<React.SetStateAction<string>>;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
   updateEmail: (newEmail: string | null) => void;
 };
 
@@ -130,10 +126,7 @@ export type TokenItemProps = {
   token: string; // Token string to display
   email: string | null;
   onDeleteToken: (tokenId: number) => void;
-  resetDeleteSuccess: () => void;
   handleEmailSuccess: () => void;
-  setError: React.Dispatch<React.SetStateAction<string>>;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
   updateEmail: (newEmail: string | null) => void;
   expiring: boolean;
 };

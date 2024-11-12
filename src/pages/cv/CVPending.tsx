@@ -1,19 +1,13 @@
 import styles from "./CVPending.module.scss";
 
 import CVCard from "../../components/ui/cv/CVCard";
-import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CV } from "../../types/types";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
+import { toast } from "react-toastify";
 
 const CVPending = () => {
-  const { setSuccess } = useOutletContext<{
-    setSuccess: (message: string) => void;
-  }>();
-  const { setError } = useOutletContext<{
-    setError: (message: string) => void;
-  }>();
   const [cvs, setCvs] = useState<CV[]>([]);
   const [loading, setLoading] = useState<string>("Fetching CVs...");
 
@@ -33,20 +27,18 @@ const CVPending = () => {
   }, []);
 
   const acceptRequest = async (id: number) => {
-    setError("");
-    setSuccess("");
     try {
       setLoading("Accepting request...");
       const response = await axiosInstance.post(`/api/cv/${id}/accept`);
       if (response.data.success) {
-        setSuccess("Request accepted successfully.");
+        toast.success("Request accepted successfully.");
         setCvs(cvs.filter((cv) => cv.id !== id));
       } else {
-        setError(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (err) {
       console.error(err);
-      setError("Failed to accept request. Please try again later.");
+      toast.error("Failed to accept request. Please try again later.");
     } finally {
       setLoading("");
     }

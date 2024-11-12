@@ -7,9 +7,8 @@ import { useState } from "react";
 
 import styles from "./AdminCreateAnnouncementItem.module.scss";
 import Spinner from "../Spinner";
-import ValidationError from "../../form/ValidationError";
-import SuccessMessage from "../../form/SuccessMessage";
 import { containsBadWords } from "../../../badWordsFilter";
+import { toast } from "react-toastify";
 
 export default function AdminCreatennouncementItem({
   classNames,
@@ -18,45 +17,31 @@ export default function AdminCreatennouncementItem({
   const [subject, setSubject] = useState<string>("");
   const [details, setDetails] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [successMessage, setSuccessMessage] = useState<string>("");
-
-  const [subjectError, setSubjectError] = useState<string>("");
-  const [detailsError, setDetailsError] = useState<string>("");
 
   const handleSubmit = async () => {
-    setLoading(true);
-    setSuccessMessage("");
-    setSubjectError("");
-    setDetailsError("");
-    let isValid = true;
-
     if (subject.trim() === "") {
-      setSubjectError("Subject cannot be blank");
-      isValid = false;
+      toast.error("Subject cannot be blank");
+      return;
     }
     if (details.trim() === "") {
-      setDetailsError("Details cannot be blank");
-      isValid = false;
+      toast.error("Details cannot be blank");
+      return;
     }
     if (containsBadWords(subject)) {
-      setSubjectError("Subject contains foul language");
-      isValid = false;
+      toast.error("Subject contains foul language");
+      return;
     }
     if (containsBadWords(details)) {
-      setDetailsError("Details contains foul language");
-      isValid = false;
-    }
-
-    if (!isValid) {
-      setLoading(false);
+      toast.error("Details contains foul language");
       return;
     }
 
     try {
+      setLoading(true);
       await createAnnouncement(subject, details);
       setSubject("");
       setDetails("");
-      setSuccessMessage("Announcement created successfully!");
+      toast.success("Announcement created successfully!");
     } catch (error) {
       console.error("Error creating announcement:", error);
     } finally {
@@ -80,7 +65,6 @@ export default function AdminCreatennouncementItem({
             Submit
           </Button>
         </div>
-        {successMessage && <SuccessMessage message={successMessage} />}{" "}
         <div className={styles.formContainer}>
           <div>
             <FormField
@@ -91,7 +75,6 @@ export default function AdminCreatennouncementItem({
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
             />
-            {subjectError && <ValidationError message={subjectError} />}
           </div>
 
           <div>
@@ -103,7 +86,6 @@ export default function AdminCreatennouncementItem({
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             />
-            {detailsError && <ValidationError message={detailsError} />}
           </div>
         </div>
       </div>

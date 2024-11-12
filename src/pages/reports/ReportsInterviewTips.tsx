@@ -6,9 +6,8 @@ import axiosInstance from "../../services/axiosInstance";
 import { TipReport } from "../../types/types";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
-import SuccessMessage from "../../components/form/SuccessMessage";
-import ValidationError from "../../components/form/ValidationError";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
+import { toast } from "react-toastify";
 
 const ReportsInterviewTips = () => {
   const [reports, setReports] = useState<TipReport[]>([]);
@@ -16,8 +15,6 @@ const ReportsInterviewTips = () => {
   const [showDeleteReportPopup, setShowDeleteReportPopup] =
     useState<boolean>(false);
   const [showDeleteRTPopup, setShowDeleteRTPopup] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -42,10 +39,10 @@ const ReportsInterviewTips = () => {
     try {
       setLoading("Dismissing report...");
       await axiosInstance.delete(`/api/report/tip/${id}/delete`);
-      setSuccess("Dismissed report");
+      toast.success("Dismissed report");
       setReports(reports.filter((report) => report.id !== id));
     } catch (error) {
-      setError("Error deleting report:" + error);
+      toast.error("Error deleting report:" + error);
     } finally {
       setLoading("");
       setShowDeleteReportPopup(false);
@@ -56,10 +53,10 @@ const ReportsInterviewTips = () => {
     try {
       setLoading("Deleting interview tip...");
       await axiosInstance.delete(`/api/report/tip/${id}/delete/with-tip`);
-      setSuccess("Deleted review successfully");
+      toast.success("Deleted review successfully");
       setReports(reports.filter((report) => report.tip_id !== tipId));
     } catch (error) {
-      setError("Error deleting review and report:" + error);
+      toast.error("Error deleting review and report:" + error);
       console.error(error);
     } finally {
       setLoading("");
@@ -70,8 +67,6 @@ const ReportsInterviewTips = () => {
   return (
     <div>
       <h1 className={styles.heading}>Interview Tips</h1>
-      {success && <SuccessMessage message={success} />}
-      {error && <ValidationError message={error} />}
       <ReportsTable>
         {reports.map((report) => (
           <div className={styles.row}>

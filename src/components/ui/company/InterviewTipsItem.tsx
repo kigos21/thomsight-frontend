@@ -19,8 +19,6 @@ export interface InterviewTipsItemProps {
   tipDescription: string;
   onTipChange?: (updatedTip: { title: string; description: string }) => void;
   onTipDelete?: (id: number | undefined) => void;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
-  setError: React.Dispatch<React.SetStateAction<string>>;
   setLoading: React.Dispatch<React.SetStateAction<string>>;
   poster_id: number | undefined;
 }

@@ -9,6 +9,7 @@ import { Job } from "../../../types/types";
 import { useCompanies } from "../../../contexts/CompaniesContext";
 import Spinner from "../Spinner";
 import { addJob, updateJob } from "../../../api/companyCRUD";
+import { toast } from "react-toastify";
 
 interface CompanyJobInformationFormItemProps {
   job: Job;
@@ -30,7 +31,6 @@ export default function CompanyJobInformationFormItem({
     onChange({ ...job, [name]: value }); // Update job state based on input change
   };
   const { slug } = useParams<{ slug: string }>();
-  const [error, setError] = useState("");
   const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [creating, setCreating] = useState(false);
@@ -66,8 +66,8 @@ export default function CompanyJobInformationFormItem({
       }
       onSave();
     } catch (err) {
-      setError("An error occurred while saving the job." + err);
-      console.log(error);
+      toast.error("An error occurred while saving the job.");
+      console.log(err);
     } finally {
       setCreating(false);
     }

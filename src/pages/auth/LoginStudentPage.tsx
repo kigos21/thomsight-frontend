@@ -8,15 +8,13 @@ import { login } from "../../api/authUser";
 import Spinner from "../../components/ui/Spinner";
 
 import styles from "./LoginStudentPage.module.scss";
-import SuccessMessage from "../../components/form/SuccessMessage";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function LoginStudentPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -27,34 +25,32 @@ export default function LoginStudentPage() {
     const registrationMessage = localStorage.getItem("registrationSuccess");
     const passwordResetMessage = localStorage.getItem("resetPasswordSuccess");
     if (verified === "1") {
-      setSuccessMessage(
+      toast.success(
         "Your email has been successfully verified! You can now log in."
       );
     }
     if (changed === "1") {
-      setSuccessMessage("Your password has been changed successfully.");
+      toast.success("Your password has been changed successfully.");
     }
     if (registrationMessage) {
-      setSuccessMessage(registrationMessage);
+      toast.success(registrationMessage);
       localStorage.removeItem("registrationSuccess");
     }
     if (passwordResetMessage) {
-      setSuccessMessage(passwordResetMessage);
+      toast.success(passwordResetMessage);
       localStorage.removeItem("resetPasswordSuccess");
     }
   }, [location]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
-    setSuccessMessage("");
 
     try {
       await login(email, password);
       navigate("/companies");
     } catch (err: any) {
-      setError(err.response.data.message);
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -72,9 +68,7 @@ export default function LoginStudentPage() {
       <div className={styles.container}>
         <h1>Login with your Account</h1>
         <div className={styles.formContainer}>
-          {successMessage && <SuccessMessage message={successMessage} />}
           <form className={styles.form} onSubmit={handleLogin}>
-            {error && <div className={styles.error}>{error}</div>}
             <FormField
               icon={<IconMail size={35} stroke={1.5} className={styles.icon} />}
               type="email"

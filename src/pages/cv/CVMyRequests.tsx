@@ -6,15 +6,9 @@ import axiosInstance from "../../services/axiosInstance";
 import { CV } from "../../types/types";
 import Spinner from "../../components/ui/Spinner";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
-import { useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CVMyRequests = () => {
-  const { setSuccess } = useOutletContext<{
-    setSuccess: (message: string) => void;
-  }>();
-  const { setError } = useOutletContext<{
-    setError: (message: string) => void;
-  }>();
   const [requestedCVs, setRequestedCVs] = useState<CV[]>([]);
   const [reviewedCVs, setReviewedCVs] = useState<CV[]>([]);
   const [loading, setLoading] = useState<string>("Fetching CVs...");
@@ -29,7 +23,7 @@ const CVMyRequests = () => {
         const reviewedResponse = await axiosInstance.get("/api/reviewed-cvs");
         setReviewedCVs(reviewedResponse.data);
       } catch (error) {
-        setError("Error fetching CVs:");
+        toast.error("Error fetching CVs:");
         console.error(error);
       } finally {
         setLoading("");
@@ -44,7 +38,7 @@ const CVMyRequests = () => {
     try {
       setLoading("Cancelling request...");
       await axiosInstance.post(`/api/${selectedCVId}/cancel-request`);
-      setSuccess("Request cancelled successfully");
+      toast.success("Request cancelled successfully");
       setRequestedCVs(requestedCVs.filter((cv) => cv.id !== selectedCVId));
     } catch (error) {
       console.error(error);

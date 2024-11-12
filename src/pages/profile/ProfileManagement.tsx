@@ -15,9 +15,8 @@ import styles from "./ProfileManagement.module.scss";
 import { useUser } from "../../contexts/UserContext";
 import { FormEvent, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
-import SuccessMessage from "../../components/form/SuccessMessage";
-import ValidationError from "../../components/form/ValidationError";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function ProfileManagement() {
   const { user, updateUser } = useUser();
@@ -27,10 +26,6 @@ export default function ProfileManagement() {
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [tempProfileName, setTempProfileName] = useState<string>(user!.name);
   const [isSaving, setIsSaving] = useState(false);
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  // const [phoneError, setPhoneError] = useState<string>("");
-  const [bioError, setBioError] = useState<string>("");
 
   const handleConfirmClick = () => {
     setIsEditingName(false);
@@ -39,20 +34,10 @@ export default function ProfileManagement() {
 
   const handleSaveProfile = async (e: FormEvent) => {
     e.preventDefault();
-    setSuccess("");
-    setError("");
-    // setPhoneError("");
-    setBioError("");
     setIsSaving(true);
 
-    // if (!/^\d{11}$/.test(phone || "")) {
-    //   setPhoneError("Phone number must be 11 digits and contain only numbers.");
-    //   setIsSaving(false);
-    //   return;
-    // }
-
     if (bio.length > 255) {
-      setBioError("Bio must not exceed 255 characters.");
+      toast.error("Bio must not exceed 255 characters.");
       setIsSaving(false);
       return;
     }
@@ -60,16 +45,15 @@ export default function ProfileManagement() {
     try {
       await axiosInstance.put("/api/update/profile", {
         name: tempProfileName,
-        // phone_number: phone,
         bio,
       });
-      // updateUser({ name, phone_number: phone || "", bio });
       updateUser({ name, bio });
       setName(tempProfileName);
       setIsEditingName(false);
-      setSuccess("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (error) {
-      setError("Could not update profile, please try again." + error);
+      toast.error("Could not update profile, please try again.");
+      console.error(error);
     } finally {
       setIsSaving(false);
     }
@@ -80,8 +64,6 @@ export default function ProfileManagement() {
     <PaddedContainer classNames={styles.paddedContainer}>
       <StyledBox classNames={styles.styledBox}>
         <div className={styles.container}>
-          {success && <SuccessMessage message={success} />}
-          {error && <ValidationError message={error} />}
           <h2 className={styles.title}>User Profile</h2>
           <IconUser size={100} stroke={2} className={styles.headerIcon} />
           <div className={styles.nameContainer}>
@@ -131,14 +113,12 @@ export default function ProfileManagement() {
                   className={styles.editIcon}
                   onClick={() => {
                     setIsEditingName(true);
-                    setSuccess("");
                   }}
                 />
               </div>
             )}
           </div>
           <form className={styles.form} onSubmit={handleSaveProfile}>
-            {bioError && <ValidationError message={bioError} />}
             <FormField
               classNames={styles.fieldBio}
               icon={
@@ -153,34 +133,6 @@ export default function ProfileManagement() {
               value={bio}
               onChange={(e) => setBio(e.target.value)}
             />
-            {/* <FormField
-              icon={<IconUser size={35} stroke={1.5} className={styles.icon} />}
-              type="text"
-              placeholder="Profile Link"
-              required={true}
-            /> */}
-            {/* {phoneError && <ValidationError message={phoneError} />}
-            <FormField
-              icon={
-                <IconPhone size={35} stroke={1.5} className={styles.icon} />
-              }
-              type="tel"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            /> */}
-            {/* <FormField
-              icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
-              type="password"
-              placeholder="Your Password"
-              required={true}
-            />
-            <FormField
-              icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
-              type="password"
-              placeholder="Your New Password"
-              required={true}
-            /> */}
 
             <Button
               color="primary"

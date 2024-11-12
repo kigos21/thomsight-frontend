@@ -7,11 +7,10 @@ import { useCompanies } from "../../contexts/CompaniesContext";
 import { useUser } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
-import SuccessMessage from "../../components/form/SuccessMessage";
-import ValidationError from "../../components/form/ValidationError";
 import { containsBadWords } from "../../badWordsFilter";
 import Button from "../../components/ui/Button";
 import Spinner from "../../components/ui/Spinner";
+import { toast } from "react-toastify";
 
 export type Tip = {
   id?: number;
@@ -28,12 +27,7 @@ export default function UserCompanyInterviewTips() {
     title: "",
     description: "",
   });
-
-  const [error, setError] = useState<string>("");
-  const [titleError, setTitleError] = useState<string>("");
-  const [descriptionError, setDescriptionError] = useState<string>("");
   const [loading, setLoading] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug } = useCompanies();
   const company = getCompanyBySlug(slug as string);
@@ -60,33 +54,25 @@ export default function UserCompanyInterviewTips() {
   }
 
   const handleSave = async () => {
-    setError("");
-    setTitleError("");
-    setDescriptionError("");
-    setSuccess("");
-    let isValid = true;
-
     if (containsBadWords(tip.title)) {
-      setDescriptionError("Your tip contains inappropriate language.");
-      isValid = false;
+      toast.error("Your tip contains inappropriate language.");
+      return;
     }
 
     if (containsBadWords(tip.description)) {
-      setDescriptionError("Your tip contains inappropriate language.");
-      isValid = false;
+      toast.error("Your tip contains inappropriate language.");
+      return;
     }
 
-    if (tip.title.length > 60) {
-      setDescriptionError("Title cannot exceed 60 characters.");
-      isValid = false;
+    if (tip.title.length > 100) {
+      toast.error("Title cannot exceed 100 characters.");
+      return;
     }
 
-    if (tip.description.length > 500) {
-      setDescriptionError("Tip description cannot exceed 500 characters.");
-      isValid = false;
+    if (tip.description.length > 2000) {
+      toast.error("Tip description cannot exceed 2000 characters.");
+      return;
     }
-
-    if (!isValid) return;
 
     try {
       setLoading("Creating tips...");
@@ -96,16 +82,16 @@ export default function UserCompanyInterviewTips() {
       });
       setIsAddingTip(false);
       setTip({ title: "", description: "" });
-      setSuccess("Tip created successfully");
+      toast.success("Tip created successfully");
       setLoading("Refetching tips...");
       const response = await axiosInstance.get(`/api/company/${slug}/tips`);
       setTips(response.data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
-        setError("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
       }
     } finally {
       setLoading("");
@@ -133,7 +119,6 @@ export default function UserCompanyInterviewTips() {
           : tp
       )
     );
-    setError("");
   };
 
   const handleTipDelete = (id: number | undefined) => {
@@ -153,16 +138,12 @@ export default function UserCompanyInterviewTips() {
               classNames={styles.replyButton}
               onClick={() => {
                 setIsAddingTip(true);
-                setSuccess("");
               }}
             >
               Add Tip
             </Button>
           )}
         </div>
-
-        {success && <SuccessMessage message={success} />}
-        {error && <ValidationError message={error} />}
       </div>
 
       <div className={styles.informationContainer}>
@@ -181,9 +162,6 @@ export default function UserCompanyInterviewTips() {
           onSave={handleSave}
           onChange={handleChange}
           onCancel={handleCancel}
-          error={error}
-          titleError={titleError}
-          descriptionError={descriptionError}
         />
       )}
 
@@ -198,8 +176,6 @@ export default function UserCompanyInterviewTips() {
             handleTipChange(tip.id, updatedTip.title, updatedTip.description)
           }
           onTipDelete={handleTipDelete}
-          setSuccess={setSuccess}
-          setError={setError}
           setLoading={setLoading}
           poster_id={tip.poster_id}
         />

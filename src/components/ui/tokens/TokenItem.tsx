@@ -7,6 +7,7 @@ import DeletePopUp from "../company/DeletePopUp";
 import Spinner from "../Spinner";
 import axiosInstance from "../../../services/axiosInstance";
 import Status from "./Status";
+import { toast } from "react-toastify";
 
 const TokenItem: React.FC<TokenItemProps> = ({
   id,
@@ -14,10 +15,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
   token,
   email,
   onDeleteToken,
-  resetDeleteSuccess,
   handleEmailSuccess,
-  setError,
-  setSuccess,
   updateEmail,
   expiring,
 }) => {
@@ -26,12 +24,10 @@ const TokenItem: React.FC<TokenItemProps> = ({
   const [loading, setLoading] = useState<string>("");
 
   const handleDeleteClick = () => {
-    resetDeleteSuccess();
     setDeleteConfirm(true);
   };
 
   const handleDelete = async () => {
-    resetDeleteSuccess();
     setDeleteLoading(true);
     try {
       await axiosInstance.delete(`api/tokens/${id}/delete`);
@@ -45,9 +41,8 @@ const TokenItem: React.FC<TokenItemProps> = ({
   };
 
   const handleMailClick = async () => {
-    resetDeleteSuccess();
     if (!email) {
-      setError("No email provided.");
+      toast.error("No email provided.");
       return;
     }
 
@@ -59,7 +54,8 @@ const TokenItem: React.FC<TokenItemProps> = ({
       });
       handleEmailSuccess();
     } catch (error) {
-      setError("Failed to send email" + error);
+      toast.error("Failed to send email");
+      console.error(error);
     } finally {
       setLoading("");
     }
@@ -83,8 +79,6 @@ const TokenItem: React.FC<TokenItemProps> = ({
         editIcon={<IconEdit />} // Icon to make it editable
         initialEmail={email}
         tokenId={id}
-        setError={setError}
-        setSuccess={setSuccess}
         updateEmail={updateEmail}
       />
       <div className={styles.iconHolder}>

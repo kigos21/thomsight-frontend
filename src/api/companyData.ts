@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Company, Job } from "../types/types";
 import axiosInstance from "../services/axiosInstance";
+import { toast } from "react-toastify";
 
 export const fetchCompanyData = async (
   slug: string
@@ -19,7 +20,6 @@ export const useCompanyData = () => {
   const { slug } = useParams<{ slug: string }>();
   const [company, setCompany] = useState<Company | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getCompanyData = async () => {
@@ -32,7 +32,7 @@ export const useCompanyData = () => {
           setLoading(false);
         } catch (error) {
           console.error("Error fetching company data:", error);
-          setError("Failed to fetch company data.");
+          toast.error("Failed to fetch company data.");
           setLoading(false);
         }
       }
@@ -41,7 +41,7 @@ export const useCompanyData = () => {
     getCompanyData();
   }, [slug]);
 
-  return { company, loading, error };
+  return { company, loading };
 };
 
 export const fetchCompanies = async (): Promise<Company[] | null> => {

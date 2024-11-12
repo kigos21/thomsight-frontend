@@ -8,15 +8,12 @@ import { User } from "../../types/types";
 import styles from "./AdminCompanyAccount.module.scss";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
-import ValidationError from "../../components/form/ValidationError";
-import SuccessMessage from "../../components/form/SuccessMessage";
+import { toast } from "react-toastify";
 
 export default function AdminCompanyAccount() {
   const [repUsers, setRepUsers] = useState<User[]>([]);
   const [filteredRepUsers, setFilteredRepUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -41,12 +38,10 @@ export default function AdminCompanyAccount() {
   const handleSoftDelete = async (
     companyId: number | undefined
   ): Promise<boolean> => {
-    setError("");
-    setSuccess("");
     try {
       setLoading("Deleting company...");
       await axiosInstance.patch(`/api/company/${companyId}/soft-delete`);
-      setSuccess("Company soft deleted successfully.");
+      toast.success("Company soft deleted successfully.");
       setRepUsers((prevRepUsers) =>
         prevRepUsers.map((user) => {
           if (user.company && user.company.id === companyId) {
@@ -64,7 +59,7 @@ export default function AdminCompanyAccount() {
       return true;
     } catch (error) {
       console.error("Error soft deleting company:", error);
-      setError("There was a problem deleting the company.");
+      toast.error("There was a problem deleting the company.");
       return false;
     } finally {
       setLoading("");
@@ -74,12 +69,10 @@ export default function AdminCompanyAccount() {
   const handleRestore = async (
     companyId: number | undefined
   ): Promise<boolean> => {
-    setError("");
-    setSuccess("");
     try {
       setLoading("Restoring company...");
       await axiosInstance.patch(`/api/company/${companyId}/restore`);
-      setSuccess("Company restored successfully.");
+      toast.success("Company restored successfully.");
       setRepUsers((prevRepUsers) =>
         prevRepUsers.map((user) => {
           if (user.company && user.company.id === companyId) {
@@ -97,7 +90,7 @@ export default function AdminCompanyAccount() {
       return true;
     } catch (error) {
       console.error("Error restoring company:", error);
-      setError("There was a problem restoring the company.");
+      toast.error("There was a problem restoring the company.");
       return false;
     } finally {
       setLoading("");
@@ -139,8 +132,6 @@ export default function AdminCompanyAccount() {
         {/* <SortButton classNames={styles.button}></SortButton> */}
         <SortButton onSort={handleSort}></SortButton>
       </div>
-      {error && <ValidationError message={error} />}
-      {success && <SuccessMessage message={success} />}
       {loading && <Spinner message={loading} />}
 
       <StyledBox

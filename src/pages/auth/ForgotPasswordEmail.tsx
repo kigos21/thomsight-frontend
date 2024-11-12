@@ -7,20 +7,15 @@ import { IconMail } from "@tabler/icons-react";
 import styles from "./ForgotPasswordEmail.module.scss";
 import axiosInstance from "../../services/axiosInstance";
 import { useState } from "react";
-import ValidationError from "../../components/form/ValidationError";
-import SuccessMessage from "../../components/form/SuccessMessage";
 import Spinner from "../../components/ui/Spinner";
+import { toast } from "react-toastify";
 
 export default function ForgotPasswordEmail() {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     try {
       setLoading("Sending email...");
@@ -28,9 +23,10 @@ export default function ForgotPasswordEmail() {
       await axiosInstance.post("/forgot-password", {
         email,
       });
-      setSuccess("Password reset link has been sent to your email");
+      toast.success("Password reset link has been sent to your email");
     } catch (err) {
-      setError("Email does not exist");
+      toast.error("Email does not exist");
+      console.log(err);
     } finally {
       setLoading("");
     }
@@ -42,8 +38,6 @@ export default function ForgotPasswordEmail() {
           {loading && <Spinner message={loading} />}
           <h1 className={styles.header}>Password Recovery</h1>
           <div className={styles.formContainer}>
-            {success && <SuccessMessage message={success} />}
-            {error && <ValidationError message={error} />}
             <form className={styles.form} onSubmit={handleSubmit}>
               <FormField
                 icon={

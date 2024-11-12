@@ -8,8 +8,7 @@ import ErrorPage from "../ErrorPage";
 import Spinner from "../../components/ui/Spinner";
 import { useUser } from "../../contexts/UserContext";
 import { updateCompanyInfo } from "../../api/companyCRUD";
-import ValidationError from "../../components/form/ValidationError";
-import SuccessMessage from "../../components/form/SuccessMessage";
+import { toast } from "react-toastify";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
@@ -21,7 +20,6 @@ export default function CompanyManageInformationCompany() {
   const [description, setDescription] = useState<string>("");
   const [originalDescription, setOriginalDescription] = useState<string>("");
   const [isEditDesc, setIsEditDesc] = useState<boolean>(false);
-  const [descriptionError, setDescriptionError] = useState<string>("");
 
   const descRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,16 +27,13 @@ export default function CompanyManageInformationCompany() {
   const [size, setCompanySize] = useState<string>("");
   const [originalSize, setOriginalSize] = useState<string>("");
   const [isEditCompanySize, setIsEditCompanySize] = useState<boolean>(false);
-  const [sizeError, setSizeError] = useState<string>("");
 
   // DATA FOR COMPANY INDUSTRY
   const [industry, setIndustry] = useState<string>("");
   const [originalIndustry, setOriginalIndustry] = useState<string>("");
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
-  const [industryError, setIndustryError] = useState<string>("");
 
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (company) {
@@ -60,27 +55,18 @@ export default function CompanyManageInformationCompany() {
   }
 
   const handleSaveUpdates = async () => {
-    let isValid = true;
-
-    setDescriptionError("");
-    setSizeError("");
-    setIndustryError("");
-    setSuccess(false);
-
     if (description.trim() === "") {
-      setDescriptionError("Description cannot be blank");
-      isValid = false;
+      toast.error("Description cannot be blank");
+      return;
     }
     if (size.trim() === "") {
-      setSizeError("Company size cannot be blank");
-      isValid = false;
+      toast.error("Company size cannot be blank");
+      return;
     }
     if (industry.trim() === "") {
-      setIndustryError("Industry cannot be blank");
-      isValid = false;
+      toast.error("Industry cannot be blank");
+      return;
     }
-
-    if (!isValid) return;
 
     setIsUpdating(true);
     try {
@@ -103,7 +89,7 @@ export default function CompanyManageInformationCompany() {
         size,
       };
       updateCompany(updatedCompany);
-      setSuccess(true);
+      toast.success("Updated successfully");
     } catch (error) {
       console.error("Error updating company data:", error);
     } finally {
@@ -117,7 +103,6 @@ export default function CompanyManageInformationCompany() {
   return (
     <div className={styles.container}>
       <h2>Company Information</h2>
-      {success && <SuccessMessage message="Updated successfully" />}
       {isUpdating && <Spinner message="Updating..." />}{" "}
       {/* COMPANY DESCRIPTION */}
       <div>
@@ -131,8 +116,6 @@ export default function CompanyManageInformationCompany() {
                 onClick={() => {
                   setIsEditDesc(false);
                   setDescription(originalDescription);
-                  setDescriptionError("");
-                  setSuccess(false);
                 }}
               >
                 Cancel
@@ -147,7 +130,6 @@ export default function CompanyManageInformationCompany() {
               onClick={() => {
                 setIsEditDesc(true);
                 setOriginalDescription(description);
-                setSuccess(false);
               }}
             >
               <IconEdit className={styles.iconEdit} />
@@ -166,7 +148,6 @@ export default function CompanyManageInformationCompany() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            {descriptionError && <ValidationError message={descriptionError} />}
           </div>
         ) : (
           <p>{description}</p>
@@ -185,8 +166,6 @@ export default function CompanyManageInformationCompany() {
                 onClick={() => {
                   setIsEditCompanySize(false);
                   setCompanySize(originalSize);
-                  setSizeError("");
-                  setSuccess(false);
                 }}
               >
                 Cancel
@@ -201,7 +180,6 @@ export default function CompanyManageInformationCompany() {
               onClick={() => {
                 setIsEditCompanySize(true);
                 setOriginalSize(size);
-                setSuccess(false);
               }}
             >
               <IconEdit className={styles.iconEdit} />
@@ -217,7 +195,6 @@ export default function CompanyManageInformationCompany() {
               onChange={(e) => setCompanySize(e.target.value)}
               className={styles.inputText}
             />
-            {sizeError && <ValidationError message={sizeError} />}
           </div>
         ) : (
           <p>{size}</p>
@@ -236,8 +213,6 @@ export default function CompanyManageInformationCompany() {
                 onClick={() => {
                   setIsEditIndustry(false);
                   setIndustry(originalIndustry);
-                  setIndustryError("");
-                  setSuccess(false);
                 }}
               >
                 Cancel
@@ -252,7 +227,6 @@ export default function CompanyManageInformationCompany() {
               onClick={() => {
                 setIsEditIndustry(true);
                 setOriginalIndustry(industry);
-                setSuccess(false);
               }}
             >
               <IconEdit className={styles.iconEdit} />
@@ -268,7 +242,6 @@ export default function CompanyManageInformationCompany() {
               onChange={(e) => setIndustry(e.target.value)}
               className={styles.inputText}
             />
-            {industryError && <ValidationError message={industryError} />}
           </div>
         ) : (
           <p>{industry}</p>

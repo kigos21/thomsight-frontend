@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
-import SuccessMessage from "../../components/form/SuccessMessage";
-import ValidationError from "../../components/form/ValidationError";
+import { toast } from "react-toastify";
 
 const ReportsComments = () => {
   const [reports, setReports] = useState<DiscussionReport[]>([]);
@@ -15,8 +14,6 @@ const ReportsComments = () => {
   const [showDeleteReportPopup, setShowDeleteReportPopup] =
     useState<boolean>(false);
   const [showDeleteRDPopup, setShowDeleteRDPopup] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -41,10 +38,10 @@ const ReportsComments = () => {
     try {
       setLoading("Dismissing report...");
       await axiosInstance.delete(`/api/report/discussion/${id}/delete`);
-      setSuccess("Dismissed report");
+      toast.success("Dismissed report");
       setReports(reports.filter((report) => report.id !== id));
     } catch (error) {
-      setError("Error deleting report:" + error);
+      toast.error("Error deleting report:" + error);
     } finally {
       setLoading("");
       setShowDeleteReportPopup(false);
@@ -60,12 +57,12 @@ const ReportsComments = () => {
       await axiosInstance.delete(
         `/api/report/discussion/${id}/delete/with-discussion`
       );
-      setSuccess("Deleted discussion successfully");
+      toast.success("Deleted discussion successfully");
       setReports(
         reports.filter((report) => report.discussion_id !== discussionId)
       );
     } catch (error) {
-      setError("Error deleting discussion and report:" + error);
+      toast.error("Error deleting discussion and report");
       console.error(error);
     } finally {
       setLoading("");
@@ -76,8 +73,6 @@ const ReportsComments = () => {
   return (
     <div>
       <h1 className={styles.heading}>Discussion</h1>
-      {success && <SuccessMessage message={success} />}
-      {error && <ValidationError message={error} />}
       <ReportsTable>
         {reports.map((report) => (
           <div key={report.id} className={styles.row}>

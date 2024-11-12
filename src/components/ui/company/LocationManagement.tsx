@@ -12,18 +12,13 @@ import {
   deleteLocation,
 } from "../../../api/companyCRUD";
 import DeletePopUp from "./DeletePopUp";
-import ValidationError from "../../form/ValidationError";
-import SuccessMessage from "../../form/SuccessMessage";
+import { toast } from "react-toastify";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [locations, setLocations] = useState<Location[]>([]);
   const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
   const company = getCompanyBySlug(slug as string);
-  const [createErrorMessage, setCreateErrorMessage] = useState<string | null>(
-    null
-  );
-  const [editErrorMessage, setEditErrorMessage] = useState<string | null>(null);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -35,9 +30,6 @@ const LocationManagement: React.FC = () => {
   const [createLoading, setCreateLoading] = useState<boolean>(false);
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [createSuccess, setCreateSuccess] = useState<boolean>(false);
-  const [updateSuccess, setUpdateSuccess] = useState<boolean>(false);
-  const [deleteSuccess, setDeleteSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (company) {
@@ -51,14 +43,11 @@ const LocationManagement: React.FC = () => {
 
   const handleAddLocation = async () => {
     if (!newLocation.trim()) {
-      setCreateErrorMessage("Location cannot be blank.");
+      toast.error("Location cannot be blank.");
       return;
     }
 
     setCreateLoading(true);
-    setCreateSuccess(false);
-    setUpdateSuccess(false);
-    setDeleteSuccess(false);
 
     if (slug) {
       const response = await addLocation(slug, newLocation);
@@ -71,10 +60,10 @@ const LocationManagement: React.FC = () => {
         setLocations([...locations, response]);
         setNewLocation("");
         setShowAddForm(false);
-        setCreateErrorMessage(null);
-        setCreateSuccess(true);
+        toast.success("Location added successfully");
       }
     }
+
     setCreateLoading(false);
   };
 
@@ -85,14 +74,11 @@ const LocationManagement: React.FC = () => {
 
   const handleUpdateLocation = async () => {
     if (editingLocation && !editingLocation.address.trim()) {
-      setEditErrorMessage("Location address cannot be blank.");
+      toast.error("Location address cannot be blank.");
       return;
     }
 
     setUpdateLoading(true);
-    setCreateSuccess(false);
-    setUpdateSuccess(false);
-    setDeleteSuccess(false);
 
     if (editingLocation && slug) {
       const response = await updateLocation(
@@ -109,8 +95,7 @@ const LocationManagement: React.FC = () => {
         setLocations(updatedLocations);
         setShowEditDialog(false);
         setEditingLocation(null);
-        setEditErrorMessage(null);
-        setUpdateSuccess(true);
+        toast.success("Location updated successfully");
       }
       setUpdateLoading(false);
     }
@@ -123,9 +108,6 @@ const LocationManagement: React.FC = () => {
 
   const handleDeleteLocation = async () => {
     setDeleteLoading(true);
-    setCreateSuccess(false);
-    setUpdateSuccess(false);
-    setDeleteSuccess(false);
     if (locationToDelete && slug) {
       await deleteLocation(slug, locationToDelete);
       const updatedLocations = locations.filter(
@@ -137,7 +119,7 @@ const LocationManagement: React.FC = () => {
       setShowDeletePopup(false);
       setLocationToDelete(null);
       setDeleteLoading(false);
-      setDeleteSuccess(true);
+      toast.success("Location deleted successfully");
     }
   };
 
@@ -150,23 +132,11 @@ const LocationManagement: React.FC = () => {
       {createLoading && <Spinner message="Creating location..." />}
       {updateLoading && <Spinner message="Updating location..." />}
       {deleteLoading && <Spinner message="Deleting locaiton..." />}
-      {createSuccess && (
-        <SuccessMessage message="Location created successfully" />
-      )}
-      {updateSuccess && (
-        <SuccessMessage message="Location updated successfully" />
-      )}
-      {deleteSuccess && (
-        <SuccessMessage message="Location deleted successfully" />
-      )}
       <div className={styles.sectionHeading}>
         <h3>Company Location</h3>
         <button
           className={styles.addLocationButton}
           onClick={() => {
-            setCreateSuccess(false);
-            setUpdateSuccess(false);
-            setDeleteSuccess(false);
             setShowAddForm(true);
           }}
         >
@@ -189,7 +159,6 @@ const LocationManagement: React.FC = () => {
               onClick={() => {
                 setShowAddForm(false);
                 setNewLocation("");
-                setCreateErrorMessage(null);
               }}
               className={styles.cancelButton}
             >
@@ -201,14 +170,12 @@ const LocationManagement: React.FC = () => {
           </div>
         </div>
       )}
-      {createErrorMessage && <ValidationError message={createErrorMessage} />}
 
       {showEditDialog && editingLocation && (
         <div
           className={styles.dialogBackdrop}
           onClick={() => {
             setShowEditDialog(false);
-            setEditErrorMessage(null);
           }}
         >
           <div
@@ -227,14 +194,10 @@ const LocationManagement: React.FC = () => {
                   })
                 }
               />
-              {editErrorMessage && (
-                <ValidationError message={editErrorMessage} />
-              )}
               <div className={styles.saveAndCancelButtonsPopUp}>
                 <button
                   onClick={() => {
                     setShowEditDialog(false);
-                    setEditErrorMessage(null);
                   }}
                   className={styles.cancelButtonPopUp}
                 >
@@ -259,9 +222,6 @@ const LocationManagement: React.FC = () => {
             <button
               className={styles.editButton}
               onClick={() => {
-                setCreateSuccess(false);
-                setUpdateSuccess(false);
-                setDeleteSuccess(false);
                 handleEditLocation(location);
               }}
             >
@@ -270,9 +230,6 @@ const LocationManagement: React.FC = () => {
             <button
               className={styles.deleteButton}
               onClick={() => {
-                setCreateSuccess(false);
-                setUpdateSuccess(false);
-                setDeleteSuccess(false);
                 handleDeleteClick(location.id);
               }}
             >

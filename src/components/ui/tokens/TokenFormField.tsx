@@ -4,6 +4,7 @@ import styles from "./TokenFormField.module.scss";
 import { IconEdit } from "@tabler/icons-react";
 import axiosInstance from "../../../services/axiosInstance";
 import Spinner from "../Spinner";
+import { toast } from "react-toastify";
 
 const TokenFormField: React.FC<TokenFormFieldProps> = ({
   icon,
@@ -16,8 +17,6 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
   readOnly: initialReadOnly = true, // Default to true if not provided
   initialEmail,
   tokenId,
-  setError,
-  setSuccess,
   updateEmail,
 }) => {
   const [isReadOnly, setIsReadOnly] = useState<boolean>(initialReadOnly);
@@ -26,8 +25,6 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
 
   const handleEditClick = () => {
     setIsReadOnly(false); // Make the input editable when the edit icon is clicked
-    setSuccess("");
-    setError("");
   };
 
   const validateEmail = (email: string) => {
@@ -38,19 +35,18 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
   const handleBlur = async () => {
     if (!isReadOnly) {
       if (!validateEmail(email)) {
-        setError("Please enter a valid email address.");
+        toast.error("Please enter a valid email address.");
         return;
       }
       setLoading(true);
       try {
         await axiosInstance.put(`/api/tokens/${tokenId}/update`, { email });
-        setError("");
         setIsReadOnly(true);
-        setSuccess("Updated email successfully");
+        toast.success("Updated email successfully");
         updateEmail(email);
       } catch (error) {
         console.error("Error updating company:", error);
-        setError("Error updating email. Please try again.");
+        toast.error("Error updating email. Please try again.");
       } finally {
         setLoading(false);
       }

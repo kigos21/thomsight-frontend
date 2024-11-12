@@ -9,9 +9,8 @@ import { IconChevronDown, IconEdit } from "@tabler/icons-react";
 import { updateCompanyDetails } from "../../../api/companyCRUD.ts";
 import Spinner from "../Spinner.tsx";
 import ErrorPage from "../../../pages/ErrorPage.tsx";
-import SuccessMessage from "../../form/SuccessMessage.tsx";
-import ValidationError from "../../form/ValidationError.tsx";
 import ChangePhotoPopup from "../ChangePhotoPopup.tsx";
+import { toast } from "react-toastify";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -37,9 +36,6 @@ export default function CompanyDetails() {
   const [locations, setLocations] = useState(company?.locations || []);
 
   const [isUpdating, setIsUpdating] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
-
-  const [detailsError, setDetailsError] = useState<string>("");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
@@ -78,24 +74,17 @@ export default function CompanyDetails() {
   // }
 
   const handleSaveUpdates = async () => {
-    let isValid = true;
-
-    setSuccess("");
-    setDetailsError("");
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (companyName.trim() === "" || companyEmail.trim() === "") {
-      setDetailsError("Details cannot be blank");
-      isValid = false;
+      toast.error("Details cannot be blank");
+      return;
     }
 
     if (!emailRegex.test(companyEmail)) {
-      setDetailsError("Invalid email format");
-      isValid = false;
+      toast.error("Invalid email format");
+      return;
     }
-
-    if (!isValid) return;
 
     setIsUpdating("Updating details...");
 
@@ -117,7 +106,7 @@ export default function CompanyDetails() {
         email: companyEmail,
       };
       updateCompany(updatedCompany);
-      setSuccess("Updated details successfully");
+      toast.success("Updated details successfully");
     } catch (error) {
       console.error("Error updating company details:", error);
     } finally {
@@ -144,9 +133,7 @@ export default function CompanyDetails() {
   if (location.pathname.includes("/manage/")) {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
-        {success && <SuccessMessage message={success} />}
         {isUpdating && <Spinner message={isUpdating} />}
-        {detailsError && <ValidationError message={detailsError} />}
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <img src={logo} alt="Logo" />
@@ -154,7 +141,6 @@ export default function CompanyDetails() {
               <button
                 onClick={() => {
                   setIsDropdownOpen((state) => !state);
-                  setSuccess("");
                 }}
               >
                 <IconChevronDown stroke={1.5} size={18} />
@@ -215,8 +201,6 @@ export default function CompanyDetails() {
                   onClick={() => {
                     setOriginalCompanyName(companyName);
                     setIsEditName(true);
-                    setDetailsError("");
-                    setSuccess("");
                   }}
                 >
                   <IconEdit className={styles.iconEdit} />
@@ -261,8 +245,6 @@ export default function CompanyDetails() {
                   onClick={() => {
                     setOriginalCompanyEmail(companyEmail);
                     setIsEditEmail(true);
-                    setDetailsError("");
-                    setSuccess("");
                   }}
                 >
                   <IconEdit className={styles.iconEdit} />
@@ -289,7 +271,6 @@ export default function CompanyDetails() {
         <ChangePhotoPopup
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
-          setSuccess={setSuccess}
         />
         {isImageViewerOpen && (
           <div className={styles.overlay} onClick={handleCloseImageViewer}>

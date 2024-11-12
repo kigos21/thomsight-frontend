@@ -6,13 +6,12 @@ import { IconKey } from "@tabler/icons-react";
 import styles from "./CompanyTokenPage.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import ValidationError from "../../components/form/ValidationError";
 import { validateToken } from "../../api/validateToken";
 import { useToken } from "../../contexts/TokenContext";
+import { toast } from "react-toastify";
 
 export default function CompanyTokenPage() {
   const [tokenInput, setTokenInput] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setToken } = useToken();
@@ -25,13 +24,12 @@ export default function CompanyTokenPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    setError("");
     const isValid = await validateToken(tokenInput);
     if (isValid) {
       setToken(tokenInput);
       navigate("/register/company");
     } else {
-      setError("Invalid token. Please try again.");
+      toast.error("Invalid token. Please try again.");
     }
     setLoading(false);
   };
@@ -60,7 +58,6 @@ export default function CompanyTokenPage() {
             {loading ? "Validating..." : "Validate"}
           </Button>
         </div>
-        {error && <ValidationError message={error} />}
       </div>
     </PaddedContainer>
   );

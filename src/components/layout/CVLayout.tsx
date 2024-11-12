@@ -11,29 +11,12 @@ import {
   IconList,
   IconOutbound,
 } from "@tabler/icons-react";
-import SuccessMessage from "../form/SuccessMessage";
-import { useEffect, useState } from "react";
-import ValidationError from "../form/ValidationError";
 import { useUser } from "../../contexts/UserContext";
 
 const CVLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [success, setSuccess] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const successMessage = location.state?.successMessage;
   const { user } = useUser();
-
-  useEffect(() => {
-    setSuccess("");
-    setError("");
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (successMessage) {
-      setSuccess(successMessage);
-    }
-  }, [successMessage]);
 
   const helpText =
     "Listing: posted CVs by the community \n" +
@@ -131,10 +114,8 @@ const CVLayout = () => {
             </Button>
           )}
         </header>
-        {success && <SuccessMessage message={success} />}
-        {error && <ValidationError message={error} />}
         {/* MAIN CONTENT */}
-        <Outlet context={{ setSuccess, setError }} />
+        <Outlet />
       </PaddedContainer>
     </div>
   );
