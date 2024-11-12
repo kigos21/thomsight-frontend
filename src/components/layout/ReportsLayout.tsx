@@ -2,7 +2,12 @@ import styles from "./ReportsLayout.module.scss";
 
 import { Link, Outlet, useLocation } from "react-router-dom";
 import PaddedContainer from "./PaddedContainer";
-import { IconBubbleText, IconBulb, IconStars } from "@tabler/icons-react";
+import {
+  IconBubbleText,
+  IconBulb,
+  IconStars,
+  IconMessages,
+} from "@tabler/icons-react";
 
 const ReportsLayout = () => {
   const location = useLocation();
@@ -16,6 +21,11 @@ const ReportsLayout = () => {
       path: "/reports/discussion",
       name: "Discussion",
       icon: <IconBubbleText stroke={2} className={styles.bottomNavIcon} />,
+    },
+    {
+      path: "/reports/comments",
+      name: "Comments",
+      icon: <IconMessages stroke={2} className={styles.bottomNavIcon} />,
     },
     {
       path: "/reports/reviews",
