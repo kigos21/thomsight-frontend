@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 55px;
+  gap: 0.5rem;
   padding: 0 4rem;
 
   @media (max-width: 768px) {
@@ -20,6 +20,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2.5rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
