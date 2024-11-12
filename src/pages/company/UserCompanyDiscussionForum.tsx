@@ -35,6 +35,11 @@ interface Post {
   user_id: number;
 }
 
+type CommentSuccessType = {
+  replyId?: number;
+  action: "edit" | "delete" | "report" | "";
+};
+
 export default function UserCompanyDiscussionForum() {
   const [isAddingPost, setIsAddingPost] = useState<boolean>(false); // To control the form visibility
   const [postForm, setPostForm] = useState({
@@ -55,6 +60,12 @@ export default function UserCompanyDiscussionForum() {
   const [activeProfileUserId, setActiveProfileUserId] = useState<number | null>(
     null
   );
+  const [editedReplyText, setEditedReplyText] = useState("");
+  const [commentSuccess, setCommentSuccess] = useState<CommentSuccessType>({
+    replyId: undefined,
+    action: "",
+  });
+
   const handleProfileClick = (userId: number) => {
     if (activeProfileUserId === userId) {
       setActiveProfileUserId(null);
@@ -165,6 +176,7 @@ export default function UserCompanyDiscussionForum() {
   const handleAddReply = async (discussionId: number) => {
     setSuccess("");
     setError("");
+    setCommentSuccess({ replyId: undefined, action: "" });
     if (!reply.trim()) {
       setError("Reply cannot be blank.");
       return;
@@ -195,6 +207,7 @@ export default function UserCompanyDiscussionForum() {
   const handleReplyDelete = async (replyId: number, discussionId: number) => {
     setSuccess("");
     setError("");
+    setCommentSuccess({ replyId: undefined, action: "" });
     try {
       setLoading("Deleting reply...");
       await axiosInstance.delete(
@@ -208,6 +221,7 @@ export default function UserCompanyDiscussionForum() {
       const discussions = response.data;
       setPostData(discussions);
       setSuccess("Reply deleted successfully.");
+      setCommentSuccess({ replyId, action: "delete" });
     } catch (error) {
       console.error("Error deleting reply:", error);
       setError("An error occurred while deleting the reply.");
@@ -216,13 +230,45 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
-  const handleEditClick = (replyId: number) => {
+  const handleEditClick = (replyId: number, replyText: string) => {
     setError("");
     setSuccess("");
+    setCommentSuccess({ replyId: undefined, action: "" });
     if (activeEditReplyId === replyId) {
       setActiveEditReplyId(null);
+      setEditedReplyText("");
     } else {
       setActiveEditReplyId(replyId);
+      setEditedReplyText(replyText);
+    }
+  };
+
+  const handleSaveEdit = async (replyId: number) => {
+    setSuccess("");
+    setError("");
+    setCommentSuccess({ replyId: undefined, action: "" });
+    try {
+      setLoading("Updating comment...");
+      await axiosInstance.put(
+        `/api/company/${slug}/comment/${replyId}/delete`,
+        {
+          comment: editedReplyText,
+        }
+      );
+      setLoading("Loading discussions...");
+      const response = await axiosInstance.get(
+        `/api/company/${slug}/discussions`
+      );
+      const discussions = response.data;
+      setPostData(discussions);
+      setCommentSuccess({ replyId, action: "edit" });
+      setActiveEditReplyId(null);
+      setEditedReplyText("");
+    } catch (error) {
+      console.error("Failed to save the reply:", error);
+      setError("Failed to update reply. Please try again.");
+    } finally {
+      setLoading("");
     }
   };
 
@@ -309,6 +355,18 @@ export default function UserCompanyDiscussionForum() {
                               gap: "0.25rem",
                             }}
                           >
+                            {commentSuccess?.replyId === reply.id &&
+                              commentSuccess.action === "edit" && (
+                                <SuccessMessage message="Comment edited successfully!" />
+                              )}
+                            {commentSuccess?.replyId === reply.id &&
+                              commentSuccess.action === "delete" && (
+                                <SuccessMessage message="Comment deleted successfully!" />
+                              )}
+                            {commentSuccess?.replyId === reply.id &&
+                              commentSuccess.action === "report" && (
+                                <SuccessMessage message="Comment reported successfully!" />
+                              )}
                             {activeProfileUserId === reply.posted_by && (
                               <DisplayProfile
                                 onClose={() => setActiveProfileUserId(null)}
@@ -335,7 +393,10 @@ export default function UserCompanyDiscussionForum() {
                                 <textarea
                                   className={styles.descriptionTextarea}
                                   rows={5}
-                                  defaultValue={reply.comment}
+                                  value={editedReplyText}
+                                  onChange={(e) =>
+                                    setEditedReplyText(e.target.value)
+                                  }
                                 />
                                 <div className={styles.editButtons}>
                                   <button
@@ -344,7 +405,10 @@ export default function UserCompanyDiscussionForum() {
                                   >
                                     Cancel
                                   </button>
-                                  <button className={styles.saveButton}>
+                                  <button
+                                    className={styles.saveButton}
+                                    onClick={() => handleSaveEdit(reply.id)}
+                                  >
                                     Save
                                   </button>
                                 </div>
@@ -356,7 +420,9 @@ export default function UserCompanyDiscussionForum() {
                             <div className={styles.iconContainer}>
                               {user?.id === reply.posted_by && (
                                 <button
-                                  onClick={() => handleEditClick(reply.id)}
+                                  onClick={() =>
+                                    handleEditClick(reply.id, reply.comment)
+                                  }
                                 >
                                   <IconEdit
                                     size={25}
