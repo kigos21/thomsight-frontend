@@ -23,7 +23,7 @@
   }
 
   @media (max-width: 480px) {
-    margin-bottom: 6rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -124,6 +124,7 @@
   border-left: 1px solid var(--black);
 
   @media screen and (max-width: 480px) {
+    margin-bottom: 2rem;
     gap: 6rem;
   }
 }
