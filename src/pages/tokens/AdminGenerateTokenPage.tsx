@@ -130,7 +130,7 @@ export default function AdminGenerateTokenPage() {
               <p>#</p>
               <p>Token</p>
               <p>Status</p>
-              <p>Company</p>
+              <p>Company Email</p>
               <p>Actions</p>
             </div>
           </div>
