@@ -14,12 +14,14 @@ import { containsBadWords } from "../../badWordsFilter";
 import FormField from "../../components/form/FormField";
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import { IconSend, IconX } from "@tabler/icons-react";
+import { useUser } from "../../contexts/UserContext";
 
 interface Reply {
   id: number;
   username: string;
   comment: string;
   posted_at: string;
+  posted_by: number;
 }
 
 interface Post {
@@ -44,6 +46,7 @@ export default function UserCompanyDiscussionForum() {
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [postData, setPostData] = useState<Post[]>([]);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchDiscussions = async () => {
@@ -289,25 +292,29 @@ export default function UserCompanyDiscussionForum() {
 
                             <div>{reply.comment}</div>
                             <div className={styles.iconContainer}>
-                              <button>
-                                <IconEdit
-                                  size={25}
-                                  stroke={1.5}
-                                  className={styles.iconEdit}
-                                />
-                              </button>
+                              {user?.id === reply.posted_by && (
+                                <button>
+                                  <IconEdit
+                                    size={25}
+                                    stroke={1.5}
+                                    className={styles.iconEdit}
+                                  />
+                                </button>
+                              )}
 
-                              <button
-                                onClick={() =>
-                                  handleReplyDelete(reply.id, post.id)
-                                }
-                              >
-                                <IconTrash
-                                  size={25}
-                                  stroke={1.5}
-                                  className={styles.iconDelete}
-                                />
-                              </button>
+                              {user?.id === reply.posted_by && (
+                                <button
+                                  onClick={() =>
+                                    handleReplyDelete(reply.id, post.id)
+                                  }
+                                >
+                                  <IconTrash
+                                    size={25}
+                                    stroke={1.5}
+                                    className={styles.iconDelete}
+                                  />
+                                </button>
+                              )}
 
                               <button>
                                 <IconFlagFilled
