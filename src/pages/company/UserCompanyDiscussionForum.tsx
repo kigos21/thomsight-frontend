@@ -39,6 +39,8 @@ export default function UserCompanyDiscussionForum() {
   const [postForm, setPostForm] = useState({
     description: "",
   });
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   const [reply, setReply] = useState<string>("");
   const [activeReplyPostId, setActiveReplyPostId] = useState<number>(-1); // -1 if unset
   const [error, setError] = useState<string>("");
@@ -201,6 +203,12 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
+  const handleEditClick = () => {
+    setError("");
+    setSuccess("");
+    setIsEditing((state) => !state);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -293,7 +301,7 @@ export default function UserCompanyDiscussionForum() {
                             <div>{reply.comment}</div>
                             <div className={styles.iconContainer}>
                               {user?.id === reply.posted_by && (
-                                <button>
+                                <button onClick={handleEditClick}>
                                   <IconEdit
                                     size={25}
                                     stroke={1.5}
