@@ -162,7 +162,7 @@ export default function AdminCompanyAccount() {
                   status={user.company.deleted_at ? "inactive" : "active"}
                   companyName={user.company.name}
                   email={user.company.email}
-                  expiration="1 month"
+                  expiration={user.company.expiration}
                   handleSoftDelete={handleSoftDelete}
                   handleRestore={handleRestore}
                   companyId={user.company.id}

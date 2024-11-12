@@ -144,7 +144,7 @@ export type TokenItemProps = {
 
 export type CompanyAccountsItemProps = {
   companyName?: string;
-  expiration: string; // Token string to display
+  expiration: string | undefined; // Token string to display
   status: "active" | "inactive" | "expiring";
   classNames?: string; // Optional classNames prop
   email?: string;
