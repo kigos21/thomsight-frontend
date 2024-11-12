@@ -2,7 +2,6 @@ import FormField from "../../form/FormField";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import styles from "./CompanyReviewForm.module.scss";
-import ValidationError from "../../form/ValidationError";
 
 interface Review {
   rating: string;
@@ -14,9 +13,6 @@ interface CompanyReviewFormProps {
   onSave: () => void;
   onChange: (review: Review) => void;
   onCancel: () => void;
-  error: string;
-  ratingError: string;
-  descriptionError: string;
 }
 
 const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
@@ -24,8 +20,6 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
   onSave,
   onChange,
   onCancel,
-  ratingError,
-  descriptionError,
 }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,7 +48,6 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               value={review.rating}
               onChange={handleInputChange}
             ></FormField>
-            {ratingError && <ValidationError message={ratingError} />}
           </div>
 
           <div>
@@ -68,7 +61,6 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               value={review.description}
               onChange={handleInputChange}
             ></FormField>
-            {descriptionError && <ValidationError message={descriptionError} />}
           </div>
 
           <div className={styles.buttonGroup}>

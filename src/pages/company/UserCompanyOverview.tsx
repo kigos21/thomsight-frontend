@@ -9,10 +9,9 @@ import { useEffect, useState } from "react";
 import CompanyReviewForm from "../../components/ui/company/CompanyReviewForm";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
-import SuccessMessage from "../../components/form/SuccessMessage";
-import ValidationError from "../../components/form/ValidationError";
 import { containsBadWords } from "../../badWordsFilter";
 import { useUser } from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 
 export type Review = {
   id?: number;
@@ -31,12 +30,7 @@ export default function UserCompanyOverview() {
     rating: "",
     description: "",
   });
-
-  const [error, setError] = useState<string>("");
-  const [ratingError, setRatingError] = useState<string>("");
-  const [descriptionError, setDescriptionError] = useState<string>("");
   const [loading, setLoading] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug } = useCompanies();
   const company = getCompanyBySlug(slug as string);
@@ -65,14 +59,10 @@ export default function UserCompanyOverview() {
   }
 
   const handleSave = async () => {
-    setError("");
-    setRatingError("");
-    setDescriptionError("");
-    setSuccess("");
     let isValid = true;
 
     if (containsBadWords(review.description)) {
-      setDescriptionError("Your review contains inappropriate language.");
+      toast.error("Your review contains inappropriate language.");
       isValid = false;
     }
 
@@ -83,12 +73,12 @@ export default function UserCompanyOverview() {
       ratingValue < 1 ||
       ratingValue > 5
     ) {
-      setRatingError("Rating must be an integer between 1 and 5.");
+      toast.error("Rating must be an integer between 1 and 5.");
       isValid = false;
     }
 
     if (review.description.length > 255) {
-      setDescriptionError("Review cannot exceed 255 characters.");
+      toast.error("Review cannot exceed 255 characters.");
       isValid = false;
     }
 
@@ -102,16 +92,16 @@ export default function UserCompanyOverview() {
       });
       setIsAddingReview(false);
       setReview({ rating: "", description: "" });
-      setSuccess("Review created successfully");
       setLoading("Refetching reviews...");
       const response = await axiosInstance.get(`/api/company/${slug}/reviews`);
       setReviews(response.data);
+      toast.success("Review created successfully");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
-        setError("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
       }
     } finally {
       setLoading("");
@@ -139,7 +129,6 @@ export default function UserCompanyOverview() {
           : rev
       )
     );
-    setError("");
   };
 
   const handleReviewDelete = (id: number | undefined) => {
@@ -185,25 +174,18 @@ export default function UserCompanyOverview() {
                   classNames={styles.replyButton}
                   onClick={() => {
                     setIsAddingReview(true);
-                    setSuccess("");
-                    setError("");
                   }}
                 >
                   Write a Review
                 </Button>
               )}
             </div>
-            {success && <SuccessMessage message={success} />}
-            {error && <ValidationError message={error} />}
             {isAddingReview && (
               <CompanyReviewForm
                 review={review}
                 onSave={handleSave}
                 onChange={handleChange}
                 onCancel={handleCancel}
-                error={error}
-                ratingError={ratingError}
-                descriptionError={descriptionError}
               />
             )}
             {reviews.map((review) => (
@@ -229,9 +211,7 @@ export default function UserCompanyOverview() {
                     updatedReview.description
                   )
                 }
-                setSuccess={setSuccess}
                 onReviewDelete={handleReviewDelete}
-                setError={setError}
                 user_id={review.user_id}
               />
             ))}

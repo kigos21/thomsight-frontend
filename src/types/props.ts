@@ -82,11 +82,9 @@ export type ReviewItemProps = {
   user_id: number | undefined;
   classNames?: string;
   style?: React.CSSProperties;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
   id: number | undefined;
   posted_by: string | undefined;
   onReviewDelete: (id: number | undefined) => void;
-  setError: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type PaddedContainerProps = {
