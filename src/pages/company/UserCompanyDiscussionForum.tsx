@@ -15,6 +15,7 @@ import FormField from "../../components/form/FormField";
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import { IconSend, IconX } from "@tabler/icons-react";
 import { useUser } from "../../contexts/UserContext";
+import DisplayProfile from "../../components/ui/company/DisplayProfile";
 
 interface Reply {
   id: number;
@@ -51,6 +52,16 @@ export default function UserCompanyDiscussionForum() {
   const [activeEditReplyId, setActiveEditReplyId] = useState<number | null>(
     null
   );
+  const [activeProfileUserId, setActiveProfileUserId] = useState<number | null>(
+    null
+  );
+  const handleProfileClick = (userId: number) => {
+    if (activeProfileUserId === userId) {
+      setActiveProfileUserId(null);
+    } else {
+      setActiveProfileUserId(userId);
+    }
+  };
 
   useEffect(() => {
     const fetchDiscussions = async () => {
@@ -298,8 +309,23 @@ export default function UserCompanyDiscussionForum() {
                               gap: "0.25rem",
                             }}
                           >
+                            {activeProfileUserId === reply.posted_by && (
+                              <DisplayProfile
+                                onClose={() => setActiveProfileUserId(null)}
+                                user_id={reply.posted_by}
+                                isVisible={
+                                  activeProfileUserId === reply.posted_by
+                                }
+                              />
+                            )}
                             <div className={styles.repliesDetails}>
-                              <strong>{reply.username}</strong>
+                              <strong
+                                onClick={() =>
+                                  handleProfileClick(reply.posted_by)
+                                }
+                              >
+                                {reply.username}
+                              </strong>
                               <span className={styles.separator}> · </span>
                               {reply.posted_at}
                             </div>
