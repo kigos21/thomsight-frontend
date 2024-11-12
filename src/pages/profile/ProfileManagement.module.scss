@@ -133,7 +133,12 @@
 }
 
 .profileFormField {
-  text-align: center;
+  text-align: left;
+  padding-left: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .cancelEditButton {
