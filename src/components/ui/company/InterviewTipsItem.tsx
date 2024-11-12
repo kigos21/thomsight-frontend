@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import ReportForm from "./ReportForm";
 import { useUser } from "../../../contexts/UserContext";
 import DisplayProfile from "./DisplayProfile";
+import { toast } from "react-toastify";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -33,8 +34,6 @@ export default function InterviewTipsItem({
   tipDescription,
   onTipChange,
   onTipDelete,
-  setSuccess,
-  setError,
   setLoading,
   poster_id,
 }: InterviewTipsItemProps) {
@@ -45,8 +44,6 @@ export default function InterviewTipsItem({
     string | null
   >(null);
   const [reportDescription, setReportDescription] = useState<string>("");
-  const [reportError, setReportError] = useState<string | null>(null);
-  const [reportSuccess, setReportSuccess] = useState<string | null>(null);
   const [reportLoading, setReportLoading] = useState<string>("");
 
   // Local state for editing
@@ -63,11 +60,18 @@ export default function InterviewTipsItem({
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
   const handleEditClick = () => {
-    setSuccess("");
     setIsEditing((state) => !state);
   };
 
   const handleSaveClick = async () => {
+    if (tempTip.title.length > 100) {
+      toast.error("Title should be limited to 100 characters");
+      return;
+    }
+    if (tempTip.description.length > 500) {
+      toast.error("Interview tips should be limited to 500 characters");
+      return;
+    }
     if (onTipChange) {
       setLoading("Updating tip...");
       try {
@@ -75,11 +79,11 @@ export default function InterviewTipsItem({
           `/api/company/${slug}/tip/${id}/update`,
           tempTip
         );
-        setSuccess("Tip updated successfully");
+        toast.success("Tip updated successfully");
         onTipChange(tempTip);
       } catch (error) {
         console.error("Error updating tip:", error);
-        setError("Could not update tip. Please try again.");
+        toast.error("Could not update tip. Please try again.");
       } finally {
         setLoading("");
         setIsEditing(false);
@@ -93,8 +97,6 @@ export default function InterviewTipsItem({
   };
 
   const handleDeleteClick = () => {
-    setSuccess("");
-    setError("");
     setShowDeletePopup(true);
   };
 
@@ -105,10 +107,10 @@ export default function InterviewTipsItem({
       if (onTipDelete) {
         onTipDelete(id);
       }
-      setSuccess("Deleted interview tip successfully");
+      toast.success("Deleted interview tip successfully");
     } catch (err) {
       console.error("Error deleting interview tip:" + err);
-      setError("Could not delete interview tip. Please try again.");
+      toast.error("Could not delete interview tip. Please try again.");
     } finally {
       setLoading("");
       setShowDeletePopup(false);
@@ -116,22 +118,18 @@ export default function InterviewTipsItem({
   };
 
   const handleReportClick = () => {
-    setSuccess("");
-    setError("");
     setShowReportPopup(true);
   };
 
   const handleSubmitReport = async (e: FormEvent) => {
     e.preventDefault();
-    setReportError(null);
-    setReportSuccess(null);
 
     if (!selectedReportOption) {
-      setReportError("Please select an issue type.");
+      toast.error("Please select an issue type.");
       return;
     }
     if (!reportDescription) {
-      setReportError("Please fill out the reason");
+      toast.error("Please fill out the reason");
       return;
     }
 
@@ -143,14 +141,15 @@ export default function InterviewTipsItem({
         reason: reportDescription,
       });
       if (response.status === 200) {
-        setReportSuccess("Report submitted successfully.");
+        toast.success("Report submitted successfully.");
         setSelectedReportOption(null);
         setReportDescription("");
       }
     } catch (error) {
-      setReportError(
-        "There was an error submitting the report. Please try again." + error
+      toast.error(
+        "There was an error submitting the report. Please try again."
       );
+      console.error(error);
     } finally {
       setReportLoading("");
     }
@@ -258,8 +257,6 @@ export default function InterviewTipsItem({
             description={reportDescription}
             setDescription={setReportDescription}
             handleSubmit={handleSubmitReport}
-            error={reportError}
-            successMessage={reportSuccess}
             loading={reportLoading === "Submitting report..."}
           ></ReportForm>
         )}

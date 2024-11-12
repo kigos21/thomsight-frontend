@@ -186,8 +186,8 @@ export interface ReportFormProps {
   description: string;
   setDescription: (value: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
-  error: string | null;
-  successMessage: string | null;
+  error?: string | null;
+  successMessage?: string | null;
   loading: boolean;
 }
 

@@ -133,7 +133,6 @@ export default function UserCompanyInterviewTips() {
           : tp
       )
     );
-    setSuccess("Tip updated successfully");
     setError("");
   };
 

@@ -59,6 +59,8 @@ import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 import PostCVForm from "./pages/cv/PostCVForm.tsx";
 import ChangePassword from "./pages/profile/ChangePassword.tsx";
 import ReportsComments from "./pages/reports/ReportsComments.tsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -386,6 +388,16 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <GoogleOAuthProvider clientId="107195282203-012nj9s8e4t16hgpefk8sovu08sc3ob1.apps.googleusercontent.com">
       <RouterProvider router={router} />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        toastStyle={{
+          fontSize: "15px",
+          border: "2px solid #000",
+          borderRadius: "8px",
+        }}
+      />
     </GoogleOAuthProvider>
   </StrictMode>
 );
