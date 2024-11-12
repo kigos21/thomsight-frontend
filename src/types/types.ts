@@ -101,4 +101,5 @@ export type CV = {
   user_id: number;
   description: string;
   file: string;
+  mine?: boolean;
 };
