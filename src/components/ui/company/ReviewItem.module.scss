@@ -74,6 +74,15 @@
 .internName {
   font-size: 0.875rem;
   font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.3s ease,
+    border-bottom-color 0.3s ease;
+  &:hover {
+    color: var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
+    cursor: pointer;
+  }
 }
 
 .rating {

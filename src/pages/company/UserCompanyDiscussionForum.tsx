@@ -378,6 +378,7 @@ export default function UserCompanyDiscussionForum() {
                             )}
                             <div className={styles.repliesDetails}>
                               <strong
+                                className={styles.replyInternName}
                                 onClick={() =>
                                   handleProfileClick(reply.posted_by)
                                 }
