@@ -259,3 +259,15 @@
     background-color: var(--red-9);
   }
 }
+
+.replyInternName {
+  // border-bottom: 1px solid transparent;
+  transition:
+    color 0.3s ease,
+    border-bottom-color 0.3s ease;
+  &:hover {
+    color: var(--secondary-color);
+    // border-bottom: 1px solid var(--secondary-color);
+    cursor: pointer;
+  }
+}
