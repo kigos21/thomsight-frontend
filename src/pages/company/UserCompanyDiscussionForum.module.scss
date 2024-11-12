@@ -17,6 +17,14 @@
     display: flex;
     flex-direction: column;
   }
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 4rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 6rem;
+  }
 }
 
 .leftcontainer {
@@ -102,8 +110,10 @@
 }
 
 .repliesContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.75rem;
 
   margin-top: 1rem;
@@ -112,6 +122,21 @@
   margin-left: 1rem;
 
   border-left: 1px solid var(--black);
+
+  @media screen and (max-width: 480px) {
+    gap: 6rem;
+  }
+}
+
+.repliesDetails {
+  @media screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+
+    .separator {
+      display: none;
+    }
+  }
 }
 
 .replyFormFieldContainer {
@@ -148,4 +173,36 @@
 .formFieldParent {
   display: block;
   width: 100%;
+}
+
+.iconContainer {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  @media screen and (max-width: 668px) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.iconEdit,
+.iconDelete,
+.iconReport {
+  transition: all 0.3s ease;
+}
+
+.iconEdit:hover {
+  color: var(--blue-6);
+}
+
+.iconDelete:hover {
+  color: var(--red-6);
+}
+
+.iconReport:hover {
+  color: var(--black-overlay);
 }

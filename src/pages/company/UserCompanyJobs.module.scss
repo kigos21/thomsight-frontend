@@ -5,9 +5,12 @@
     padding: 0 1.25rem;
   }
 
+  @media (max-width: 1024px) {
+    margin-bottom: 4rem;
+  }
+
   @media (max-width: 480px) {
-    padding: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 6rem;
   }
 }
 

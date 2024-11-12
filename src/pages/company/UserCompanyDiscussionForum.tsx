@@ -12,6 +12,7 @@ import Spinner from "../../components/ui/Spinner";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import { containsBadWords } from "../../badWordsFilter";
 import FormField from "../../components/form/FormField";
+import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import { IconSend, IconX } from "@tabler/icons-react";
 
 interface Reply {
@@ -199,6 +200,10 @@ export default function UserCompanyDiscussionForum() {
                 No offensive and rude behavior is allowed. Please report them by
                 clicking the report button on the post.
               </p>
+              <p>
+                If you need to mention the company, simply type "@rep" in your
+                message.
+              </p>
             </StyledBox>
           </div>
           {error && <ValidationError message={error} />}
@@ -250,11 +255,38 @@ export default function UserCompanyDiscussionForum() {
                               gap: "0.25rem",
                             }}
                           >
-                            <div>
-                              <strong>{reply.username}</strong> ·{" "}
+                            <div className={styles.repliesDetails}>
+                              <strong>{reply.username}</strong>
+                              <span className={styles.separator}> · </span>
                               {reply.posted_at}
                             </div>
+
                             <div>{reply.comment}</div>
+                            <div className={styles.iconContainer}>
+                              <button>
+                                <IconEdit
+                                  size={25}
+                                  stroke={1.5}
+                                  className={styles.iconEdit}
+                                />
+                              </button>
+
+                              <button>
+                                <IconTrash
+                                  size={25}
+                                  stroke={1.5}
+                                  className={styles.iconDelete}
+                                />
+                              </button>
+
+                              <button>
+                                <IconFlagFilled
+                                  size={25}
+                                  stroke={1.5}
+                                  className={styles.iconReport}
+                                />
+                              </button>
+                            </div>
                           </div>
                         ))}
                     </div>
@@ -297,6 +329,10 @@ export default function UserCompanyDiscussionForum() {
             <p>
               No offensive and rude behavior is allowed. Please report them by
               clicking the report button on the post.
+            </p>
+            <p>
+              If you need to mention the company, simply type "@rep" in your
+              message.
             </p>
           </StyledBox>
         </div>

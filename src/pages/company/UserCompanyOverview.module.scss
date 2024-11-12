@@ -1,5 +1,13 @@
 .paddedContainer {
   padding: 0rem 0rem;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 4rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 0rem;
+  }
 }
 
 .styledBox {
