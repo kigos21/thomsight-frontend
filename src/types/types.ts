@@ -34,7 +34,7 @@ export type Company = {
   locations?: Location[];
   jobs?: Job[];
   image?: string;
-  deleted_at?: Date;
+  deleted_at?: Date | null;
 };
 
 export type Location = {
