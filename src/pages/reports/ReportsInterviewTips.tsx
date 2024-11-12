@@ -92,7 +92,10 @@ const ReportsInterviewTips = () => {
                 <IconPointFilled size={8} />
                 <p className={styles.reportDetailsDate}>{report.report_date}</p>
               </div>
-              <p>{report.issue}</p>
+              <div className={styles.reportIssueHolder}>
+                <p>Report Issue:</p>
+                <p>{report.issue}</p>
+              </div>
               <p className={styles.reportDetailsBody}>{report.reason}</p>
             </div>
             <div className={styles.thirdCol}>

@@ -58,6 +58,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 import PostCVForm from "./pages/cv/PostCVForm.tsx";
 import ChangePassword from "./pages/profile/ChangePassword.tsx";
+import ReportsComments from "./pages/reports/ReportsComments.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -206,6 +207,10 @@ const router = createBrowserRouter([
           {
             path: "discussion",
             element: <ReportsDiscussion />,
+          },
+          {
+            path: "comments",
+            element: <ReportsComments />,
           },
           {
             path: "reviews",
