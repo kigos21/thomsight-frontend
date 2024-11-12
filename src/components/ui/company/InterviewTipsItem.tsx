@@ -7,6 +7,7 @@ import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import ReportForm from "./ReportForm";
 import { useUser } from "../../../contexts/UserContext";
+import DisplayProfile from "./DisplayProfile";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -59,6 +60,7 @@ export default function InterviewTipsItem({
   });
 
   const { user } = useUser();
+  const [showProfile, setShowProfile] = useState<boolean>(false);
 
   const handleEditClick = () => {
     setSuccess("");
@@ -199,7 +201,12 @@ export default function InterviewTipsItem({
               <div className={styles.tipsSubjectContainer}>
                 <p className={styles.subjectHeading}>{subjectHeading}</p>
                 {internName && (
-                  <p className={styles.internName}>{internName}</p>
+                  <p
+                    className={styles.internName}
+                    onClick={() => setShowProfile(true)}
+                  >
+                    {internName}
+                  </p>
                 )}
               </div>
               <p className={styles.jobDescription}>{tipDescription}</p>
@@ -257,6 +264,14 @@ export default function InterviewTipsItem({
           ></ReportForm>
         )}
       </PaddedContainer>
+
+      {showProfile && (
+        <DisplayProfile
+          onClose={() => setShowProfile(false)}
+          user_id={poster_id}
+          isVisible={showProfile}
+        />
+      )}
     </div>
   );
 }
