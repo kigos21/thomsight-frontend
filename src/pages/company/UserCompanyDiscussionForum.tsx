@@ -173,6 +173,30 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
+  const handleReplyDelete = async (replyId: number, discussionId: number) => {
+    setSuccess("");
+    setError("");
+    try {
+      setLoading("Deleting reply...");
+      await axiosInstance.delete(
+        `/api/company/${slug}/discussions/${discussionId}/comment/${replyId}/delete`
+      );
+
+      setLoading("Loading discussions...");
+      const response = await axiosInstance.get(
+        `/api/company/${slug}/discussions`
+      );
+      const discussions = response.data;
+      setPostData(discussions);
+      setSuccess("Reply deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting reply:", error);
+      setError("An error occurred while deleting the reply.");
+    } finally {
+      setLoading("");
+    }
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -271,7 +295,11 @@ export default function UserCompanyDiscussionForum() {
                                 />
                               </button>
 
-                              <button>
+                              <button
+                                onClick={() =>
+                                  handleReplyDelete(reply.id, post.id)
+                                }
+                              >
                                 <IconTrash
                                   size={25}
                                   stroke={1.5}
