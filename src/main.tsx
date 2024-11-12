@@ -401,6 +401,9 @@ createRoot(document.getElementById("root")!).render(
           fontSize: "15px",
           border: "2px solid #000",
           borderRadius: "8px",
+          fontFamily: "Poppins, sans-serif",
+          color: "black",
+          fontStyle: "bold",
         }}
       />
     </GoogleOAuthProvider>
