@@ -5,7 +5,14 @@ import { useState } from "react";
 import { useUser } from "../../../contexts/UserContext";
 import styles from "./AnnouncementItem.module.scss";
 import DeletePopUp from "../company/DeletePopUp";
+import { toast } from "react-toastify";
+import axiosInstance from "../../../services/axiosInstance";
+import { useParams } from "react-router-dom";
 
+interface Announcement {
+  id: number;
+  post: string;
+}
 export default function AnnouncementItem({
   classNames,
   style,
@@ -16,9 +23,45 @@ export default function AnnouncementItem({
   onDelete,
 }: any) {
   const [isDeletePopupVisible, setDeletePopupVisible] = useState(false);
+  const [activeEditReplyId, setActiveEditReplyId] = useState<number | null>(
+    null
+  );
+  const [editedReplyText, setEditedReplyText] = useState("");
+  const [loading, setLoading] = useState<string>("");
+  const { slug } = useParams<{ slug: string }>();
+  const [postData, setPostData] = useState<Announcement[]>([]);
 
   const handleIconClick = () => {
     console.log("Icon clicked!");
+  };
+
+  const handleSaveEdit = async (replyId: number) => {
+    if (editedReplyText.length > 500) {
+      toast.error("Comments should be limited to 500 characters");
+      return;
+    }
+    try {
+      setLoading("Updating comment...");
+      await axiosInstance.put(
+        `/api/company/${slug}/comment/${replyId}/delete`,
+        {
+          comment: editedReplyText,
+        }
+      );
+      setLoading("Loading discussions...");
+      const response = await axiosInstance.get(
+        `/api/company/${slug}/discussions`
+      );
+      const discussions = response.data;
+      setPostData(discussions);
+      setActiveEditReplyId(null);
+      setEditedReplyText("");
+    } catch (error) {
+      console.error("Failed to save the reply:", error);
+      toast.error("Failed to update reply. Please try again.");
+    } finally {
+      setLoading("");
+    }
   };
 
   const handleDeleteClick = () => {
@@ -43,6 +86,33 @@ export default function AnnouncementItem({
           <p className={styles.header}>{announcementHeader}</p>
           <p className={styles.date}>{date}</p>
         </div>
+
+        {activeEditReplyId === reply.id ? (
+          <div className={styles.editDescriptionSection}>
+            <textarea
+              className={styles.descriptionTextarea}
+              rows={5}
+              value={editedReplyText}
+              onChange={(e) => setEditedReplyText(e.target.value)}
+            />
+            <div className={styles.editButtons}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setActiveEditReplyId(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles.saveButton}
+                onClick={() => handleSaveEdit(reply.id)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>{reply.comment}</div>
+        )}
         {user?.role === "Admin" && (
           <div className={styles.iconContainer}>
             <button onClick={handleIconClick} className={styles.iconButton}>
