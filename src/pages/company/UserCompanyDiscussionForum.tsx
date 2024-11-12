@@ -39,7 +39,6 @@ export default function UserCompanyDiscussionForum() {
   const [postForm, setPostForm] = useState({
     description: "",
   });
-  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [reply, setReply] = useState<string>("");
   const [activeReplyPostId, setActiveReplyPostId] = useState<number>(-1); // -1 if unset
@@ -49,6 +48,9 @@ export default function UserCompanyDiscussionForum() {
   const [success, setSuccess] = useState<string>("");
   const [postData, setPostData] = useState<Post[]>([]);
   const { user } = useUser();
+  const [activeEditReplyId, setActiveEditReplyId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchDiscussions = async () => {
@@ -203,10 +205,14 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (replyId: number) => {
     setError("");
     setSuccess("");
-    setIsEditing((state) => !state);
+    if (activeEditReplyId === replyId) {
+      setActiveEditReplyId(null);
+    } else {
+      setActiveEditReplyId(replyId);
+    }
   };
 
   return (
@@ -298,10 +304,34 @@ export default function UserCompanyDiscussionForum() {
                               {reply.posted_at}
                             </div>
 
-                            <div>{reply.comment}</div>
+                            {activeEditReplyId === reply.id ? (
+                              <div className={styles.editDescriptionSection}>
+                                <textarea
+                                  className={styles.descriptionTextarea}
+                                  rows={5}
+                                  defaultValue={reply.comment} // Populate with the current comment
+                                />
+                                <div className={styles.editButtons}>
+                                  <button
+                                    className={styles.cancelButton}
+                                    onClick={() => setActiveEditReplyId(null)}
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button className={styles.saveButton}>
+                                    Save
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div>{reply.comment}</div>
+                            )}
+
                             <div className={styles.iconContainer}>
                               {user?.id === reply.posted_by && (
-                                <button onClick={handleEditClick}>
+                                <button
+                                  onClick={() => handleEditClick(reply.id)}
+                                >
                                   <IconEdit
                                     size={25}
                                     stroke={1.5}
