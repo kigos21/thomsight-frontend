@@ -115,6 +115,10 @@ export default function DiscussionForumItem({
       toast.error("Please fill out the reason");
       return;
     }
+    if (reportDescription.length > 255) {
+      toast.error("Reason should be limited to 255 characters");
+      return;
+    }
 
     setReportLoading("Submitting report...");
     try {

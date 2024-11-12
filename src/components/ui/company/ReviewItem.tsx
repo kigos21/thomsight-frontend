@@ -172,6 +172,10 @@ export default function ReviewItem({
       toast.error("Please fill out the reason");
       return;
     }
+    if (reportDescription.length > 255) {
+      toast.error("Reason should be limited to 255 characters");
+      return;
+    }
 
     setLoading("Submitting report...");
     try {
