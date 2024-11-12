@@ -66,8 +66,8 @@ export default function InterviewTipsItem({
       toast.error("Title should be limited to 100 characters");
       return;
     }
-    if (tempTip.description.length > 500) {
-      toast.error("Interview tips should be limited to 500 characters");
+    if (tempTip.description.length > 2000) {
+      toast.error("Interview tips should be limited to 2000 characters");
       return;
     }
     if (onTipChange) {
