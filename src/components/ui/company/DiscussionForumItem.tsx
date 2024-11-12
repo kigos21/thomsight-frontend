@@ -59,6 +59,10 @@ export default function DiscussionForumItem({
       setDescriptionError("New description contains foul language");
       return;
     }
+    if (tempDescription.length > 2000) {
+      setDescriptionError("Description should be limited to 2000 characters");
+      return;
+    }
     try {
       setLoading("Updating discussion...");
       await axiosInstance.put(`/api/company/${slug}/discussion/${id}/update`, {

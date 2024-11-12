@@ -35,11 +35,6 @@ interface Post {
   user_id: number;
 }
 
-type CommentSuccessType = {
-  replyId?: number;
-  action: "edit" | "delete" | "report" | "";
-};
-
 export default function UserCompanyDiscussionForum() {
   const [isAddingPost, setIsAddingPost] = useState<boolean>(false); // To control the form visibility
   const [postForm, setPostForm] = useState({
@@ -61,10 +56,6 @@ export default function UserCompanyDiscussionForum() {
     null
   );
   const [editedReplyText, setEditedReplyText] = useState("");
-  const [commentSuccess, setCommentSuccess] = useState<CommentSuccessType>({
-    replyId: undefined,
-    action: "",
-  });
 
   const handleProfileClick = (userId: number) => {
     if (activeProfileUserId === userId) {
@@ -100,6 +91,10 @@ export default function UserCompanyDiscussionForum() {
     }
     if (containsBadWords(postForm.description)) {
       setError("Post description contains foul language");
+      return;
+    }
+    if (postForm.description.length > 2000) {
+      setError("Post description should be limited to 2000 characters.");
       return;
     }
 
@@ -176,9 +171,12 @@ export default function UserCompanyDiscussionForum() {
   const handleAddReply = async (discussionId: number) => {
     setSuccess("");
     setError("");
-    setCommentSuccess({ replyId: undefined, action: "" });
     if (!reply.trim()) {
-      setError("Reply cannot be blank.");
+      setError("Comment cannot be blank.");
+      return;
+    }
+    if (reply.length > 500) {
+      setError("Comments should be limited to 500 characters.");
       return;
     }
 
@@ -207,7 +205,6 @@ export default function UserCompanyDiscussionForum() {
   const handleReplyDelete = async (replyId: number, discussionId: number) => {
     setSuccess("");
     setError("");
-    setCommentSuccess({ replyId: undefined, action: "" });
     try {
       setLoading("Deleting reply...");
       await axiosInstance.delete(
@@ -221,7 +218,6 @@ export default function UserCompanyDiscussionForum() {
       const discussions = response.data;
       setPostData(discussions);
       setSuccess("Reply deleted successfully.");
-      setCommentSuccess({ replyId, action: "delete" });
     } catch (error) {
       console.error("Error deleting reply:", error);
       setError("An error occurred while deleting the reply.");
@@ -233,7 +229,6 @@ export default function UserCompanyDiscussionForum() {
   const handleEditClick = (replyId: number, replyText: string) => {
     setError("");
     setSuccess("");
-    setCommentSuccess({ replyId: undefined, action: "" });
     if (activeEditReplyId === replyId) {
       setActiveEditReplyId(null);
       setEditedReplyText("");
@@ -246,7 +241,10 @@ export default function UserCompanyDiscussionForum() {
   const handleSaveEdit = async (replyId: number) => {
     setSuccess("");
     setError("");
-    setCommentSuccess({ replyId: undefined, action: "" });
+    if (editedReplyText.length > 500) {
+      setError("Comments should be limited to 500 characters");
+      return;
+    }
     try {
       setLoading("Updating comment...");
       await axiosInstance.put(
@@ -261,7 +259,6 @@ export default function UserCompanyDiscussionForum() {
       );
       const discussions = response.data;
       setPostData(discussions);
-      setCommentSuccess({ replyId, action: "edit" });
       setActiveEditReplyId(null);
       setEditedReplyText("");
     } catch (error) {
@@ -348,18 +345,6 @@ export default function UserCompanyDiscussionForum() {
                       {post.replies &&
                         post.replies.map((reply) => (
                           <div>
-                            {commentSuccess?.replyId === reply.id &&
-                              commentSuccess.action === "edit" && (
-                                <SuccessMessage message="Comment edited successfully!" />
-                              )}
-                            {commentSuccess?.replyId === reply.id &&
-                              commentSuccess.action === "delete" && (
-                                <SuccessMessage message="Comment deleted successfully!" />
-                              )}
-                            {commentSuccess?.replyId === reply.id &&
-                              commentSuccess.action === "report" && (
-                                <SuccessMessage message="Comment reported successfully!" />
-                              )}
                             <div
                               key={reply.id}
                               style={{

@@ -2,7 +2,7 @@ import styles from "./SuccessMessage.module.scss";
 import { IconCheck } from "@tabler/icons-react";
 
 interface SuccessMessageProps {
-  message: string;
+  message?: string;
 }
 
 const SuccessMessage: React.FC<SuccessMessageProps> = ({ message }) => {
