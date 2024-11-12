@@ -77,6 +77,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
           >
             {loading ? "Submitting..." : "Submit Report"}
           </button>
+          <button className={styles.cancelButton} onClick={onClose}>
+            Cancel
+          </button>
         </form>
       </div>
     </div>
