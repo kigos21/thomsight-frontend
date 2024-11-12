@@ -227,13 +227,15 @@ export default function DiscussionForumItem({
                 />
               </button>
             )}
-            <button onClick={handleReportClick} className={styles.iconButton}>
-              <IconFlagFilled
-                size={25}
-                stroke={1.5}
-                className={styles.iconReport}
-              />
-            </button>
+            {user?.id !== posted_by && (
+              <button onClick={handleReportClick} className={styles.iconButton}>
+                <IconFlagFilled
+                  size={25}
+                  stroke={1.5}
+                  className={styles.iconReport}
+                />
+              </button>
+            )}
           </div>
         </div>
       </StyledBox>

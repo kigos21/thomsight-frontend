@@ -18,6 +18,7 @@ export type Tip = {
   title: string;
   description: string;
   posted_by?: string;
+  poster_id?: number;
 };
 
 export default function UserCompanyInterviewTips() {
@@ -201,6 +202,7 @@ export default function UserCompanyInterviewTips() {
           setSuccess={setSuccess}
           setError={setError}
           setLoading={setLoading}
+          poster_id={tip.poster_id}
         />
       ))}
     </PaddedContainer>

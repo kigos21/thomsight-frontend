@@ -354,13 +354,15 @@ export default function UserCompanyDiscussionForum() {
                                 </button>
                               )}
 
-                              <button>
-                                <IconFlagFilled
-                                  size={25}
-                                  stroke={1.5}
-                                  className={styles.iconReport}
-                                />
-                              </button>
+                              {user?.id !== reply.posted_by && (
+                                <button>
+                                  <IconFlagFilled
+                                    size={25}
+                                    stroke={1.5}
+                                    className={styles.iconReport}
+                                  />
+                                </button>
+                              )}
                             </div>
                           </div>
                         ))}

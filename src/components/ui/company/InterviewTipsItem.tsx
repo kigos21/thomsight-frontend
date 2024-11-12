@@ -6,6 +6,7 @@ import DeletePopUp from "./DeletePopUp";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import ReportForm from "./ReportForm";
+import { useUser } from "../../../contexts/UserContext";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -19,6 +20,7 @@ export interface InterviewTipsItemProps {
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
   setLoading: React.Dispatch<React.SetStateAction<string>>;
+  poster_id: number | undefined;
 }
 
 export default function InterviewTipsItem({
@@ -33,6 +35,7 @@ export default function InterviewTipsItem({
   setSuccess,
   setError,
   setLoading,
+  poster_id,
 }: InterviewTipsItemProps) {
   const { slug } = useParams<{ slug: string }>();
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
@@ -54,6 +57,8 @@ export default function InterviewTipsItem({
     title: subjectHeading,
     description: tipDescription,
   });
+
+  const { user } = useUser();
 
   const handleEditClick = () => {
     setSuccess("");
@@ -201,10 +206,12 @@ export default function InterviewTipsItem({
             </>
           )}
           <div className={styles.iconContainer}>
-            <button onClick={handleEditClick} className={styles.iconButton}>
-              <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
-            </button>
-            {onTipDelete && (
+            {user?.id === poster_id && (
+              <button onClick={handleEditClick} className={styles.iconButton}>
+                <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
+              </button>
+            )}
+            {user?.id === poster_id && onTipDelete && (
               <button onClick={handleDeleteClick} className={styles.iconButton}>
                 <IconTrash
                   size={25}
@@ -213,13 +220,15 @@ export default function InterviewTipsItem({
                 />
               </button>
             )}
-            <button onClick={handleReportClick} className={styles.iconButton}>
-              <IconFlagFilled
-                size={25}
-                stroke={1.5}
-                className={styles.iconReport}
-              />
-            </button>
+            {user?.id !== poster_id && (
+              <button onClick={handleReportClick} className={styles.iconButton}>
+                <IconFlagFilled
+                  size={25}
+                  stroke={1.5}
+                  className={styles.iconReport}
+                />
+              </button>
+            )}
           </div>
         </div>
 

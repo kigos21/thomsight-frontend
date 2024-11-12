@@ -43,7 +43,7 @@ export type InterviewTipsItemProps = {
   internName: string | undefined;
   tipDescription: string;
   id: number | undefined;
-
+  poster_id: number;
   onTipChange: (updatedReview: { title: string; description: string }) => void;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
   onTipDelete: (id: number | undefined) => void;
