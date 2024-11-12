@@ -58,6 +58,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 import PostCVForm from "./pages/cv/PostCVForm.tsx";
 import ChangePassword from "./pages/profile/ChangePassword.tsx";
+import FAQsPage from "./pages/faqs/FAQsPage.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -162,7 +163,11 @@ const router = createBrowserRouter([
         path: "interview-guide",
         element: <InterviewGuidePage />,
       },
-
+      // FAQs
+      {
+        path: "faqs",
+        element: <FAQsPage />,
+      },
       // Profile Management
       {
         path: "profile",

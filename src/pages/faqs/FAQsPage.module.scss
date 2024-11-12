@@ -1,0 +1,41 @@
+.styledbox {
+  background-color: var(--neutral-0);
+  border: 3px solid var(--black);
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  border-radius: 30px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  align-self: center;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.subtitle {
+  margin-bottom: 0.5rem;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  color: var(--black);
+}
+
+.paragraph {
+    margin-bottom: 0.75rem;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
