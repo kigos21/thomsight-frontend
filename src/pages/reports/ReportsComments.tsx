@@ -1,6 +1,6 @@
 import { IconCheck, IconPointFilled, IconX } from "@tabler/icons-react";
 import ReportsTable from "../../components/ui/reports/ReportsTable";
-import styles from "./ReportsDiscussion.module.scss";
+import styles from "./ReportsComments.module.scss";
 import { DiscussionReport } from "../../types/types";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
@@ -9,7 +9,7 @@ import DeletePopUp from "../../components/ui/company/DeletePopUp";
 import SuccessMessage from "../../components/form/SuccessMessage";
 import ValidationError from "../../components/form/ValidationError";
 
-const ReportsDiscussion = () => {
+const ReportsComments = () => {
   const [reports, setReports] = useState<DiscussionReport[]>([]);
   const [loading, setLoading] = useState<string>("Fetching reports...");
   const [showDeleteReportPopup, setShowDeleteReportPopup] =
@@ -150,4 +150,4 @@ const ReportsDiscussion = () => {
   );
 };
 
-export default ReportsDiscussion;
+export default ReportsComments;

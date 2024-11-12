@@ -111,3 +111,10 @@
     background-color: var(--red-9);
   }
 }
+
+.reportIssueHolder {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 0 0 1rem 0;
+}
