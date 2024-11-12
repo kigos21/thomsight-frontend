@@ -47,10 +47,10 @@ export default function CompanyRoot() {
           path: `${basePath}/overview`,
           icon: <IconHome stroke={2} className={styles.bottomNavIcon} />,
         },
-        {
-          path: `${basePath}/overview#reviews`,
-          icon: <IconStars stroke={2} className={styles.bottomNavIcon} />,
-        },
+        // {
+        //   path: `${basePath}/overview#reviews`,
+        //   icon: <IconStars stroke={2} className={styles.bottomNavIcon} />,
+        // },
         {
           path: `${basePath}/jobs`,
           icon: <IconBriefcase stroke={2} className={styles.bottomNavIcon} />,
@@ -85,9 +85,9 @@ export default function CompanyRoot() {
       >
         Overview
       </NavLink>,
-      <NavLink to={`${basePath}/overview#reviews`} key="reviewCompany">
-        Review
-      </NavLink>,
+      // <NavLink to={`${basePath}/overview#reviews`} key="reviewCompany">
+      //   Review
+      // </NavLink>,
       <NavLink
         to={`${basePath}/jobs`}
         key="jobsCompany"
