@@ -9,6 +9,7 @@ import styles from "./AdminCreateAnnouncementItem.module.scss";
 import Spinner from "../Spinner";
 import { containsBadWords } from "../../../badWordsFilter";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminCreatennouncementItem({
   classNames,
@@ -17,6 +18,7 @@ export default function AdminCreatennouncementItem({
   const [subject, setSubject] = useState<string>("");
   const [details, setDetails] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSubmit = async () => {
     if (subject.trim() === "") {
@@ -42,6 +44,7 @@ export default function AdminCreatennouncementItem({
       setSubject("");
       setDetails("");
       toast.success("Announcement created successfully!");
+      navigate("/announcements");
     } catch (error) {
       console.error("Error creating announcement:", error);
     } finally {
