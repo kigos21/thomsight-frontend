@@ -79,7 +79,7 @@ export type ReviewItemProps = {
     rating: string;
     description: string;
   }) => void;
-
+  user_id: number | undefined;
   classNames?: string;
   style?: React.CSSProperties;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
@@ -206,7 +206,7 @@ export interface DismissPopUpProps {
 export interface DisplayProfileProps {
   isVisible: boolean;
   onClose: () => void;
-  user_id: number;
+  user_id: number | undefined;
   // internName: string;
   // bio: string;
   // profileLink?: string;

@@ -21,6 +21,7 @@ export type Review = {
   posted_by?: string;
   date?: string | number | Date;
   poster_name?: string;
+  user_id?: number;
 };
 
 export default function UserCompanyOverview() {
@@ -232,6 +233,7 @@ export default function UserCompanyOverview() {
                 setSuccess={setSuccess}
                 onReviewDelete={handleReviewDelete}
                 setError={setError}
+                user_id={review.user_id}
               />
             ))}
           </div>

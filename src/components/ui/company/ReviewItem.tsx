@@ -16,6 +16,7 @@ import Spinner from "../Spinner";
 import { useUser } from "../../../contexts/UserContext";
 import DeletePopUp from "./DeletePopUp";
 import ReportForm from "./ReportForm";
+import DisplayProfile from "./DisplayProfile";
 
 export default function ReviewItem({
   classNames,
@@ -30,6 +31,7 @@ export default function ReviewItem({
   posted_by,
   onReviewDelete,
   setError,
+  user_id,
 }: ReviewItemProps) {
   // Local state for editing
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -55,6 +57,7 @@ export default function ReviewItem({
   const [upvotes, setUpvotes] = useState<number>(0);
   const [downvotes, setDownvotes] = useState<number>(0);
   const [userVote, setUserVote] = useState<string | null>(null);
+  const [showProfile, setShowProfile] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchVotes = async () => {
@@ -204,7 +207,12 @@ export default function ReviewItem({
         <div className={styles.reviewContainer}>
           <div className={styles.reviewSubjectContainer}>
             <div className={styles.reviewerDetails}>
-              <p className={styles.internName}>{internName}</p>
+              <p
+                className={styles.internName}
+                onClick={() => setShowProfile(true)}
+              >
+                {internName}
+              </p>
               <div className={styles.verticalDivider}></div>
               {!isEditing ? (
                 <div className={styles.ratingContainer}>
@@ -318,13 +326,15 @@ export default function ReviewItem({
                 />
               </button>
             )}
-            <button onClick={handleReportClick} className={styles.iconButton}>
-              <IconFlagFilled
-                size={25}
-                stroke={1.5}
-                className={styles.iconReport}
-              />
-            </button>
+            {user?.id != posted_by && (
+              <button onClick={handleReportClick} className={styles.iconButton}>
+                <IconFlagFilled
+                  size={25}
+                  stroke={1.5}
+                  className={styles.iconReport}
+                />
+              </button>
+            )}
           </div>
         </div>
       </StyledBox>
@@ -352,6 +362,14 @@ export default function ReviewItem({
           successMessage={reportSuccess}
           loading={loading === "Submitting report..."}
         ></ReportForm>
+      )}
+
+      {showProfile && (
+        <DisplayProfile
+          onClose={() => setShowProfile(false)}
+          user_id={user_id}
+          isVisible={showProfile}
+        />
       )}
     </div>
   );
