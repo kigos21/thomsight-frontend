@@ -14,6 +14,10 @@ import { containsBadWords } from "../../badWordsFilter";
 import FormField from "../../components/form/FormField";
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import { IconSend, IconX } from "@tabler/icons-react";
+import DeletePopUp from "../../components/ui/company/DeletePopUp";
+import ReportForm from "../../components/ui/company/ReportForm";
+import { FormEvent, useState } from "react";
+import { useUser } from "../../contexts/UserContext";
 
 interface Reply {
   id: number;
@@ -43,6 +47,17 @@ export default function UserCompanyDiscussionForum() {
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [postData, setPostData] = useState<Post[]>([]);
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
+  const [selectedReportOption, setSelectedReportOption] = useState<
+    string | null
+  >(null);
+  const [reportDescription, setReportDescription] = useState<string>("");
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [reportSuccess, setReportSuccess] = useState<string | null>(null);
+  const [reportLoading, setReportLoading] = useState<string>("");
+  const { user } = useUser();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchDiscussions = async () => {
@@ -173,6 +188,81 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
+  const handleDeleteDiscussion = async () => {
+    try {
+      setLoading("Deleting discussion...");
+      await axiosInstance.delete(
+        `/api/company/${slug}/discussion/${id}/delete`
+      );
+      if (onDiscussionDelete) {
+        onDiscussionDelete(id);
+      }
+      setSuccess("Deleted discussion successfully");
+    } catch (err) {
+      console.error("Error deleting discussion:" + err);
+      setError("Could not delete discussion. Please try again.");
+    } finally {
+      setLoading("");
+      setShowDeletePopup(false);
+    }
+  };
+
+  const handleSubmitReport = async (e: FormEvent) => {
+    e.preventDefault();
+    setReportError(null);
+    setReportSuccess(null);
+
+    if (!selectedReportOption) {
+      setReportError("Please select an issue type.");
+      return;
+    }
+    if (!reportDescription) {
+      setReportError("Please fill out the reason");
+      return;
+    }
+
+    setReportLoading("Submitting report...");
+    try {
+      const response = await axiosInstance.post(
+        `/api/report/discussion/${id}`,
+        {
+          id,
+          issue: selectedReportOption,
+          reason: reportDescription,
+        }
+      );
+      if (response.status === 200) {
+        setReportSuccess("Report submitted successfully.");
+        setSelectedReportOption(null);
+        setReportDescription("");
+      }
+    } catch (error) {
+      setReportError(
+        "There was an error submitting the report. Please try again." + error
+      );
+    } finally {
+      setReportLoading("");
+    }
+  };
+
+  const handleEditClick = () => {
+    setError("");
+    setSuccess("");
+    setIsEditing((state) => !state);
+  };
+
+  const handleDeleteClick = () => {
+    setSuccess("");
+    setError("");
+    setShowDeletePopup(true);
+  };
+
+  const handleReportClick = () => {
+    setSuccess("");
+    setError("");
+    setShowReportPopup(true);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -263,29 +353,34 @@ export default function UserCompanyDiscussionForum() {
 
                             <div>{reply.comment}</div>
                             <div className={styles.iconContainer}>
-                              <button>
-                                <IconEdit
-                                  size={25}
-                                  stroke={1.5}
-                                  className={styles.iconEdit}
-                                />
-                              </button>
+                              {user?.id === posted_by && (
+                                <button onClick={handleEditClick}>
+                                  <IconEdit
+                                    size={25}
+                                    stroke={1.5}
+                                    className={styles.iconEdit}
+                                  />
+                                </button>
+                              )}
 
-                              <button>
-                                <IconTrash
-                                  size={25}
-                                  stroke={1.5}
-                                  className={styles.iconDelete}
-                                />
-                              </button>
-
-                              <button>
-                                <IconFlagFilled
-                                  size={25}
-                                  stroke={1.5}
-                                  className={styles.iconReport}
-                                />
-                              </button>
+                              {user?.id === posted_by && (
+                                <button onClick={handleDeleteClick}>
+                                  <IconTrash
+                                    size={25}
+                                    stroke={1.5}
+                                    className={styles.iconDelete}
+                                  />
+                                </button>
+                              )}
+                              {user?.id === posted_by && (
+                                <button onClick={handleReportClick}>
+                                  <IconFlagFilled
+                                    size={25}
+                                    stroke={1.5}
+                                    className={styles.iconReport}
+                                  />
+                                </button>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -336,6 +431,31 @@ export default function UserCompanyDiscussionForum() {
             </p>
           </StyledBox>
         </div>
+
+        {showDeletePopup && (
+          <DeletePopUp
+            isVisible={showDeletePopup}
+            onClose={() => setShowDeletePopup(false)}
+            onDelete={handleDeleteDiscussion}
+            heading="Delete Discussion"
+            details="Are you sure you want to delete this discussion? Please note that all replies in your discussion will be deleted as well."
+          />
+        )}
+
+        {showReportPopup && (
+          <ReportForm
+            isVisible={showReportPopup}
+            onClose={() => setShowReportPopup(false)}
+            selectedOption={selectedReportOption}
+            setSelectedOption={setSelectedReportOption}
+            description={reportDescription}
+            setDescription={setReportDescription}
+            handleSubmit={handleSubmitReport}
+            error={reportError}
+            successMessage={reportSuccess}
+            loading={reportLoading === "Submitting report..."}
+          ></ReportForm>
+        )}
       </div>
     </PaddedContainer>
   );
