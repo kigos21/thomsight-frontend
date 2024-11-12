@@ -309,7 +309,7 @@ export default function UserCompanyDiscussionForum() {
                                 <textarea
                                   className={styles.descriptionTextarea}
                                   rows={5}
-                                  defaultValue={reply.comment} // Populate with the current comment
+                                  defaultValue={reply.comment}
                                 />
                                 <div className={styles.editButtons}>
                                   <button
