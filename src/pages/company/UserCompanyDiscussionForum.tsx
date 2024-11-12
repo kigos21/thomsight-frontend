@@ -347,14 +347,7 @@ export default function UserCompanyDiscussionForum() {
                     <div className={styles.repliesContainer}>
                       {post.replies &&
                         post.replies.map((reply) => (
-                          <div
-                            key={reply.id}
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "0.25rem",
-                            }}
-                          >
+                          <div>
                             {commentSuccess?.replyId === reply.id &&
                               commentSuccess.action === "edit" && (
                                 <SuccessMessage message="Comment edited successfully!" />
@@ -367,95 +360,104 @@ export default function UserCompanyDiscussionForum() {
                               commentSuccess.action === "report" && (
                                 <SuccessMessage message="Comment reported successfully!" />
                               )}
-                            {activeProfileUserId === reply.posted_by && (
-                              <DisplayProfile
-                                onClose={() => setActiveProfileUserId(null)}
-                                user_id={reply.posted_by}
-                                isVisible={
-                                  activeProfileUserId === reply.posted_by
-                                }
-                              />
-                            )}
-                            <div className={styles.repliesDetails}>
-                              <strong
-                                className={styles.replyInternName}
-                                onClick={() =>
-                                  handleProfileClick(reply.posted_by)
-                                }
-                              >
-                                {reply.username}
-                              </strong>
-                              <span className={styles.separator}> · </span>
-                              {reply.posted_at}
-                            </div>
-
-                            {activeEditReplyId === reply.id ? (
-                              <div className={styles.editDescriptionSection}>
-                                <textarea
-                                  className={styles.descriptionTextarea}
-                                  rows={5}
-                                  value={editedReplyText}
-                                  onChange={(e) =>
-                                    setEditedReplyText(e.target.value)
+                            <div
+                              key={reply.id}
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "0.25rem",
+                              }}
+                            >
+                              {activeProfileUserId === reply.posted_by && (
+                                <DisplayProfile
+                                  onClose={() => setActiveProfileUserId(null)}
+                                  user_id={reply.posted_by}
+                                  isVisible={
+                                    activeProfileUserId === reply.posted_by
                                   }
                                 />
-                                <div className={styles.editButtons}>
-                                  <button
-                                    className={styles.cancelButton}
-                                    onClick={() => setActiveEditReplyId(null)}
-                                  >
-                                    Cancel
-                                  </button>
-                                  <button
-                                    className={styles.saveButton}
-                                    onClick={() => handleSaveEdit(reply.id)}
-                                  >
-                                    Save
-                                  </button>
-                                </div>
+                              )}
+                              <div className={styles.repliesDetails}>
+                                <strong
+                                  className={styles.replyInternName}
+                                  onClick={() =>
+                                    handleProfileClick(reply.posted_by)
+                                  }
+                                >
+                                  {reply.username}
+                                </strong>
+                                <span className={styles.separator}> · </span>
+                                {reply.posted_at}
                               </div>
-                            ) : (
-                              <div>{reply.comment}</div>
-                            )}
 
-                            <div className={styles.iconContainer}>
-                              {user?.id === reply.posted_by && (
-                                <button
-                                  onClick={() =>
-                                    handleEditClick(reply.id, reply.comment)
-                                  }
-                                >
-                                  <IconEdit
-                                    size={25}
-                                    stroke={1.5}
-                                    className={styles.iconEdit}
+                              {activeEditReplyId === reply.id ? (
+                                <div className={styles.editDescriptionSection}>
+                                  <textarea
+                                    className={styles.descriptionTextarea}
+                                    rows={5}
+                                    value={editedReplyText}
+                                    onChange={(e) =>
+                                      setEditedReplyText(e.target.value)
+                                    }
                                   />
-                                </button>
+                                  <div className={styles.editButtons}>
+                                    <button
+                                      className={styles.cancelButton}
+                                      onClick={() => setActiveEditReplyId(null)}
+                                    >
+                                      Cancel
+                                    </button>
+                                    <button
+                                      className={styles.saveButton}
+                                      onClick={() => handleSaveEdit(reply.id)}
+                                    >
+                                      Save
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div>{reply.comment}</div>
                               )}
 
-                              {user?.id === reply.posted_by && (
-                                <button
-                                  onClick={() =>
-                                    handleReplyDelete(reply.id, post.id)
-                                  }
-                                >
-                                  <IconTrash
-                                    size={25}
-                                    stroke={1.5}
-                                    className={styles.iconDelete}
-                                  />
-                                </button>
-                              )}
+                              <div className={styles.iconContainer}>
+                                {user?.id === reply.posted_by && (
+                                  <button
+                                    onClick={() =>
+                                      handleEditClick(reply.id, reply.comment)
+                                    }
+                                  >
+                                    <IconEdit
+                                      size={25}
+                                      stroke={1.5}
+                                      className={styles.iconEdit}
+                                    />
+                                  </button>
+                                )}
 
-                              {user?.id !== reply.posted_by && (
-                                <button>
-                                  <IconFlagFilled
-                                    size={25}
-                                    stroke={1.5}
-                                    className={styles.iconReport}
-                                  />
-                                </button>
-                              )}
+                                {user?.id === reply.posted_by && (
+                                  <button
+                                    onClick={() =>
+                                      handleReplyDelete(reply.id, post.id)
+                                    }
+                                  >
+                                    <IconTrash
+                                      size={25}
+                                      stroke={1.5}
+                                      className={styles.iconDelete}
+                                    />
+                                  </button>
+                                )}
+
+                                {user?.id !== reply.posted_by && (
+                                  <button>
+                                    <IconFlagFilled
+                                      size={25}
+                                      stroke={1.5}
+                                      className={styles.iconReport}
+                                    />
+                                  </button>
+                                )}
+                              </div>
                             </div>
                           </div>
                         ))}
