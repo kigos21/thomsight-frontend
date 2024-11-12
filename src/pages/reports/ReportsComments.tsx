@@ -1,7 +1,7 @@
 import { IconCheck, IconPointFilled, IconX } from "@tabler/icons-react";
 import ReportsTable from "../../components/ui/reports/ReportsTable";
 import styles from "./ReportsComments.module.scss";
-import { DiscussionReport } from "../../types/types";
+import { CommentReport } from "../../types/types";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
@@ -9,7 +9,7 @@ import DeletePopUp from "../../components/ui/company/DeletePopUp";
 import { toast } from "react-toastify";
 
 const ReportsComments = () => {
-  const [reports, setReports] = useState<DiscussionReport[]>([]);
+  const [reports, setReports] = useState<CommentReport[]>([]);
   const [loading, setLoading] = useState<string>("Fetching reports...");
   const [showDeleteReportPopup, setShowDeleteReportPopup] =
     useState<boolean>(false);
@@ -18,7 +18,7 @@ const ReportsComments = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axiosInstance.get("/api/reports/discussion");
+        const response = await axiosInstance.get("/api/reports/comments");
         setReports(response.data);
       } catch (error) {
         console.error("Error fetching reports:", error);
@@ -37,7 +37,7 @@ const ReportsComments = () => {
   const handleDeleteReport = async (id: number) => {
     try {
       setLoading("Dismissing report...");
-      await axiosInstance.delete(`/api/report/discussion/${id}/delete`);
+      await axiosInstance.delete(`/api/report/comment/${id}/delete`);
       toast.success("Dismissed report");
       setReports(reports.filter((report) => report.id !== id));
     } catch (error) {
@@ -48,21 +48,19 @@ const ReportsComments = () => {
     }
   };
 
-  const handleDeleteDiscussionAndReport = async (
+  const handleDeleteCommentAndReport = async (
     id: number,
-    discussionId: number
+    commentId: number
   ) => {
     try {
-      setLoading("Deleting discussion...");
+      setLoading("Deleting comment...");
       await axiosInstance.delete(
-        `/api/report/discussion/${id}/delete/with-discussion`
+        `/api/report/comment/${id}/delete/with-comment`
       );
-      toast.success("Deleted discussion successfully");
-      setReports(
-        reports.filter((report) => report.discussion_id !== discussionId)
-      );
+      toast.success("Deleted comment successfully");
+      setReports(reports.filter((report) => report.comment_id !== commentId));
     } catch (error) {
-      toast.error("Error deleting discussion and report");
+      toast.error("Error deleting comment and report");
       console.error(error);
     } finally {
       setLoading("");
@@ -72,7 +70,7 @@ const ReportsComments = () => {
 
   return (
     <div>
-      <h1 className={styles.heading}>Discussion</h1>
+      <h1 className={styles.heading}>Comment</h1>
       <ReportsTable>
         {reports.map((report) => (
           <div key={report.id} className={styles.row}>
@@ -82,7 +80,7 @@ const ReportsComments = () => {
                 <IconPointFilled size={8} />
                 <p className={styles.postDetailsDate}>{report.posted_date}</p>
               </div>
-              <p className={styles.postDetailsBody}>{report.description}</p>
+              <p className={styles.postDetailsBody}>{report.comment}</p>
             </div>
             <div className={styles.col}>
               <div className={styles.reportDetailsHeading}>
@@ -129,13 +127,10 @@ const ReportsComments = () => {
                 isVisible={showDeleteRDPopup}
                 onClose={() => setShowDeleteRDPopup(false)}
                 onDelete={() =>
-                  handleDeleteDiscussionAndReport(
-                    report.id,
-                    report.discussion_id
-                  )
+                  handleDeleteCommentAndReport(report.id, report.comment_id)
                 }
-                heading="Delete Discussion"
-                details="Are you sure you want to delete this discussion? Please note that all replies in this discussion will be deleted as well."
+                heading="Delete Comment"
+                details="Are you sure you want to delete this comment?"
               />
             )}
           </div>

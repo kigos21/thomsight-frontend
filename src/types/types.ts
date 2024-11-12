@@ -96,6 +96,18 @@ export type TipReport = {
   issue: string;
 };
 
+export type CommentReport = {
+  id: number;
+  poster_name: string;
+  posted_date: string;
+  comment: string;
+  reporter_name: string;
+  report_date: string;
+  reason: string;
+  comment_id: number;
+  issue: string;
+};
+
 export type CV = {
   id: number;
   name: string;

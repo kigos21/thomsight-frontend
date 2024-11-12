@@ -15,6 +15,7 @@ import { IconSend, IconX } from "@tabler/icons-react";
 import { useUser } from "../../contexts/UserContext";
 import DisplayProfile from "../../components/ui/company/DisplayProfile";
 import { toast } from "react-toastify";
+import ReportForm from "../../components/ui/company/ReportForm";
 
 interface Reply {
   id: number;
@@ -53,6 +54,12 @@ export default function UserCompanyDiscussionForum() {
     null
   );
   const [editedReplyText, setEditedReplyText] = useState("");
+  const [showReportPopup, setShowReportPopup] = useState<boolean>(false);
+  const [selectedReportOption, setSelectedReportOption] = useState<
+    string | null
+  >(null);
+  const [reportDescription, setReportDescription] = useState<string>("");
+  const [reportLoading, setReportLoading] = useState<string>("");
 
   const handleProfileClick = (userId: number) => {
     if (activeProfileUserId === userId) {
@@ -260,6 +267,45 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
+  const handleReportClick = () => {
+    setShowReportPopup(true);
+  };
+
+  const handleSubmitReport = async (replyId: number) => {
+    if (!selectedReportOption) {
+      toast.error("Please select an issue type.");
+      return;
+    }
+    if (!reportDescription) {
+      toast.error("Please fill out the reason");
+      return;
+    }
+
+    setReportLoading("Submitting report...");
+    try {
+      const response = await axiosInstance.post(
+        `/api/report/comment/${replyId}`,
+        {
+          id: replyId,
+          issue: selectedReportOption,
+          reason: reportDescription,
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Report submitted successfully.");
+        setSelectedReportOption(null);
+        setReportDescription("");
+      }
+    } catch (error) {
+      toast.error(
+        "There was an error submitting the report. Please try again."
+      );
+      console.error(error);
+    } finally {
+      setReportLoading("");
+    }
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -417,13 +463,35 @@ export default function UserCompanyDiscussionForum() {
                                 )}
 
                                 {user?.id !== reply.posted_by && (
-                                  <button>
+                                  <button onClick={handleReportClick}>
                                     <IconFlagFilled
                                       size={25}
                                       stroke={1.5}
                                       className={styles.iconReport}
                                     />
                                   </button>
+                                )}
+
+                                {showReportPopup && (
+                                  <ReportForm
+                                    isVisible={showReportPopup}
+                                    onClose={() => setShowReportPopup(false)}
+                                    selectedOption={selectedReportOption}
+                                    setSelectedOption={setSelectedReportOption}
+                                    description={reportDescription}
+                                    setDescription={setReportDescription}
+                                    handleSubmit={(event) => {
+                                      event.preventDefault();
+                                      handleSubmitReport(reply.id);
+                                    }}
+                                    loading={
+                                      reportLoading === "Submitting report..."
+                                    }
+                                  ></ReportForm>
+                                )}
+
+                                {reportLoading && (
+                                  <Spinner message={reportLoading} />
                                 )}
                               </div>
                             </div>
