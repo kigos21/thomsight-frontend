@@ -66,7 +66,7 @@ export type DiscussionForumItemProps = {
   setError: React.Dispatch<React.SetStateAction<string>>;
   onDiscussionDelete: (id: number | undefined) => void;
   posted_by: number;
-
+  user_id: number;
   handleReplyClick: () => void;
 };
 
@@ -206,10 +206,10 @@ export interface DismissPopUpProps {
 export interface DisplayProfileProps {
   isVisible: boolean;
   onClose: () => void;
-  firstName: string;
-  lastName: string;
-  bio: string;
-  profileLink: string;
-  phoneNumber?: string;
-  email: string;
+  user_id: number;
+  // internName: string;
+  // bio: string;
+  // profileLink?: string;
+  // phoneNumber?: string;
+  // email: string;
 }

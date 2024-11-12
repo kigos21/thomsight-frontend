@@ -12,6 +12,7 @@ import { containsBadWords } from "../../../badWordsFilter";
 import ValidationError from "../../form/ValidationError";
 import { useUser } from "../../../contexts/UserContext";
 import ReportForm from "./ReportForm";
+import DisplayProfile from "./DisplayProfile";
 
 export default function DiscussionForumItem({
   classNames,
@@ -27,6 +28,7 @@ export default function DiscussionForumItem({
   onDiscussionDelete,
   posted_by,
   handleReplyClick,
+  user_id,
 }: DiscussionForumItemProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
@@ -42,6 +44,8 @@ export default function DiscussionForumItem({
   const [reportError, setReportError] = useState<string | null>(null);
   const [reportSuccess, setReportSuccess] = useState<string | null>(null);
   const [reportLoading, setReportLoading] = useState<string>("");
+
+  const [showProfile, setShowProfile] = useState<boolean>(false);
 
   const handleEditClick = () => {
     setError("");
@@ -151,7 +155,12 @@ export default function DiscussionForumItem({
       <StyledBox paddedContainerClass={styles.styledBox}>
         <div className={styles.forumContainer}>
           <div className={styles.ForumSubjectContainer}>
-            <p className={styles.internName}>{internName}</p>
+            <p
+              className={styles.internName}
+              onClick={() => setShowProfile(true)}
+            >
+              {internName}
+            </p>
             <p className={styles.date}>{date}</p>
 
             <div className={styles.replyButtonContainer}>
@@ -252,6 +261,14 @@ export default function DiscussionForumItem({
           successMessage={reportSuccess}
           loading={reportLoading === "Submitting report..."}
         ></ReportForm>
+      )}
+
+      {showProfile && (
+        <DisplayProfile
+          onClose={() => setShowProfile(false)}
+          user_id={user_id}
+          isVisible={showProfile}
+        />
       )}
     </div>
   );

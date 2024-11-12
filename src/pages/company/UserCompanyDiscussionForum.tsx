@@ -29,6 +29,7 @@ interface Post {
   description: string;
   posted_by: number;
   replies: Reply[];
+  user_id: number;
 }
 
 export default function UserCompanyDiscussionForum() {
@@ -266,6 +267,7 @@ export default function UserCompanyDiscussionForum() {
                       setError("");
                       setSuccess("");
                     }}
+                    user_id={post.user_id}
                   />
                   {
                     <div className={styles.repliesContainer}>
