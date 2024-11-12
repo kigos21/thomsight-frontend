@@ -139,6 +139,7 @@ export type TokenItemProps = {
   setError: React.Dispatch<React.SetStateAction<string>>;
   setSuccess: React.Dispatch<React.SetStateAction<string>>;
   updateEmail: (newEmail: string | null) => void;
+  expiring: boolean;
 };
 
 export type CompanyAccountsItemProps = {

@@ -42,6 +42,7 @@ export default function CompanyDetails() {
   const [detailsError, setDetailsError] = useState<string>("");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
 
   useEffect(() => {
     if (company) {
@@ -126,6 +127,14 @@ export default function CompanyDetails() {
     }
   };
 
+  const handleViewPhoto = () => {
+    setIsImageViewerOpen(true);
+  };
+
+  const handleCloseImageViewer = () => {
+    setIsImageViewerOpen(false);
+  };
+
   /**
    * We want to separate the rendering of edit options away from the read-only.
    * Therefore, return the editable components if pathname is in /.../manage/*.
@@ -153,7 +162,7 @@ export default function CompanyDetails() {
               {isDropdownOpen && (
                 <div className={styles.dropdownContent}>
                   <button
-                    onClick={() => console.log("You clicked on View Photo!")}
+                    onClick={handleViewPhoto}
                     className={styles.dropdownItem}
                   >
                     View Photo
@@ -282,6 +291,22 @@ export default function CompanyDetails() {
           onClose={() => setIsPopupOpen(false)}
           setSuccess={setSuccess}
         />
+        {isImageViewerOpen && (
+          <div className={styles.overlay} onClick={handleCloseImageViewer}>
+            <div
+              className={styles.imageViewer}
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on the image itself
+            >
+              <img src={logo} alt="Company Logo" className={styles.image} />
+              <span
+                className={styles.closeButton}
+                onClick={handleCloseImageViewer}
+              >
+                &times; {/* "X" button */}
+              </span>
+            </div>
+          </div>
+        )}
       </PaddedContainer>
     );
 

@@ -12,7 +12,7 @@ import ValidationError from "../../components/form/ValidationError";
 
 export default function AdminGenerateTokenPage() {
   const [tokens, setTokens] = useState<
-    { id: number; token: string; email: string | null }[]
+    { id: number; token: string; email: string | null; expiring: boolean }[]
   >([]);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
   const [generateLoading, setGenerateLoading] = useState<boolean>(false);
@@ -27,7 +27,18 @@ export default function AdminGenerateTokenPage() {
       try {
         const response = await axiosInstance.get("/api/tokens");
         console.log(response.data);
-        setTokens(response.data);
+        const tokensWithExpiringStatus = response.data.map((token: any) => {
+          const expiresAt = new Date(token.expires_at);
+          const isExpiring =
+            expiresAt <=
+            new Date(new Date().setMonth(new Date().getMonth() + 2));
+
+          return {
+            ...token,
+            expiring: isExpiring,
+          };
+        });
+        setTokens(tokensWithExpiringStatus);
       } catch (error) {
         console.error("Error fetching tokens:", error);
       } finally {
@@ -50,7 +61,7 @@ export default function AdminGenerateTokenPage() {
 
       setTokens((prevTokens) => [
         ...prevTokens,
-        { id: response.data.id, token: newToken, email: "" },
+        { id: response.data.id, token: newToken, email: "", expiring: false },
       ]);
 
       setSuccess("Token generated successfully");
@@ -138,6 +149,7 @@ export default function AdminGenerateTokenPage() {
               updateEmail={async (newEmail: string | null) => {
                 updateTokenEmail(token.id, newEmail);
               }}
+              expiring={token.expiring}
             />
           ))}
         </div>

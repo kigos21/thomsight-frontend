@@ -48,6 +48,7 @@ export default function CompanyRegisterPage() {
     e.preventDefault();
     let isValid = true;
 
+    setError("");
     setCompanyNameError("");
     setNameError("");
     setEmailError("");
@@ -107,16 +108,26 @@ export default function CompanyRegisterPage() {
       });
 
       const userId = userResponse.data.user_id;
+
       const companyData = {
         name: companyName,
         posted_by: userId,
+        token: token,
       };
 
-      await axiosInstance.delete(`/api/token/delete`, {
-        data: { token },
-      });
+      const response = await axiosInstance.post(
+        "/api/company/create",
+        companyData
+      );
+      if (response)
+        await axiosInstance.delete(`/api/token/delete`, {
+          data: { token },
+        });
 
-      await axiosInstance.post("/api/company/create", companyData);
+      localStorage.setItem(
+        "registrationSuccess",
+        "Your account has been created successfully! Please verify your email before logging in."
+      );
 
       navigate("/login");
     } catch (error) {

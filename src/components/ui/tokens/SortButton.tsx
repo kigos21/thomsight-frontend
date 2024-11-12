@@ -36,9 +36,11 @@ const SortButton = ({ onSort }: SortButtonProps) => {
 
   const menu: JSX.Element = (
     <div className={styles.menuContainer}>
-      <div onClick={() => handleSortOptionClick("Token")}>Token</div>
-      <div onClick={() => handleSortOptionClick("Status")}>Status</div>
-      <div onClick={() => handleSortOptionClick("Expiration")}>Expiration</div>
+      <div onClick={() => handleSortOptionClick("Company Name")}>
+        Company Name
+      </div>
+      <div onClick={() => handleSortOptionClick("Active")}>Active</div>
+      <div onClick={() => handleSortOptionClick("Inactive")}>Inactive</div>
     </div>
   );
 

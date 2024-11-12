@@ -1,13 +1,14 @@
 import PaddedContainer from "../components/layout/PaddedContainer";
 import StyledBox from "../components/layout/StyledBox";
 import styles from "./CVGuidePage.module.scss";
+import srcLogo from "../assets/thomsight-logo.svg";
 
 export default function CVGuidePage() {
   return (
     <PaddedContainer>
       <StyledBox classNames={styles.styledbox}>
         <div className={styles.imgContainer}>
-          <img src="/src/assets/thomsight-logo.svg" alt="Thomsight logo" />
+          <img src={srcLogo} alt="Thomsight logo" />
         </div>
 
         <div className={styles.container}>

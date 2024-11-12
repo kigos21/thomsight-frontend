@@ -34,7 +34,7 @@ export type Company = {
   locations?: Location[];
   jobs?: Job[];
   image?: string;
-  deleted_at?: Date;
+  deleted_at?: Date | null;
 };
 
 export type Location = {
@@ -67,6 +67,7 @@ export type FeedbackReport = {
   report_date: string;
   reason: string;
   feedback_id: number;
+  issue: string;
 };
 
 export type DiscussionReport = {
@@ -78,6 +79,7 @@ export type DiscussionReport = {
   report_date: string;
   reason: string;
   discussion_id: number;
+  issue: string;
 };
 
 export type TipReport = {
@@ -90,6 +92,7 @@ export type TipReport = {
   report_date: string;
   reason: string;
   tip_id: number;
+  issue: string;
 };
 
 export type CV = {

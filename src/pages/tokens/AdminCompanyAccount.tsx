@@ -10,14 +10,13 @@ import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import ValidationError from "../../components/form/ValidationError";
 import SuccessMessage from "../../components/form/SuccessMessage";
-import { useCompanies } from "../../contexts/CompaniesContext";
 
 export default function AdminCompanyAccount() {
   const [repUsers, setRepUsers] = useState<User[]>([]);
+  const [filteredRepUsers, setFilteredRepUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { loadCompanies } = useCompanies();
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -35,6 +34,10 @@ export default function AdminCompanyAccount() {
     fetchRepUsers();
   }, []);
 
+  useEffect(() => {
+    setFilteredRepUsers(repUsers);
+  }, [repUsers]);
+
   const handleSoftDelete = async (
     companyId: number | undefined
   ): Promise<boolean> => {
@@ -44,7 +47,20 @@ export default function AdminCompanyAccount() {
       setLoading("Deleting company...");
       await axiosInstance.patch(`/api/company/${companyId}/soft-delete`);
       setSuccess("Company soft deleted successfully.");
-      loadCompanies();
+      setRepUsers((prevRepUsers) =>
+        prevRepUsers.map((user) => {
+          if (user.company && user.company.id === companyId) {
+            return {
+              ...user,
+              company: {
+                ...user.company,
+                deleted_at: new Date(),
+              },
+            };
+          }
+          return user;
+        })
+      );
       return true;
     } catch (error) {
       console.error("Error soft deleting company:", error);
@@ -64,7 +80,20 @@ export default function AdminCompanyAccount() {
       setLoading("Restoring company...");
       await axiosInstance.patch(`/api/company/${companyId}/restore`);
       setSuccess("Company restored successfully.");
-      loadCompanies();
+      setRepUsers((prevRepUsers) =>
+        prevRepUsers.map((user) => {
+          if (user.company && user.company.id === companyId) {
+            return {
+              ...user,
+              company: {
+                ...user.company,
+                deleted_at: null,
+              },
+            };
+          }
+          return user;
+        })
+      );
       return true;
     } catch (error) {
       console.error("Error restoring company:", error);
@@ -75,14 +104,40 @@ export default function AdminCompanyAccount() {
     }
   };
 
+  const handleSort = (option: string) => {
+    const updatedRepUsers = [...repUsers];
+    let sortedUsers: User[] = [];
+
+    switch (option) {
+      case "Company Name":
+        sortedUsers = updatedRepUsers.sort((a, b) =>
+          (a.company?.name || "").localeCompare(b.company?.name || "")
+        );
+        break;
+      case "Active":
+        sortedUsers = updatedRepUsers.filter(
+          (user) => !user.company?.deleted_at
+        );
+        break;
+      case "Inactive":
+        sortedUsers = updatedRepUsers.filter(
+          (user) => !!user.company?.deleted_at
+        );
+        break;
+      default:
+        sortedUsers = updatedRepUsers;
+        break;
+    }
+
+    setFilteredRepUsers(sortedUsers);
+  };
+
   return (
     <PaddedContainer>
       <div className={styles.title}>
         <h1>Company Accounts</h1>
         {/* <SortButton classNames={styles.button}></SortButton> */}
-        <SortButton
-          onSort={(option: string) => console.log(option)}
-        ></SortButton>
+        <SortButton onSort={handleSort}></SortButton>
       </div>
       {error && <ValidationError message={error} />}
       {success && <SuccessMessage message={success} />}
@@ -99,12 +154,12 @@ export default function AdminCompanyAccount() {
             <p className={styles.expiresIn}>Expires&nbsp;In</p>
             <p className={styles.company}>Email</p>
           </div>
-          {repUsers.map((user) => (
+          {filteredRepUsers.map((user) => (
             <>
               {user.company && (
                 <CompanyAccountsItem
                   key={user.id}
-                  status="active"
+                  status={user.company.deleted_at ? "inactive" : "active"}
                   companyName={user.company.name}
                   email={user.company.email}
                   expiration="1 month"
