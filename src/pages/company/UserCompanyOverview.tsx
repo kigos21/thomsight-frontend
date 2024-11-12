@@ -139,7 +139,6 @@ export default function UserCompanyOverview() {
           : rev
       )
     );
-    setSuccess("Review updated successfully");
     setError("");
   };
 

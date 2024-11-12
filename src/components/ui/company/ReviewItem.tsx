@@ -17,6 +17,8 @@ import { useUser } from "../../../contexts/UserContext";
 import DeletePopUp from "./DeletePopUp";
 import ReportForm from "./ReportForm";
 import DisplayProfile from "./DisplayProfile";
+import SuccessMessage from "../../form/SuccessMessage";
+import ValidationError from "../../form/ValidationError";
 
 export default function ReviewItem({
   classNames,
@@ -58,6 +60,8 @@ export default function ReviewItem({
   const [downvotes, setDownvotes] = useState<number>(0);
   const [userVote, setUserVote] = useState<string | null>(null);
   const [showProfile, setShowProfile] = useState<boolean>(false);
+  const [reviewSuccess, setReviewSuccess] = useState<string>("");
+  const [reviewError, setReviewError] = useState<string>("");
 
   useEffect(() => {
     const fetchVotes = async () => {
@@ -102,7 +106,7 @@ export default function ReviewItem({
         `/api/company/${slug}/review/${id}/update`,
         updatedReview
       );
-      setSuccess("Review updated successfully");
+      setReviewSuccess("Review updated successfully");
       onReviewChange(updatedReview);
     } catch (error) {
       console.error("Error updating review:", error);
@@ -115,12 +119,20 @@ export default function ReviewItem({
   const handleEditClick = () => {
     setError("");
     setSuccess("");
+    setReviewSuccess("");
+    setReviewError("");
     setIsEditing((state) => !state);
   };
 
   const handleSaveClick = async () => {
+    setReviewSuccess("");
+    setReviewError("");
     if (ratingRef.current && !ratingRef.current!.checkValidity()) {
       ratingRef.current.reportValidity();
+      return;
+    }
+    if (tempReview.description.length > 500) {
+      setReviewError("Review should not be longer than 500 characters.");
       return;
     }
     await updateReview();
@@ -139,6 +151,8 @@ export default function ReviewItem({
   const handleDeleteClick = () => {
     setSuccess("");
     setError("");
+    setReviewSuccess("");
+    setReviewError("");
     setShowDeletePopup(true);
   };
 
@@ -162,6 +176,8 @@ export default function ReviewItem({
   const handleReportClick = () => {
     setSuccess("");
     setError("");
+    setReviewSuccess("");
+    setReviewError("");
     setShowReportPopup(true);
   };
 
@@ -201,176 +217,193 @@ export default function ReviewItem({
   };
 
   return (
-    <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
-      {loading && <Spinner message={loading} />}
-      <StyledBox paddedContainerClass={styles.styledBox}>
-        <div className={styles.reviewContainer}>
-          <div className={styles.reviewSubjectContainer}>
-            <div className={styles.reviewerDetails}>
-              <p
-                className={styles.internName}
-                onClick={() => setShowProfile(true)}
-              >
-                {internName}
-              </p>
-              <div className={styles.verticalDivider}></div>
-              {!isEditing ? (
-                <div className={styles.ratingContainer}>
-                  <h2 className={styles.rating}>{rating}</h2>
-                  <IconStarFilled width={16} />
-                </div>
-              ) : (
-                <form onSubmit={(e) => handleRatingSubmit(e)} ref={ratingRef}>
-                  <input
-                    className={styles.ratingTextfield}
-                    type="number"
-                    name="rating"
-                    id="rating"
-                    placeholder="5"
-                    value={tempReview.rating}
-                    onChange={(e) =>
-                      setTempReview((current) => {
-                        return { ...current, rating: e.target.value };
-                      })
-                    }
-                    min="1"
-                    max="5"
-                  />
-                </form>
-              )}
-            </div>
-            {date && <p className={styles.date}>{date.toString()}</p>}
+    <div>
+      {reviewSuccess && <SuccessMessage message={reviewSuccess} />}
+      {reviewError && <ValidationError message={reviewError} />}
+      <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
+        {loading && <Spinner message={loading} />}
+        <StyledBox paddedContainerClass={styles.styledBox}>
+          <div className={styles.reviewContainer}>
+            <div className={styles.reviewSubjectContainer}>
+              <div className={styles.reviewerDetails}>
+                <p
+                  className={styles.internName}
+                  onClick={() => setShowProfile(true)}
+                >
+                  {internName}
+                </p>
+                <div className={styles.verticalDivider}></div>
+                {!isEditing ? (
+                  <div className={styles.ratingContainer}>
+                    <h2 className={styles.rating}>{rating}</h2>
+                    <IconStarFilled width={16} />
+                  </div>
+                ) : (
+                  <form onSubmit={(e) => handleRatingSubmit(e)} ref={ratingRef}>
+                    <input
+                      className={styles.ratingTextfield}
+                      type="number"
+                      name="rating"
+                      id="rating"
+                      placeholder="5"
+                      value={tempReview.rating}
+                      onChange={(e) =>
+                        setTempReview((current) => {
+                          return { ...current, rating: e.target.value };
+                        })
+                      }
+                      min="1"
+                      max="5"
+                    />
+                  </form>
+                )}
+              </div>
+              {date && <p className={styles.date}>{date.toString()}</p>}
 
-            <div className={styles.replyButtonContainer}>
-              <ButtonReview
-                classNames={`${styles.replyButton} ${styles.up} ${userVote === "up" ? styles.active : ""}`}
-                onClick={() => handleVote("up")}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-chevron-compact-up"
-                  viewBox="0 0 16 16"
+              <div className={styles.replyButtonContainer}>
+                <ButtonReview
+                  classNames={`${styles.replyButton} ${styles.up} ${userVote === "up" ? styles.active : ""}`}
+                  onClick={() => handleVote("up")}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"
-                  />
-                </svg>
-                {upvotes}
-              </ButtonReview>
-              <ButtonReview
-                classNames={`${styles.replyButton} ${styles.down} ${userVote === "down" ? styles.active : ""}`}
-                onClick={() => handleVote("down")}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-chevron-compact-down"
-                  viewBox="0 0 16 16"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-chevron-compact-up"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"
+                    />
+                  </svg>
+                  {upvotes}
+                </ButtonReview>
+                <ButtonReview
+                  classNames={`${styles.replyButton} ${styles.down} ${userVote === "down" ? styles.active : ""}`}
+                  onClick={() => handleVote("down")}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"
-                  />
-                </svg>
-                {downvotes}
-              </ButtonReview>
-            </div>
-          </div>
-
-          {isEditing ? (
-            <div className={styles.editReviewDescriptionSection}>
-              <textarea
-                className={styles.descriptionTextarea}
-                value={tempReview.description}
-                onChange={(e) =>
-                  setTempReview((current) => {
-                    return { ...current, description: e.target.value };
-                  })
-                }
-                rows={5}
-              />
-              <div className={styles.editButtons}>
-                <button
-                  onClick={handleCancelClick}
-                  className={styles.cancelButton}
-                >
-                  Cancel
-                </button>
-                <button onClick={handleSaveClick} className={styles.saveButton}>
-                  Save
-                </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-chevron-compact-down"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"
+                    />
+                  </svg>
+                  {downvotes}
+                </ButtonReview>
               </div>
             </div>
-          ) : (
-            <p className={styles.reviewDescription}>{reviewDescription}</p>
-          )}
 
-          <div className={styles.iconContainer}>
-            {user?.id == posted_by && (
-              <button onClick={handleEditClick} className={styles.iconButton}>
-                <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
-              </button>
-            )}
-            {user?.id == posted_by && (
-              <button onClick={handleDeleteClick} className={styles.iconButton}>
-                <IconTrash
-                  size={25}
-                  stroke={1.5}
-                  className={styles.iconDelete}
+            {isEditing ? (
+              <div className={styles.editReviewDescriptionSection}>
+                <textarea
+                  className={styles.descriptionTextarea}
+                  value={tempReview.description}
+                  onChange={(e) =>
+                    setTempReview((current) => {
+                      return { ...current, description: e.target.value };
+                    })
+                  }
+                  rows={5}
                 />
-              </button>
+                <div className={styles.editButtons}>
+                  <button
+                    onClick={handleCancelClick}
+                    className={styles.cancelButton}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSaveClick}
+                    className={styles.saveButton}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className={styles.reviewDescription}>{reviewDescription}</p>
             )}
-            {user?.id != posted_by && (
-              <button onClick={handleReportClick} className={styles.iconButton}>
-                <IconFlagFilled
-                  size={25}
-                  stroke={1.5}
-                  className={styles.iconReport}
-                />
-              </button>
-            )}
+
+            <div className={styles.iconContainer}>
+              {user?.id == posted_by && (
+                <button onClick={handleEditClick} className={styles.iconButton}>
+                  <IconEdit
+                    size={25}
+                    stroke={1.5}
+                    className={styles.iconEdit}
+                  />
+                </button>
+              )}
+              {user?.id == posted_by && (
+                <button
+                  onClick={handleDeleteClick}
+                  className={styles.iconButton}
+                >
+                  <IconTrash
+                    size={25}
+                    stroke={1.5}
+                    className={styles.iconDelete}
+                  />
+                </button>
+              )}
+              {user?.id != posted_by && (
+                <button
+                  onClick={handleReportClick}
+                  className={styles.iconButton}
+                >
+                  <IconFlagFilled
+                    size={25}
+                    stroke={1.5}
+                    className={styles.iconReport}
+                  />
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      </StyledBox>
+        </StyledBox>
 
-      {showDeletePopup && (
-        <DeletePopUp
-          isVisible={showDeletePopup}
-          onClose={() => setShowDeletePopup(false)}
-          onDelete={handleDeleteReview}
-          heading="Delete Review"
-          details="Are you sure you want to delete this review?"
-        />
-      )}
+        {showDeletePopup && (
+          <DeletePopUp
+            isVisible={showDeletePopup}
+            onClose={() => setShowDeletePopup(false)}
+            onDelete={handleDeleteReview}
+            heading="Delete Review"
+            details="Are you sure you want to delete this review?"
+          />
+        )}
 
-      {showReportPopup && (
-        <ReportForm
-          isVisible={showReportPopup}
-          onClose={() => setShowReportPopup(false)}
-          selectedOption={selectedReportOption}
-          setSelectedOption={setSelectedReportOption}
-          description={reportDescription}
-          setDescription={setReportDescription}
-          handleSubmit={handleSubmitReport}
-          error={reportError}
-          successMessage={reportSuccess}
-          loading={loading === "Submitting report..."}
-        ></ReportForm>
-      )}
+        {showReportPopup && (
+          <ReportForm
+            isVisible={showReportPopup}
+            onClose={() => setShowReportPopup(false)}
+            selectedOption={selectedReportOption}
+            setSelectedOption={setSelectedReportOption}
+            description={reportDescription}
+            setDescription={setReportDescription}
+            handleSubmit={handleSubmitReport}
+            error={reportError}
+            successMessage={reportSuccess}
+            loading={loading === "Submitting report..."}
+          ></ReportForm>
+        )}
 
-      {showProfile && (
-        <DisplayProfile
-          onClose={() => setShowProfile(false)}
-          user_id={user_id}
-          isVisible={showProfile}
-        />
-      )}
+        {showProfile && (
+          <DisplayProfile
+            onClose={() => setShowProfile(false)}
+            user_id={user_id}
+            isVisible={showProfile}
+          />
+        )}
+      </div>
     </div>
   );
 }
