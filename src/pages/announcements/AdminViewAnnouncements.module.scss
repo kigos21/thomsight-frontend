@@ -25,6 +25,7 @@
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 1.5rem;
     gap: 15px;
   }
 
@@ -32,6 +33,7 @@
     gap: 10px;
     padding-bottom: 6px;
     border-bottom: 0.5px solid var(--muted-black);
+    margin-bottom: 1.25rem;
   }
 }
 
