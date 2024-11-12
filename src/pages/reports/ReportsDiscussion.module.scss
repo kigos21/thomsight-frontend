@@ -41,6 +41,29 @@
 
 .postDetailsBody {
   font-size: 0.875rem;
+  width: 520px;
+  word-wrap: break-word;
+  overflow-y: auto;
+
+  @media screen and (max-width: 1480px) {
+    width: 300px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    width: 250px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    width: 210px;
+  }
+
+  @media screen and (max-width: 850px) {
+    width: 175px;
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 150px;
+  }
 }
 
 .reportDetailsHeading {

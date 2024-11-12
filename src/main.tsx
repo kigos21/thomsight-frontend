@@ -58,6 +58,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 import PostCVForm from "./pages/cv/PostCVForm.tsx";
 import ChangePassword from "./pages/profile/ChangePassword.tsx";
+import FAQsPage from "./pages/faqs/FAQsPage.tsx";
 import ReportsComments from "./pages/reports/ReportsComments.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -165,7 +166,11 @@ const router = createBrowserRouter([
         path: "interview-guide",
         element: <InterviewGuidePage />,
       },
-
+      // FAQs
+      {
+        path: "faqs",
+        element: <FAQsPage />,
+      },
       // Profile Management
       {
         path: "profile",

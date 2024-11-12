@@ -83,7 +83,7 @@ const TermsAndConditions = () => {
           </div>
           <p>
             If you have any questions about these terms, please contact us at
-            *email ng TPC?*.
+            "thomsight2024@gmail.com".
           </p>
         </div>
       </AuthContentContainer>

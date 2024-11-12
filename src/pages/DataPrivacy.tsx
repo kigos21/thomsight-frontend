@@ -58,7 +58,7 @@ const DataPrivacy = () => {
           </div>
           <p>
             If you have questions or comments about this policy, you may contact
-            us at *email ni TPC?*.
+            us at "thomsight2024@gmail.com".
           </p>
         </div>
       </AuthContentContainer>

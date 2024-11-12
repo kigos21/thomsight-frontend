@@ -41,6 +41,13 @@ export default function AppRoot() {
             },
           ]}
         />,
+        <NavLink
+          to="/faqs"
+          key="faqs"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
+          FAQs
+        </NavLink>,
       ];
       break;
 
@@ -80,6 +87,13 @@ export default function AppRoot() {
           className={({ isActive }) => (isActive ? styles.active : "")}
         >
           Manage Info
+        </NavLink>,
+        <NavLink
+          to="/faqs"
+          key="faqs"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
+          FAQs
         </NavLink>,
       ];
       break;
@@ -121,6 +135,13 @@ export default function AppRoot() {
           className={({ isActive }) => (isActive ? styles.active : "")}
         >
           Reports
+        </NavLink>,
+        <NavLink
+          to="/faqs"
+          key="faqs"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+        >
+          FAQs
         </NavLink>,
       ];
       break;
