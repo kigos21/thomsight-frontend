@@ -74,15 +74,6 @@ export default function RegisterAlumniPage() {
     const isBirthdayValid = validateBirthday(birthday);
     if (!isBirthdayValid) return;
 
-    // const formElement = e.currentTarget;
-    // const birthdayInput = formElement.elements.namedItem(
-    //   "birthday"
-    // ) as HTMLInputElement;
-    // if (validateBirthday(birthdayInput.value)) {
-    //   // Proceed with form submission
-    //   console.log("Form submitted successfully");
-    // }
-
     try {
       setLoading("Registering alumni...");
       await axiosInstance.post("/api/register-alumni", {
@@ -108,7 +99,6 @@ export default function RegisterAlumniPage() {
   };
 
   const handleBirthdayChange = (value: string) => {
-    validateBirthday(value);
     setBirthday(value);
   };
 
