@@ -92,7 +92,7 @@ export default function UserCompanyDiscussionForum() {
 
   const handleSave = async () => {
     if (postForm.description.trim() === "") {
-      toast.error("Post description cannot be blank.");
+      toast.error("Post description can not be blank.");
       return;
     }
     if (containsBadWords(postForm.description)) {
@@ -153,6 +153,10 @@ export default function UserCompanyDiscussionForum() {
   };
 
   const handleDescriptionChange = (id: number, updatedDescription: string) => {
+    if (/(@rep)\b/i.test(updatedDescription)) {
+      notifyRepresentativeBySlug(updatedDescription);
+    }
+
     const newPosts = postData.map((post) => {
       if (post.id != id) {
         return post;
@@ -177,11 +181,15 @@ export default function UserCompanyDiscussionForum() {
 
   const handleAddReply = async (discussionId: number) => {
     if (!reply.trim()) {
-      toast.error("Comment cannot be blank.");
+      toast.error("Comment can not be blank.");
       return;
     }
     if (reply.length > 500) {
       toast.error("Comments should be limited to 500 characters.");
+      return;
+    }
+    if (containsBadWords(reply)) {
+      toast.error("Comment contains foul language");
       return;
     }
 
@@ -191,6 +199,9 @@ export default function UserCompanyDiscussionForum() {
         `/api/company/${slug}/discussions/${discussionId}/comments`,
         { comment: reply }
       );
+      if (/(@rep)\b/i.test(reply)) {
+        notifyRepresentativeBySlug(reply);
+      }
       setLoading("Loading discussions...");
       const response = await axiosInstance.get(
         `/api/company/${slug}/discussions`
@@ -241,18 +252,29 @@ export default function UserCompanyDiscussionForum() {
   };
 
   const handleSaveEdit = async (replyId: number) => {
+    if (!editedReplyText.trim()) {
+      toast.error("Comment can not be blank.");
+      return;
+    }
     if (editedReplyText.length > 500) {
       toast.error("Comments should be limited to 500 characters");
       return;
     }
+    if (containsBadWords(editedReplyText)) {
+      toast.error("Comment contains foul language");
+      return;
+    }
     try {
-      setLoading("Updating comment...");
+      setLoading("Updating reply...");
       await axiosInstance.put(
         `/api/company/${slug}/comment/${replyId}/delete`,
         {
           comment: editedReplyText,
         }
       );
+      if (/(@rep)\b/i.test(editedReplyText)) {
+        notifyRepresentativeBySlug(editedReplyText);
+      }
       setLoading("Loading discussions...");
       const response = await axiosInstance.get(
         `/api/company/${slug}/discussions`

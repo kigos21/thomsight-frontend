@@ -47,6 +47,10 @@ export default function DiscussionForumItem({
   };
 
   const handleSaveClick = async () => {
+    if (!tempDescription.trim()) {
+      toast.error("New description can not be blank");
+      return;
+    }
     if (containsBadWords(tempDescription)) {
       toast.error("New description contains foul language");
       return;

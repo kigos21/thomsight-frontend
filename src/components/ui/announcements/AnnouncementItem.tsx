@@ -30,8 +30,19 @@ export default function AnnouncementItem({
   const [loading, setLoading] = useState<string>("");
 
   const handleSaveEdit = async (id: number) => {
+    if (!editedHeader.trim()) {
+      toast.error("Subject should not be blank");
+      return;
+    }
+    if (!editedDescription.trim()) {
+      toast.error("Details should not be blank");
+      return;
+    }
+    if (editedHeader.length > 100) {
+      toast.error("Subject should be limited to 100 characters");
+    }
     if (editedDescription.length > 500) {
-      toast.error("Description should be limited to 500 characters");
+      toast.error("Details should be limited to 500 characters");
       return;
     }
     try {
