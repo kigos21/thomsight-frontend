@@ -16,6 +16,7 @@ import { useUser } from "../../contexts/UserContext";
 import DisplayProfile from "../../components/ui/company/DisplayProfile";
 import { toast } from "react-toastify";
 import ReportForm from "../../components/ui/company/ReportForm";
+import DeletePopUp from "../../components/ui/company/DeletePopUp";
 
 interface Reply {
   id: number;
@@ -60,6 +61,7 @@ export default function UserCompanyDiscussionForum() {
   >(null);
   const [reportDescription, setReportDescription] = useState<string>("");
   const [reportLoading, setReportLoading] = useState<string>("");
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
 
   const handleProfileClick = (userId: number) => {
     if (activeProfileUserId === userId) {
@@ -310,6 +312,10 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
+  const handleDeleteClick = () => {
+    setShowDeletePopup(true);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -453,11 +459,7 @@ export default function UserCompanyDiscussionForum() {
                                 )}
 
                                 {user?.id === reply.posted_by && (
-                                  <button
-                                    onClick={() =>
-                                      handleReplyDelete(reply.id, post.id)
-                                    }
-                                  >
+                                  <button onClick={handleDeleteClick}>
                                     <IconTrash
                                       size={25}
                                       stroke={1.5}
@@ -474,6 +476,18 @@ export default function UserCompanyDiscussionForum() {
                                       className={styles.iconReport}
                                     />
                                   </button>
+                                )}
+
+                                {showDeletePopup && (
+                                  <DeletePopUp
+                                    isVisible={showDeletePopup}
+                                    onClose={() => setShowDeletePopup(false)}
+                                    onDelete={() =>
+                                      handleReplyDelete(reply.id, post.id)
+                                    }
+                                    heading="Delete Reply"
+                                    details="Are you sure you want to delete this reply?"
+                                  />
                                 )}
 
                                 {showReportPopup && (
