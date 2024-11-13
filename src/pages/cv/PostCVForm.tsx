@@ -26,7 +26,6 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
         toast.error("File size should not exceed 2MB.");
         setCvFile(null);
       } else {
-        toast.error("");
         setCvFile(file);
       }
     }

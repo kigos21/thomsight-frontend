@@ -10,7 +10,7 @@ const CVFeedbackCreate = () => {
   const { reviewId } = useParams<{ reviewId: string }>();
   const navigate = useNavigate();
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
-  const [pdfUrl, setPdfUrl] = useState<string | undefined>("");
+  const [pdfUrl, setPdfUrl] = useState<string | undefined>(undefined);
   const [remark, setRemark] = useState<string>("");
   const [remarkedBy, setRemarkedBy] = useState<string>("");
   const [loading, setLoading] = useState<string>("");
@@ -28,10 +28,11 @@ const CVFeedbackCreate = () => {
           const response = await axiosInstance.get(
             `/api/cv/${reviewId}/review/pdf`
           );
-          setPdfUrl(response.data.pdfUrl);
-          setRemark(response.data.remark);
-          setRemarkedBy(response.data.remarkedBy);
-          console.log(pdfUrl);
+          if (response) {
+            setPdfUrl(response.data.pdfUrl);
+            setRemark(response.data.remark);
+            setRemarkedBy(response.data.remarkedBy);
+          }
         } else {
           navigate("/cv-review/reviewed");
         }

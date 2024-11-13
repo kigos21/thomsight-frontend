@@ -10,7 +10,7 @@ const CVFeedbackCreate = () => {
   const { cvId } = useParams<{ cvId: string }>();
   const navigate = useNavigate();
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
-  const [pdfUrl, setPdfUrl] = useState<string | undefined>("");
+  const [pdfUrl, setPdfUrl] = useState<string | undefined>(undefined);
   const [remark, setRemark] = useState<string>("");
   const [loading, setLoading] = useState<string>("");
 
@@ -55,9 +55,8 @@ const CVFeedbackCreate = () => {
       });
       if (response.status === 200) {
         setRemark("");
-        navigate("/cv-review/to-review", {
-          state: { successMessage: "Remarks submitted successfully!" },
-        });
+        toast.success("Remarks submitted successfully");
+        navigate("/cv-review/to-review");
       } else {
         toast.error("Error submitting CV review. Please try again.");
       }
