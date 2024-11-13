@@ -1,7 +1,7 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import StyledBox from "../../components/layout/StyledBox";
 import styles from "./FAQsPage.module.scss";
-import srcLogo from "../assets/thomsight-logo.svg";
+import srcLogo from "../../assets/thomsight-logo.svg";
 
 export default function FAQsPage() {
   return (
