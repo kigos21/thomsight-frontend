@@ -7,12 +7,8 @@ import styles from "./AnnouncementItem.module.scss";
 import DeletePopUp from "../company/DeletePopUp";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../services/axiosInstance";
-import { useParams } from "react-router-dom";
+import Spinner from "../Spinner";
 
-interface Announcement {
-  id: number;
-  post: string;
-}
 export default function AnnouncementItem({
   classNames,
   style,
@@ -21,44 +17,35 @@ export default function AnnouncementItem({
   announcementDescription,
   id,
   onDelete,
+  onEdit,
 }: any) {
   const [isDeletePopupVisible, setDeletePopupVisible] = useState(false);
-  const [activeEditReplyId, setActiveEditReplyId] = useState<number | null>(
-    null
+  const [activeEditAnnouncementId, setActiveEditAnnouncementId] = useState<
+    number | null
+  >(null);
+  const [editedHeader, setEditedHeader] = useState<string>(announcementHeader);
+  const [editedDescription, setEditedDescription] = useState<string>(
+    announcementDescription
   );
-  const [editedReplyText, setEditedReplyText] = useState("");
   const [loading, setLoading] = useState<string>("");
-  const { slug } = useParams<{ slug: string }>();
-  const [postData, setPostData] = useState<Announcement[]>([]);
 
-  const handleIconClick = () => {
-    console.log("Icon clicked!");
-  };
-
-  const handleSaveEdit = async (replyId: number) => {
-    if (editedReplyText.length > 500) {
-      toast.error("Comments should be limited to 500 characters");
+  const handleSaveEdit = async (id: number) => {
+    if (editedDescription.length > 500) {
+      toast.error("Description should be limited to 500 characters");
       return;
     }
     try {
-      setLoading("Updating comment...");
-      await axiosInstance.put(
-        `/api/company/${slug}/comment/${replyId}/delete`,
-        {
-          comment: editedReplyText,
-        }
-      );
-      setLoading("Loading discussions...");
-      const response = await axiosInstance.get(
-        `/api/company/${slug}/discussions`
-      );
-      const discussions = response.data;
-      setPostData(discussions);
-      setActiveEditReplyId(null);
-      setEditedReplyText("");
+      setLoading("Updating announcement...");
+      await axiosInstance.put(`/api/announcements/${id}/update`, {
+        subject: editedHeader,
+        details: editedDescription,
+      });
+      setActiveEditAnnouncementId(null);
+      onEdit(id, editedHeader, editedDescription);
+      toast.success("Updated announcement successfully");
     } catch (error) {
-      console.error("Failed to save the reply:", error);
-      toast.error("Failed to update reply. Please try again.");
+      console.error("Failed to save the announcement:", error);
+      toast.error("Failed to update announcement. Please try again.");
     } finally {
       setLoading("");
     }
@@ -81,41 +68,28 @@ export default function AnnouncementItem({
 
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
+      {loading && <Spinner message={loading} />}
       <div className={styles.detailsContainer}>
         <div className={styles.detailsHeaderContainer}>
-          <p className={styles.header}>{announcementHeader}</p>
+          {activeEditAnnouncementId === id ? (
+            <input
+              className={styles.editHeaderInput}
+              type="text"
+              value={editedHeader}
+              onChange={(e) => setEditedHeader(e.target.value)}
+            />
+          ) : (
+            <p className={styles.header}>{announcementHeader}</p>
+          )}
           <p className={styles.date}>{date}</p>
         </div>
 
-        {activeEditReplyId === reply.id ? (
-          <div className={styles.editDescriptionSection}>
-            <textarea
-              className={styles.descriptionTextarea}
-              rows={5}
-              value={editedReplyText}
-              onChange={(e) => setEditedReplyText(e.target.value)}
-            />
-            <div className={styles.editButtons}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => setActiveEditReplyId(null)}
-              >
-                Cancel
-              </button>
-              <button
-                className={styles.saveButton}
-                onClick={() => handleSaveEdit(reply.id)}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div>{reply.comment}</div>
-        )}
         {user?.role === "Admin" && (
           <div className={styles.iconContainer}>
-            <button onClick={handleIconClick} className={styles.iconButton}>
+            <button
+              onClick={() => setActiveEditAnnouncementId(id)}
+              className={styles.iconButton}
+            >
               <IconEdit className={styles.iconEdit} />
             </button>
             <button onClick={handleDeleteClick} className={styles.iconButton}>
@@ -125,7 +99,36 @@ export default function AnnouncementItem({
         )}
       </div>
       <StyledBox paddedContainerClass={styles.styledBox}>
-        <p className={styles.description}>{announcementDescription}</p>
+        {activeEditAnnouncementId === id ? (
+          <div className={styles.editDescriptionSection}>
+            <textarea
+              className={styles.descriptionTextarea}
+              rows={5}
+              value={editedDescription}
+              onChange={(e) => setEditedDescription(e.target.value)}
+            />
+            <div className={styles.editButtons}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => {
+                  setActiveEditAnnouncementId(null);
+                  setEditedHeader(announcementHeader);
+                  setEditedDescription(announcementDescription);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles.saveButton}
+                onClick={() => handleSaveEdit(id)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className={styles.description}>{announcementDescription}</p>
+        )}
       </StyledBox>
 
       <DeletePopUp

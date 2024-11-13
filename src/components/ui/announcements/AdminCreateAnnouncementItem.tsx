@@ -37,6 +37,14 @@ export default function AdminCreatennouncementItem({
       toast.error("Details contains foul language");
       return;
     }
+    if (subject.length > 100) {
+      toast.error("Subject should be limited to 100 characters");
+      return;
+    }
+    if (details.length > 500) {
+      toast.error("Details should be limited to 500 characters");
+      return;
+    }
 
     try {
       setLoading(true);

@@ -49,6 +49,24 @@ export default function AdminViewAnnouncements() {
     }
   };
 
+  const handleEdit = (
+    id: number,
+    updatedHeader: string,
+    updatedDescription: string
+  ) => {
+    setAnnouncements((prevAnnouncements) =>
+      prevAnnouncements.map((announcement) =>
+        announcement.id === id
+          ? {
+              ...announcement,
+              title: updatedHeader,
+              content: updatedDescription,
+            }
+          : announcement
+      )
+    );
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
@@ -80,6 +98,7 @@ export default function AdminViewAnnouncements() {
               date={new Date(announcement.updated_at).toLocaleDateString()}
               announcementDescription={announcement.content}
               onDelete={handleDelete}
+              onEdit={handleEdit}
             />
           ))
         ) : (
