@@ -147,11 +147,11 @@ export default function InterviewTipsItem({
         toast.success("Report submitted successfully.");
         setSelectedReportOption(null);
         setReportDescription("");
+      } else {
+        toast.error(response.data.message);
       }
-    } catch (error) {
-      toast.error(
-        "There was an error submitting the report. Please try again."
-      );
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       console.error(error);
     } finally {
       setReportLoading("");

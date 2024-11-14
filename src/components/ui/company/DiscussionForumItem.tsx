@@ -142,10 +142,8 @@ export default function DiscussionForumItem({
       } else {
         toast.error(response.data.message);
       }
-    } catch (error) {
-      toast.error(
-        "There was an error submitting the report. Please try again."
-      );
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       console.error(error);
     } finally {
       setReportLoading("");
