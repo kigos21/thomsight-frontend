@@ -139,6 +139,8 @@ export default function DiscussionForumItem({
         toast.success("Report submitted successfully.");
         setSelectedReportOption(null);
         setReportDescription("");
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
       toast.error(
