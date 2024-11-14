@@ -52,10 +52,8 @@ export default function ProfileManagement() {
       setIsSaving(false);
       return;
     }
-    if (!/^\d{11}$/.test(phone || "")) {
-      toast.error(
-        "Phone number must be exactly 11 digits and contain only numbers."
-      );
+    if (phone && !/^\d{11}$/.test(phone)) {
+      toast.error("Phone number must be exactly 11 digits or left blank.");
       setIsSaving(false);
       return;
     }
