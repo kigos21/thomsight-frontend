@@ -123,7 +123,7 @@ export default function UserCompanyDiscussionForum() {
       if (/(@rep)\b/i.test(postForm.description)) {
         notifyRepresentativeBySlug(postForm.description);
       }
-      setPostData((prevPosts) => [...prevPosts, savedPost]);
+      setPostData((prevPosts) => [savedPost, ...prevPosts]);
       setIsAddingPost(false);
       setPostForm({ description: "" });
       toast.success("Created discussion successfully");
