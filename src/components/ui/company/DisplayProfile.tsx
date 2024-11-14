@@ -49,15 +49,17 @@ export const DisplayProfile: React.FC<DisplayProfileProps> = ({
         <p className={styles.paragraph}>
           <strong>Email:</strong> {profile.email}
         </p>
+        <p className={styles.paragraph}>
+          <strong>Phone Number:</strong> {profile.phone_number}
+        </p>
         {profile.bio && (
-          <p className={styles.paragraph}>
-            <strong>Bio:</strong> {profile.bio}
+          <p className={styles.bio}>
+            {/* <strong>Bio:</strong> {profile.bio} */}"{profile.bio}"
           </p>
         )}
         {/* <p>
           <strong>Profile Link:</strong> <a href={profileLink}>{profileLink}</a>
         </p> */}
-        {/* <p><strong>Phone Number:</strong> {phoneNumber}</p> */}
         <button className={styles.closeButton} onClick={onClose}>
           Close
         </button>

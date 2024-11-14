@@ -3,7 +3,7 @@ import Button from "../../components/ui/Button";
 import StyledBox from "../../components/layout/StyledBox";
 import FormField from "../../components/form/FormField";
 import {
-  // IconPhone,
+  IconPhone,
   IconUser,
   IconBook2,
   IconEdit,
@@ -22,7 +22,7 @@ import { containsBadWords } from "../../badWordsFilter";
 export default function ProfileManagement() {
   const { user, updateUser } = useUser();
   const [name, setName] = useState<string | undefined>(user?.name || "");
-  // const [phone, setPhone] = useState<string | null>(user?.phone_number || null);
+  const [phone, setPhone] = useState<string>(user?.phone_number || "");
   const [bio, setBio] = useState<string>(user?.bio || "");
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [tempProfileName, setTempProfileName] = useState<string>(user!.name);
@@ -44,18 +44,29 @@ export default function ProfileManagement() {
     }
     if (containsBadWords(tempProfileName)) {
       toast.error("Name contains foul language");
+      setIsSaving(false);
       return;
     }
     if (containsBadWords(bio)) {
       toast.error("Bio contains foul language");
+      setIsSaving(false);
       return;
     }
+    if (!/^\d{11}$/.test(phone || "")) {
+      toast.error(
+        "Phone number must be exactly 11 digits and contain only numbers."
+      );
+      setIsSaving(false);
+      return;
+    }
+
     try {
       await axiosInstance.put("/api/update/profile", {
         name: tempProfileName,
         bio,
+        phone_number: phone,
       });
-      updateUser({ name: tempProfileName, bio });
+      updateUser({ name: tempProfileName, bio, phone_number: phone });
       setName(tempProfileName);
       setIsEditingName(false);
       toast.success("Profile updated successfully!");
@@ -142,6 +153,17 @@ export default function ProfileManagement() {
               placeholder="Your Bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+            />
+
+            <FormField
+              classNames={styles.fieldPhone}
+              icon={
+                <IconPhone size={35} stroke={1.5} className={styles.icon} />
+              }
+              type="tel"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
 
             <Button
