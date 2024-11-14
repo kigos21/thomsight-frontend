@@ -16,6 +16,7 @@ import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import { containsBadWords } from "../../badWordsFilter";
 
 export default function RegisterAlumniPage() {
   const [firstName, setFirstName] = useState<string>("");
@@ -57,6 +58,10 @@ export default function RegisterAlumniPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (containsBadWords(firstName) || containsBadWords(lastName)) {
+      toast.error("Name contains foul language");
+      return;
+    }
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
     if (!passwordRegex.test(password)) {

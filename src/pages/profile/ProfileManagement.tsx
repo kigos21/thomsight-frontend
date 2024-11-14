@@ -17,6 +17,7 @@ import { FormEvent, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { containsBadWords } from "../../badWordsFilter";
 
 export default function ProfileManagement() {
   const { user, updateUser } = useUser();
@@ -41,7 +42,14 @@ export default function ProfileManagement() {
       setIsSaving(false);
       return;
     }
-
+    if (containsBadWords(tempProfileName)) {
+      toast.error("Name contains foul language");
+      return;
+    }
+    if (containsBadWords(bio)) {
+      toast.error("Bio contains foul language");
+      return;
+    }
     try {
       await axiosInstance.put("/api/update/profile", {
         name: tempProfileName,

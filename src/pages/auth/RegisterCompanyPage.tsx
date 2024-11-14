@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import { containsBadWords } from "../../badWordsFilter";
 
 export default function CompanyRegisterPage() {
   const { token } = useToken();
@@ -43,9 +44,16 @@ export default function CompanyRegisterPage() {
       toast.error("Company name must be less than 100 characters.");
       return;
     }
+    if (containsBadWords(companyName)) {
+      toast.error("Company name contains foul language");
+    }
 
     if (name.length > 100) {
       toast.error("Name must be less than 100 characters.");
+      return;
+    }
+    if (containsBadWords(name)) {
+      toast.error("Name contains foul language");
       return;
     }
 

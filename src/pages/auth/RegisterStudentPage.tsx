@@ -16,6 +16,7 @@ import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import { containsBadWords } from "../../badWordsFilter";
 
 export default function StudentRegisterPage() {
   const navigate = useNavigate();
@@ -31,6 +32,10 @@ export default function StudentRegisterPage() {
 
     if (name.length > 100) {
       toast.error("Name must be less than 100 characters.");
+      return;
+    }
+    if (containsBadWords(name)) {
+      toast.error("Name contains foul language");
       return;
     }
 
