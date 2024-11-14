@@ -284,6 +284,7 @@ export default function UserCompanyDiscussionForum() {
       setPostData(discussions);
       setActiveEditReplyId(null);
       setEditedReplyText("");
+      toast.success("Updated reply successfully");
     } catch (error) {
       console.error("Failed to save the reply:", error);
       toast.error("Failed to update reply. Please try again.");
