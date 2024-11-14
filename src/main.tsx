@@ -1,4 +1,5 @@
-import { StrictMode } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
@@ -13,38 +14,38 @@ import CompanyLayout from "./components/layout/CompanyLayout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import PreRegisterPage from "./pages/auth/PreRegister.tsx";
 import StudentRegisterPage from "./pages/auth/RegisterStudentPage.tsx";
-import RegisterAlumniPage from "./pages/auth/RegisterAlumniPage.tsx";
+// import RegisterAlumniPage from "./pages/auth/RegisterAlumniPage.tsx";
 import ForgotPasswordEmail from "./pages/auth/ForgotPasswordEmail.tsx";
-import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
+// import ForgotPasswordChangePassword from "./pages/auth/ForgotPasswordChangePassword.tsx";
 import CompanyTokenPage from "./pages/company/CompanyTokenPage.tsx";
-import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
+// import CompanyRegisterPage from "./pages/auth/RegisterCompanyPage.tsx";
 import LoginStudentPage from "./pages/auth/LoginStudentPage.tsx";
 import UserHomePage from "./pages/home/UserHomePage.tsx";
 import UserCompanyJobs from "./pages/company/UserCompanyJobs.tsx";
 import UserCompanyInterviewTips from "./pages/company/UserCompanyInterviewTips.tsx";
-import ProfileManagement from "./pages/profile/ProfileManagement.tsx";
+// import ProfileManagement from "./pages/profile/ProfileManagement.tsx";
 import CVLayout from "./components/layout/CVLayout.tsx";
 import CVGuidePage from "./pages/CVGuidePage.tsx";
 import UserCompanyDiscussionForum from "./pages/company/UserCompanyDiscussionForum.tsx";
 import InterviewGuidePage from "./pages/InterviewGuidePage.tsx";
 import CVListing from "./pages/cv/CVListing.tsx";
-import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
-import DataPrivacy from "./pages/DataPrivacy.tsx";
+// import TermsAndConditions from "./pages/auth/TermsAndConditions.tsx";
+// import DataPrivacy from "./pages/DataPrivacy.tsx";
 import UserCompanyOverview from "./pages/company/UserCompanyOverview.tsx";
-import CVPending from "./pages/cv/CVPending.tsx";
-import CVToReview from "./pages/cv/CVToReview.tsx";
-import CVReviewed from "./pages/cv/CVReviewed.tsx";
-import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
-import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
-import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
+// import CVPending from "./pages/cv/CVPending.tsx";
+// import CVToReview from "./pages/cv/CVToReview.tsx";
+// import CVReviewed from "./pages/cv/CVReviewed.tsx";
+// import CVMyRequests from "./pages/cv/CVMyRequests.tsx";
+// import CVFeedbackCreate from "./pages/cv/CVFeedbackCreate.tsx";
+// import CVFeedbackView from "./pages/cv/CVFeedbackView.tsx";
 import AdminGenerateTokenPage from "./pages/tokens/AdminGenerateTokenPage.tsx";
 import AdminCompanyAccount from "./pages/tokens/AdminCompanyAccount.tsx";
 import ReportsLayout from "./components/layout/ReportsLayout.tsx";
 import ReportsDiscussion from "./pages/reports/ReportsDiscussion.tsx";
-import CompanyNotification from "./pages/company/CompanyNotification.tsx";
+// import CompanyNotification from "./pages/company/CompanyNotification.tsx";
 import AdminViewAnnouncements from "./pages/announcements/AdminViewAnnouncements.tsx";
-import CompanyManageInformationCompany from "./pages/company/CompanyManageInformationCompany.tsx";
-import CompanyManageInformationJobs from "./pages/company/CompanyManageInformationJobs.tsx";
+// import CompanyManageInformationCompany from "./pages/company/CompanyManageInformationCompany.tsx";
+// import CompanyManageInformationJobs from "./pages/company/CompanyManageInformationJobs.tsx";
 import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
@@ -57,13 +58,56 @@ import { TokenProvider } from "./contexts/TokenContext.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./contexts/AuthenticatedContext.tsx";
 import PostCVForm from "./pages/cv/PostCVForm.tsx";
-import ChangePassword from "./pages/profile/ChangePassword.tsx";
-import FAQsPage from "./pages/faqs/FAQsPage.tsx";
+// import ChangePassword from "./pages/profile/ChangePassword.tsx";
+// import FAQsPage from "./pages/faqs/FAQsPage.tsx";
 import ReportsComments from "./pages/reports/ReportsComments.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavProvider } from "./contexts/NavContext.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
+
+// Profile Management
+const ProfileManagement = lazy(
+  () => import("./pages/profile/ProfileManagement.tsx")
+);
+const ChangePassword = lazy(() => import("./pages/profile/ChangePassword.tsx"));
+
+// CV Review Components
+const CVPending = lazy(() => import("./pages/cv/CVPending.tsx"));
+const CVToReview = lazy(() => import("./pages/cv/CVToReview.tsx"));
+const CVReviewed = lazy(() => import("./pages/cv/CVReviewed.tsx"));
+const CVMyRequests = lazy(() => import("./pages/cv/CVMyRequests.tsx"));
+const CVFeedbackCreate = lazy(() => import("./pages/cv/CVFeedbackCreate.tsx"));
+const CVFeedbackView = lazy(() => import("./pages/cv/CVFeedbackView.tsx"));
+
+// Company Management
+const CompanyManageInformationCompany = lazy(
+  () => import("./pages/company/CompanyManageInformationCompany.tsx")
+);
+const CompanyManageInformationJobs = lazy(
+  () => import("./pages/company/CompanyManageInformationJobs.tsx")
+);
+
+// Auth Pages
+const RegisterAlumniPage = lazy(
+  () => import("./pages/auth/RegisterAlumniPage.tsx")
+);
+const RegisterCompanyPage = lazy(
+  () => import("./pages/auth/RegisterCompanyPage.tsx")
+);
+const ForgotPasswordChangePassword = lazy(
+  () => import("./pages/auth/ForgotPasswordChangePassword.tsx")
+);
+
+// Additional Pages
+const TermsAndConditions = lazy(
+  () => import("./pages/auth/TermsAndConditions.tsx")
+);
+const DataPrivacy = lazy(() => import("./pages/DataPrivacy.tsx"));
+const FAQsPage = lazy(() => import("./pages/faqs/FAQsPage.tsx"));
+const CompanyNotification = lazy(
+  () => import("./pages/company/CompanyNotification.tsx")
+);
 
 const router = createBrowserRouter([
   {
@@ -89,19 +133,23 @@ const router = createBrowserRouter([
       {
         path: "announcements",
         element: (
-          <PrivateRoute
-            element={<AdminViewAnnouncements />}
-            allowedRoles={["Admin", "Rep"]}
-          />
+          <Suspense fallback="Loading...">
+            <PrivateRoute
+              element={<AdminViewAnnouncements />}
+              allowedRoles={["Admin", "Rep"]}
+            />
+          </Suspense>
         ),
       },
       {
         path: "announcements/create",
         element: (
-          <PrivateRoute
-            element={<AdminCreateAnnouncement />}
-            allowedRoles={["Admin"]}
-          />
+          <Suspense fallback="Loading...">
+            <PrivateRoute
+              element={<AdminCreateAnnouncement />}
+              allowedRoles={["Admin"]}
+            />
+          </Suspense>
         ),
       },
 
@@ -140,19 +188,23 @@ const router = createBrowserRouter([
           {
             path: "manage/info",
             element: (
-              <PrivateRoute
-                element={<CompanyManageInformationCompany />}
-                allowedRoles={["Rep"]}
-              />
+              <Suspense fallback="Loading...">
+                <PrivateRoute
+                  element={<CompanyManageInformationCompany />}
+                  allowedRoles={["Rep"]}
+                />
+              </Suspense>
             ),
           },
           {
             path: "manage/jobs",
             element: (
-              <PrivateRoute
-                element={<CompanyManageInformationJobs />}
-                allowedRoles={["Rep"]}
-              />
+              <Suspense fallback="Loading...">
+                <PrivateRoute
+                  element={<CompanyManageInformationJobs />}
+                  allowedRoles={["Rep"]}
+                />
+              </Suspense>
             ),
           },
         ],
@@ -172,34 +224,50 @@ const router = createBrowserRouter([
       // FAQs
       {
         path: "faqs",
-        element: <FAQsPage />,
+        element: (
+          <Suspense fallback="Loading...">
+            <FAQsPage />
+          </Suspense>
+        ),
       },
       // Profile Management
       {
         path: "profile",
-        element: <ProfileManagement />,
+        element: (
+          <Suspense fallback="Loading...">
+            <ProfileManagement />
+          </Suspense>
+        ),
       },
       {
         path: "/profile/change-password/",
-        element: <ChangePassword />,
+        element: (
+          <Suspense fallback="Loading...">
+            <ChangePassword />
+          </Suspense>
+        ),
       },
       // Tokens
       {
         path: "tokens",
         element: (
-          <PrivateRoute
-            element={<AdminGenerateTokenPage />}
-            allowedRoles={["Admin"]}
-          />
+          <Suspense fallback="Loading...">
+            <PrivateRoute
+              element={<AdminGenerateTokenPage />}
+              allowedRoles={["Admin"]}
+            />
+          </Suspense>
         ),
       },
       {
         path: "company-accounts",
         element: (
-          <PrivateRoute
-            element={<AdminCompanyAccount />}
-            allowedRoles={["Admin"]}
-          />
+          <Suspense fallback="Loading...">
+            <PrivateRoute
+              element={<AdminCompanyAccount />}
+              allowedRoles={["Admin"]}
+            />
+          </Suspense>
         ),
       },
 
@@ -207,7 +275,12 @@ const router = createBrowserRouter([
       {
         path: "reports",
         element: (
-          <PrivateRoute element={<ReportsLayout />} allowedRoles={["Admin"]} />
+          <Suspense fallback="Loading...">
+            <PrivateRoute
+              element={<ReportsLayout />}
+              allowedRoles={["Admin"]}
+            />
+          </Suspense>
         ),
         children: [
           {
@@ -250,31 +323,53 @@ const router = createBrowserRouter([
           {
             path: "pending",
             element: (
-              <PrivateRoute
-                element={<CVPending />}
-                allowedRoles={["Student"]}
-              />
+              <Suspense fallback="Loading...">
+                <PrivateRoute
+                  element={<CVPending />}
+                  allowedRoles={["Student"]}
+                />
+              </Suspense>
             ),
           },
           {
             path: "to-review",
-            element: <CVToReview />,
+            element: (
+              <Suspense fallback="Loading...">
+                <CVToReview />
+              </Suspense>
+            ),
           },
           {
             path: "reviewed",
-            element: <CVReviewed />,
+            element: (
+              <Suspense fallback="Loading...">
+                <CVReviewed />
+              </Suspense>
+            ),
           },
           {
             path: "my-requests",
-            element: <CVMyRequests />,
+            element: (
+              <Suspense fallback="Loading...">
+                <CVMyRequests />
+              </Suspense>
+            ),
           },
           {
             path: ":cvId",
-            element: <CVFeedbackCreate />,
+            element: (
+              <Suspense fallback="Loading...">
+                <CVFeedbackCreate />
+              </Suspense>
+            ),
           },
           {
             path: "view/:reviewId",
-            element: <CVFeedbackView />,
+            element: (
+              <Suspense fallback="Loading...">
+                <CVFeedbackView />
+              </Suspense>
+            ),
           },
           {
             path: "post-cv",
@@ -287,10 +382,12 @@ const router = createBrowserRouter([
       {
         path: "/notifications",
         element: (
-          <PrivateRoute
-            element={<CompanyNotification />}
-            allowedRoles={["Rep"]}
-          />
+          <Suspense fallback="Loading...">
+            <PrivateRoute
+              element={<CompanyNotification />}
+              allowedRoles={["Rep"]}
+            />
+          </Suspense>
         ),
       },
     ],
@@ -322,7 +419,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/register/alumni",
-        element: <RegisterAlumniPage />,
+        element: (
+          <Suspense fallback="Loading...">
+            <RegisterAlumniPage />
+          </Suspense>
+        ),
       },
       {
         path: "/register/token",
@@ -333,7 +434,11 @@ const router = createBrowserRouter([
         // TODO: company must be a protected route, a link which should be
         // clicked from email
         path: "/register/company",
-        element: <CompanyRegisterPage />,
+        element: (
+          <Suspense fallback="Loading...">
+            <RegisterCompanyPage />
+          </Suspense>
+        ),
       },
 
       /**
@@ -361,15 +466,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/forgot-password/change-password/:token",
-        element: <ForgotPasswordChangePassword />,
+        element: (
+          <Suspense fallback="Loading...">
+            <ForgotPasswordChangePassword />
+          </Suspense>
+        ),
       },
       {
         path: "/terms-and-conditions",
-        element: <TermsAndConditions />,
+        element: (
+          <Suspense fallback="Loading...">
+            <TermsAndConditions />
+          </Suspense>
+        ),
       },
       {
         path: "/data-privacy",
-        element: <DataPrivacy />,
+        element: (
+          <Suspense fallback="Loading...">
+            <DataPrivacy />
+          </Suspense>
+        ),
       },
       // {
       //   path: "/displayprofile",
