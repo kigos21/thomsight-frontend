@@ -78,7 +78,10 @@ export default function UserCompanyDiscussionForum() {
         const response = await axiosInstance.get(
           `/api/company/${slug}/discussions`
         );
-        const discussions = response.data;
+        let discussions: Post[] = response.data;
+        discussions = discussions.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
         setPostData(discussions);
       } catch (error) {
         console.error("Error fetching discussions:", error);
@@ -206,7 +209,10 @@ export default function UserCompanyDiscussionForum() {
       const response = await axiosInstance.get(
         `/api/company/${slug}/discussions`
       );
-      const discussions = response.data;
+      let discussions: Post[] = response.data;
+      discussions = discussions.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
       setPostData(discussions);
       setReply("");
       setActiveReplyPostId(-1);
@@ -230,7 +236,10 @@ export default function UserCompanyDiscussionForum() {
       const response = await axiosInstance.get(
         `/api/company/${slug}/discussions`
       );
-      const discussions = response.data;
+      let discussions: Post[] = response.data;
+      discussions = discussions.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
       setPostData(discussions);
       toast.success("Reply deleted successfully.");
       setShowDeletePopup(false);
@@ -280,7 +289,10 @@ export default function UserCompanyDiscussionForum() {
       const response = await axiosInstance.get(
         `/api/company/${slug}/discussions`
       );
-      const discussions = response.data;
+      let discussions: Post[] = response.data;
+      discussions = discussions.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
       setPostData(discussions);
       setActiveEditReplyId(null);
       setEditedReplyText("");
