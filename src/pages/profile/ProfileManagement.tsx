@@ -47,7 +47,7 @@ export default function ProfileManagement() {
         name: tempProfileName,
         bio,
       });
-      updateUser({ name, bio });
+      updateUser({ name: tempProfileName, bio });
       setName(tempProfileName);
       setIsEditingName(false);
       toast.success("Profile updated successfully!");
@@ -79,7 +79,9 @@ export default function ProfileManagement() {
                 <FormField
                   type={"text"}
                   value={tempProfileName}
-                  onChange={(e) => setTempProfileName(e.target.value)}
+                  onChange={(e) => {
+                    setTempProfileName(e.target.value);
+                  }}
                   placeholder={"Profile name"}
                   classNames={styles.profileFormField}
                   parentDivClassnames={styles.formFieldParentDiv}
