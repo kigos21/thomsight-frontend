@@ -62,6 +62,7 @@ import FAQsPage from "./pages/faqs/FAQsPage.tsx";
 import ReportsComments from "./pages/reports/ReportsComments.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NavProvider } from "./contexts/NavContext.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 const router = createBrowserRouter([
@@ -70,7 +71,9 @@ const router = createBrowserRouter([
     element: (
       <UserProvider>
         <CompaniesProvider>
-          <PrivateRoute element={<AppLayout />} />
+          <NavProvider>
+            <PrivateRoute element={<AppLayout />} />
+          </NavProvider>
         </CompaniesProvider>
       </UserProvider>
     ),

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./NavDropdown.module.scss";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
+import { useNav } from "../../contexts/NavContext";
 
 interface NavDropdownProps {
   items: Item[];
@@ -19,6 +20,7 @@ const NavDropdown: React.FunctionComponent<NavDropdownProps> = ({
 }) => {
   const [showWindow, setShowWindow] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { setDisplayNav } = useNav();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -53,6 +55,7 @@ const NavDropdown: React.FunctionComponent<NavDropdownProps> = ({
               onClick={(e) => {
                 e.stopPropagation();
                 setShowWindow(false);
+                setDisplayNav(false);
               }}
               className={styles.dropdownItem}
             >
