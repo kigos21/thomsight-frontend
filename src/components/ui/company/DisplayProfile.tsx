@@ -46,12 +46,16 @@ export const DisplayProfile: React.FC<DisplayProfileProps> = ({
       {loading && <Spinner />}
       <div className={styles.profilePopup}>
         <h2 className={styles.heading}>{profile.name}</h2>
-        <p className={styles.paragraph}>
-          <strong>Email:</strong> {profile.email}
-        </p>
-        <p className={styles.paragraph}>
-          <strong>Phone Number:</strong> {profile.phone_number}
-        </p>
+        {profile.email && (
+          <p className={styles.paragraph}>
+            <strong>Email:</strong> {profile.email}
+          </p>
+        )}
+        {profile.phone_number && (
+          <p className={styles.paragraph}>
+            <strong>Phone Number:</strong> {profile.phone_number}
+          </p>
+        )}
         {profile.bio && (
           <p className={styles.bio}>
             {/* <strong>Bio:</strong> {profile.bio} */}"{profile.bio}"
