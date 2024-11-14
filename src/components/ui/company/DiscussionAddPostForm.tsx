@@ -50,7 +50,6 @@ const DiscussionAddPostForm: React.FunctionComponent<
               type="textarea"
               name="description"
               placeholder="Tell us about your post"
-              required={true}
               value={post.description}
               onChange={handleInputChange}
             ></FormField>

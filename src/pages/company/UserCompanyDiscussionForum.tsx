@@ -34,6 +34,7 @@ interface Post {
   posted_by: number;
   replies: Reply[];
   user_id: number;
+  created_at: string;
 }
 
 export default function UserCompanyDiscussionForum() {
@@ -334,6 +335,7 @@ export default function UserCompanyDiscussionForum() {
         }
       );
       if (response.status === 200) {
+        setShowReportPopup(false);
         toast.success("Report submitted successfully.");
         setSelectedReportOption(null);
         setReportDescription("");

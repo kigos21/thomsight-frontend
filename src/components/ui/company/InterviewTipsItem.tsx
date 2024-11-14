@@ -143,6 +143,7 @@ export default function InterviewTipsItem({
         reason: reportDescription,
       });
       if (response.status === 200) {
+        setShowReportPopup(false);
         toast.success("Report submitted successfully.");
         setSelectedReportOption(null);
         setReportDescription("");
