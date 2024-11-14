@@ -74,13 +74,23 @@ export default function ReviewItem({
       });
 
       if (voteType === "up") {
-        setUpvotes((prev) => (userVote === "up" ? prev - 1 : prev + 1));
-        setDownvotes((prev) => (userVote === "down" ? prev - 1 : prev));
-        toast.success("Upvoted");
+        if (userVote === "up") {
+          setUpvotes((prev) => prev - 1);
+          toast.success("Removed upvote");
+        } else {
+          setUpvotes((prev) => prev + 1);
+          if (userVote === "down") setDownvotes((prev) => prev - 1);
+          toast.success("Upvoted");
+        }
       } else {
-        setDownvotes((prev) => (userVote === "down" ? prev - 1 : prev + 1));
-        setUpvotes((prev) => (userVote === "up" ? prev - 1 : prev));
-        toast.success("Downvoted");
+        if (userVote === "down") {
+          setDownvotes((prev) => prev - 1);
+          toast.success("Removed downvote");
+        } else {
+          setDownvotes((prev) => prev + 1);
+          if (userVote === "up") setUpvotes((prev) => prev - 1);
+          toast.success("Downvoted");
+        }
       }
       setUserVote(userVote === voteType ? null : voteType);
     } catch (error) {
