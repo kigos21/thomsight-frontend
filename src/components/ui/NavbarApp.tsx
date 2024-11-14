@@ -20,12 +20,15 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const { user, loading, setUser } = useUser();
   const [logoutLoading, setLogoutLoading] = useState(false);
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         mobileNavRef.current &&
-        !mobileNavRef.current.contains(event.target as Node)
+        !mobileNavRef.current.contains(event.target as Node) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(event.target as Node)
       ) {
         setDisplayNav(false);
       }
@@ -105,7 +108,10 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         <button
           type="button"
           className={styles.hamburgerButton}
-          onClick={() => setDisplayNav(true)}
+          onClick={() =>
+            displayNav ? setDisplayNav(false) : setDisplayNav(true)
+          }
+          ref={hamburgerRef}
         >
           <IconMenu2 size={30} stroke={1.5} className={styles.hamburgerIcon} />
         </button>
