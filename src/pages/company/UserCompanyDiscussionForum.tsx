@@ -233,6 +233,7 @@ export default function UserCompanyDiscussionForum() {
       const discussions = response.data;
       setPostData(discussions);
       toast.success("Reply deleted successfully.");
+      setShowDeletePopup(false);
     } catch (error) {
       console.error("Error deleting reply:", error);
       toast.error("An error occurred while deleting the reply.");
