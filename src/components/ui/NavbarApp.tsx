@@ -9,13 +9,14 @@ import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../api/authUser";
 import Spinner from "./Spinner";
 import ProfileDropdown from "./ProfileDropdown";
+import { useNav } from "../../contexts/NavContext";
 
 interface NavbarAppProps {
   links: JSX.Element[];
 }
 
 export default function NavbarApp({ links }: NavbarAppProps) {
-  const [displayNav, setDisplayNav] = useState(false);
+  const { displayNav, setDisplayNav } = useNav();
   const { user, loading, setUser } = useUser();
   const [logoutLoading, setLogoutLoading] = useState(false);
   const mobileNavRef = useRef<HTMLDivElement>(null);
@@ -104,7 +105,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         <button
           type="button"
           className={styles.hamburgerButton}
-          onClick={() => setDisplayNav((state) => !state)}
+          onClick={() => setDisplayNav(true)}
         >
           <IconMenu2 size={30} stroke={1.5} className={styles.hamburgerIcon} />
         </button>

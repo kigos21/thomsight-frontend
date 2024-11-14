@@ -5,10 +5,12 @@ import NavbarApp from "../ui/NavbarApp";
 import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import NavDropdown from "../ui/NavDropdown";
+import { useNav } from "../../contexts/NavContext";
 
 export default function AppRoot() {
   const { user } = useUser();
   const { companies } = useCompanies();
+  const { setDisplayNav } = useNav();
 
   let links: JSX.Element[];
 
@@ -20,6 +22,7 @@ export default function AppRoot() {
           to="/companies"
           key="homeUser"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Home
         </NavLink>,
@@ -27,6 +30,7 @@ export default function AppRoot() {
           to="/interview-guide"
           key="interviewTipsUser"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Interview Tips
         </NavLink>,
@@ -45,6 +49,7 @@ export default function AppRoot() {
           to="/faqs"
           key="faqs"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           FAQs
         </NavLink>,
@@ -62,6 +67,7 @@ export default function AppRoot() {
           to="/companies"
           key="homeCompany"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Home
         </NavLink>,
@@ -69,6 +75,7 @@ export default function AppRoot() {
           to="/announcements"
           key="announcementsCompany"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Announcements
         </NavLink>,
@@ -76,6 +83,7 @@ export default function AppRoot() {
           to={`/company/${companySlug}`}
           key="overviewCompany"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           {" "}
           {/* Assuming companyId is part of the user object */}
@@ -85,6 +93,7 @@ export default function AppRoot() {
           to={`/company/${companySlug}/manage/info`}
           key="manageinfoCompany"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Manage Info
         </NavLink>,
@@ -92,6 +101,7 @@ export default function AppRoot() {
           to="/faqs"
           key="faqs"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           FAQs
         </NavLink>,
@@ -105,6 +115,7 @@ export default function AppRoot() {
           to="/companies"
           key="homeAdmin"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Home
         </NavLink>,
@@ -112,6 +123,7 @@ export default function AppRoot() {
           to="/tokens"
           key="tokensAdmin"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Tokens
         </NavLink>,
@@ -119,6 +131,7 @@ export default function AppRoot() {
           to="/announcements"
           key="announcementsAdmin"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Announcements
         </NavLink>,
@@ -126,6 +139,7 @@ export default function AppRoot() {
           to="/company-accounts"
           key="companiesAdmin"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Companies
         </NavLink>,
@@ -133,6 +147,7 @@ export default function AppRoot() {
           to="/reports"
           key="reportsAdmin"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           Reports
         </NavLink>,
@@ -140,6 +155,7 @@ export default function AppRoot() {
           to="/faqs"
           key="faqs"
           className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
         >
           FAQs
         </NavLink>,
