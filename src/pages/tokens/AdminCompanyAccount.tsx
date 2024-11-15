@@ -9,11 +9,13 @@ import styles from "./AdminCompanyAccount.module.scss";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import { useCompanies } from "../../contexts/CompaniesContext";
 
 export default function AdminCompanyAccount() {
   const [repUsers, setRepUsers] = useState<User[]>([]);
   const [filteredRepUsers, setFilteredRepUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<string>("");
+  const { loadCompanies, loadJobs } = useCompanies();
 
   useEffect(() => {
     const fetchRepUsers = async () => {
@@ -41,6 +43,8 @@ export default function AdminCompanyAccount() {
     try {
       setLoading("Deleting company...");
       await axiosInstance.patch(`/api/company/${companyId}/soft-delete`);
+      loadCompanies();
+      loadJobs();
       toast.success("Company soft deleted successfully.");
       setRepUsers((prevRepUsers) =>
         prevRepUsers.map((user) => {
@@ -72,6 +76,8 @@ export default function AdminCompanyAccount() {
     try {
       setLoading("Restoring company...");
       await axiosInstance.patch(`/api/company/${companyId}/restore`);
+      loadCompanies();
+      loadJobs();
       toast.success("Company restored successfully.");
       setRepUsers((prevRepUsers) =>
         prevRepUsers.map((user) => {

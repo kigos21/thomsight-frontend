@@ -13,6 +13,7 @@ interface CompaniesContextType {
   updateCompany: (updatedCompany: Company) => void;
   createJob: (newJob: Job) => void;
   loadCompanies: () => void;
+  loadJobs: () => void;
 }
 
 const CompaniesContext = createContext<CompaniesContextType | undefined>(
@@ -40,20 +41,20 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  useEffect(() => {
-    const loadJobs = async () => {
-      try {
-        await axiosInstance.get("/sanctum/csrf-cookie");
-        const jobsData = await fetchJobs();
-        setJobs(jobsData);
-      } catch (err) {
-        console.log(err);
-        setError("Failed to load jobs.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadJobs = async () => {
+    try {
+      await axiosInstance.get("/sanctum/csrf-cookie");
+      const jobsData = await fetchJobs();
+      setJobs(jobsData);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to load jobs.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadCompanies();
     loadJobs();
   }, []);
@@ -94,6 +95,7 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
         updateCompany,
         createJob,
         loadCompanies,
+        loadJobs,
       }}
     >
       {children}
