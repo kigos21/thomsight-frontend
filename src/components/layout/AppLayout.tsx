@@ -1,6 +1,6 @@
 import styles from "./AppLayout.module.scss";
 
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import NavbarApp from "../ui/NavbarApp";
 import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
@@ -11,6 +11,7 @@ export default function AppRoot() {
   const { user } = useUser();
   const { companies } = useCompanies();
   const { setDisplayNav } = useNav();
+  const location = useLocation();
 
   let links: JSX.Element[];
 
@@ -82,7 +83,11 @@ export default function AppRoot() {
         <NavLink
           to={`/company/${companySlug}`}
           key="overviewCompany"
-          className={({ isActive }) => (isActive ? styles.active : "")}
+          className={({ isActive }) =>
+            isActive && !location.pathname.includes("/manage")
+              ? styles.active
+              : ""
+          }
           onClick={() => setDisplayNav(false)}
         >
           {" "}
