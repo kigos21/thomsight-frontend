@@ -58,7 +58,8 @@ export default function ForgotPasswordChangePassword() {
       );
       navigate("/login");
     } catch (err) {
-      toast.error("There was an issue resetting your password." + err);
+      toast.error("There was an issue resetting your password.");
+      console.error(err);
     } finally {
       setLoading("");
     }
