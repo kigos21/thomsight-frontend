@@ -29,6 +29,22 @@ export default function StudentRegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (name.trim() === "") {
+      toast.error("Name should not be left blank");
+      return;
+    }
+    if (email.trim() === "") {
+      toast.error("Email should not be left blank");
+      return;
+    }
+    if (password.trim() === "") {
+      toast.error("Password should not be left blank");
+      return;
+    }
+    if (confirmPassword.trim() === "") {
+      toast.error("Confirm password should not be left blank");
+      return;
+    }
 
     if (name.length > 48) {
       toast.error("Name must be less than 48 characters.");
@@ -97,7 +113,6 @@ export default function StudentRegisterPage() {
                 }
                 type="text"
                 placeholder="Full Name"
-                required={true}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -108,7 +123,6 @@ export default function StudentRegisterPage() {
                 }
                 type="email"
                 placeholder="Email (cics@ust.edu.ph)"
-                required={true}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -119,7 +133,6 @@ export default function StudentRegisterPage() {
                 }
                 type="password"
                 placeholder="Password"
-                required={true}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -130,7 +143,6 @@ export default function StudentRegisterPage() {
                 }
                 type="password"
                 placeholder="Confirm Password"
-                required={true}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

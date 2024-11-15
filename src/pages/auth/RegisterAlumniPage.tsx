@@ -58,6 +58,30 @@ export default function RegisterAlumniPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (firstName.trim() === "") {
+      toast.error("First name should not be left blank");
+      return;
+    }
+    if (lastName.trim() === "") {
+      toast.error("Last name should not be left blank");
+      return;
+    }
+    if (birthday.trim() === "") {
+      toast.error("Birthday should not be left blank");
+      return;
+    }
+    if (email.trim() === "") {
+      toast.error("Email should not be left blank");
+      return;
+    }
+    if (password.trim() === "") {
+      toast.error("Password should not be left blank");
+      return;
+    }
+    if (confirmPassword.trim() === "") {
+      toast.error("Confirm password should not be left blank");
+      return;
+    }
     if (firstName.length + lastName.length > 48) {
       toast.error(
         "Combined length of first name and last name must not exceed 48 characters."
@@ -136,7 +160,6 @@ export default function RegisterAlumniPage() {
                 }
                 type="text"
                 placeholder="First Name"
-                required={true}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -146,7 +169,6 @@ export default function RegisterAlumniPage() {
                 }
                 type="text"
                 placeholder="Last Name"
-                required={true}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -162,7 +184,6 @@ export default function RegisterAlumniPage() {
                 name="birthday"
                 placeholder="Birthday (mm/dd/yyyy)"
                 onChange={(e) => handleBirthdayChange(e.target.value)}
-                required={true}
                 extraProps={{
                   title: "Enter date in mm/dd/yyyy format",
                   pattern: "\\d{2}/\\d{2}/\\d{4}",
@@ -175,7 +196,6 @@ export default function RegisterAlumniPage() {
                 }
                 type="email"
                 placeholder="Email"
-                required={true}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -185,7 +205,6 @@ export default function RegisterAlumniPage() {
                 }
                 type="password"
                 placeholder="Password"
-                required={true}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -195,7 +214,6 @@ export default function RegisterAlumniPage() {
                 }
                 type="password"
                 placeholder="Confirm Password"
-                required={true}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

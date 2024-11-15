@@ -41,6 +41,27 @@ export default function CompanyRegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (companyName.trim() === "") {
+      toast.error("Company name should not be left blank");
+      return;
+    }
+    if (name.trim() === "") {
+      toast.error("Name should not be left blank");
+      return;
+    }
+    if (email.trim() === "") {
+      toast.error("Email should not be left blank");
+      return;
+    }
+    if (password.trim() === "") {
+      toast.error("Password should not be left blank");
+      return;
+    }
+    if (confirmPassword.trim() === "") {
+      toast.error("Confirm password should not be left blank");
+      return;
+    }
+
     if (companyName.length > 100) {
       toast.error("Company name must be less than 100 characters.");
       return;
@@ -141,7 +162,6 @@ export default function CompanyRegisterPage() {
                 placeholder="Company Name"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                required
               />
 
               {/* Name Field */}
@@ -153,7 +173,6 @@ export default function CompanyRegisterPage() {
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                required
               />
 
               {/* Email Field */}
@@ -165,7 +184,6 @@ export default function CompanyRegisterPage() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
 
               {/* Password Field */}
@@ -177,7 +195,6 @@ export default function CompanyRegisterPage() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
 
               {/* Confirm Password Field */}
@@ -189,7 +206,6 @@ export default function CompanyRegisterPage() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                required
               />
 
               <CheckboxWithLabel
