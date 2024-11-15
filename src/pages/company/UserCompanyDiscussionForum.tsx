@@ -37,6 +37,11 @@ interface Post {
   created_at: string;
 }
 
+interface ReplyToDelete {
+  replyId: number | null;
+  postId: number | null;
+}
+
 export default function UserCompanyDiscussionForum() {
   const [isAddingPost, setIsAddingPost] = useState<boolean>(false); // To control the form visibility
   const [postForm, setPostForm] = useState({
@@ -63,6 +68,11 @@ export default function UserCompanyDiscussionForum() {
   const [reportDescription, setReportDescription] = useState<string>("");
   const [reportLoading, setReportLoading] = useState<string>("");
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [replyToDelete, setReplyToDelete] = useState<ReplyToDelete>({
+    replyId: null,
+    postId: null,
+  });
+  const [replyToReport, setReplyToReport] = useState<number | null>(null);
 
   const handleProfileClick = (userId: number) => {
     if (activeProfileUserId === userId) {
@@ -226,12 +236,13 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
-  const handleReplyDelete = async (replyId: number, discussionId: number) => {
+  const handleReplyDelete = async () => {
+    if (!replyToDelete.replyId || !replyToDelete.postId) return;
     try {
       setShowDeletePopup(false);
       setLoading("Deleting reply...");
       await axiosInstance.delete(
-        `/api/company/${slug}/discussions/${discussionId}/comment/${replyId}/delete`
+        `/api/company/${slug}/discussions/${replyToDelete.postId}/comment/${replyToDelete.replyId}/delete`
       );
 
       setLoading("Loading discussions...");
@@ -249,6 +260,7 @@ export default function UserCompanyDiscussionForum() {
       toast.error("An error occurred while deleting the reply.");
     } finally {
       setLoading("");
+      setReplyToDelete({ replyId: null, postId: null });
     }
   };
 
@@ -306,11 +318,12 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
-  const handleReportClick = () => {
+  const handleReportClick = (id: number) => {
+    setReplyToReport(id);
     setShowReportPopup(true);
   };
 
-  const handleSubmitReport = async (replyId: number) => {
+  const handleSubmitReport = async () => {
     if (!selectedReportOption) {
       toast.error("Please select an issue type.");
       return;
@@ -327,9 +340,9 @@ export default function UserCompanyDiscussionForum() {
     setReportLoading("Submitting report...");
     try {
       const response = await axiosInstance.post(
-        `/api/report/comment/${replyId}`,
+        `/api/report/comment/${replyToReport}`,
         {
-          id: replyId,
+          id: replyToReport,
           issue: selectedReportOption,
           reason: reportDescription,
         }
@@ -346,10 +359,12 @@ export default function UserCompanyDiscussionForum() {
       setReportLoading("");
       setSelectedReportOption(null);
       setReportDescription("");
+      setReplyToReport(null);
     }
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (replyId: number, postId: number) => {
+    setReplyToDelete({ replyId, postId });
     setShowDeletePopup(true);
   };
 
@@ -497,7 +512,11 @@ export default function UserCompanyDiscussionForum() {
                                 )}
 
                                 {user?.id === reply.posted_by && (
-                                  <button onClick={handleDeleteClick}>
+                                  <button
+                                    onClick={() =>
+                                      handleDeleteClick(reply.id, post.id)
+                                    }
+                                  >
                                     <IconTrash
                                       size={25}
                                       stroke={1.5}
@@ -507,43 +526,15 @@ export default function UserCompanyDiscussionForum() {
                                 )}
 
                                 {user?.id !== reply.posted_by && (
-                                  <button onClick={handleReportClick}>
+                                  <button
+                                    onClick={() => handleReportClick(reply.id)}
+                                  >
                                     <IconFlagFilled
                                       size={25}
                                       stroke={1.5}
                                       className={styles.iconReport}
                                     />
                                   </button>
-                                )}
-
-                                {showDeletePopup && (
-                                  <DeletePopUp
-                                    isVisible={showDeletePopup}
-                                    onClose={() => setShowDeletePopup(false)}
-                                    onDelete={() =>
-                                      handleReplyDelete(reply.id, post.id)
-                                    }
-                                    heading="Delete Reply"
-                                    details="Are you sure you want to delete this reply?"
-                                  />
-                                )}
-
-                                {showReportPopup && (
-                                  <ReportForm
-                                    isVisible={showReportPopup}
-                                    onClose={() => setShowReportPopup(false)}
-                                    selectedOption={selectedReportOption}
-                                    setSelectedOption={setSelectedReportOption}
-                                    description={reportDescription}
-                                    setDescription={setReportDescription}
-                                    handleSubmit={(event) => {
-                                      event.preventDefault();
-                                      handleSubmitReport(reply.id);
-                                    }}
-                                    loading={
-                                      reportLoading === "Submitting report..."
-                                    }
-                                  ></ReportForm>
                                 )}
                               </div>
                             </div>
@@ -597,6 +588,30 @@ export default function UserCompanyDiscussionForum() {
           </StyledBox>
         </div>
       </div>
+      {showReportPopup && (
+        <ReportForm
+          isVisible={showReportPopup}
+          onClose={() => setShowReportPopup(false)}
+          selectedOption={selectedReportOption}
+          setSelectedOption={setSelectedReportOption}
+          description={reportDescription}
+          setDescription={setReportDescription}
+          handleSubmit={(event) => {
+            event.preventDefault();
+            handleSubmitReport();
+          }}
+          loading={reportLoading === "Submitting report..."}
+        ></ReportForm>
+      )}
+      {showDeletePopup && (
+        <DeletePopUp
+          isVisible={showDeletePopup}
+          onClose={() => setShowDeletePopup(false)}
+          onDelete={handleReplyDelete}
+          heading="Delete Reply"
+          details="Are you sure you want to delete this reply?"
+        />
+      )}
     </PaddedContainer>
   );
 }
