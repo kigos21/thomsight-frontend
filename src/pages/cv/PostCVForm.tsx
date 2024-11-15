@@ -4,6 +4,7 @@ import Button from "../../components/ui/Button";
 import Spinner from "../../components/ui/Spinner";
 import axiosInstance from "../../services/axiosInstance";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface PostCVFormProps {
   onClose?: () => void;
@@ -15,6 +16,7 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
   const [loading, setLoading] = useState<string>("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -49,6 +51,9 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
       toast.error("Please upload a PDF file.");
       return;
     }
+    if (description.trim() === "") {
+      toast.error("Description must not be left blank");
+    }
     if (description.length > 255) {
       toast.error("Description must be 255 characters or less.");
       return;
@@ -70,6 +75,7 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
       console.error(error);
     } finally {
       setLoading("");
+      navigate("/cv-review");
     }
   };
 
