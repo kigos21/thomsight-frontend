@@ -76,12 +76,17 @@ export default function CompanyDetails() {
   const handleSaveUpdates = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (companyName.trim() === "" || companyEmail.trim() === "") {
-      toast.error("Details cannot be blank");
+    if (isEditName && companyName.trim() === "") {
+      toast.error("Company name cannot be blank");
       return;
     }
 
-    if (!emailRegex.test(companyEmail)) {
+    if (isEditEmail && companyEmail.trim() === "") {
+      toast.error("Company email cannot be blank");
+      return;
+    }
+
+    if (isEditEmail && !emailRegex.test(companyEmail)) {
       toast.error("Invalid email format");
       return;
     }
