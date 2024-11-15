@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Spinner from "./Spinner";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import { toast } from "react-toastify";
+import ErrorPage from "../../pages/ErrorPage";
 
 interface ChangePhotoPopupProps {
   isOpen: boolean;
@@ -19,7 +20,21 @@ const ChangePhotoPopup: React.FC<ChangePhotoPopupProps> = ({
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
-  const { updateCompany, getCompanyBySlug } = useCompanies();
+  const {
+    updateCompany,
+    getCompanyBySlug,
+    loading: companyLoading,
+    error,
+  } = useCompanies();
+
+  if (companyLoading) {
+    return <Spinner message="Please wait while we render relevant data!" />;
+  }
+
+  if (error) {
+    return <ErrorPage />;
+  }
+
   const company = getCompanyBySlug(slug as string);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

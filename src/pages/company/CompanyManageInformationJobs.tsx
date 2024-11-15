@@ -3,7 +3,7 @@ import Button from "../../components/ui/Button";
 
 import styles from "./CompanyManageInformationJobs.module.scss";
 import CompanyJobs from "../../components/ui/company/CompanyJobs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Job } from "../../types/types";
 import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
@@ -12,12 +12,12 @@ import DeletePopUp from "../../components/ui/company/DeletePopUp";
 import { deleteJob } from "../../api/companyCRUD";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import ErrorPage from "../ErrorPage";
 
 export default function CompanyManageInformationJobs() {
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug, updateCompany } = useCompanies();
-  const company = getCompanyBySlug(slug || "");
-  const [jobs, setJobs] = useState<Job[]>(company?.jobs || []);
+  const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
+  const [jobs, setJobs] = useState<Job[]>([]);
   const { user } = useUser();
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const [jobToDelete, setJobToDelete] = useState<number | null>(null);
@@ -33,6 +33,20 @@ export default function CompanyManageInformationJobs() {
 
   // State to control the visibility of the form
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (slug) {
+      const fetchedCompany = getCompanyBySlug(slug);
+      if (fetchedCompany) {
+        setJobs(fetchedCompany.jobs || []);
+      }
+    }
+  }, [slug, getCompanyBySlug]);
+
+  if (loading)
+    return <Spinner message="Please wait while we render relevant data!" />;
+  if (error) return <ErrorPage />;
+  const company = getCompanyBySlug(slug || "");
 
   const handleAdd = () => {
     window.scrollTo({

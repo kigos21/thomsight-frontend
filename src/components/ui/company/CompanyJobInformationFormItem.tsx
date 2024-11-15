@@ -10,6 +10,7 @@ import { useCompanies } from "../../../contexts/CompaniesContext";
 import Spinner from "../Spinner";
 import { addJob, updateJob } from "../../../api/companyCRUD";
 import { toast } from "react-toastify";
+import ErrorPage from "../../../pages/ErrorPage";
 
 interface CompanyJobInformationFormItemProps {
   job: Job;
@@ -31,8 +32,8 @@ export default function CompanyJobInformationFormItem({
     onChange({ ...job, [name]: value }); // Update job state based on input change
   };
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
-  const company = getCompanyBySlug(slug || "");
+  const { getCompanyBySlug, updateCompany, createJob, loading, error } =
+    useCompanies();
   const [creating, setCreating] = useState(false);
   const { loadJobs } = useCompanies();
 
@@ -82,6 +83,16 @@ export default function CompanyJobInformationFormItem({
       setCreating(false);
     }
   };
+
+  if (loading) {
+    return <Spinner message="Please wait while we render relevant data!" />;
+  }
+
+  if (!slug || slug.trim() === "" || error) {
+    return <ErrorPage />;
+  }
+
+  const company = getCompanyBySlug(slug as string);
 
   return (
     <div className={`${styles.container}`}>

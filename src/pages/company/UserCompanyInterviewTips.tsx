@@ -11,6 +11,7 @@ import { containsBadWords } from "../../badWordsFilter";
 import Button from "../../components/ui/Button";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import ErrorPage from "../ErrorPage";
 
 export type Tip = {
   id?: number;
@@ -29,8 +30,7 @@ export default function UserCompanyInterviewTips() {
   });
   const [loading, setLoading] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug } = useCompanies();
-  const company = getCompanyBySlug(slug as string);
+  const { getCompanyBySlug, loading: companyLoading, error } = useCompanies();
   const [tips, setTips] = useState<Tip[]>([]);
 
   useEffect(() => {
@@ -49,9 +49,10 @@ export default function UserCompanyInterviewTips() {
     fetchInterviewTips();
   }, [slug]);
 
-  if (!company) {
-    return <div></div>;
-  }
+  if (companyLoading)
+    return <Spinner message="Please wait while we render relevant data!" />;
+  if (error) return <ErrorPage />;
+  getCompanyBySlug(slug as string);
 
   const handleSave = async () => {
     if (!tip.title.trim()) {

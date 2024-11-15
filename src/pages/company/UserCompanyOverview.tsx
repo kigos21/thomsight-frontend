@@ -12,6 +12,7 @@ import Spinner from "../../components/ui/Spinner";
 import { containsBadWords } from "../../badWordsFilter";
 import { useUser } from "../../contexts/UserContext";
 import { toast } from "react-toastify";
+import ErrorPage from "../ErrorPage";
 
 export type Review = {
   id?: number;
@@ -32,8 +33,7 @@ export default function UserCompanyOverview() {
   });
   const [loading, setLoading] = useState<string>("");
   const { slug } = useParams<{ slug: string }>();
-  const { getCompanyBySlug } = useCompanies();
-  const company = getCompanyBySlug(slug as string);
+  const { getCompanyBySlug, loading: companyLoading, error } = useCompanies();
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
@@ -54,9 +54,10 @@ export default function UserCompanyOverview() {
     fetchReviews();
   }, [slug]);
 
-  if (!company) {
-    return <div></div>;
-  }
+  if (companyLoading)
+    return <Spinner message="Please wait while we render relevant data!" />;
+  if (error) return <ErrorPage />;
+  const company = getCompanyBySlug(slug as string);
 
   const handleSave = async () => {
     let isValid = true;
@@ -144,7 +145,7 @@ export default function UserCompanyOverview() {
         <div className={styles.leftcontainer}>
           <div className={styles.titleContainer}>
             <h2 className={styles.titleHeader}>Company Description</h2>
-            <p>{company.description}</p>
+            <p>{company?.description}</p>
           </div>
 
           <div className={styles.rightcontainerMobile}>
@@ -152,11 +153,11 @@ export default function UserCompanyOverview() {
               <div className={styles.noteContainer}>
                 <div className={styles.companySize}>
                   <h5>Company Size</h5>
-                  <p>{company.size}</p>
+                  <p>{company?.size}</p>
                 </div>
                 <div className={styles.industry}>
                   <h5>Industry</h5>
-                  <p>{company.industry}</p>
+                  <p>{company?.industry}</p>
                 </div>
               </div>
             </StyledBox>
@@ -222,11 +223,11 @@ export default function UserCompanyOverview() {
             <div className={styles.noteContainer}>
               <div className={styles.companySize}>
                 <h5>Company Size</h5>
-                <p>{company.size}</p>
+                <p>{company?.size}</p>
               </div>
               <div className={styles.industry}>
                 <h5>Industry</h5>
-                <p>{company.industry}</p>
+                <p>{company?.industry}</p>
               </div>
             </div>
           </StyledBox>

@@ -8,19 +8,14 @@ import { useParams } from "react-router-dom";
 export default function UserCompanyJobs() {
   const { slug } = useParams<{ slug: string }>();
   const { loading, error, getCompanyBySlug } = useCompanies();
-  const company = getCompanyBySlug(slug as string);
 
   if (loading) {
     return <Spinner message="Please wait while we render relevant data!" />;
   }
-
   if (error) {
     return <div>{error}</div>;
   }
-
-  if (!company) {
-    return <div></div>;
-  }
+  const company = getCompanyBySlug(slug as string);
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -36,7 +31,7 @@ export default function UserCompanyJobs() {
           companyName="Emerson"
           jobDescription="this is your work so do well lorem morel ako ikaw siya tayo lahat sino siya sino ako "
         ></JobItem> */}
-        {company.jobs && company.jobs.length > 0 ? (
+        {company?.jobs && company.jobs.length > 0 ? (
           company.jobs.map((job, index) => (
             <JobItem
               key={index}

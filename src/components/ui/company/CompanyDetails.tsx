@@ -11,29 +11,26 @@ import Spinner from "../Spinner.tsx";
 import ErrorPage from "../../../pages/ErrorPage.tsx";
 import ChangePhotoPopup from "../ChangePhotoPopup.tsx";
 import { toast } from "react-toastify";
+import { Company, Location } from "../../../types/types.ts";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
-  const company = getCompanyBySlug(slug as string);
   const location = useLocation();
   const [logo, setLogo] = useState<string>("");
+  const [company, setCompany] = useState<Company | null>(null);
 
   const [isEditName, setIsEditName] = useState(false);
   const [isEditEmail, setIsEditEmail] = useState(false);
 
-  const [companyName, setCompanyName] = useState(company!.name || "");
-  const [companyEmail, setCompanyEmail] = useState(company!.email || "");
+  const [companyName, setCompanyName] = useState("");
+  const [companyEmail, setCompanyEmail] = useState("");
 
-  const [originalCompanyName, setOriginalCompanyName] = useState(
-    company!.name || ""
-  );
-  const [originalCompanyEmail, setOriginalCompanyEmail] = useState(
-    company!.email || ""
-  );
-  const [locations, setLocations] = useState(company?.locations || []);
+  const [originalCompanyName, setOriginalCompanyName] = useState("");
+  const [originalCompanyEmail, setOriginalCompanyEmail] = useState("");
+  const [locations, setLocations] = useState<Location[]>([]);
 
   const [isUpdating, setIsUpdating] = useState<string>("");
 
@@ -41,13 +38,19 @@ export default function CompanyDetails() {
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
 
   useEffect(() => {
-    if (company) {
-      setCompanyName(company!.name || "");
-      setCompanyEmail(company!.email || "");
-      setLocations(company!.locations || []);
-      setLogo(company!.image || "");
+    if (slug) {
+      const fetchedCompany = getCompanyBySlug(slug);
+      if (fetchedCompany) {
+        setCompany(fetchedCompany);
+        setCompanyName(fetchedCompany.name || "");
+        setCompanyEmail(fetchedCompany.email || "");
+        setOriginalCompanyName(fetchedCompany.name || "");
+        setOriginalCompanyEmail(fetchedCompany.email || "");
+        setLocations(fetchedCompany.locations || []);
+        setLogo(fetchedCompany.image || "");
+      }
     }
-  }, [company]);
+  }, [slug, getCompanyBySlug]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -68,10 +71,6 @@ export default function CompanyDetails() {
   if (loading)
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
-  if (!company) return <div></div>;
-  // if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
-  //   return <ErrorPage />;
-  // }
 
   const handleSaveUpdates = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -315,9 +314,9 @@ export default function CompanyDetails() {
 
           <div className={styles.detailsHolder}>
             <p className={styles.companyName}>
-              {company.name || "No company name set"}
+              {company?.name || "No company name set"}
             </p>
-            <p>{company.email || "No contact email set"}</p>
+            <p>{company?.email || "No contact email set"}</p>
             <div className={styles.locationsContainer}>
               {locations.length > 0 ? (
                 <p className={styles.locations}>

@@ -60,7 +60,7 @@ export const CompaniesProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const getCompanyBySlug = (slug: string) => {
-    return companies!.find((company) => company.slug === slug);
+    return companies?.find((company) => company.slug === slug);
   };
 
   const updateCompany = (updatedCompany: Company) => {

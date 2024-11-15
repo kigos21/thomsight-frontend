@@ -32,10 +32,13 @@ const LocationManagement: React.FC = () => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (company) {
-      setLocations(company.locations || []);
+    if (slug) {
+      const fetchedCompany = getCompanyBySlug(slug);
+      if (fetchedCompany) {
+        setLocations(fetchedCompany.locations || []);
+      }
     }
-  }, [company]);
+  }, [slug, getCompanyBySlug]);
 
   if (loading)
     return <Spinner message="Please wait while we render relevant data!" />;

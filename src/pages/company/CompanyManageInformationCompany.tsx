@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
-  const company = getCompanyBySlug(slug as string);
   const { user } = useUser();
 
   // DATA FOR DESCRIPTION
@@ -36,20 +35,23 @@ export default function CompanyManageInformationCompany() {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   useEffect(() => {
-    if (company) {
-      setDescription(company.description || "");
-      setOriginalDescription(company.description || "");
-      setCompanySize(company.size || "");
-      setOriginalSize(company.size || "");
-      setIndustry(company.industry || "");
-      setOriginalIndustry(company.industry || "");
+    if (slug) {
+      const fetchedCompany = getCompanyBySlug(slug);
+      if (fetchedCompany) {
+        setDescription(fetchedCompany.description || "");
+        setOriginalDescription(fetchedCompany.description || "");
+        setCompanySize(fetchedCompany.size || "");
+        setOriginalSize(fetchedCompany.size || "");
+        setIndustry(fetchedCompany.industry || "");
+        setOriginalIndustry(fetchedCompany.industry || "");
+      }
     }
-  }, [company]);
+  }, [slug, getCompanyBySlug]);
 
   if (loading)
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
-  if (!company) return <div></div>;
+  const company = getCompanyBySlug(slug as string);
   if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
     return <ErrorPage />;
   }

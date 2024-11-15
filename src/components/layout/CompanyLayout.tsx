@@ -25,7 +25,6 @@ export default function CompanyRoot() {
   const { slug } = useParams<{ slug: string }>();
   const { loading, error, getCompanyBySlug } = useCompanies();
   const { user } = useUser();
-  const company = getCompanyBySlug(slug || "");
   const location = useLocation();
 
   if (loading) {
@@ -35,6 +34,8 @@ export default function CompanyRoot() {
   if (!slug || slug.trim() === "" || error) {
     return <ErrorPage />;
   }
+
+  const company = getCompanyBySlug(slug as string);
 
   const basePath = slug ? `/company/${slug}` : "/company";
   const isManagePath = location.pathname.includes("/manage/");
