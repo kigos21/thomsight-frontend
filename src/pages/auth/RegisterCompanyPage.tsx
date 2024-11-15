@@ -19,6 +19,7 @@ import axiosInstance from "../../services/axiosInstance";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
 import { containsBadWords } from "../../badWordsFilter";
+import CheckboxWithLabel from "../../components/form/CheckboxWIthLabel";
 
 export default function CompanyRegisterPage() {
   const { token } = useToken();
@@ -189,6 +190,21 @@ export default function CompanyRegisterPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
+              />
+
+              <CheckboxWithLabel
+                id="terms"
+                label="I have read and agree to the website"
+                linkText="terms & conditions"
+                linkHref="/terms-and-conditions"
+                required={true}
+              />
+              <CheckboxWithLabel
+                id="privacy"
+                label="By ticking this box, I agree that I have read the"
+                linkText="data privacy policy"
+                linkHref="/data-privacy"
+                required={true}
               />
 
               <Button

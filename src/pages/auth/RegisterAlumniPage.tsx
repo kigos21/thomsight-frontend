@@ -205,14 +205,14 @@ export default function RegisterAlumniPage() {
                 id="terms"
                 label="I have read and agree to the website"
                 linkText="terms & conditions"
-                linkHref="#"
+                linkHref="/terms-and-conditions"
                 required={true}
               />
               <CheckboxWithLabel
                 id="privacy"
                 label="By ticking this box, I agree that I have read the"
                 linkText="data privacy policy"
-                linkHref="#"
+                linkHref="/data-privacy"
                 required={true}
               />
               <Button

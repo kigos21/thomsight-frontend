@@ -24,6 +24,10 @@ export default function CompanyTokenPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    if (tokenInput.trim() === "") {
+      toast.error("Please input a token");
+      return;
+    }
     const isValid = await validateToken(tokenInput);
     if (isValid) {
       setToken(tokenInput);

@@ -111,7 +111,13 @@ export default function CompanyDetails() {
         email: companyEmail,
       };
       updateCompany(updatedCompany);
-      toast.success("Updated details successfully");
+      if (isEditName && isEditEmail) {
+        toast.success("Updated details successfully");
+      } else if (isEditName) {
+        toast.success("Updated company name successfully");
+      } else if (isEditEmail) {
+        toast.success("Updated company email successfully");
+      }
     } catch (error) {
       console.error("Error updating company details:", error);
     } finally {
