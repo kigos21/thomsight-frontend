@@ -97,7 +97,11 @@ export default function AppRoot() {
         <NavLink
           to={`/company/${companySlug}/manage/info`}
           key="manageinfoCompany"
-          className={({ isActive }) => (isActive ? styles.active : "")}
+          className={({ isActive }) =>
+            isActive || location.pathname.includes("/manage/jobs")
+              ? styles.active
+              : ""
+          }
           onClick={() => setDisplayNav(false)}
         >
           Manage Info
