@@ -39,6 +39,14 @@ export default function CompanyJobInformationFormItem({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (job.title.trim() === "") {
+      toast.error("Title should not be left blank");
+      return;
+    }
+    if (job.description.trim() === "") {
+      toast.error("Description should not be left blank");
+      return;
+    }
     if (job.title.length > 100) {
       toast.error("Title should not exceed 100 characters");
       return;
@@ -61,6 +69,7 @@ export default function CompanyJobInformationFormItem({
         };
         updateCompany(updatedCompany);
         createJob(newJob);
+        onSave();
       } else {
         const updatedJob = await updateJob(slug || "", job.id, {
           title: job.title,
@@ -74,8 +83,8 @@ export default function CompanyJobInformationFormItem({
         };
         updateCompany(updatedCompany);
         loadJobs();
+        onSave();
       }
-      onSave();
     } catch (err) {
       toast.error("An error occurred while saving the job.");
       console.log(err);
@@ -106,7 +115,6 @@ export default function CompanyJobInformationFormItem({
               type="text"
               name="title"
               placeholder="Enter Job Title"
-              required={true}
               value={job.title}
               onChange={handleInputChange}
             ></FormField>
@@ -129,7 +137,6 @@ export default function CompanyJobInformationFormItem({
               type="textarea"
               name="description"
               placeholder="Enter Job Description"
-              required={true}
               value={job.description}
               onChange={handleInputChange}
             ></FormField>

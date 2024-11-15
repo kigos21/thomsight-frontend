@@ -58,6 +58,12 @@ export default function RegisterAlumniPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (firstName.length + lastName.length > 48) {
+      toast.error(
+        "Combined length of first name and last name must not exceed 48 characters."
+      );
+      return;
+    }
     if (containsBadWords(firstName) || containsBadWords(lastName)) {
       toast.error("Name contains foul language");
       return;

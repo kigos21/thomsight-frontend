@@ -30,8 +30,8 @@ export default function StudentRegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name.length > 100) {
-      toast.error("Name must be less than 100 characters.");
+    if (name.length > 48) {
+      toast.error("Name must be less than 48 characters.");
       return;
     }
     if (containsBadWords(name)) {

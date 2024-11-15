@@ -49,8 +49,8 @@ export default function CompanyRegisterPage() {
       toast.error("Company name contains foul language");
     }
 
-    if (name.length > 100) {
-      toast.error("Name must be less than 100 characters.");
+    if (name.length > 48) {
+      toast.error("Name must be less than 48 characters.");
       return;
     }
     if (containsBadWords(name)) {
