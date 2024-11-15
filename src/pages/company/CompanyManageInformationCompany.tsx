@@ -6,14 +6,12 @@ import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import ErrorPage from "../ErrorPage";
 import Spinner from "../../components/ui/Spinner";
-import { useUser } from "../../contexts/UserContext";
 import { updateCompanyInfo } from "../../api/companyCRUD";
 import { toast } from "react-toastify";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
-  const { user } = useUser();
 
   // DATA FOR DESCRIPTION
   const [description, setDescription] = useState<string>("");
@@ -52,9 +50,6 @@ export default function CompanyManageInformationCompany() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   const company = getCompanyBySlug(slug as string);
-  if (!user || user.role !== "Rep" || company?.posted_by !== user.id) {
-    return <ErrorPage />;
-  }
 
   const handleSaveUpdates = async () => {
     if (isEditDesc && description.trim() === "") {

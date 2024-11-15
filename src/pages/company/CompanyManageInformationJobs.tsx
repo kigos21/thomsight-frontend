@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { Job } from "../../types/types";
 import { useParams } from "react-router-dom";
 import { useCompanies } from "../../contexts/CompaniesContext";
-import { useUser } from "../../contexts/UserContext";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
 import { deleteJob } from "../../api/companyCRUD";
 import Spinner from "../../components/ui/Spinner";
@@ -18,15 +17,16 @@ export default function CompanyManageInformationJobs() {
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug, updateCompany, loading, error } = useCompanies();
   const [jobs, setJobs] = useState<Job[]>([]);
-  const { user } = useUser();
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const [jobToDelete, setJobToDelete] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const { loadJobs } = useCompanies();
 
+  const company = getCompanyBySlug(slug || "");
+
   const [currentJob, setCurrentJob] = useState<Job>({
     id: 0, // IGNORE THIS WHEN CREATING NEW JOB, only useful when editing exising Job
-    company_id: user?.id, // current company_id of logged in representative
+    company_id: company?.id, // current company_id of logged in representative
     title: "",
     description: "",
   });
@@ -46,7 +46,6 @@ export default function CompanyManageInformationJobs() {
   if (loading)
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
-  const company = getCompanyBySlug(slug || "");
 
   const handleAdd = () => {
     window.scrollTo({

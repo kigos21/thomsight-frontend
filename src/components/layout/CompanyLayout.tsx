@@ -36,6 +36,7 @@ export default function CompanyRoot() {
   }
 
   const company = getCompanyBySlug(slug as string);
+  if (!company) return <div></div>;
 
   const basePath = slug ? `/company/${slug}` : "/company";
   const isManagePath = location.pathname.includes("/manage/");
