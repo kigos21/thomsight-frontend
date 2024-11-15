@@ -43,7 +43,7 @@ export default function CompanyJobInformationFormItem({
       toast.error("Title should not exceed 100 characters");
       return;
     }
-    if (job.description.length > 100) {
+    if (job.description.length > 1500) {
       toast.error("Description should not exceed 1500 characters");
       return;
     }
