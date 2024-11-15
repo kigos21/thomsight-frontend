@@ -38,7 +38,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   return (
     <div className={styles.profileDropdown} ref={dropdownRef}>
       <button className={styles.profileGroup} onClick={toggleDropdown}>
-        <span className={styles.username}>{username}</span>
+        <span className={styles.username}>
+          {username.length > 40 ? `${username.slice(0, 36)}...` : username}
+        </span>
         <IconUser className={styles.icon} />
       </button>
       {isOpen && (
