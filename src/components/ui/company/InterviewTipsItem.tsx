@@ -9,6 +9,7 @@ import ReportForm from "./ReportForm";
 import { useUser } from "../../../contexts/UserContext";
 import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
+import Spinner from "../Spinner";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -100,6 +101,7 @@ export default function InterviewTipsItem({
 
   const handleDelete = async () => {
     try {
+      setShowDeletePopup(false);
       setLoading("Deleting interview tip...");
       await axiosInstance.delete(`/api/company/${slug}/tip/${id}/delete`);
       if (onTipDelete) {
@@ -111,7 +113,6 @@ export default function InterviewTipsItem({
       toast.error("Could not delete interview tip. Please try again.");
     } finally {
       setLoading("");
-      setShowDeletePopup(false);
     }
   };
 
@@ -134,7 +135,7 @@ export default function InterviewTipsItem({
       toast.error("Reason should be limited to 255 characters");
       return;
     }
-
+    setShowReportPopup(false);
     setReportLoading("Submitting report...");
     try {
       const response = await axiosInstance.post(`/api/report/tip/${id}`, {
@@ -143,10 +144,7 @@ export default function InterviewTipsItem({
         reason: reportDescription,
       });
       if (response.status === 200) {
-        setShowReportPopup(false);
         toast.success("Report submitted successfully.");
-        setSelectedReportOption(null);
-        setReportDescription("");
       } else {
         toast.error(response.data.message);
       }
@@ -155,11 +153,14 @@ export default function InterviewTipsItem({
       console.error(error);
     } finally {
       setReportLoading("");
+      setSelectedReportOption(null);
+      setReportDescription("");
     }
   };
 
   return (
     <div className={`${styles.container} ${classNames || ""}`} style={style}>
+      {reportLoading && <Spinner message={reportLoading} />}
       <PaddedContainer classNames={styles.paddedContainer}>
         <div className={styles.tipsDetailsContainer}>
           {isEditing ? (

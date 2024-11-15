@@ -152,6 +152,7 @@ export default function ReviewItem({
 
   const handleDeleteReview = async () => {
     try {
+      setShowDeletePopup(false);
       setLoading("Deleting review...");
       await axiosInstance.delete(`/api/company/${slug}/review/${id}/delete`);
       if (onReviewDelete) {
@@ -163,7 +164,6 @@ export default function ReviewItem({
       toast.error("Could not delete review. Please try again.");
     } finally {
       setLoading("");
-      setShowDeletePopup(false);
     }
   };
 
@@ -186,7 +186,7 @@ export default function ReviewItem({
       toast.error("Reason should be limited to 255 characters");
       return;
     }
-
+    setShowReportPopup(false);
     setLoading("Submitting report...");
     try {
       const response = await axiosInstance.post(`/api/report/feedback/${id}`, {
@@ -195,10 +195,7 @@ export default function ReviewItem({
         reason: reportDescription,
       });
       if (response.status === 200) {
-        setShowReportPopup(false);
         toast.success("Report submitted successfully.");
-        setSelectedReportOption(null);
-        setReportDescription("");
       } else {
         toast.error(response.data.message);
       }
@@ -207,6 +204,8 @@ export default function ReviewItem({
       console.error(error);
     } finally {
       setLoading("");
+      setSelectedReportOption(null);
+      setReportDescription("");
     }
   };
 

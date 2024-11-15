@@ -13,6 +13,7 @@ import { useUser } from "../../../contexts/UserContext";
 import ReportForm from "./ReportForm";
 import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
+import Spinner from "../Spinner";
 
 export default function DiscussionForumItem({
   classNames,
@@ -87,6 +88,7 @@ export default function DiscussionForumItem({
 
   const handleDeleteDiscussion = async () => {
     try {
+      setShowDeletePopup(false);
       setLoading("Deleting discussion...");
       await axiosInstance.delete(
         `/api/company/${slug}/discussion/${id}/delete`
@@ -100,7 +102,6 @@ export default function DiscussionForumItem({
       toast.error("Could not delete discussion. Please try again.");
     } finally {
       setLoading("");
-      setShowDeletePopup(false);
     }
   };
 
@@ -123,7 +124,7 @@ export default function DiscussionForumItem({
       toast.error("Reason should be limited to 255 characters");
       return;
     }
-
+    setShowReportPopup(false);
     setReportLoading("Submitting report...");
     try {
       const response = await axiosInstance.post(
@@ -135,10 +136,7 @@ export default function DiscussionForumItem({
         }
       );
       if (response.status === 200) {
-        setShowReportPopup(false);
         toast.success("Report submitted successfully.");
-        setSelectedReportOption(null);
-        setReportDescription("");
       } else {
         toast.error(response.data.message);
       }
@@ -147,11 +145,14 @@ export default function DiscussionForumItem({
       console.error(error);
     } finally {
       setReportLoading("");
+      setSelectedReportOption(null);
+      setReportDescription("");
     }
   };
 
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
+      {reportLoading && <Spinner message={reportLoading} />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <div className={styles.forumContainer}>
           <div className={styles.ForumSubjectContainer}>

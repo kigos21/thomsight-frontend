@@ -228,6 +228,7 @@ export default function UserCompanyDiscussionForum() {
 
   const handleReplyDelete = async (replyId: number, discussionId: number) => {
     try {
+      setShowDeletePopup(false);
       setLoading("Deleting reply...");
       await axiosInstance.delete(
         `/api/company/${slug}/discussions/${discussionId}/comment/${replyId}/delete`
@@ -243,7 +244,6 @@ export default function UserCompanyDiscussionForum() {
       );
       setPostData(discussions);
       toast.success("Reply deleted successfully.");
-      setShowDeletePopup(false);
     } catch (error) {
       console.error("Error deleting reply:", error);
       toast.error("An error occurred while deleting the reply.");
@@ -323,7 +323,7 @@ export default function UserCompanyDiscussionForum() {
       toast.error("Reason should be limited to 255 characters");
       return;
     }
-
+    setShowReportPopup(false);
     setReportLoading("Submitting report...");
     try {
       const response = await axiosInstance.post(
@@ -335,10 +335,7 @@ export default function UserCompanyDiscussionForum() {
         }
       );
       if (response.status === 200) {
-        setShowReportPopup(false);
         toast.success("Report submitted successfully.");
-        setSelectedReportOption(null);
-        setReportDescription("");
       } else {
         toast.error(response.data.message);
       }
@@ -347,6 +344,8 @@ export default function UserCompanyDiscussionForum() {
       console.error(error);
     } finally {
       setReportLoading("");
+      setSelectedReportOption(null);
+      setReportDescription("");
     }
   };
 
@@ -357,6 +356,7 @@ export default function UserCompanyDiscussionForum() {
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
+      {reportLoading && <Spinner message={reportLoading} />}
       <div className={styles.container}>
         <div className={styles.leftcontainer}>
           <div className={styles.titleButtonContainer}>
@@ -544,10 +544,6 @@ export default function UserCompanyDiscussionForum() {
                                       reportLoading === "Submitting report..."
                                     }
                                   ></ReportForm>
-                                )}
-
-                                {reportLoading && (
-                                  <Spinner message={reportLoading} />
                                 )}
                               </div>
                             </div>
