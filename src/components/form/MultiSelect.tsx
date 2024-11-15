@@ -11,15 +11,21 @@ export interface Option {
 interface MultiSelectProps extends Omit<ComponentProps<"div">, "onChange"> {
   options: Option[];
   onChange: (selected: string[]) => void;
+  searchQuery: string;
+  onSearchQueryChange: (query: string) => void;
 }
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
   options,
   onChange,
+  searchQuery,
+  onSearchQueryChange,
   ...props
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     onChange(selectedOptions);
@@ -34,17 +40,41 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
     });
   };
 
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredOptions.length / itemsPerPage);
+
+  const paginatedOptions = filteredOptions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  };
+
   return (
     <div {...props} tabIndex={0} onClick={() => setIsOpen((state) => !state)}>
       <IconFilter className={styles.iconFilter} />
-      <p>Job Classifications</p>
+      <input
+        type="text"
+        placeholder="Job Classifications"
+        className={styles.searchBox}
+        onChange={(e) => onSearchQueryChange(e.target.value)}
+      />
 
       {isOpen && (
         <div
           className={styles.selectWindow}
           onClick={(e) => e.stopPropagation()}
         >
-          {options.map((option) => (
+          {paginatedOptions.map((option) => (
             <label key={option.value}>
               <input
                 type="checkbox"
@@ -54,6 +84,24 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
               {option.label}
             </label>
           ))}
+
+          <div className={styles.paginationControls}>
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className={styles.paginationButton}
+            >
+              Previous
+            </button>
+            <span>{`Page ${currentPage} of ${totalPages}`}</span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className={styles.paginationButton}
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </div>

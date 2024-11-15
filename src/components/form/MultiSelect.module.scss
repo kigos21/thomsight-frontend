@@ -31,3 +31,67 @@
   transform: translate(0, -50%);
   left: 1.5rem;
 }
+
+.searchBox {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.paginationControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--muted-black);
+  gap: 1rem;
+}
+
+.paginationButton {
+  background-color: var(
+    --primary-color,
+    #007bff
+  ); /* Assuming your primary color is blue */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: var(
+      --primary-hover-color,
+      #0056b3
+    ); /* Slightly darker shade on hover */
+    transform: translateY(-2px); /* Lift effect */
+  }
+
+  &:active {
+    transform: translateY(1px); /* Slight compression effect when clicked */
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.paginationControls span {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0;
+}
+
+.paginationButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Focus effect */
+}

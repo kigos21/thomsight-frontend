@@ -34,6 +34,7 @@ export default function CompanyJobInformationFormItem({
   const { getCompanyBySlug, updateCompany, createJob } = useCompanies();
   const company = getCompanyBySlug(slug || "");
   const [creating, setCreating] = useState(false);
+  const { loadJobs } = useCompanies();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +64,7 @@ export default function CompanyJobInformationFormItem({
             company?.jobs?.map((j) => (j.id === job.id ? updatedJob : j)) || [],
         };
         updateCompany(updatedCompany);
+        loadJobs();
       }
       onSave();
     } catch (err) {

@@ -14,11 +14,16 @@ export default function UserHomePage() {
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [jobSearchQuery, setJobSearchQuery] = useState("");
   const [itemsPerPage] = useState(5);
   const navigate = useNavigate();
 
   const jobOptions = jobs
-    ? jobs.map((job) => ({ label: job.title, value: job.title }))
+    ? jobs
+        .filter((job) =>
+          job.title.toLowerCase().includes(jobSearchQuery.toLowerCase())
+        )
+        .map((job) => ({ label: job.title, value: job.title }))
     : [];
 
   if (loading)
@@ -65,8 +70,6 @@ export default function UserHomePage() {
     }
   };
 
-  console.log(filteredCompanies);
-
   return (
     <PaddedContainer classNames={styles.container}>
       <div className={styles.filterSection}>
@@ -81,6 +84,8 @@ export default function UserHomePage() {
           options={jobOptions}
           className={styles.jobClassification}
           onChange={handleJobSelect}
+          searchQuery={jobSearchQuery}
+          onSearchQueryChange={setJobSearchQuery}
         />
       </div>
 

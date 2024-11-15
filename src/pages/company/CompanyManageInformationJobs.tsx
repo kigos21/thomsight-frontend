@@ -22,6 +22,7 @@ export default function CompanyManageInformationJobs() {
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const [jobToDelete, setJobToDelete] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const { loadJobs } = useCompanies();
 
   const [currentJob, setCurrentJob] = useState<Job>({
     id: 0, // IGNORE THIS WHEN CREATING NEW JOB, only useful when editing exising Job
@@ -77,6 +78,7 @@ export default function CompanyManageInformationJobs() {
           await deleteJob(slug, jobToDelete);
           const updatedJobs = jobs.filter((job) => job.id !== jobToDelete);
           setJobs(updatedJobs);
+          loadJobs();
           toast.success("Deleted job successfully");
 
           if (company) {
