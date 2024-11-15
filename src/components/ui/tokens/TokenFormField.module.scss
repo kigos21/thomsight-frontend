@@ -1,32 +1,39 @@
 .formGroup {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd; /* Border for the input box */
-    padding: 0.5rem;
-    border-radius: 5px;
-  }
-  
-  .formField {
-    border: none;
-    flex-grow: 1;
-    font-size: 1rem;
-    background: transparent;
-  }
-  
-  .readOnly {
-    background-color: transparent; /* To make read-only input transparent */
-    color: #333; /* Text color */
-  }
-  
-  .editIcon {
-    cursor: pointer;
-    color: var(--blue-7); /* Color of the edit icon */
-    margin-left: 0.5rem; /* Space between input field and icon */
-    display: flex;
-    align-items: center;
-  }
-  
-  .icon {
-    margin-right: 0.5rem; /* Space between input icon and input field */
-  }
-  
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd; /* Border for the input box */
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.formField {
+  border: none;
+  flex-grow: 1;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.readOnly {
+  background-color: transparent; /* To make read-only input transparent */
+  color: #333; /* Text color */
+}
+
+.editIcon {
+  cursor: pointer;
+  color: var(--blue-7); /* Color of the edit icon */
+  margin-left: 0.5rem; /* Space between input field and icon */
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 0.5rem; /* Space between input icon and input field */
+}
+
+.saveIcon {
+  cursor: pointer;
+  color: var(--blue-7); /* Color of the edit icon */
+  margin-left: 0.5rem; /* Space between input field and icon */
+  display: flex;
+  align-items: center;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TokenFormFieldProps } from "../../../types/props";
 import styles from "./TokenFormField.module.scss";
-import { IconEdit } from "@tabler/icons-react";
+import { IconEdit, IconDeviceFloppy } from "@tabler/icons-react";
 import axiosInstance from "../../../services/axiosInstance";
 import Spinner from "../Spinner";
 import { toast } from "react-toastify";
@@ -29,26 +29,38 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return email === "" || emailRegex.test(email);
+  };
+
+  const handleSaveClick = () => {
+    handleBlur();
   };
 
   const handleBlur = async () => {
     if (!isReadOnly) {
       if (!validateEmail(email)) {
-        toast.error("Please enter a valid email address.");
+        toast.error("Please leave it blank or enter a valid email address.");
         return;
       }
       setLoading(true);
       try {
-        await axiosInstance.put(`/api/tokens/${tokenId}/update`, { email });
-        setIsReadOnly(true);
-        toast.success("Updated email successfully");
-        updateEmail(email);
+        if (email === "") {
+          await axiosInstance.put(`/api/tokens/${tokenId}/update`, {
+            email: null,
+          });
+          toast.success("Removed email successfully");
+          updateEmail("");
+        } else {
+          await axiosInstance.put(`/api/tokens/${tokenId}/update`, { email });
+          toast.success("Updated email successfully");
+          updateEmail(email);
+        }
       } catch (error) {
         console.error("Error updating company:", error);
         toast.error("Error updating email. Please try again.");
       } finally {
         setLoading(false);
+        setIsReadOnly(true);
       }
     }
   };
@@ -65,12 +77,15 @@ const TokenFormField: React.FC<TokenFormFieldProps> = ({
         {...extraProps}
         readOnly={isReadOnly}
         onChange={(e) => setEmail(e.target.value)}
-        onBlur={handleBlur}
         value={email}
       />
-      {editIcon && (
+      {isReadOnly ? (
         <span className={styles.editIcon} onClick={handleEditClick}>
           {editIcon}
+        </span>
+      ) : (
+        <span className={styles.saveIcon} onClick={handleSaveClick}>
+          <IconDeviceFloppy />
         </span>
       )}
     </div>

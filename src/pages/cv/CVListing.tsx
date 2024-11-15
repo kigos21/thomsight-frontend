@@ -68,7 +68,6 @@ const CVListing = () => {
   return (
     <div className={styles.rootContainer}>
       {loading && <Spinner message={loading} />}
-
       {cvs.map((cv) => (
         <CVCard
           key={cv.id}
@@ -81,7 +80,6 @@ const CVListing = () => {
           }
         />
       ))}
-
       <DeletePopUp
         isVisible={isDeletePopupVisible}
         onClose={() => setDeletePopupVisible(false)}
