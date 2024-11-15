@@ -127,9 +127,7 @@ export default function ProfileManagement() {
                 </Button>
               </div>
             ) : (
-              <div
-                style={{ display: "flex", width: "100%", alignItems: "center" }}
-              >
+              <div className={styles.nameHolder}>
                 <p className={styles.name}>{name}</p>
                 <IconEdit
                   size={30}
