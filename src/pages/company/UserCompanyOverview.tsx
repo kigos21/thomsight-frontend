@@ -77,8 +77,8 @@ export default function UserCompanyOverview() {
       isValid = false;
     }
 
-    if (review.description.length > 255) {
-      toast.error("Review cannot exceed 255 characters.");
+    if (review.description.length > 2500) {
+      toast.error("Review cannot exceed 2500 characters.");
       isValid = false;
     }
 

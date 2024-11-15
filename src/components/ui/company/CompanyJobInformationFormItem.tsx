@@ -39,6 +39,14 @@ export default function CompanyJobInformationFormItem({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setCreating(true);
+    if (job.title.length > 100) {
+      toast.error("Title should not exceed 100 characters");
+      return;
+    }
+    if (job.description.length > 100) {
+      toast.error("Description should not exceed 1500 characters");
+      return;
+    }
     try {
       if (job.id === 0) {
         const newJob = await addJob(slug || "", {

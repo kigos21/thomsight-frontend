@@ -67,6 +67,18 @@ export default function CompanyManageInformationCompany() {
       toast.error("Industry cannot be blank");
       return;
     }
+    if (isEditDesc && description.length > 2500) {
+      toast.error("Description should not exceed more than 2500 characters");
+      return;
+    }
+    if (isEditCompanySize && size.length > 100) {
+      toast.error("Size should not exceed more than 100 characters");
+      return;
+    }
+    if (isEditIndustry && industry.length > 100) {
+      toast.error("Industry should not exceed more than 100 characters");
+      return;
+    }
 
     setIsUpdating(true);
     try {

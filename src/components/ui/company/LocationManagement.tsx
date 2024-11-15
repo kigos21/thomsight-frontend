@@ -46,6 +46,9 @@ const LocationManagement: React.FC = () => {
       toast.error("Location cannot be blank.");
       return;
     }
+    if (newLocation.length > 250) {
+      toast.error("Location should not exceed 250 characters");
+    }
 
     setCreateLoading(true);
 
@@ -76,6 +79,9 @@ const LocationManagement: React.FC = () => {
     if (editingLocation && !editingLocation.address.trim()) {
       toast.error("Location address cannot be blank.");
       return;
+    }
+    if (editingLocation && editingLocation.address.length > 250) {
+      toast.error("Location should not exceed 250 characters");
     }
 
     setUpdateLoading(true);

@@ -77,8 +77,8 @@ export default function UserCompanyInterviewTips() {
       return;
     }
 
-    if (tip.description.length > 2000) {
-      toast.error("Tip description cannot exceed 2000 characters.");
+    if (tip.description.length > 1500) {
+      toast.error("Tip description cannot exceed 1500 characters.");
       return;
     }
 

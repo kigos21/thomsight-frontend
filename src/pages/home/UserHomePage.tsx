@@ -24,6 +24,7 @@ export default function UserHomePage() {
           job.title.toLowerCase().includes(jobSearchQuery.toLowerCase())
         )
         .map((job) => ({ label: job.title, value: job.title }))
+        .sort((a, b) => a.label.localeCompare(b.label))
     : [];
 
   if (loading)

@@ -10,6 +10,7 @@ import { useUser } from "../../../contexts/UserContext";
 import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
+import { containsBadWords } from "../../../badWordsFilter";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -67,8 +68,16 @@ export default function InterviewTipsItem({
       toast.error("Title should be limited to 100 characters");
       return;
     }
-    if (tempTip.description.length > 2000) {
-      toast.error("Interview tips should be limited to 2000 characters");
+    if (tempTip.description.length > 1500) {
+      toast.error("Interview tips should be limited to 1500 characters");
+      return;
+    }
+    if (containsBadWords(tempTip.title)) {
+      toast.error("Title contains foul language");
+      return;
+    }
+    if (containsBadWords(tempTip.description)) {
+      toast.error("Description contains foul language");
       return;
     }
     if (onTipChange) {

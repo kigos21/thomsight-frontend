@@ -56,8 +56,8 @@ export default function DiscussionForumItem({
       toast.error("New description contains foul language");
       return;
     }
-    if (tempDescription.length > 2000) {
-      toast.error("Description should be limited to 2000 characters");
+    if (tempDescription.length > 2500) {
+      toast.error("Description should be limited to 2500 characters");
       return;
     }
     try {

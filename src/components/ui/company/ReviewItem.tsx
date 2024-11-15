@@ -129,7 +129,7 @@ export default function ReviewItem({
       ratingRef.current.reportValidity();
       return;
     }
-    if (tempReview.description.length > 500) {
+    if (tempReview.description.length > 2500) {
       toast.error("Review should not be longer than 500 characters.");
       return;
     }

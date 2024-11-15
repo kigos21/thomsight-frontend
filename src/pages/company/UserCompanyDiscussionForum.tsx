@@ -113,8 +113,8 @@ export default function UserCompanyDiscussionForum() {
       toast.error("Post description contains foul language");
       return;
     }
-    if (postForm.description.length > 2000) {
-      toast.error("Post description should be limited to 2000 characters.");
+    if (postForm.description.length > 2500) {
+      toast.error("Post description should be limited to 2500 characters.");
       return;
     }
 
@@ -198,8 +198,8 @@ export default function UserCompanyDiscussionForum() {
       toast.error("Comment can not be blank.");
       return;
     }
-    if (reply.length > 500) {
-      toast.error("Comments should be limited to 500 characters.");
+    if (reply.length > 1000) {
+      toast.error("Comments should be limited to 1000 characters.");
       return;
     }
     if (containsBadWords(reply)) {
@@ -279,8 +279,8 @@ export default function UserCompanyDiscussionForum() {
       toast.error("Comment can not be blank.");
       return;
     }
-    if (editedReplyText.length > 500) {
-      toast.error("Comments should be limited to 500 characters");
+    if (editedReplyText.length > 1000) {
+      toast.error("Comments should be limited to 1000 characters");
       return;
     }
     if (containsBadWords(editedReplyText)) {
