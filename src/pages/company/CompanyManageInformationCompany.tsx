@@ -55,15 +55,15 @@ export default function CompanyManageInformationCompany() {
   }
 
   const handleSaveUpdates = async () => {
-    if (description.trim() === "") {
+    if (isEditDesc && description.trim() === "") {
       toast.error("Description cannot be blank");
       return;
     }
-    if (size.trim() === "") {
+    if (isEditCompanySize && size.trim() === "") {
       toast.error("Company size cannot be blank");
       return;
     }
-    if (industry.trim() === "") {
+    if (isEditIndustry && industry.trim() === "") {
       toast.error("Industry cannot be blank");
       return;
     }

@@ -223,7 +223,7 @@ export default function CompanyDetails() {
                   className={styles.inputTextEmail}
                 />
               ) : (
-                <p>{companyEmail}</p>
+                <p>{companyEmail ?? "No email set"}</p>
               )}
 
               {isEditEmail ? (
