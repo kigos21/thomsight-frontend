@@ -40,7 +40,7 @@ const CompanyInterviewTipForm: React.FunctionComponent<
               type="text"
               name="title"
               placeholder="Enter Tip Heading"
-              required={true}
+              // required={true}
               value={tip.title}
               onChange={handleInputChange}
             ></FormField>
@@ -53,7 +53,7 @@ const CompanyInterviewTipForm: React.FunctionComponent<
               type="textarea"
               name="description"
               placeholder="Tip Description"
-              required={true}
+              // required={true}
               value={tip.description}
               onChange={handleInputChange}
             ></FormField>

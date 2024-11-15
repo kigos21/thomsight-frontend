@@ -54,6 +54,14 @@ export default function UserCompanyInterviewTips() {
   }
 
   const handleSave = async () => {
+    if (!tip.title.trim()) {
+      toast.error("Title should not be left blank");
+      return;
+    }
+    if (!tip.description.trim()) {
+      toast.error("Description should not be left blank");
+      return;
+    }
     if (containsBadWords(tip.title)) {
       toast.error("Your tip contains inappropriate language.");
       return;
