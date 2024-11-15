@@ -48,6 +48,26 @@
   position: relative;
 }
 
+.nameHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  max-width: 300px;
+  word-wrap: break-word;
+
+  @media (max-width: 480px) {
+    max-width: 200px;
+  }
+
+  @media (max-width: 335px) {
+    max-width: 150px;
+  }
+}
+
 .fieldBio {
   height: 170px;
   border-radius: 30px;
