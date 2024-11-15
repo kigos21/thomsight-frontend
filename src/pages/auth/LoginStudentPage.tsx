@@ -44,9 +44,16 @@ export default function LoginStudentPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
+    if (email.trim() === "") {
+      toast.error("Email should not be left blank");
+      return;
+    }
+    if (password.trim() === "") {
+      toast.error("Password should not be left blank");
+      return;
+    }
     try {
+      setLoading(true);
       await login(email, password);
       navigate("/companies");
     } catch (err: any) {
@@ -73,7 +80,6 @@ export default function LoginStudentPage() {
               icon={<IconMail size={35} stroke={1.5} className={styles.icon} />}
               type="email"
               placeholder="Email"
-              required={true}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -81,7 +87,6 @@ export default function LoginStudentPage() {
               icon={<IconLock size={35} stroke={1.5} className={styles.icon} />}
               type="password"
               placeholder="Password"
-              required={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
