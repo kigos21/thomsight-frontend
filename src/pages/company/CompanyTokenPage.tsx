@@ -26,6 +26,7 @@ export default function CompanyTokenPage() {
     setLoading(true);
     if (tokenInput.trim() === "") {
       toast.error("Please input a token");
+      setLoading(false);
       return;
     }
     const isValid = await validateToken(tokenInput);

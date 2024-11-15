@@ -37,6 +37,11 @@ export default function ProfileManagement() {
     e.preventDefault();
     setIsSaving(true);
 
+    if (tempProfileName.length > 48) {
+      toast.error("Name must not exceed 48 characters.");
+      setIsSaving(false);
+      return;
+    }
     if (bio.length > 255) {
       toast.error("Bio must not exceed 255 characters.");
       setIsSaving(false);
