@@ -86,7 +86,8 @@ export default function CompanyRegisterPage() {
     }
 
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+
     if (!passwordRegex.test(password)) {
       toast.error(
         "Password must be at least 8 characters, include 1 special character, and have both uppercase and lowercase letters."
@@ -133,9 +134,33 @@ export default function CompanyRegisterPage() {
       );
 
       navigate("/login");
-    } catch (error) {
-      console.error("Error registering company:", error);
-      toast.error("Account already exists!");
+    } catch (error: any) {
+      if (error.response) {
+        const { status, data } = error.response;
+
+        if (status === 401 && data.message.includes("Account already exists")) {
+          toast.error("Account already exists!");
+        } else if (
+          status === 404 &&
+          data.message.includes("Error creating company")
+        ) {
+          toast.error(
+            "There was an error creating the company. Please try again."
+          );
+        } else if (
+          status === 404 &&
+          data.message.includes("Error deleting token")
+        ) {
+          toast.error(
+            "There was an error deleting the token. Please try again."
+          );
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        console.error("Error registering company:", error.response);
+        toast.error("An error occurred. Please check your network connection.");
+      }
     } finally {
       setLoading(false);
     }
