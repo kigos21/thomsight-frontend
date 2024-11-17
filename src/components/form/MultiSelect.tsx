@@ -46,6 +46,10 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
   const totalPages = Math.ceil(filteredOptions.length / itemsPerPage);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredOptions.length]);
+
   const paginatedOptions = filteredOptions.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
