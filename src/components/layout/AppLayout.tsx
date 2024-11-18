@@ -6,6 +6,7 @@ import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import NavDropdown from "../ui/NavDropdown";
 import { useNav } from "../../contexts/NavContext";
+import { IconBell } from "@tabler/icons-react";
 
 export default function AppRoot() {
   const { user } = useUser();
@@ -113,6 +114,18 @@ export default function AppRoot() {
           onClick={() => setDisplayNav(false)}
         >
           FAQs
+        </NavLink>,
+        <NavLink
+          to="/notifications"
+          key="notifications"
+          className={({ isActive }) => `
+    ${isActive ? styles.active : ""} 
+    ${styles.notificationContainer}
+  `}
+          onClick={() => setDisplayNav(false)}
+        >
+          <IconBell className={styles.iconBell} size={30} />
+          {<span className={styles.notificationBadge}>1</span>}
         </NavLink>,
       ];
       break;

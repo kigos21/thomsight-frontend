@@ -13,8 +13,10 @@
 .container {
   background-color: var(--neutral-0);
   color: black;
-  border-bottom: 1px solid var(--black);
+  border-radius: 8px;
+  border: 2px solid var(--black);
   transition: box-shadow 0.3s ease;
+  margin-bottom: 10px;
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -22,12 +24,10 @@
 
   @media (max-width: 768px) {
     border-radius: 1rem;
-    padding: 1.5rem;
   }
 
   @media (max-width: 480px) {
     border-radius: 0.75rem;
-    padding: 1.25rem;
   }
 }
 
@@ -52,20 +52,18 @@
   @media (max-width: 768px) {
     font-size: 1rem;
   }
-
-  @media (max-width: 480px) {
-    font-size: 0.875rem;
-  }
 }
 
 .description {
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
 
   @media (max-width: 768px) {
-    padding: 0.75rem 2rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
   }
 
   @media (max-width: 480px) {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 0.75rem;
   }
 }

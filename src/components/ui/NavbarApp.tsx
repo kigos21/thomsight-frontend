@@ -94,6 +94,14 @@ export default function NavbarApp({ links }: NavbarAppProps) {
             {links.length > 0 &&
               links.map((link, i) => <li key={i}>{link}</li>)}
             <li>
+              <NavLink
+                to={"/notifications"}
+                onClick={() => setDisplayNav(false)}
+              >
+                Notifications
+              </NavLink>
+            </li>
+            <li>
               <NavLink to={"/profile"} onClick={() => setDisplayNav(false)}>
                 Profile
               </NavLink>

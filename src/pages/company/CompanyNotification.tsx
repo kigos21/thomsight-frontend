@@ -11,16 +11,16 @@ export default function CompanyNotification() {
         <h2 className={styles.title}>Notifications</h2>
         <StyledBox paddedContainerClass={styles.styledBox}>
           <NotificationItem
-            notificationHeader="ANNOUNCEMENT"
-            notificationDescription="This is an announcement"
+            notificationHeader="Mention 1"
+            notificationDescription="sample mention to rep"
           ></NotificationItem>
           <NotificationItem
-            notificationHeader="ANNOUNCEMENT 2"
-            notificationDescription="This is an announcement"
+            notificationHeader="Mention 2"
+            notificationDescription="sample mention to rep"
           ></NotificationItem>
           <NotificationItem
-            notificationHeader="ANNOUNCEMENT 3"
-            notificationDescription="This is an announcement"
+            notificationHeader="Mention 3"
+            notificationDescription="sample mention to rep"
           ></NotificationItem>
         </StyledBox>
       </div>
