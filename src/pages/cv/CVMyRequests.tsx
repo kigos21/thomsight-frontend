@@ -85,85 +85,9 @@ const CVMyRequests = () => {
           url={`/cv-review/view/${cv.id}`}
         />
       ))}
-      {/* <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="cancel"
-        onButtonClick={() => console.log("Cancel my request")}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="view-feedback"
-        url={"/cv-review/view/1"}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="cancel"
-        onButtonClick={() => console.log("Cancel my request")}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="view-feedback"
-        url={"/cv-review/view/1"}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="cancel"
-        onButtonClick={() => console.log("Cancel my request")}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="view-feedback"
-        url={"/cv-review/view/1"}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="cancel"
-        onButtonClick={() => console.log("Cancel my request")}
-      />
-
-      <CVCard
-        name={"Jair T. Tongol"}
-        fileTitle={"jair-cv-2024.pdf"}
-        description={
-          "Help me review my CV guys, I am applying for a Junior Developer position"
-        }
-        buttonVariant="view-feedback"
-        url={"/cv-review/view/1"}
-      /> */}
+      {reviewedCVs.length === 0 && requestedCVs.length === 0 && (
+        <div style={{ fontSize: "1.25rem" }}>This section is empty.</div>
+      )}
     </div>
   );
 };

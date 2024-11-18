@@ -80,6 +80,9 @@ const CVListing = () => {
           }
         />
       ))}
+      {cvs.length === 0 && (
+        <div style={{ fontSize: "1.25rem" }}>This section is empty.</div>
+      )}
       <DeletePopUp
         isVisible={isDeletePopupVisible}
         onClose={() => setDeletePopupVisible(false)}
