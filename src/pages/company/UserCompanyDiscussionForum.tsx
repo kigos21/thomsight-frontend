@@ -439,11 +439,7 @@ export default function UserCompanyDiscussionForum() {
                           <div>
                             <div
                               key={reply.id}
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "0.25rem",
-                              }}
+                              className={styles.commentContainer}
                             >
                               {activeProfileUserId === reply.posted_by && (
                                 <DisplayProfile
@@ -493,7 +489,14 @@ export default function UserCompanyDiscussionForum() {
                                   </div>
                                 </div>
                               ) : (
-                                <div>{reply.comment}</div>
+                                <div
+                                  style={{
+                                    maxWidth: "100%",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {reply.comment}
+                                </div>
                               )}
 
                               <div className={styles.iconContainer}>
