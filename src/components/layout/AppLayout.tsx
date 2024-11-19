@@ -142,7 +142,10 @@ export default function AppRoot() {
     ${isActive ? styles.active : ""} 
     ${styles.notificationContainer}
   `}
-          onClick={() => setDisplayNav(false)}
+          onClick={() => {
+            setDisplayNav(false);
+            setUnreadNotifications(0);
+          }}
         >
           <IconBell className={styles.iconBell} size={30} />
           {unreadNotifications > 0 && (
