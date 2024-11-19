@@ -28,6 +28,7 @@ export default function CompanyNotification() {
         } else {
           setNotifications([]);
         }
+        await axiosInstance.post("/api/notifications/mark-all-read");
       } catch (err) {
         toast.error("Failed to load notifications. Please try again later.");
         console.error(err);
