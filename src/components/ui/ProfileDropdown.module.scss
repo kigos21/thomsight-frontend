@@ -10,14 +10,18 @@
 .profileGroup {
   display: flex;
   align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
   padding: 5px;
 
-  span {
-    margin-right: 10px;
-  }
+  border-radius: 10rem;
+  background-color: var(--secondary-color);
+  color: white;
+
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 .username {

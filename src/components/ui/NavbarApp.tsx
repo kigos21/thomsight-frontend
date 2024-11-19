@@ -2,7 +2,7 @@ import styles from "./NavbarApp.module.scss";
 import logo from "../../assets/thomsight-logo.svg";
 
 import PaddedContainer from "../layout/PaddedContainer";
-import { IconMenu2 } from "@tabler/icons-react";
+import { IconBell, IconMenu2 } from "@tabler/icons-react";
 import { Link, NavLink } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
@@ -10,9 +10,24 @@ import { logout } from "../../api/authUser";
 import Spinner from "./Spinner";
 import ProfileDropdown from "./ProfileDropdown";
 import { useNav } from "../../contexts/NavContext";
+import axiosInstance from "../../services/axiosInstance";
+import { toast } from "react-toastify";
 
 interface NavbarAppProps {
   links: JSX.Element[];
+}
+
+function getInitials(input: string): string {
+  const trimmedInput = input.trim(); // Remove extra spaces
+  const words = trimmedInput.split(/\s+/); // Split by spaces
+
+  if (words.length === 1) {
+    // If only one word, take the first two letters
+    return words[0].slice(0, 2).toUpperCase();
+  }
+
+  // If more than one word, take the first letter of the first two words
+  return words[0][0]?.toUpperCase() + (words[1]?.[0]?.toUpperCase() || "");
 }
 
 export default function NavbarApp({ links }: NavbarAppProps) {
@@ -21,6 +36,24 @@ export default function NavbarApp({ links }: NavbarAppProps) {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const mobileNavRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
+
+  const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
+
+  const fetchUnreadNotifications = async () => {
+    if (user?.role === "Rep") {
+      try {
+        const response = await axiosInstance.get("/api/notification-number");
+        setUnreadNotifications(response.data);
+      } catch (error) {
+        toast.error("Failed to fetch notifications.");
+        console.error(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchUnreadNotifications();
+  }, [user]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -125,10 +158,34 @@ export default function NavbarApp({ links }: NavbarAppProps) {
         </button>
 
         {/* Profile button */}
-        <ProfileDropdown
-          username={user ? user.name : "User"}
-          onLogout={handleProfileClick}
-        />
+        <div className={styles.notifAndProfileContainer}>
+          {user?.role == "Rep" && (
+            <NavLink
+              to="/notifications"
+              key="notifications"
+              className={({ isActive }) => `
+              ${isActive ? styles.active : ""} 
+              ${styles.notificationContainer}
+            `}
+              onClick={() => {
+                setDisplayNav(false);
+                setUnreadNotifications(0);
+              }}
+            >
+              <IconBell className={styles.iconBell} size={30} />
+              {unreadNotifications > 0 && (
+                <span className={styles.notificationBadge}>
+                  {unreadNotifications}
+                </span>
+              )}
+            </NavLink>
+          )}
+
+          <ProfileDropdown
+            username={user ? getInitials(user.name) : "User"}
+            onLogout={handleProfileClick}
+          />
+        </div>
 
         {/* <Link to={"/"} className={styles.profileGroup}>
           <span>{loading ? "Loading..." : user ? user.name : "User"}</span>

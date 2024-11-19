@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ProfileDropdown.module.scss";
-import { IconUser } from "@tabler/icons-react";
 
 interface ProfileDropdownProps {
   username: string;
@@ -41,7 +40,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <span className={styles.username}>
           {username.length > 40 ? `${username.slice(0, 36)}...` : username}
         </span>
-        <IconUser className={styles.icon} />
       </button>
       {isOpen && (
         <div className={styles.dropdownContent}>

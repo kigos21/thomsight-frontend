@@ -124,19 +124,29 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 1100px) {
+.notifAndProfileContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media screen and (max-width: 1140px) {
   .navList {
     gap: 0.75rem;
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1081px) {
   .mobileNavContainer {
     display: none !important;
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1080px) {
+  .notifAndProfileContainer {
+    display: none;
+  }
+
   .navList,
   .profileGroup {
     display: none;
@@ -182,6 +192,38 @@
   }
 }
 
+.notificationContainer {
+  border-radius: 10rem;
+  width: 2.5rem;
+  aspect-ratio: 1/1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // background-color: white;
+
+  position: relative;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 360px) {
   .rootContainer {
     padding: 1rem !important;
@@ -200,4 +242,9 @@
   .brandTextCics {
     display: none !important;
   }
+}
+
+.iconBell {
+  width: 1.5rem;
+  height: 1.5rem;
 }
