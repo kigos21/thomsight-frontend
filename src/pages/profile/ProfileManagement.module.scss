@@ -180,3 +180,16 @@
   border-radius: 10rem;
   aspect-ratio: 1/1;
 }
+
+.deleteAccountButton {
+  background-color: var(--red-6);
+  color: var(--white);
+
+  &:hover {
+    background-color: var(--red-7);
+  }
+
+  &:active {
+    background-color: var(--red-9);
+  }
+}
