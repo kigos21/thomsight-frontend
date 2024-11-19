@@ -7,12 +7,32 @@ import { useCompanies } from "../../contexts/CompaniesContext";
 import NavDropdown from "../ui/NavDropdown";
 import { useNav } from "../../contexts/NavContext";
 import { IconBell } from "@tabler/icons-react";
+import axiosInstance from "../../services/axiosInstance";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AppRoot() {
   const { user } = useUser();
   const { companies } = useCompanies();
   const { setDisplayNav } = useNav();
   const location = useLocation();
+  const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
+
+  const fetchUnreadNotifications = async () => {
+    if (user?.role === "Rep") {
+      try {
+        const response = await axiosInstance.get("/api/notification-number");
+        setUnreadNotifications(response.data);
+      } catch (error) {
+        toast.error("Failed to fetch notifications.");
+        console.error(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchUnreadNotifications();
+  }, [user]);
 
   let links: JSX.Element[];
 
@@ -125,7 +145,11 @@ export default function AppRoot() {
           onClick={() => setDisplayNav(false)}
         >
           <IconBell className={styles.iconBell} size={30} />
-          {<span className={styles.notificationBadge}>1</span>}
+          {
+            <span className={styles.notificationBadge}>
+              {unreadNotifications}
+            </span>
+          }
         </NavLink>,
       ];
       break;
