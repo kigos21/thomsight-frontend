@@ -85,8 +85,8 @@ const CVMyRequests = () => {
           url={`/cv-review/view/${cv.id}`}
         />
       ))}
-      {reviewedCVs.length === 0 && requestedCVs.length === 0 && (
-        <div style={{ fontSize: "1.25rem" }}>This section is empty.</div>
+      {reviewedCVs.length === 0 && requestedCVs.length === 0 && !loading && (
+        <div style={{ fontSize: "1.25rem" }}>No requests made.</div>
       )}
     </div>
   );

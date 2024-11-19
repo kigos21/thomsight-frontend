@@ -38,8 +38,8 @@ const CVToReview = () => {
           url={`/cv-review/${cv.id}`}
         />
       ))}
-      {cvs.length === 0 && (
-        <div style={{ fontSize: "1.25rem" }}>This section is empty.</div>
+      {cvs.length === 0 && !loading && (
+        <div style={{ fontSize: "1.25rem" }}>No CVs to review available.</div>
       )}
     </div>
   );
