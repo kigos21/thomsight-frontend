@@ -91,6 +91,7 @@ export default function ProfileManagement() {
       setShowDeletePopup(false);
       setLoading("Deleting account");
       await axiosInstance.delete("/api/delete/account");
+      await axiosInstance.post("/api/logout-after-delete");
       toast.success("Your account has been deleted.");
       navigate("/login");
     } catch (error) {
