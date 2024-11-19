@@ -171,18 +171,28 @@ export default function ProfileManagement() {
               color="primary"
               roundness="rounded"
               classNames={styles.button}
-              onClick={() => navigate("/profile/change-password/")}
-            >
-              Change Password
-            </Button>
-            <Button
-              color="primary"
-              roundness="rounded"
-              classNames={styles.button}
               disabled={isSaving}
               type="submit"
             >
               {isSaving ? "Saving..." : "Save"}
+            </Button>
+
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.button}
+              onClick={() => navigate("/profile/change-password/")}
+            >
+              Change Password
+            </Button>
+
+            <Button
+              color="gray"
+              roundness="rounded"
+              classNames={`${styles.button} ${styles.deleteAccountButton}`}
+              onClick={() => console.log("Delete account")}
+            >
+              Delete Account
             </Button>
           </form>
         </div>
