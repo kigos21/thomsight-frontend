@@ -71,6 +71,11 @@ export default function UserHomePage() {
     }
   };
 
+  const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
   return (
     <PaddedContainer classNames={styles.container}>
       <div className={styles.filterSection}>
@@ -79,7 +84,7 @@ export default function UserHomePage() {
           type="text"
           placeholder="Keywords, Company"
           className={styles.searchBox}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearchQueryChange}
         />
         <MultiSelect
           options={jobOptions}
