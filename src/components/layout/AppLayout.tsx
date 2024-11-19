@@ -145,11 +145,11 @@ export default function AppRoot() {
           onClick={() => setDisplayNav(false)}
         >
           <IconBell className={styles.iconBell} size={30} />
-          {
+          {unreadNotifications > 0 && (
             <span className={styles.notificationBadge}>
               {unreadNotifications}
             </span>
-          }
+          )}
         </NavLink>,
       ];
       break;
