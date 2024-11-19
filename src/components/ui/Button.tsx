@@ -8,6 +8,7 @@ export default function Button({
   children,
   style,
   onClick,
+  type,
 }: ButtonProps) {
   const colorClass =
     color === "primary"
@@ -23,7 +24,7 @@ export default function Button({
   const allClasses: string = `${styles.button} ${colorClass} ${roundnessClass} ${classNames}`;
 
   return (
-    <button className={allClasses} style={style} onClick={onClick}>
+    <button className={allClasses} style={style} onClick={onClick} type={type}>
       {children}
     </button>
   );

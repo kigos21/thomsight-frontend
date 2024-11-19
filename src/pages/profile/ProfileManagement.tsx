@@ -18,6 +18,8 @@ import axiosInstance from "../../services/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { containsBadWords } from "../../badWordsFilter";
+import DeletePopUp from "../../components/ui/company/DeletePopUp";
+import Spinner from "../../components/ui/Spinner";
 
 export default function ProfileManagement() {
   const { user, updateUser } = useUser();
@@ -27,6 +29,8 @@ export default function ProfileManagement() {
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [tempProfileName, setTempProfileName] = useState<string>(user!.name);
   const [isSaving, setIsSaving] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+  const [loading, setLoading] = useState<string>("");
 
   const handleConfirmClick = () => {
     setIsEditingName(false);
@@ -82,8 +86,26 @@ export default function ProfileManagement() {
   };
   const navigate = useNavigate();
 
+  const handleDeleteUser = async () => {
+    try {
+      setShowDeletePopup(false);
+      setLoading("Deleting account");
+      await axiosInstance.delete("/api/delete/account");
+      toast.success("Your account has been deleted.");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Failed to delete account, please try again.");
+      console.error(error);
+    } finally {
+      setLoading("");
+    }
+  };
+
+  const handleDeleteClick = () => setShowDeletePopup(true);
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
+      {loading && <Spinner message={loading} />}
       <StyledBox classNames={styles.styledBox}>
         <div className={styles.container}>
           <h2 className={styles.title}>User Profile</h2>
@@ -182,21 +204,35 @@ export default function ProfileManagement() {
               roundness="rounded"
               classNames={styles.button}
               onClick={() => navigate("/profile/change-password/")}
+              type="button"
             >
               Change Password
             </Button>
 
-            <Button
-              color="gray"
-              roundness="rounded"
-              classNames={`${styles.button} ${styles.deleteAccountButton}`}
-              onClick={() => console.log("Delete account")}
-            >
-              Delete Account
-            </Button>
+            {user?.role !== "Admin" && (
+              <Button
+                color="gray"
+                roundness="rounded"
+                classNames={`${styles.button} ${styles.deleteAccountButton}`}
+                onClick={handleDeleteClick}
+                type="button"
+              >
+                Delete Account
+              </Button>
+            )}
           </form>
         </div>
       </StyledBox>
+
+      {showDeletePopup && (
+        <DeletePopUp
+          isVisible={showDeletePopup}
+          onClose={() => setShowDeletePopup(false)}
+          onDelete={handleDeleteUser}
+          heading="Delete Account"
+          details="Are you sure you want to delete your account? This action is irreversible and all associated data to your account will also be deleted."
+        />
+      )}
     </PaddedContainer>
   );
 }
