@@ -10,6 +10,7 @@ import Spinner from "../Spinner";
 import { containsBadWords } from "../../../badWordsFilter";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../services/axiosInstance";
 
 export default function AdminCreatennouncementItem({
   classNames,
@@ -58,6 +59,8 @@ export default function AdminCreatennouncementItem({
     } finally {
       setLoading(false);
     }
+
+    await axiosInstance.post("/api/announcements/email", { subject, details });
   };
 
   return (
