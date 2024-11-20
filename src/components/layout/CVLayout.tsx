@@ -27,7 +27,7 @@ const CVLayout = () => {
 
   const links: {
     path: string;
-    name?: string;
+    name?: string | JSX.Element;
     icon?: JSX.Element;
   }[] = [
     {
@@ -39,9 +39,19 @@ const CVLayout = () => {
       ? [
           {
             path: "/cv-review/pending",
-            name: "Pending",
+            name: (
+              <div className={styles.badgeHolder}>
+                Pending <span className={styles.notificationBadge}>1</span>
+              </div>
+            ),
             icon: (
-              <IconHourglassHigh stroke={2} className={styles.bottomNavIcon} />
+              <div className={styles.mobileBadgeHolder}>
+                <IconHourglassHigh
+                  stroke={2}
+                  className={styles.bottomNavIcon}
+                />
+                <span className={styles.mobileNotificationBadge}>1</span>
+              </div>
             ),
           },
         ]
@@ -49,8 +59,17 @@ const CVLayout = () => {
 
     {
       path: "/cv-review/to-review",
-      name: "To Review",
-      icon: <IconFilePencil stroke={2} className={styles.bottomNavIcon} />,
+      name: (
+        <div className={styles.badgeHolder}>
+          To&nbsp;Review <span className={styles.notificationBadge}>1</span>
+        </div>
+      ),
+      icon: (
+        <div className={styles.mobileBadgeHolder}>
+          <IconFilePencil stroke={2} className={styles.bottomNavIcon} />
+          <span className={styles.mobileNotificationBadge}>1</span>
+        </div>
+      ),
     },
     {
       path: "/cv-review/reviewed",
@@ -69,8 +88,8 @@ const CVLayout = () => {
       <div className={styles.sideNav}>
         <PaddedContainer>
           <ul className={styles.navList}>
-            {links.map((link) => (
-              <li key={link.name}>
+            {links.map((link, i) => (
+              <li key={i}>
                 <Link
                   to={link.path}
                   className={`${location.pathname === link.path && styles.activeLink}`}
@@ -85,8 +104,8 @@ const CVLayout = () => {
 
       <div className={styles.bottomNav}>
         <ul className={styles.bottomNavList}>
-          {links.map((link) => (
-            <li key={link.name}>
+          {links.map((link, i) => (
+            <li key={i}>
               <Link
                 to={link.path}
                 className={`${location.pathname === link.path && styles.bottomNavIconActive}`}

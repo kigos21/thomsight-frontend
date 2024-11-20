@@ -14,28 +14,65 @@ const ReportsLayout = () => {
 
   const links: {
     path: string;
-    name?: string;
+    name?: string | JSX.Element;
     icon?: JSX.Element;
   }[] = [
     {
       path: "/reports/discussion",
-      name: "Discussion",
-      icon: <IconBubbleText stroke={2} className={styles.bottomNavIcon} />,
+      name: (
+        <div className={styles.badgeHolder}>
+          Discussion <span className={styles.notificationBadge}>1</span>
+        </div>
+      ),
+      icon: (
+        <div className={styles.mobileBadgeHolder}>
+          <IconBubbleText stroke={2} className={styles.bottomNavIcon} />
+          <span className={styles.mobileNotificationBadge}>1</span>
+        </div>
+      ),
     },
     {
       path: "/reports/comments",
-      name: "Comments",
-      icon: <IconMessages stroke={2} className={styles.bottomNavIcon} />,
+      name: (
+        <div className={styles.badgeHolder}>
+          Comments <span className={styles.notificationBadge}>1</span>
+        </div>
+      ),
+      icon: (
+        <div className={styles.mobileBadgeHolder}>
+          <IconMessages stroke={2} className={styles.bottomNavIcon} />
+          <span className={styles.mobileNotificationBadge}>1</span>
+        </div>
+      ),
     },
     {
       path: "/reports/reviews",
-      name: "Reviews",
-      icon: <IconStars stroke={2} className={styles.bottomNavIcon} />,
+      name: (
+        <div className={styles.badgeHolder}>
+          Reviews <span className={styles.notificationBadge}>1</span>
+        </div>
+      ),
+      icon: (
+        <div className={styles.mobileBadgeHolder}>
+          <IconStars stroke={2} className={styles.bottomNavIcon} />
+          <span className={styles.mobileNotificationBadge}>1</span>
+        </div>
+      ),
     },
     {
       path: "/reports/interview-tips",
-      name: "Interview\u00A0Tips",
-      icon: <IconBulb stroke={2} className={styles.bottomNavIcon} />,
+      name: (
+        <div className={styles.badgeHolder}>
+          Interview&nbsp;Tips
+          <span className={styles.notificationBadge}>1</span>
+        </div>
+      ),
+      icon: (
+        <div className={styles.mobileBadgeHolder}>
+          <IconBulb stroke={2} className={styles.bottomNavIcon} />
+          <span className={styles.mobileNotificationBadge}>1</span>
+        </div>
+      ),
     },
   ];
 
@@ -44,8 +81,8 @@ const ReportsLayout = () => {
       <div className={styles.sideNav}>
         <PaddedContainer>
           <ul className={styles.navList}>
-            {links.map((link) => (
-              <li key={link.name}>
+            {links.map((link, i) => (
+              <li key={i}>
                 <Link
                   to={link.path}
                   className={`${location.pathname === link.path && styles.activeLink}`}
@@ -60,8 +97,8 @@ const ReportsLayout = () => {
 
       <div className={styles.bottomNav}>
         <ul className={styles.bottomNavList}>
-          {links.map((link) => (
-            <li key={link.name}>
+          {links.map((link, i) => (
+            <li key={i}>
               <Link
                 to={link.path}
                 className={`${location.pathname === link.path && styles.bottomNavIconActive}`}

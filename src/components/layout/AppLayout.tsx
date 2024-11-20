@@ -158,7 +158,10 @@ export default function AppRoot() {
           className={({ isActive }) => (isActive ? styles.active : "")}
           onClick={() => setDisplayNav(false)}
         >
-          Reports
+          <div className={styles.badgeHolder}>
+            <span>Reports</span>
+            <span className={styles.notificationBadge}>1</span>
+          </div>
         </NavLink>,
         <NavLink
           to="/faqs"
