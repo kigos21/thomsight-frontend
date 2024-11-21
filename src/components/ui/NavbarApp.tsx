@@ -177,7 +177,7 @@ export default function NavbarApp({ links }: NavbarAppProps) {
               <IconBell className={styles.iconBell} size={30} />
               {unreadNotifications > 0 && (
                 <span className={styles.notificationBadge}>
-                  {unreadNotifications}
+                  {unreadNotifications >= 100 ? "99+" : unreadNotifications}
                 </span>
               )}
             </NavLink>
