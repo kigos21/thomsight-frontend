@@ -6,12 +6,34 @@ import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import NavDropdown from "../ui/NavDropdown";
 import { useNav } from "../../contexts/NavContext";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../services/axiosInstance";
+import { toast } from "react-toastify";
 
 export default function AppRoot() {
   const { user } = useUser();
   const { companies } = useCompanies();
   const { setDisplayNav } = useNav();
   const location = useLocation();
+  const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
+
+  const fetchUnreadNotifications = async () => {
+    if (user?.role === "Admin") {
+      try {
+        const response = await axiosInstance.get(
+          "/api/reports/notification-number"
+        );
+        setUnreadNotifications(response.data);
+      } catch (error) {
+        toast.error("Failed to fetch notifications.");
+        console.error(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchUnreadNotifications();
+  }, [user]);
 
   let links: JSX.Element[];
 
@@ -158,9 +180,16 @@ export default function AppRoot() {
           className={({ isActive }) => (isActive ? styles.active : "")}
           onClick={() => setDisplayNav(false)}
         >
-          <div className={styles.badgeHolder}>
+          <div
+            className={styles.badgeHolder}
+            onClick={() => setUnreadNotifications(0)}
+          >
             <span>Reports</span>
-            <span className={styles.notificationBadge}>1</span>
+            {unreadNotifications > 0 && (
+              <span className={styles.notificationBadge}>
+                {unreadNotifications >= 100 ? "99+" : unreadNotifications}
+              </span>
+            )}
           </div>
         </NavLink>,
         <NavLink
