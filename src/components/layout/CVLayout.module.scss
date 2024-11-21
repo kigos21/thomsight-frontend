@@ -148,8 +148,8 @@
   background-color: var(--secondary-color);
   color: white;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,13 +165,13 @@
 
   @media screen and (max-width: 868px) {
     position: absolute;
-    top: -10px;
-    right: -8px;
+    top: -17px;
+    right: -14px;
     background-color: var(--secondary-color);
     color: white;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;

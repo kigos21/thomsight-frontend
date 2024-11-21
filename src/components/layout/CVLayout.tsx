@@ -143,8 +143,36 @@ const CVLayout = () => {
     },
     {
       path: "/cv-review/my-requests",
-      name: "My Requests",
-      icon: <IconOutbound stroke={2} className={styles.bottomNavIcon} />,
+      name: (
+        <div
+          className={styles.badgeHolder}
+          onClick={() => setUnreadToReviewNotifications(0)}
+        >
+          My&nbsp;Requests
+          {unreadToReviewNotifications > 0 && (
+            <span className={styles.notificationBadge}>
+              {unreadToReviewNotifications >= 100
+                ? "99+"
+                : unreadToReviewNotifications}
+            </span>
+          )}
+        </div>
+      ),
+      icon: (
+        <div
+          className={styles.mobileBadgeHolder}
+          onClick={() => setUnreadToReviewNotifications(0)}
+        >
+          <IconOutbound stroke={2} className={styles.bottomNavIcon} />
+          {unreadToReviewNotifications > 0 && (
+            <span className={styles.mobileNotificationBadge}>
+              {unreadToReviewNotifications >= 100
+                ? "99+"
+                : unreadToReviewNotifications}
+            </span>
+          )}
+        </div>
+      ),
     },
   ];
 
