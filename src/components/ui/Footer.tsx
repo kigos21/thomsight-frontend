@@ -1,9 +1,20 @@
 import styles from "./Footer.module.scss";
 import srcLogo from "../../assets/thomsight-logo.svg";
 import { IconMail } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer: React.FC = () => {
+  const location = useLocation();
+
+  let customClassnames = "";
+  if (location.pathname.includes("/company")) {
+    customClassnames = styles.companyPaddingBottom;
+  } else if (location.pathname.includes("/cv-review")) {
+    customClassnames = styles.cvPaddingBottom;
+  } else if (location.pathname.includes("/reports")) {
+    customClassnames = styles.reportsPaddingBottom;
+  }
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -53,7 +64,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className={styles.border}></div>
-      <div className={styles.underneathContainer}>
+      <div className={`${styles.underneathContainer} ${customClassnames}`}>
         <p>
           © 2024 Thomsight. All rights reserved. Designed and developed by the
           Thomsight Team.

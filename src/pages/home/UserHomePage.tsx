@@ -6,7 +6,6 @@ import Spinner from "../../components/ui/Spinner";
 import { useState } from "react";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/ui/Footer";
 
 import styles from "./UserHomePage.module.scss";
 
@@ -163,7 +162,6 @@ export default function UserHomePage() {
           </div>
         )}
       </PaddedContainer>
-      <Footer />
     </>
   );
 }

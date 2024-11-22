@@ -9,6 +9,7 @@ import { useNav } from "../../contexts/NavContext";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import { toast } from "react-toastify";
+import Footer from "../ui/Footer";
 
 export default function AppRoot() {
   const { user } = useUser();
@@ -213,6 +214,7 @@ export default function AppRoot() {
       <main className={styles.main}>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }

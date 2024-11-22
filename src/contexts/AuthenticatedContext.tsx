@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Spinner from "../components/ui/Spinner";
 import axiosInstance from "../services/axiosInstance";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   isLoggedIn: boolean | null;
@@ -18,6 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -36,7 +37,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    const isPublicRoute =
+      location.pathname.includes("terms-and-conditions") ||
+      location.pathname.includes("data-privacy");
+
+    if (isLoggedIn && !isPublicRoute) {
       navigate("/companies");
     }
   }, [isLoggedIn, navigate]);

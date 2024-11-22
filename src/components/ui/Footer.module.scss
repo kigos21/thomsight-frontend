@@ -153,3 +153,21 @@
   margin: 0;
   padding: 0;
 }
+
+@media screen and (max-width: 1024px) {
+  .companyPaddingBottom {
+    padding-bottom: 6rem;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .reportsPaddingBottom {
+    padding-bottom: 6rem;
+  }
+}
+
+@media screen and (max-width: 868px) {
+  .cvPaddingBottom {
+    padding-bottom: 6rem;
+  }
+}
