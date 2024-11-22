@@ -6,6 +6,7 @@ import Spinner from "../../components/ui/Spinner";
 import { useState } from "react";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/ui/Footer";
 
 import styles from "./UserHomePage.module.scss";
 
@@ -77,89 +78,92 @@ export default function UserHomePage() {
   };
 
   return (
-    <PaddedContainer classNames={styles.container}>
-      <div className={styles.filterSection}>
-        <IconSearch className={styles.iconSearch} />
-        <input
-          type="text"
-          placeholder="Keywords, Company"
-          className={styles.searchBox}
-          onChange={handleSearchQueryChange}
-        />
-        <MultiSelect
-          options={jobOptions}
-          className={styles.jobClassification}
-          onChange={handleJobSelect}
-          searchQuery={jobSearchQuery}
-          onSearchQueryChange={setJobSearchQuery}
-        />
-      </div>
-
-      <h1 className={styles.h1}>Companies</h1>
-
-      {paginatedCompanies.length > 0 ? (
-        <div className={styles.itemContainer}>
-          {paginatedCompanies.map((company) => (
-            <div
-              key={company.id}
-              onClick={() => handleCompanyClick(company.slug)}
-            >
-              <HomeCompanyItem company={company} />
-            </div>
-          ))}
+    <>
+      <PaddedContainer classNames={styles.container}>
+        <div className={styles.filterSection}>
+          <IconSearch className={styles.iconSearch} />
+          <input
+            type="text"
+            placeholder="Keywords, Company"
+            className={styles.searchBox}
+            onChange={handleSearchQueryChange}
+          />
+          <MultiSelect
+            options={jobOptions}
+            className={styles.jobClassification}
+            onChange={handleJobSelect}
+            searchQuery={jobSearchQuery}
+            onSearchQueryChange={setJobSearchQuery}
+          />
         </div>
-      ) : (
-        <div>No companies found.</div>
-      )}
 
-      {filteredCompanies.length > 0 && totalPages > 1 && (
-        <div className={styles.pagination}>
-          <button
-            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            &#60; Previous
-          </button>
-          <button
-            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-            onClick={() => setCurrentPage(1)}
-            disabled={currentPage === 1}
-          >
-            First
-          </button>
+        <h1 className={styles.h1}>Companies</h1>
 
-          {Array.from({ length: totalPages }, (_, index) => index + 1)
-            .slice(
-              Math.max(currentPage - 2, 0),
-              Math.min(currentPage + 1, totalPages)
-            )
-            .map((page) => (
-              <button
-                key={page}
-                className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
-                onClick={() => setCurrentPage(page)}
+        {paginatedCompanies.length > 0 ? (
+          <div className={styles.itemContainer}>
+            {paginatedCompanies.map((company) => (
+              <div
+                key={company.id}
+                onClick={() => handleCompanyClick(company.slug)}
               >
-                {page}
-              </button>
+                <HomeCompanyItem company={company} />
+              </div>
             ))}
+          </div>
+        ) : (
+          <div>No companies found.</div>
+        )}
 
-          <button
-            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-            onClick={() => setCurrentPage(totalPages)}
-            disabled={currentPage === totalPages}
-          >
-            Last
-          </button>
-          <button
-            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next &#62;
-          </button>
-        </div>
-      )}
-    </PaddedContainer>
+        {filteredCompanies.length > 0 && totalPages > 1 && (
+          <div className={styles.pagination}>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              &#60; Previous
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(1)}
+              disabled={currentPage === 1}
+            >
+              First
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => index + 1)
+              .slice(
+                Math.max(currentPage - 2, 0),
+                Math.min(currentPage + 1, totalPages)
+              )
+              .map((page) => (
+                <button
+                  key={page}
+                  className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              ))}
+
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(totalPages)}
+              disabled={currentPage === totalPages}
+            >
+              Last
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next &#62;
+            </button>
+          </div>
+        )}
+      </PaddedContainer>
+      <Footer />
+    </>
   );
 }
