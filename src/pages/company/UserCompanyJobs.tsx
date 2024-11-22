@@ -41,7 +41,15 @@ export default function UserCompanyJobs() {
             />
           ))
         ) : (
-          <div>No jobs available.</div>
+          <em
+            style={{
+              fontSize: "0.875rem",
+              paddingTop: "1rem",
+              display: "block",
+            }}
+          >
+            There's no data available currently!
+          </em>
         )}
       </div>
     </PaddedContainer>

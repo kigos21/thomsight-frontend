@@ -189,6 +189,11 @@ export default function UserCompanyOverview() {
                 onCancel={handleCancel}
               />
             )}
+            {reviews.length === 0 && (
+              <em style={{ fontSize: "0.875rem" }}>
+                There's no data available currently!
+              </em>
+            )}
             {reviews.map((review) => (
               <ReviewItem
                 key={review.id}

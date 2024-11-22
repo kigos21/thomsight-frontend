@@ -174,6 +174,11 @@ export default function UserCompanyInterviewTips() {
         />
       )}
 
+      {tips.length === 0 && (
+        <em style={{ fontSize: "0.875rem" }}>
+          There's no data available currently!
+        </em>
+      )}
       {tips.map((tip) => (
         <InterviewTipsItem
           key={tip.id}

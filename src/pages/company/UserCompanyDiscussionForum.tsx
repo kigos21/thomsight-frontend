@@ -411,6 +411,11 @@ export default function UserCompanyDiscussionForum() {
           )}
 
           <div className={styles.discussionContainer}>
+            {postData.length === 0 && (
+              <em style={{ fontSize: "0.875rem" }}>
+                There are no posts as of now, create the first one!
+              </em>
+            )}
             {postData &&
               postData.map((post) => (
                 <Fragment key={post.id}>
