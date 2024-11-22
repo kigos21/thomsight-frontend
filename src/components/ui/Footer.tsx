@@ -1,6 +1,7 @@
 import styles from "./Footer.module.scss";
 import srcLogo from "../../assets/thomsight-logo.svg";
 import { IconMail } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
@@ -20,9 +21,21 @@ const Footer: React.FC = () => {
         </div>
         <div className={styles.middleLeftContainer}>
           <h4 className={styles.h4}>Explore</h4>
-          <p>Terms and Conditions</p>
-          <p>Data Privacy Policy</p>
-          <p>FAQS</p>
+          <ul className={styles.ul}>
+            <Link to={"/terms-and-conditions"} className={styles.links}>
+              Terms and Conditions
+            </Link>
+          </ul>
+          <ul className={styles.ul}>
+            <Link to={"/data-privacy"} className={styles.links}>
+              Data Privacy Policy
+            </Link>
+          </ul>
+          <ul className={styles.ul}>
+            <Link to={"/faqs"} className={styles.links}>
+              FAQS
+            </Link>
+          </ul>
         </div>
         <div className={styles.middleRightContainer}>
           <h4 className={styles.h4}>Contact</h4>
