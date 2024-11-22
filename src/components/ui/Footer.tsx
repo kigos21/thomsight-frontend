@@ -22,17 +22,17 @@ const Footer: React.FC = () => {
         <div className={styles.middleLeftContainer}>
           <h4 className={styles.h4}>Explore</h4>
           <ul className={styles.ul}>
-            <Link to={"/terms-and-conditions"} className={styles.links}>
+            <Link to="/terms-and-conditions" className={styles.links}>
               Terms and Conditions
             </Link>
           </ul>
           <ul className={styles.ul}>
-            <Link to={"/data-privacy"} className={styles.links}>
+            <Link to="/data-privacy" className={styles.links}>
               Data Privacy Policy
             </Link>
           </ul>
           <ul className={styles.ul}>
-            <Link to={"/faqs"} className={styles.links}>
+            <Link to="/faqs" className={styles.links}>
               FAQS
             </Link>
           </ul>
