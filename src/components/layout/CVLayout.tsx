@@ -24,6 +24,8 @@ const CVLayout = () => {
     useState<number>(0);
   const [unreadToReviewNotifications, setUnreadToReviewNotifications] =
     useState<number>(0);
+  const [unreadReviewedNotifications, setUnreadReviewedNotifications] =
+    useState<number>(0);
 
   const fetchUnreadNotifications = async () => {
     try {
@@ -35,6 +37,10 @@ const CVLayout = () => {
         "/api/cvs/to-review/notification-number"
       );
       setUnreadToReviewNotifications(toReview.data);
+      const reviewed = await axiosInstance.get(
+        "/api/cvs/reviewed/notification-number"
+      );
+      setUnreadReviewedNotifications(reviewed.data);
     } catch (error) {
       toast.error("Failed to fetch notifications.");
       console.error(error);
@@ -146,14 +152,14 @@ const CVLayout = () => {
       name: (
         <div
           className={styles.badgeHolder}
-          onClick={() => setUnreadToReviewNotifications(0)}
+          onClick={() => setUnreadReviewedNotifications(0)}
         >
           My&nbsp;Requests
-          {unreadToReviewNotifications > 0 && (
+          {unreadReviewedNotifications > 0 && (
             <span className={styles.notificationBadge}>
-              {unreadToReviewNotifications >= 100
+              {unreadReviewedNotifications >= 100
                 ? "99+"
-                : unreadToReviewNotifications}
+                : unreadReviewedNotifications}
             </span>
           )}
         </div>
