@@ -21,16 +21,6 @@ export default function UserCompanyJobs() {
     <PaddedContainer classNames={styles.paddedContainer}>
       <h2>Job Description</h2>
       <div className={styles.boxContainer}>
-        {/* <JobItem
-          jobTitle="Java Developer"
-          companyName="Accenture"
-          jobDescription="this is your work so do well lorem morel ako ikaw siya tayo lahat sino siya sino ako "
-        ></JobItem>
-        <JobItem
-          jobTitle="Frontend Master"
-          companyName="Emerson"
-          jobDescription="this is your work so do well lorem morel ako ikaw siya tayo lahat sino siya sino ako "
-        ></JobItem> */}
         {company?.jobs && company.jobs.length > 0 ? (
           company.jobs.map((job, index) => (
             <JobItem
