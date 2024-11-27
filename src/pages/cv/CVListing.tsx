@@ -43,6 +43,8 @@ const CVListing = () => {
     } finally {
       setLoading("");
     }
+
+    await axiosInstance.post(`/api/cv/request-email`, { cvId });
   };
 
   const handleDeleteCV = async () => {

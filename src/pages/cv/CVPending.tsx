@@ -42,6 +42,8 @@ const CVPending = () => {
     } finally {
       setLoading("");
     }
+
+    await axiosInstance.post(`/api/cv/accept-email`, { id });
   };
 
   return (
