@@ -93,6 +93,7 @@ export default function UserHomePage() {
             onChange={handleJobSelect}
             searchQuery={jobSearchQuery}
             onSearchQueryChange={setJobSearchQuery}
+            setCurrentPage={setCurrentPage}
           />
         </div>
 
