@@ -34,15 +34,21 @@
 .notificationDetailsContainer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px; /* Increased gap between items */
 
   @media (max-width: 768px) {
-    gap: 8px;
+    gap: 10px;
   }
 
   @media (max-width: 480px) {
-    gap: 6px;
+    gap: 8px;
   }
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; /* Makes it look cleaner */
 }
 
 .header {
@@ -54,16 +60,41 @@
   }
 }
 
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .description {
-  padding: 1rem 2rem;
   font-size: 1rem;
+  color: var(--neutral-800);
+  margin-bottom: 10px;
 
   @media (max-width: 768px) {
-    padding: 0.75rem 1rem;
     font-size: 0.9rem;
   }
 
   @media (max-width: 480px) {
-    padding: 0.75rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+.timestampContainer {
+  display: flex;
+  justify-content: flex-end; /* Align timestamp to the right */
+}
+
+.timestamp {
+  font-size: 0.875rem;
+  color: var(--neutral-500); /* Lighter color for timestamp */
+  font-style: italic; /* Makes it less prominent */
+  text-align: right;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
   }
 }

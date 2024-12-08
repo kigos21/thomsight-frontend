@@ -62,6 +62,7 @@ export default function CompanyNotification() {
                 key={index}
                 notificationHeader={notification.header}
                 notificationDescription={notification.description}
+                notificationDate={notification.created_at}
               />
             ))
           ) : (

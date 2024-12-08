@@ -8,13 +8,21 @@ export default function NotificationItem({
   style,
   notificationHeader,
   notificationDescription,
+  notificationDate,
 }: any) {
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
       <PaddedContainer classNames={styles.paddedContainer}>
         <div className={styles.notificationDetailsContainer}>
-          <p className={styles.header}>{notificationHeader}</p>
-          <p className={styles.description}>{notificationDescription}</p>
+          <div className={styles.headerContainer}>
+            <p className={styles.header}>{notificationHeader}</p>
+          </div>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.description}>{notificationDescription}</p>
+          </div>
+          <div className={styles.timestampContainer}>
+            <p className={styles.timestamp}>{notificationDate}</p>
+          </div>
         </div>
       </PaddedContainer>
     </div>
