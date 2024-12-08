@@ -9,16 +9,28 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   const { name, jobs, description, locations, image } = company;
   const trimmedJobs = jobs?.slice(0, 3);
 
+  const getInitials = (companyName: string) => {
+    const words = companyName.split(" ");
+    const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
+    return initials;
+  };
+
   return (
     <StyledBox
       classNames={styles.container}
       paddedContainerClass={styles.paddedContainer}
     >
-      <img
-        src={image}
-        alt={"Image of " + name}
-        className={styles.companyImage}
-      />
+      {image !== "http://localhost:8000/storage/uploads/companies" ? (
+        <img
+          src={image}
+          alt={"Image of " + name}
+          className={styles.companyImage}
+        />
+      ) : (
+        <div className={styles.companyImageFallback}>
+          {name ? getInitials(name) : "NA"}
+        </div>
+      )}
 
       <div className={styles.coreInfoSection}>
         <div>

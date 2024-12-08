@@ -28,6 +28,22 @@
   font-size: 0.7rem;
 }
 
+.companyImageFallback {
+  display: flex;
+  width: 140px;
+  height: 140px;
+  flex: 0 0 auto;
+  background-color: var(--primary-color);
+  border-radius: 1.25rem;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+  font-size: 40px; /* Adjust text size */
+  font-weight: bold;
+  text-transform: uppercase; /* Optional: make initials uppercase */
+}
+
 .coreInfoSection {
   display: flex;
   flex-direction: column;

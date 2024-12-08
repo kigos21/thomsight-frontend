@@ -140,13 +140,25 @@ export default function CompanyDetails() {
    * Otherwise, return with read-only component
    */
 
+  const getInitials = (companyName: string) => {
+    const words = companyName.split(" ");
+    const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
+    return initials;
+  };
+
   if (location.pathname.includes("/manage/")) {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
         {isUpdating && <Spinner message={isUpdating} />}
         <div className={styles.container}>
           <div className={styles.imageContainer}>
-            <img src={logo} alt="Logo" />
+            {logo !== "http://localhost:8000/storage/uploads/companies" ? (
+              <img src={logo} alt="Logo" />
+            ) : (
+              <div className={styles.companyImageFallback}>
+                {companyName ? getInitials(companyName) : "NA"}
+              </div>
+            )}
             <div className={styles.positionedButton} ref={dropdownRef}>
               <button
                 onClick={() => {
@@ -313,7 +325,13 @@ export default function CompanyDetails() {
       <PaddedContainer classNames={styles.paddedContainer}>
         <div className={styles.container}>
           <div className={styles.imageContainer}>
-            <img src={logo} alt="Logo" />
+            {logo !== "http://localhost:8000/storage/uploads/companies" ? (
+              <img src={logo} alt="Logo" />
+            ) : (
+              <div className={styles.companyImageFallback}>
+                {companyName ? getInitials(companyName) : "NA"}
+              </div>
+            )}
           </div>
 
           <div className={styles.detailsHolder}>

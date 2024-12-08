@@ -8,6 +8,7 @@ import axiosInstance from "../../services/axiosInstance";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
+import BulkGeneratePopup from "../../components/ui/BulkGeneratePopup";
 
 export default function AdminGenerateTokenPage() {
   const [tokens, setTokens] = useState<
@@ -15,18 +16,19 @@ export default function AdminGenerateTokenPage() {
   >([]);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
   const [generateLoading, setGenerateLoading] = useState<boolean>(false);
+  const [showBulkGenerate, setShowBulkGenerate] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchTokens = async () => {
       setFetchLoading(true);
       try {
         const response = await axiosInstance.get("/api/tokens");
-        console.log(response.data);
         const tokensWithExpiringStatus = response.data.map((token: any) => {
           const expiresAt = new Date(token.expires_at);
+          const currentTime = new Date();
+
           const isExpiring =
-            expiresAt <=
-            new Date(new Date().setMonth(new Date().getMonth() + 2));
+            expiresAt <= new Date(currentTime.getTime() + 3 * 60 * 60 * 1000);
 
           return {
             ...token,
@@ -82,6 +84,11 @@ export default function AdminGenerateTokenPage() {
     );
   };
 
+  const handleBulkGenerateSuccess = (newTokens: any[]) => {
+    setTokens((prevTokens) => [...prevTokens, ...newTokens]);
+    toast.success("Bulk tokens generated successfully");
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {fetchLoading && <Spinner message="Fetching tokens..." />}
@@ -90,14 +97,22 @@ export default function AdminGenerateTokenPage() {
         <div className={styles.titleRight}>
           <h1>Tokens</h1>
         </div>
-        <div className={styles.titleLeft}>
+        <div className={styles.generateButtonWrapper}>
           <Button
             color="secondary"
             roundness="rounded"
-            classNames={styles.button}
+            classNames={styles.buttonLeft}
             onClick={generateToken}
           >
             <IconPlus /> Generate Token
+          </Button>
+          <Button
+            color="secondary"
+            roundness="rounded"
+            classNames={styles.buttonRight}
+            onClick={() => setShowBulkGenerate(true)}
+          >
+            Bulk Generate
           </Button>
         </div>
       </div>
@@ -130,6 +145,14 @@ export default function AdminGenerateTokenPage() {
           ))}
         </div>
       </StyledBox>
+
+      {showBulkGenerate && (
+        <BulkGeneratePopup
+          isOpen={showBulkGenerate}
+          onClose={() => setShowBulkGenerate(false)}
+          onBulkGenerateSuccess={handleBulkGenerateSuccess} // Pass the success callback
+        />
+      )}
     </PaddedContainer>
   );
 }
