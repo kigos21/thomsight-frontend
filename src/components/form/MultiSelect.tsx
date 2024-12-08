@@ -13,7 +13,7 @@ interface MultiSelectProps extends Omit<ComponentProps<"div">, "onChange"> {
   onChange: (selected: string[]) => void;
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setCompanyPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
@@ -21,7 +21,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   onChange,
   searchQuery,
   onSearchQueryChange,
-  setCurrentPage: setCompanyPage,
+  setCompanyPage,
   ...props
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -50,7 +50,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
   useEffect(() => {
     setCurrentPage(1);
-    setCompanyPage(1);
   }, [filteredOptions.length]);
 
   const paginatedOptions = filteredOptions.slice(
@@ -86,7 +85,10 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
               <input
                 type="checkbox"
                 checked={selectedOptions.includes(option.value)}
-                onChange={() => toggleOption(option.value)}
+                onChange={() => {
+                  toggleOption(option.value);
+                  setCompanyPage(1);
+                }}
               />
               {option.label}
             </label>

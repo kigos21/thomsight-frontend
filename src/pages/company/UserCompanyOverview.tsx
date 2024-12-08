@@ -13,6 +13,7 @@ import { containsBadWords } from "../../badWordsFilter";
 import { useUser } from "../../contexts/UserContext";
 import { toast } from "react-toastify";
 import ErrorPage from "../ErrorPage";
+import DOMPurify from "dompurify";
 
 export type Review = {
   id?: number;
@@ -126,7 +127,11 @@ export default function UserCompanyOverview() {
     setReviews((currentReviews) =>
       currentReviews.map((rev) =>
         rev.id === id
-          ? { ...rev, rating: updatedRating, description: updatedDescription }
+          ? {
+              ...rev,
+              rating: updatedRating !== undefined ? updatedRating : rev.rating,
+              description: updatedDescription,
+            }
           : rev
       )
     );
@@ -206,7 +211,7 @@ export default function UserCompanyOverview() {
                     ? new Date(review.date).toLocaleDateString()
                     : "N/A"
                 }
-                reviewDescription={review.description}
+                reviewDescription={DOMPurify.sanitize(review.description)}
                 onReviewChange={(updatedReview: {
                   rating: string;
                   description: string;

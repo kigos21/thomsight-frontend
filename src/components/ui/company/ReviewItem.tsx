@@ -317,7 +317,12 @@ export default function ReviewItem({
               </div>
             </div>
           ) : (
-            <p className={styles.reviewDescription}>{reviewDescription}</p>
+            <p
+              className={styles.reviewDescription}
+              dangerouslySetInnerHTML={{
+                __html: reviewDescription,
+              }}
+            ></p>
           )}
 
           <div className={styles.iconContainer}>

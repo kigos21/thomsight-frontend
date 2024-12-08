@@ -1,7 +1,10 @@
+import React, { useRef, useEffect, useState } from "react";
 import FormField from "../../form/FormField";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import styles from "./CompanyReviewForm.module.scss";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
 
 interface Review {
   rating: string;
@@ -21,15 +24,49 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
   onChange,
   onCancel,
 }) => {
+  const [rating, setRating] = useState(review.rating);
+  const [description, setDescription] = useState(review.description);
+
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
+  useEffect(() => {
+    if (!quillRef.current || quillInstance.current) return;
+
+    quillInstance.current = new Quill(quillRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [["bold", "italic", { list: "bullet" }, { list: "ordered" }]],
+      },
+    });
+
+    quillInstance.current.root.innerHTML = description;
+
+    quillInstance.current.on("text-change", () => {
+      const htmlContent = quillInstance.current?.root.innerHTML || "";
+      setDescription(htmlContent);
+      onChange({ rating, description: htmlContent });
+    });
+  }, [description, rating, onChange]);
+
+  useEffect(() => {
+    onChange({ rating, description });
+  }, [rating, description, onChange]);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    onChange({ ...review, [name]: value }); // Update review state based on input change
+    if (name === "description") {
+      setDescription(value);
+    } else if (name === "rating") {
+      setRating(value);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    onChange({ rating, description });
     onSave();
   };
 
@@ -45,14 +82,15 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               name="rating"
               placeholder="Rate your experience 1 to 5 (5 = highest)"
               required={true}
-              value={review.rating}
+              value={rating}
               onChange={handleInputChange}
             ></FormField>
           </div>
 
           <div>
             <p className={styles.formTitle}>Description</p>
-            <FormField
+            <div ref={quillRef} className={styles.quillContainer}></div>
+            {/* <FormField
               classNames={styles.formFieldBio}
               type="textarea"
               name="description"
@@ -60,7 +98,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               required={true}
               value={review.description}
               onChange={handleInputChange}
-            ></FormField>
+            ></FormField> */}
           </div>
 
           <div className={styles.buttonGroup}>
