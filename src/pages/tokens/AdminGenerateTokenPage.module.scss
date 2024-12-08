@@ -135,3 +135,48 @@
     border-right: 2px solid var(--neutral-1);
   }
 }
+
+//pagination
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 0 0;
+
+  @media screen and (max-width: 480px) {
+    padding: 1rem 2rem;
+  }
+}
+
+.paginationButton {
+  background-color: var(--black); // Change to your preferred color
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &.active {
+    background-color: var(--black); // Active page color
+    font-weight: bold;
+  }
+
+  &.disabled {
+    background-color: #ccc; // Disable color
+    cursor: not-allowed;
+    pointer-events: none; // Prevent click
+  }
+
+  &:focus {
+    outline: none; // Remove default focus outline
+  }
+}

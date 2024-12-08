@@ -18,6 +18,9 @@ export default function AdminGenerateTokenPage() {
   const [generateLoading, setGenerateLoading] = useState<boolean>(false);
   const [showBulkGenerate, setShowBulkGenerate] = useState<boolean>(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
   useEffect(() => {
     const fetchTokens = async () => {
       setFetchLoading(true);
@@ -45,6 +48,12 @@ export default function AdminGenerateTokenPage() {
 
     fetchTokens();
   }, []);
+
+  const totalPages = Math.ceil(tokens.length / itemsPerPage);
+  const paginatedTokens = tokens.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const generateToken = async () => {
     setGenerateLoading(true);
@@ -89,6 +98,22 @@ export default function AdminGenerateTokenPage() {
     toast.success("Bulk tokens generated successfully");
   };
 
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {fetchLoading && <Spinner message="Fetching tokens..." />}
@@ -128,11 +153,11 @@ export default function AdminGenerateTokenPage() {
               <p>Actions</p>
             </div>
           </div>
-          {tokens.map((token, index) => (
+          {paginatedTokens.map((token, index) => (
             <TokenItem
               key={token.id}
               id={token.id}
-              number={index + 1}
+              number={index + 1 + (currentPage - 1) * itemsPerPage}
               token={token.token}
               email={token.email}
               onDeleteToken={handleDeleteToken}
@@ -144,6 +169,55 @@ export default function AdminGenerateTokenPage() {
             />
           ))}
         </div>
+
+        {tokens.length > itemsPerPage && (
+          <div className={styles.pagination}>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              &#60; Previous
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(1)}
+              disabled={currentPage === 1}
+            >
+              First
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => index + 1)
+              .slice(
+                Math.max(currentPage - 2, 0),
+                Math.min(currentPage + 1, totalPages)
+              )
+              .map((page) => (
+                <button
+                  key={page}
+                  className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                  onClick={() => handlePageSelect(page)}
+                >
+                  {page}
+                </button>
+              ))}
+
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(totalPages)}
+              disabled={currentPage === totalPages}
+            >
+              Last
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next &#62;
+            </button>
+          </div>
+        )}
       </StyledBox>
 
       {showBulkGenerate && (
