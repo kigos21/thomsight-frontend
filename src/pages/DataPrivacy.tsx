@@ -20,8 +20,31 @@ const DataPrivacy = () => {
             <p>
               We collect personal information that you voluntarily provide to us
               when registering on the platform, such as your name, email
+<<<<<<< Updated upstream
               address, phone number, student number, alumni number, and any
               other information you choose to provide.
+=======
+              address, birthday, and any other information
+              you choose to provide.
+>>>>>>> Stashed changes
+            </p>
+            <h2>CV Peer Review Center</h2>
+            <p>
+              For students who posted their CVs on the resume peer review tab,
+              this is to inform you that your post will be automatically deleted
+              after 7 days.
+            </p>
+            <h2>Company Accounts Availability</h2>
+            <p>
+              For company representatives who registered to the platform, this is
+              to inform you that your account will be automatically be disabled after
+              12 months but an email will automatically inform you 1 month before the expiration
+              of your account. You can email the TPC (Technology Program Coordinator) to communicate
+              regarding your account validity.
+            </p>
+            <h2>Token Expiration</h2>
+            <p>
+              The token will be expired automatically once it wasn't validated in 24 hours.
             </p>
             <h2>How We Use Your Information</h2>
             <p>
