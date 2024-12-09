@@ -72,7 +72,7 @@ export default function LoginStudentPage() {
   return (
     <PaddedContainer>
       <div className={styles.container}>
-        <h1>Login with your Account</h1>
+        <h1 className={styles.h1}>Login with your Account</h1>
         <div className={styles.formContainer}>
           <form className={styles.form} onSubmit={handleLogin}>
             <FormField
@@ -80,6 +80,7 @@ export default function LoginStudentPage() {
               type="email"
               placeholder="Email"
               value={email}
+              classNames={styles.textBox}
               onChange={(e) => setEmail(e.target.value)}
             />
             <FormField
@@ -87,6 +88,7 @@ export default function LoginStudentPage() {
               type="password"
               placeholder="Password"
               value={password}
+              classNames={styles.textBox}
               onChange={(e) => setPassword(e.target.value)}
             />
             <a className={styles.forgotPassword} href="/forgot-password">
@@ -94,7 +96,7 @@ export default function LoginStudentPage() {
             </a>
             {loading && <Spinner message="Please wait while we log you in!" />}
             <Button
-              color="primary"
+              color="secondary"
               roundness="rounded"
               classNames={styles.button}
               type="submit"

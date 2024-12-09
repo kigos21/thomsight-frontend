@@ -162,7 +162,7 @@ export default function StudentRegisterPage() {
                 required={true}
               />
               <Button
-                color="primary"
+                color="secondary"
                 roundness="rounded"
                 classNames={styles.button}
                 type="submit"

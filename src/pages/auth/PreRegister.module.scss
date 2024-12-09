@@ -9,7 +9,7 @@
   flex-direction: column;
   gap: 0.6rem;
 
-  max-width: 420px;
+  max-width: 360px;
   width: 100%;
 
   margin-top: 2.5rem;
@@ -17,18 +17,22 @@
 
 .button {
   width: 100%;
-  padding: 1.2rem 2.4rem;
+  padding: 1rem 2rem;
   font-size: 1.2rem;
 }
 
 @media screen and (max-width: 768px) {
+  .buttonContainer {
+    max-width: 220px;
+  }
   .button {
-    padding: 1.1rem 2.2rem;
-    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
   }
 
   .h1 {
-    font-size: 1.5rem;
+    text-align: center;
+    font-size: 1.45rem;
   }
 }
 
@@ -39,11 +43,11 @@
   }
 
   .button {
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
   }
 
   .h1 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 }

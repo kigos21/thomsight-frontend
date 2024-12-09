@@ -7,13 +7,13 @@
 .formContainer {
   max-width: 420px;
   width: 100%;
-
   margin-top: 2.5rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 0.6rem;
 }
 
@@ -27,9 +27,8 @@
 
 .button {
   width: 100%;
-  padding: 1.2rem 2.4rem;
+  padding: 1rem 2rem;
   font-size: 1.2rem;
-
   margin-top: 2.5rem;
 }
 
@@ -43,19 +42,21 @@
   }
 
   .button {
-    padding: 1.1rem 2.2rem;
-    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
   }
 
   .header {
-    font-size: 1.75rem;
+    text-align: center;
+    font-size: 1.45rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .formContainer,
   .button {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
+    max-width: 320px;
   }
 
   .form {
@@ -69,11 +70,11 @@
   }
 
   .button {
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
   }
 
   .header {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
   }
 }

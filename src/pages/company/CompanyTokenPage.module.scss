@@ -25,24 +25,29 @@
 }
 
 .button {
-  padding: 1.2rem 2.4rem;
+  padding: 1rem 2rem;
   font-size: 1.2rem;
 }
 
 @media screen and (max-width: 768px) {
+  .formContainer {
+    max-width: 600px;
+  }
+
   .icon {
     left: 1.4rem;
   }
 
   .button {
-    padding: 1.1rem 2.2rem;
-    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .formContainer {
     margin-top: 1.5rem;
+    max-width: 320px;
   }
 
   .formContainer {
@@ -56,7 +61,7 @@
   }
 
   .button {
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
   }
 }

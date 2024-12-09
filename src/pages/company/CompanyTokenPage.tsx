@@ -54,7 +54,7 @@ export default function CompanyTokenPage() {
             />
           </form>
           <Button
-            color="primary"
+            color="secondary"
             roundness="rounded"
             classNames={styles.button}
             disabled={loading}

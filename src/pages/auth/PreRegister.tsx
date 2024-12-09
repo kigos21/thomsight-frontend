@@ -14,7 +14,7 @@ export default function PreRegisterPage() {
           <div className={styles.buttonContainer}>
             <Link to={"/register/student"}>
               <Button
-                color={"primary"}
+                color={"secondary"}
                 roundness={"rounded"}
                 classNames={styles.button}
               >
@@ -23,7 +23,7 @@ export default function PreRegisterPage() {
             </Link>
             <Link to={"/register/alumni"}>
               <Button
-                color={"primary"}
+                color={"secondary"}
                 roundness={"rounded"}
                 classNames={styles.button}
               >

@@ -241,7 +241,7 @@ export default function RegisterAlumniPage() {
               />
               <Button
                 type="submit"
-                color="primary"
+                color="secondary"
                 roundness="rounded"
                 classNames={styles.button}
               >
