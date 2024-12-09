@@ -20,8 +20,8 @@ const DataPrivacy = () => {
             <p>
               We collect personal information that you voluntarily provide to us
               when registering on the platform, such as your name, email
-              address, student number, alumni number, and any other information
-              you choose to provide.
+              address, phone number, student number, alumni number, and any
+              other information you choose to provide.
             </p>
             <h2>How We Use Your Information</h2>
             <p>
