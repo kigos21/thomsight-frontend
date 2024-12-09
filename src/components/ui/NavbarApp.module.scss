@@ -1,7 +1,10 @@
 .rootContainer {
-  background-color: var(--primary-color);
+  // background-color: var(--primary-color);
+  background-color: #ffffff;
+
   padding: 1.5rem 2.5rem !important;
   position: relative;
+  border-bottom: 2px solid var(--neutral-3);
 }
 
 .container {
