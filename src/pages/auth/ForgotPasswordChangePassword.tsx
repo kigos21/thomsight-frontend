@@ -67,7 +67,7 @@ export default function ForgotPasswordChangePassword() {
 
   return (
     <PaddedContainer>
-      <AuthContentContainer>
+      <AuthContentContainer ableBoxShadow={true}>
         <div className={styles.container}>
           {loading && <Spinner message={loading} />}
           <h1 className={styles.header}>Password Recovery</h1>
@@ -97,7 +97,7 @@ export default function ForgotPasswordChangePassword() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <Button
-                color="primary"
+                color="secondary"
                 roundness="rounded"
                 classNames={styles.button}
                 type="submit"

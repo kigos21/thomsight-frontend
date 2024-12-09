@@ -9,7 +9,15 @@
   border-radius: 999px;
 
   border: 2px solid var(--muted-black);
+  // box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+  // border: none;
+
   color: var(--black);
+}
+
+.boxShadow {
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+  border: none;
 }
 
 @media screen and (max-width: 768px) {

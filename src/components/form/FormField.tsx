@@ -1,5 +1,4 @@
 import { FormFieldProps } from "../../types/props";
-
 import styles from "./FormField.module.scss";
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -14,6 +13,7 @@ const FormField: React.FC<FormFieldProps> = ({
   editIcon,
   onChange,
   name,
+  ableBoxShadow, // Add a new prop
 }) => (
   <div className={`${styles.formGroup} ${parentDivClassnames}`}>
     {icon && icon}
@@ -23,7 +23,9 @@ const FormField: React.FC<FormFieldProps> = ({
         required={required}
         name={name}
         value={value ?? ""}
-        className={`${styles.formField} ${classNames}`}
+        className={`${styles.formField} ${classNames} ${
+          ableBoxShadow ? styles.boxShadow : ""
+        }`}
         onChange={onChange}
       />
     ) : (
@@ -33,7 +35,9 @@ const FormField: React.FC<FormFieldProps> = ({
         required={required}
         name={name}
         value={value ?? ""}
-        className={`${styles.formField} ${classNames}`}
+        className={`${styles.formField} ${classNames} ${
+          ableBoxShadow ? styles.boxShadow : ""
+        }`}
         onChange={onChange}
         {...extraProps}
       />

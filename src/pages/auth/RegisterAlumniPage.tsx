@@ -139,7 +139,7 @@ export default function RegisterAlumniPage() {
 
   return (
     <PaddedContainer>
-      <AuthContentContainer>
+      <AuthContentContainer ableBoxShadow={true}>
         <div className={styles.container}>
           {loading && <Spinner message={loading} />}
           <h1 className={styles.header}>Register your Account</h1>

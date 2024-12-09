@@ -8,7 +8,7 @@ import styles from "./PreRegister.module.scss";
 export default function PreRegisterPage() {
   return (
     <PaddedContainer classNames={styles.background}>
-      <AuthContentContainer>
+      <AuthContentContainer ableBoxShadow={true}>
         <div className={styles.container}>
           <h1 className={styles.h1}>Are you a student or an alumni?</h1>
           <div className={styles.buttonContainer}>

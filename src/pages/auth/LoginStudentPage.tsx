@@ -81,6 +81,7 @@ export default function LoginStudentPage() {
               placeholder="Email"
               value={email}
               classNames={styles.textBox}
+              ableBoxShadow={true}
               onChange={(e) => setEmail(e.target.value)}
             />
             <FormField
@@ -89,6 +90,7 @@ export default function LoginStudentPage() {
               placeholder="Password"
               value={password}
               classNames={styles.textBox}
+              ableBoxShadow={true}
               onChange={(e) => setPassword(e.target.value)}
             />
             <a className={styles.forgotPassword} href="/forgot-password">

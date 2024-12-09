@@ -168,7 +168,7 @@ export default function CompanyRegisterPage() {
 
   return (
     <PaddedContainer>
-      <AuthContentContainer>
+      <AuthContentContainer ableBoxShadow={true}>
         {loading && <Spinner message="Registering your company..." />}
         <div className={styles.container}>
           <h1 className={styles.header}>Register your Company</h1>
@@ -250,7 +250,7 @@ export default function CompanyRegisterPage() {
 
               <Button
                 type="submit"
-                color="primary"
+                color="secondary"
                 roundness="rounded"
                 classNames={styles.button}
                 disabled={loading}

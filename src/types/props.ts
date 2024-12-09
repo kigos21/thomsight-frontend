@@ -99,6 +99,7 @@ export type FormFieldProps = {
   placeholder: string;
   name?: string;
   required?: true | false;
+  ableBoxShadow?: true | false;
   value?: string | number | null | undefined;
   extraProps?: React.InputHTMLAttributes<HTMLInputElement>;
   onChange?: (

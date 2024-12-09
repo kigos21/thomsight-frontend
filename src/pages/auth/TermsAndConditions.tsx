@@ -6,7 +6,7 @@ import AuthContentContainer from "../../components/ui/auth/AuthContentContainer"
 const TermsAndConditions = () => {
   return (
     <PaddedContainer classNames={styles.background}>
-      <AuthContentContainer>
+      <AuthContentContainer ableBoxShadow={true}>
         <div className={styles.textContainer}>
           <h1>Terms & Conditions</h1>
           <p>

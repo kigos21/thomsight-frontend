@@ -49,7 +49,7 @@ import AdminViewAnnouncements from "./pages/announcements/AdminViewAnnouncements
 import AdminCreateAnnouncement from "./pages/announcements/AdminCreateAnnouncement.tsx";
 import ReportsReviews from "./pages/reports/ReportsReviews.tsx";
 import ReportsInterviewTips from "./pages/reports/ReportsInterviewTips.tsx";
-import LoginExternalPage from "./pages/auth/LoginExternalPage.tsx";
+// import LoginExternalPage from "./pages/auth/LoginExternalPage.tsx";
 import LandingPage from "./pages/auth/LandingPage.tsx";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import PrivateRoute from "./contexts/PrivateRoute.tsx";
@@ -452,10 +452,10 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginStudentPage />,
       },
-      {
-        path: "/login/external",
-        element: <LoginExternalPage />,
-      },
+      // {
+      //   path: "/login/external",
+      //   element: <LoginExternalPage />,
+      // },
 
       /**
        * Others

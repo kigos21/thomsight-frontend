@@ -100,7 +100,7 @@ export default function StudentRegisterPage() {
   };
   return (
     <PaddedContainer>
-      <AuthContentContainer>
+      <AuthContentContainer ableBoxShadow={true}>
         <div className={styles.container}>
           <h1 className={styles.header}>Register your Account</h1>
           {loading && <Spinner message="Registering student..." />}
