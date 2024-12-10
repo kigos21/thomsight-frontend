@@ -1,5 +1,8 @@
 .paddedContainer {
   padding: 2rem 12rem;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
 
   @media (max-width: 1200px) {
     padding: 2rem 8rem;
@@ -18,10 +21,15 @@
   background-color: var(--neutral-0);
   text-align: center;
   padding: 0 8rem;
-  border: 2px solid black;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+  border-radius: 10px !important;
 
   @media (max-width: 1200px) {
     padding: 0 5rem;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0 3rem;
   }
 
   @media (max-width: 768px) {
@@ -70,8 +78,12 @@
 
 .fieldBio {
   height: 170px;
-  border-radius: 30px;
+  border-radius: 10px !important;
   resize: vertical;
+}
+
+.fieldPhone {
+  border-radius: 10px !important;
 }
 
 .form {

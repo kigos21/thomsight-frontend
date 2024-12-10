@@ -177,6 +177,7 @@ export default function ProfileManagement() {
               placeholder="Your Bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+              ableBoxShadow={true}
             />
 
             <FormField
@@ -188,11 +189,12 @@ export default function ProfileManagement() {
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              ableBoxShadow={true}
             />
 
             <Button
-              color="primary"
-              roundness="rounded"
+              color="secondary"
+              roundness="sm-rounded"
               classNames={styles.button}
               disabled={isSaving}
               type="submit"
@@ -201,8 +203,8 @@ export default function ProfileManagement() {
             </Button>
 
             <Button
-              color="primary"
-              roundness="rounded"
+              color="secondary"
+              roundness="sm-rounded"
               classNames={styles.button}
               onClick={() => navigate("/profile/change-password/")}
               type="button"
@@ -213,7 +215,7 @@ export default function ProfileManagement() {
             {user?.role !== "Admin" && (
               <Button
                 color="gray"
-                roundness="rounded"
+                roundness="sm-rounded"
                 classNames={`${styles.button} ${styles.deleteAccountButton}`}
                 onClick={handleDeleteClick}
                 type="button"
