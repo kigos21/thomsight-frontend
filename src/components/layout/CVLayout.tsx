@@ -224,8 +224,8 @@ const CVLayout = () => {
           </h1>
           {location.pathname === "/cv-review" && user!.role === "Student" && (
             <Button
-              color={"primary"}
-              roundness={"rounded"}
+              color={"secondary"}
+              roundness={"sm-rounded"}
               onClick={() => navigate("/cv-review/post-cv")}
             >
               Post CV

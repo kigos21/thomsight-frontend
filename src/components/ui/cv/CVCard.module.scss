@@ -1,8 +1,9 @@
 .card {
   width: 100%; /* Allow the card to take up the available space */
-  background-color: var(--neutral-0);
+  background-color: #fff;
   padding: 1.5rem;
   border-radius: 32px;
+  border: var(--muted-black) 1px solid;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 312px;
 

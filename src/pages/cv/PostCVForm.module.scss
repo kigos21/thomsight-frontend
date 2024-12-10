@@ -3,8 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   background-color: var(--neutral-0);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
 }
 
 .h2 {
@@ -19,7 +19,7 @@
 .label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .textarea,
@@ -27,7 +27,7 @@
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
   resize: none;
 }
 

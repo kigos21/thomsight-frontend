@@ -116,7 +116,11 @@ const CVFeedbackCreate = () => {
         onChange={(e) => setRemark(e.target.value)}
       ></textarea>
 
-      <Button color={"secondary"} roundness={"rounded"} onClick={handleSubmit}>
+      <Button
+        color={"secondary"}
+        roundness={"sm-rounded"}
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
     </div>

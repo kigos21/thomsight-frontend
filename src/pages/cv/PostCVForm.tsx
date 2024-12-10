@@ -114,8 +114,8 @@ const PostCVForm: React.FC<PostCVFormProps> = () => {
           </div>
           <Button
             type="submit"
-            color={"primary"}
-            roundness={"rounded"}
+            color={"secondary"}
+            roundness={"sm-rounded"}
             classNames={styles.submitButton}
           >
             Submit
