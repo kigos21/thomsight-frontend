@@ -76,7 +76,7 @@ export default function AdminViewAnnouncements() {
             <Button
               classNames={styles.announcementButton}
               color="secondary"
-              roundness="rounded"
+              roundness="sm-rounded"
               onClick={() => setIsPopupOpen(true)}
             >
               <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />

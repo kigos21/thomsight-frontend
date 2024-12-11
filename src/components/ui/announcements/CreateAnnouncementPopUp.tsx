@@ -54,7 +54,10 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
     try {
       setLoading(true);
       await createAnnouncement(subject, details);
-      await axiosInstance.post("/api/announcements/email", { subject, details });
+      await axiosInstance.post("/api/announcements/email", {
+        subject,
+        details,
+      });
       toast.success("Announcement created successfully!");
       navigate("/announcements");
     } catch (error) {
@@ -93,16 +96,20 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
           />
         </div>
         <div className={styles.buttonContainer}>
-          <Button 
-            color="secondary"
-            classNames={styles.cancelButton} 
-            onClick={onClose}>
+          <Button
+            color="black"
+            classNames={styles.cancelButton}
+            roundness="sm-rounded"
+            onClick={onClose}
+          >
             Cancel
           </Button>
-          <Button 
+          <Button
             color="secondary"
-            classNames={styles.submitButton} 
-            onClick={handleSubmit}>
+            classNames={styles.submitButton}
+            roundness="sm-rounded"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         </div>
@@ -111,4 +118,4 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
   );
 };
 
-export default CreateAnnouncementPopup; 
+export default CreateAnnouncementPopup;
