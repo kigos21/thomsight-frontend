@@ -1,114 +1,114 @@
-.paddedContainer {
-  padding: 1rem 2.875rem;
+// .paddedContainer {
+//   padding: 1rem 2.875rem;
 
-  @media (max-width: 768px) {
-    padding: 1rem 1rem;
-  }
+//   @media (max-width: 768px) {
+//     padding: 1rem 1rem;
+//   }
 
-  @media (max-width: 480px) {
-    padding: 1rem 0.5rem;
-  }
-}
+//   @media (max-width: 480px) {
+//     padding: 1rem 0.5rem;
+//   }
+// }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 20px;
 
-  @media (max-width: 768px) {
-    gap: 15px;
-  }
+//   @media (max-width: 768px) {
+//     gap: 15px;
+//   }
 
-  @media (max-width: 480px) {
-    gap: 10px;
-  }
-}
+//   @media (max-width: 480px) {
+//     gap: 10px;
+//   }
+// }
 
-.titleContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 30px;
-  align-items: center;
+// .titleContainer {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   gap: 30px;
+//   align-items: center;
 
-  h2 {
-    font-size: 1.75rem;
-    font-weight: bold;
+//   h2 {
+//     font-size: 1.75rem;
+//     font-weight: bold;
 
-    @media (max-width: 768px) {
-      font-size: 1.5rem;
-    }
+//     @media (max-width: 768px) {
+//       font-size: 1.5rem;
+//     }
 
-    @media (max-width: 480px) {
-      font-size: 1.25rem;
-    }
-  }
+//     @media (max-width: 480px) {
+//       font-size: 1.25rem;
+//     }
+//   }
 
-  // Button responsiveness
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-}
+//   // Button responsiveness
+//   @media (max-width: 768px) {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     gap: 15px;
+//   }
+// }
 
-.formContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+// .formContainer {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 20px;
 
-  @media (max-width: 768px) {
-    gap: 15px;
-  }
+//   @media (max-width: 768px) {
+//     gap: 15px;
+//   }
 
-  @media (max-width: 480px) {
-    gap: 10px;
-  }
-}
+//   @media (max-width: 480px) {
+//     gap: 10px;
+//   }
+// }
 
-.formField {
-  padding: 1rem;
-  border-radius: 8px;
-  width: 100%;
-  font-size: 1rem;
+// .formField {
+//   padding: 1rem;
+//   border-radius: 8px;
+//   width: 100%;
+//   font-size: 1rem;
 
-  @media (max-width: 480px) {
-    padding: 0.75rem;
-    font-size: 0.875rem;
-  }
-}
+//   @media (max-width: 480px) {
+//     padding: 0.75rem;
+//     font-size: 0.875rem;
+//   }
+// }
 
-.formFieldBio {
-  height: 400px;
-  width: 100%;
-  padding: 1rem;
-  border-radius: 8px;
-  resize: vertical;
-  font-size: 1rem;
+// .formFieldBio {
+//   height: 400px;
+//   width: 100%;
+//   padding: 1rem;
+//   border-radius: 8px;
+//   resize: vertical;
+//   font-size: 1rem;
 
-  @media (max-width: 768px) {
-    height: 250px;
-  }
+//   @media (max-width: 768px) {
+//     height: 250px;
+//   }
 
-  @media (max-width: 480px) {
-    height: 150px;
-    padding: 0.75rem;
-    font-size: 0.875rem;
-  }
-}
+//   @media (max-width: 480px) {
+//     height: 150px;
+//     padding: 0.75rem;
+//     font-size: 0.875rem;
+//   }
+// }
 
-.submitButton {
-  width: 200px;
-  height: 50px;
-  align-items: center;
+// .submitButton {
+//   width: 200px;
+//   height: 50px;
+//   align-items: center;
 
-  @media (max-width: 768px) {
-    width: 160px;
-    height: 40px;
-  }
+//   @media (max-width: 768px) {
+//     width: 160px;
+//     height: 40px;
+//   }
 
-  @media (max-width: 480px) {
-    width: 120px;
-    height: 30px;
-  }
-}
+//   @media (max-width: 480px) {
+//     width: 120px;
+//     height: 30px;
+//   }
+// }

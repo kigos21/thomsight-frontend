@@ -17,6 +17,18 @@
   color: black;
 }
 
+.editHeaderInput{
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+.descriptionTextarea{
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
 .iconContainer {
   display: flex;
   flex-direction: row;

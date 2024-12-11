@@ -1,17 +1,13 @@
-import PaddedContainer from "../../components/layout/PaddedContainer";
-import AdminCreatennouncementItem from "../../components/ui/announcements/AdminCreateAnnouncementItem";
+// import { useState } from "react";
+// import CreateAnnouncementPopup from "../../components/ui/announcements/CreateAnnouncementPopUp";
 
-import styles from "./AdminCreateAnnouncement.module.scss";
+// export default function AdminCreateAnnouncement() {
+//   const [isPopupOpen, setIsPopupOpen] = useState(true);
 
-export default function AdminCreateAnnouncement() {
-  return (
-    <PaddedContainer classNames={styles.paddedContainer}>
-      <div className={styles.container}>
-        <AdminCreatennouncementItem
-          subject=""
-          details=""
-        ></AdminCreatennouncementItem>
-      </div>
-    </PaddedContainer>
-  );
-}
+//   return (
+//     <CreateAnnouncementPopup
+//       isOpen={isPopupOpen}
+//       onClose={() => setIsPopupOpen(false)}
+//     />
+//   );
+// }
