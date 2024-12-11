@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./BulkGeneratePopup.module.scss";
 import { toast } from "react-toastify";
+import Button from "./Button";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "./Spinner";
 
@@ -79,12 +80,22 @@ const BulkGeneratePopup: React.FC<BulkGeneratePopupProps> = ({
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button className={styles.redButton} onClick={onClose}>
+          <Button
+            classNames={styles.cancelButton}
+            color={"black"}
+            roundness={"sm-rounded"}
+            onClick={onClose}
+          >
             Cancel
-          </button>
-          <button className={styles.popupButton} onClick={handleBulkGenerate}>
+          </Button>
+          <Button
+            classNames={styles.saveButton}
+            color={"secondary"}
+            roundness={"sm-rounded"}
+            onClick={handleBulkGenerate}
+          >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>
