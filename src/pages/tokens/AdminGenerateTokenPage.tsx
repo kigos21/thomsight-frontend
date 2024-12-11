@@ -125,7 +125,7 @@ export default function AdminGenerateTokenPage() {
         <div className={styles.generateButtonWrapper}>
           <Button
             color="secondary"
-            roundness="rounded"
+            roundness="sm-rounded"
             classNames={styles.buttonLeft}
             onClick={generateToken}
           >
@@ -133,7 +133,7 @@ export default function AdminGenerateTokenPage() {
           </Button>
           <Button
             color="secondary"
-            roundness="rounded"
+            roundness="sm-rounded"
             classNames={styles.buttonRight}
             onClick={() => setShowBulkGenerate(true)}
           >
