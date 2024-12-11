@@ -2,21 +2,21 @@ import PaddedContainer from "../../components/layout/PaddedContainer";
 import AnnouncementItem from "../../components/ui/announcements/AnnouncementItem";
 import Button from "../../components/ui/Button";
 import { IconPlus } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { deleteAnnouncement, getAnnouncements } from "../../api/adminCRUD";
 import { Announcement } from "../../types/types";
-
 import styles from "./AdminViewAnnouncements.module.scss";
 import Spinner from "../../components/ui/Spinner";
 import { useUser } from "../../contexts/UserContext";
 import { toast } from "react-toastify";
+import CreateAnnouncementPopup from "../../components/ui/announcements/CreateAnnouncementPopUp";
 
 export default function AdminViewAnnouncements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState<string>("");
   const { user } = useUser();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -73,16 +73,15 @@ export default function AdminViewAnnouncements() {
         <div className={styles.header}>
           <h2 className={styles.title}>Announcements</h2>
           {user?.role === "Admin" && (
-            <Link to={"/announcements/create"}>
-              <Button
-                classNames={styles.announcementButton}
-                color="secondary"
-                roundness="rounded"
-              >
-                <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />
-                Create Announcement
-              </Button>
-            </Link>
+            <Button
+              classNames={styles.announcementButton}
+              color="secondary"
+              roundness="rounded"
+              onClick={() => setIsPopupOpen(true)}
+            >
+              <IconPlus size={25} stroke={1.5} className={styles.iconPlus} />
+              Create Announcement
+            </Button>
           )}
         </div>
         {deleteLoading && <Spinner message={deleteLoading} />}
@@ -105,6 +104,11 @@ export default function AdminViewAnnouncements() {
           <p>No announcements available.</p>
         )}
       </div>
+
+      <CreateAnnouncementPopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </PaddedContainer>
   );
 }
