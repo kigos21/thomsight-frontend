@@ -10,13 +10,14 @@
     align-items: center;
     justify-content: center;
     padding: 0.75rem 1.5rem;
-    background-color: var(--blue-8); // Blue color
+    background-color: var(--blue-6); // Blue color
     color: white;
     border: none;
     border-radius: 999px;
     cursor: pointer;
     font-size: 1rem;
     position: relative;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
   
     &:hover {
       background-color: var(--blue-8);
