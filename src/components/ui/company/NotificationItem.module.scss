@@ -11,16 +11,13 @@
 }
 
 .container {
-  background-color: var(--neutral-0);
+  background-color: var(--white);
   color: black;
   border-radius: 8px;
-  border: 2px solid var(--black);
+  border: 2px solid var(--neutral-2);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
   transition: box-shadow 0.3s ease;
   margin-bottom: 10px;
-
-  &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
 
   @media (max-width: 768px) {
     border-radius: 1rem;

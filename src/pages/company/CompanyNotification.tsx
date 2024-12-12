@@ -51,7 +51,7 @@ export default function CompanyNotification() {
   const sortedNotifications = sortNotificationsByDate(notifications);
 
   return (
-    <PaddedContainer>
+    <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
       <div className={styles.notificationContainer}>
         <h2 className={styles.title}>Notifications</h2>
