@@ -132,9 +132,9 @@ export default function AdminCompanyAccount() {
   };
 
   return (
-    <PaddedContainer>
-      <div className={styles.title}>
-        <h1>Company Accounts</h1>
+    <PaddedContainer classNames={styles.paddedContainer}>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.title}>Company Accounts</h1>
         {/* <SortButton classNames={styles.button}></SortButton> */}
         <SortButton onSort={handleSort}></SortButton>
       </div>
