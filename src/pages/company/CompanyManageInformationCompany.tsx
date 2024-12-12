@@ -8,6 +8,7 @@ import ErrorPage from "../ErrorPage";
 import Spinner from "../../components/ui/Spinner";
 import { updateCompanyInfo } from "../../api/companyCRUD";
 import { toast } from "react-toastify";
+import EditCompanyInfoPopup from "../../components/ui/company/EditCompanyInfoPopup";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
@@ -31,6 +32,8 @@ export default function CompanyManageInformationCompany() {
   const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
 
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (slug) {
@@ -109,43 +112,28 @@ export default function CompanyManageInformationCompany() {
     }
   };
 
+  const handleEditInfo = () => {
+    setIsEditPopupOpen(true);
+  };
+
   return (
     <div className={styles.container}>
-      <h2>Company Information</h2>
-      {isUpdating && <Spinner message="Updating..." />}{" "}
+      <div className={styles.headerContainer}>
+        <h2>Company Information</h2>
+        <button
+          className={styles.editButton}
+          onClick={handleEditInfo}
+        >
+          <IconEdit className={styles.iconEdit} />
+          Edit Information
+        </button>
+      </div>
+      {isUpdating && <Spinner message="Updating..." />}
       {/* COMPANY DESCRIPTION */}
       <div>
         <div className={styles.sectionHeading}>
           <h3>Company Description</h3>
-
-          {isEditDesc ? (
-            <div className={styles.saveAndCancelButtons}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => {
-                  setIsEditDesc(false);
-                  setDescription(originalDescription);
-                }}
-              >
-                Cancel
-              </button>
-              <button className={styles.saveButton} onClick={handleSaveUpdates}>
-                Save
-              </button>
-            </div>
-          ) : (
-            <button
-              className={styles.headingEditButton}
-              onClick={() => {
-                setIsEditDesc(true);
-                setOriginalDescription(description);
-              }}
-            >
-              <IconEdit className={styles.iconEdit} />
-            </button>
-          )}
         </div>
-
         {isEditDesc ? (
           <div>
             <textarea
@@ -167,35 +155,7 @@ export default function CompanyManageInformationCompany() {
       <div>
         <div className={styles.sectionHeading}>
           <h3>Company Size</h3>
-
-          {isEditCompanySize ? (
-            <div className={styles.saveAndCancelButtons}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => {
-                  setIsEditCompanySize(false);
-                  setCompanySize(originalSize);
-                }}
-              >
-                Cancel
-              </button>
-              <button className={styles.saveButton} onClick={handleSaveUpdates}>
-                Save
-              </button>
-            </div>
-          ) : (
-            <button
-              className={styles.headingEditButton}
-              onClick={() => {
-                setIsEditCompanySize(true);
-                setOriginalSize(size);
-              }}
-            >
-              <IconEdit className={styles.iconEdit} />
-            </button>
-          )}
         </div>
-
         {isEditCompanySize ? (
           <div>
             <input
@@ -214,35 +174,7 @@ export default function CompanyManageInformationCompany() {
       <div>
         <div className={styles.sectionHeading}>
           <h3>Industry</h3>
-
-          {isEditIndustry ? (
-            <div className={styles.saveAndCancelButtons}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => {
-                  setIsEditIndustry(false);
-                  setIndustry(originalIndustry);
-                }}
-              >
-                Cancel
-              </button>
-              <button className={styles.saveButton} onClick={handleSaveUpdates}>
-                Save
-              </button>
-            </div>
-          ) : (
-            <button
-              className={styles.headingEditButton}
-              onClick={() => {
-                setIsEditIndustry(true);
-                setOriginalIndustry(industry);
-              }}
-            >
-              <IconEdit className={styles.iconEdit} />
-            </button>
-          )}
         </div>
-
         {isEditIndustry ? (
           <div>
             <input
@@ -260,6 +192,41 @@ export default function CompanyManageInformationCompany() {
       {/* LOCATIONS */}
       <LocationManagement />
       {/* END OF LOCATIONS */}
+
+      {/* Edit Company Info Popup */}
+      <EditCompanyInfoPopup
+        isOpen={isEditPopupOpen}
+        onClose={() => setIsEditPopupOpen(false)}
+        initialSize={size}
+        initialIndustry={industry}
+        initialDescription={description}
+        onSave={async (data) => {
+          setIsUpdating(true);
+          try {
+            if (!slug) {
+              throw new Error("Slug is undefined");
+            }
+
+            await updateCompanyInfo(slug, data);
+            
+            const updatedCompany = {
+              ...company,
+              ...data
+            };
+            updateCompany(updatedCompany);
+            setCompanySize(data.size);
+            setIndustry(data.industry);
+            setDescription(data.description);
+            setIsEditPopupOpen(false);
+            toast.success("Company information updated successfully");
+          } catch (error) {
+            console.error("Error updating company information:", error);
+            toast.error("Failed to update company information");
+          } finally {
+            setIsUpdating(false);
+          }
+        }}
+      />
     </div>
   );
 }
