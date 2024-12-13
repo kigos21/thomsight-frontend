@@ -81,6 +81,7 @@ export type ReviewItemProps = {
   id: number | undefined;
   posted_by: string | undefined;
   onReviewDelete: (id: number | undefined) => void;
+  reviewImage?: string;
 };
 
 export type PaddedContainerProps = {
