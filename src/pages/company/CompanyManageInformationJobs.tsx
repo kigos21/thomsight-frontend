@@ -12,6 +12,8 @@ import { deleteJob } from "../../api/companyCRUD";
 import Spinner from "../../components/ui/Spinner";
 import { toast } from "react-toastify";
 import ErrorPage from "../ErrorPage";
+import JobPopup from "../../components/ui/company/JobPopup";
+import EditJobPopup from "../../components/ui/company/EditJobPopup";
 
 export default function CompanyManageInformationJobs() {
   const { slug } = useParams<{ slug: string }>();
@@ -33,6 +35,8 @@ export default function CompanyManageInformationJobs() {
 
   // State to control the visibility of the form
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+  const [showJobPopup, setShowJobPopup] = useState(false);
+  const [showEditJobPopup, setShowEditJobPopup] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -48,23 +52,19 @@ export default function CompanyManageInformationJobs() {
   if (error) return <ErrorPage />;
 
   const handleAdd = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Smooth scrolling
-    });
-    // Reset to a clean state for adding a new job and show the form
-    setCurrentJob({ id: 0, company_id: 1, title: "", description: "" });
-    setIsFormVisible(true); // Show the form
+    setShowJobPopup(true);
+  };
+
+  const handleAddJob = async (jobTitle: string, jobDescription: string) => {
+    const newJob = { id: jobs.length + 1, company_id: 1, title: jobTitle, description: jobDescription };
+    setJobs([...jobs, newJob]);
+    toast.success("Job added successfully");
+    setShowJobPopup(false);
   };
 
   const handleEdit = (job: Job) => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Smooth scrolling
-    });
-    // Populate the form with the job data to be edited and show the form
     setCurrentJob(job);
-    setIsFormVisible(true); // Show the form
+    setShowEditJobPopup(true);
   };
 
   const handleSave = () => {
@@ -138,6 +138,14 @@ export default function CompanyManageInformationJobs() {
         </Button>
       </div>
 
+      {showJobPopup && (
+        <JobPopup
+          isOpen={showJobPopup}
+          onClose={() => setShowJobPopup(false)}
+          onSubmit={handleAddJob}
+        />
+      )}
+
       {/* Conditionally render the form based on isFormVisible */}
       {isFormVisible && (
         <CompanyJobInformationFormItem
@@ -161,6 +169,22 @@ export default function CompanyManageInformationJobs() {
           onDelete={handleDelete}
           heading="Delete Job"
           details="Are you sure you want to delete this job?"
+        />
+      )}
+
+      {showEditJobPopup && currentJob && (
+        <EditJobPopup
+          isOpen={showEditJobPopup}
+          onClose={() => setShowEditJobPopup(false)}
+          onSave={async (jobTitle, jobDescription) => {
+            // Update the job in the state
+            const updatedJob = { ...currentJob, title: jobTitle, description: jobDescription };
+            setJobs(jobs.map((job) => (job.id === currentJob.id ? updatedJob : job)));
+            toast.success("Job updated successfully");
+            setShowEditJobPopup(false);
+          }}
+          initialJobTitle={currentJob.title}
+          initialJobDescription={currentJob.description}
         />
       )}
     </div>
