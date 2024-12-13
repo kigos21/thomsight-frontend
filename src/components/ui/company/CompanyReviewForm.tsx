@@ -9,6 +9,7 @@ import "quill/dist/quill.snow.css";
 interface Review {
   rating: string;
   description: string;
+  image?: File | null;
 }
 
 interface CompanyReviewFormProps {
@@ -16,6 +17,7 @@ interface CompanyReviewFormProps {
   onSave: () => void;
   onChange: (review: Review) => void;
   onCancel: () => void;
+  setSelectedFile: (file: File | null) => void;
 }
 
 const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
@@ -23,6 +25,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
   onSave,
   onChange,
   onCancel,
+  setSelectedFile,
 }) => {
   const [rating, setRating] = useState(review.rating);
   const [description, setDescription] = useState(review.description);
@@ -36,7 +39,11 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
     quillInstance.current = new Quill(quillRef.current, {
       theme: "snow",
       modules: {
-        toolbar: [["bold", "italic", { list: "bullet" }, { list: "ordered" }]],
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ align: [] }],
+        ],
       },
     });
 
@@ -66,8 +73,15 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onChange({ rating, description });
+    onChange({ rating, description, image: review.image });
     onSave();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+      onChange({ rating, description, image: e.target.files[0] });
+    }
   };
 
   return (
@@ -89,7 +103,9 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
 
           <div>
             <p className={styles.formTitle}>Description</p>
-            <div ref={quillRef} className={styles.quillContainer}></div>
+            <div className={styles.quillWrapper}>
+              <div ref={quillRef} className={styles.quillContainer}></div>
+            </div>
             {/* <FormField
               classNames={styles.formFieldBio}
               type="textarea"
@@ -99,6 +115,18 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               value={review.description}
               onChange={handleInputChange}
             ></FormField> */}
+          </div>
+
+          <div>
+            <p className={styles.formTitle}>
+              Image Upload (optional, max 4 MB)
+            </p>
+            <input
+              id="fileInput"
+              type="file"
+              accept=".jpeg, .jpg, .png"
+              onChange={handleFileChange}
+            />
           </div>
 
           <div className={styles.buttonGroup}>

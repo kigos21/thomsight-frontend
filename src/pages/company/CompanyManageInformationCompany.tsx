@@ -9,6 +9,7 @@ import Spinner from "../../components/ui/Spinner";
 import { updateCompanyInfo } from "../../api/companyCRUD";
 import { toast } from "react-toastify";
 import EditCompanyInfoPopup from "../../components/ui/company/EditCompanyInfoPopup";
+import DOMPurify from "dompurify";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
@@ -16,20 +17,12 @@ export default function CompanyManageInformationCompany() {
 
   // DATA FOR DESCRIPTION
   const [description, setDescription] = useState<string>("");
-  // const [originalDescription, setOriginalDescription] = useState<string>("");
-  // const [isEditDesc, setIsEditDesc] = useState<boolean>(false);
-
-  // const descRef = useRef<HTMLTextAreaElement>(null);
 
   // DATA FOR COMPANY SIZE
   const [size, setCompanySize] = useState<string>("");
-  // const [originalSize, setOriginalSize] = useState<string>("");
-  // const [isEditCompanySize, setIsEditCompanySize] = useState<boolean>(false);
 
   // DATA FOR COMPANY INDUSTRY
   const [industry, setIndustry] = useState<string>("");
-  // const [originalIndustry, setOriginalIndustry] = useState<string>("");
-  // const [isEditIndustry, setIsEditIndustry] = useState<boolean>(false);
 
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
@@ -40,11 +33,8 @@ export default function CompanyManageInformationCompany() {
       const fetchedCompany = getCompanyBySlug(slug);
       if (fetchedCompany) {
         setDescription(fetchedCompany.description || "");
-        // setOriginalDescription(fetchedCompany.description || "");
         setCompanySize(fetchedCompany.size || "");
-        // setOriginalSize(fetchedCompany.size || "");
         setIndustry(fetchedCompany.industry || "");
-        // setOriginalIndustry(fetchedCompany.industry || "");
       }
     }
   }, [slug, getCompanyBySlug]);
@@ -53,64 +43,6 @@ export default function CompanyManageInformationCompany() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   const company = getCompanyBySlug(slug as string);
-
-  // const handleSaveUpdates = async () => {
-  //   if (isEditDesc && description.trim() === "") {
-  //     toast.error("Description cannot be blank");
-  //     return;
-  //   }
-  //   if (isEditCompanySize && size.trim() === "") {
-  //     toast.error("Company size cannot be blank");
-  //     return;
-  //   }
-  //   if (isEditIndustry && industry.trim() === "") {
-  //     toast.error("Industry cannot be blank");
-  //     return;
-  //   }
-  //   if (isEditDesc && description.length > 2500) {
-  //     toast.error("Description should not exceed more than 2500 characters");
-  //     return;
-  //   }
-  //   if (isEditCompanySize && size.length > 100) {
-  //     toast.error("Size should not exceed more than 100 characters");
-  //     return;
-  //   }
-  //   if (isEditIndustry && industry.length > 100) {
-  //     toast.error("Industry should not exceed more than 100 characters");
-  //     return;
-  //   }
-
-  //   setIsUpdating(true);
-  //   try {
-  //     if (!slug) {
-  //       throw new Error("Slug is undefined");
-  //     }
-
-  //     const updatedData = {
-  //       description,
-  //       industry,
-  //       size,
-  //     };
-
-  //     await updateCompanyInfo(slug, updatedData);
-
-  //     const updatedCompany = {
-  //       ...company,
-  //       description,
-  //       industry,
-  //       size,
-  //     };
-  //     updateCompany(updatedCompany);
-  //     toast.success("Updated successfully");
-  //   } catch (error) {
-  //     console.error("Error updating company data:", error);
-  //   } finally {
-  //     setIsUpdating(false);
-  //     setIsEditDesc(false);
-  //     setIsEditCompanySize(false);
-  //     setIsEditIndustry(false);
-  //   }
-  // };
 
   const handleEditInfo = () => {
     setIsEditPopupOpen(true);
@@ -131,22 +63,14 @@ export default function CompanyManageInformationCompany() {
         <div className={styles.sectionHeading}>
           <h3>Company Description</h3>
         </div>
-        {/* {isEditDesc ? (
-          <div>
-            <textarea
-              name="description"
-              id="description"
-              rows={10}
-              className={styles.textareaDesc}
-              ref={descRef}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-        ) : (
-          <p>{description}</p>
-        )} */}
-        <p>{description}</p>
+
+        <p
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(
+              company?.description || "No company description"
+            ),
+          }}
+        ></p>
       </div>
       {/* END OF COMPANY DESCRIPTION */}
       {/* COMPANY SIZE */}
@@ -154,18 +78,7 @@ export default function CompanyManageInformationCompany() {
         <div className={styles.sectionHeading}>
           <h3>Company Size</h3>
         </div>
-        {/* {isEditCompanySize ? (
-          <div>
-            <input
-              type="text"
-              value={size}
-              onChange={(e) => setCompanySize(e.target.value)}
-              className={styles.inputText}
-            />
-          </div>
-        ) : (
-          <p>{size}</p>
-        )} */}
+
         <p>{size}</p>
       </div>
       {/* END OF COMPANY SIZE */}
@@ -174,18 +87,7 @@ export default function CompanyManageInformationCompany() {
         <div className={styles.sectionHeading}>
           <h3>Industry</h3>
         </div>
-        {/* {isEditIndustry ? (
-          <div>
-            <input
-              type="text"
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              className={styles.inputText}
-            />
-          </div>
-        ) : (
-          <p>{industry}</p>
-        )} */}
+
         <p>{industry}</p>
       </div>
       {/* END OF COMPANY INDUSTRY */}

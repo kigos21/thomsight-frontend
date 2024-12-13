@@ -2,6 +2,7 @@ import { HomeCompanyItemProps } from "../../../types/props";
 import styles from "./HomeCompanyItem.module.scss";
 import JobChip from "./JobChip";
 import { IconMapPin, IconStarFilled } from "@tabler/icons-react";
+import srcLogo from "../../../assets/no-image.png";
 
 const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   company,
@@ -10,12 +11,6 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   const trimmedJobs = jobs?.slice(0, 2);
 
   const someBoolState = true;
-
-  const getInitials = (companyName: string) => {
-    const words = companyName.split(" ");
-    const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
-    return initials;
-  };
 
   return (
     <div className={styles.container}>
@@ -27,9 +22,11 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
             className={styles.companyImage}
           />
         ) : (
-          <div className={styles.companyImageFallback}>
-            {name ? getInitials(name) : "NA"}
-          </div>
+          <img
+            src={srcLogo}
+            alt={"Image of " + name}
+            className={styles.companyImage}
+          />
         )}
 
         {/* Company Name and Location (Clamped to 1 line) */}

@@ -4,7 +4,7 @@ import ButtonReview from "../ButtonReview";
 
 import styles from "./ReviewItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
@@ -21,18 +21,12 @@ export default function ReviewItem({
   date,
   rating,
   reviewDescription,
-  onReviewChange,
   id,
   posted_by,
   onReviewDelete,
   user_id,
+  reviewImage,
 }: ReviewItemProps) {
-  // Local state for editing
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [tempReview, setTempReview] = useState<{
-    rating: string;
-    description: string;
-  }>({ rating: rating, description: reviewDescription });
   const { slug } = useParams<{ slug: string }>();
   const [loading, setLoading] = useState<string>("");
   const { user } = useUser();
@@ -42,9 +36,6 @@ export default function ReviewItem({
     string | null
   >(null);
   const [reportDescription, setReportDescription] = useState<string>("");
-
-  // Used for firing off HTML validation for rating input[type=number] element
-  const ratingRef = useRef<HTMLFormElement>(null);
 
   const [upvotes, setUpvotes] = useState<number>(0);
   const [downvotes, setDownvotes] = useState<number>(0);
@@ -61,6 +52,8 @@ export default function ReviewItem({
 
     fetchVotes();
   }, [id]);
+
+  console.log(reviewImage);
 
   const handleVote = async (voteType: "up" | "down") => {
     try {
@@ -91,54 +84,6 @@ export default function ReviewItem({
     } catch (error) {
       console.error("Error submitting vote:", error);
     }
-  };
-
-  const updateReview = async () => {
-    const updatedReview = {
-      rating: tempReview.rating,
-      description: tempReview.description,
-    };
-
-    try {
-      setLoading("Updating review...");
-      await axiosInstance.put(
-        `/api/company/${slug}/review/${id}/update`,
-        updatedReview
-      );
-      toast.success("Review updated successfully");
-      onReviewChange(updatedReview);
-    } catch (error) {
-      console.error("Error updating review:", error);
-      toast.error("Could not update review. Please try again.");
-    } finally {
-      setLoading("");
-    }
-  };
-
-  // const handleEditClick = () => {
-  //   setIsEditing((state) => !state);
-  // };
-
-  const handleSaveClick = async () => {
-    if (ratingRef.current && !ratingRef.current!.checkValidity()) {
-      ratingRef.current.reportValidity();
-      return;
-    }
-    if (tempReview.description.length > 2500) {
-      toast.error("Review should not be longer than 500 characters.");
-      return;
-    }
-    await updateReview();
-    setIsEditing(false);
-  };
-
-  const handleCancelClick = () => {
-    setTempReview({ rating: rating, description: reviewDescription });
-    setIsEditing(false);
-  };
-
-  const handleRatingSubmit = (e: FormEvent) => {
-    e.preventDefault();
   };
 
   const handleDeleteClick = () => {
@@ -218,30 +163,10 @@ export default function ReviewItem({
                 {internName}
               </p>
               <div className={styles.verticalDivider}></div>
-              {!isEditing ? (
-                <div className={styles.ratingContainer}>
-                  <h2 className={styles.rating}>{rating}</h2>
-                  <IconStarFilled width={16} />
-                </div>
-              ) : (
-                <form onSubmit={(e) => handleRatingSubmit(e)} ref={ratingRef}>
-                  <input
-                    className={styles.ratingTextfield}
-                    type="number"
-                    name="rating"
-                    id="rating"
-                    placeholder="5"
-                    value={tempReview.rating}
-                    onChange={(e) =>
-                      setTempReview((current) => {
-                        return { ...current, rating: e.target.value };
-                      })
-                    }
-                    min="1"
-                    max="5"
-                  />
-                </form>
-              )}
+              <div className={styles.ratingContainer}>
+                <h2 className={styles.rating}>{rating}</h2>
+                <IconStarFilled width={16} />
+              </div>
             </div>
             {date && <p className={styles.date}>{date.toString()}</p>}
 
@@ -287,38 +212,16 @@ export default function ReviewItem({
             </div>
           </div>
 
-          {isEditing ? (
-            <div className={styles.editReviewDescriptionSection}>
-              <textarea
-                className={styles.descriptionTextarea}
-                value={tempReview.description}
-                onChange={(e) =>
-                  setTempReview((current) => {
-                    return { ...current, description: e.target.value };
-                  })
-                }
-                rows={5}
-              />
-              <div className={styles.editButtons}>
-                <button
-                  onClick={handleCancelClick}
-                  className={styles.cancelButton}
-                >
-                  Cancel
-                </button>
-                <button onClick={handleSaveClick} className={styles.saveButton}>
-                  Save
-                </button>
-              </div>
-            </div>
-          ) : (
-            <p
-              className={styles.reviewDescription}
-              dangerouslySetInnerHTML={{
-                __html: reviewDescription,
-              }}
-            ></p>
+          {reviewImage !== "http://localhost:8000/storage/uploads/reviews" && (
+            <img className={styles.image} src={reviewImage} alt={"Test"} />
           )}
+
+          <p
+            className={styles.reviewDescription}
+            dangerouslySetInnerHTML={{
+              __html: reviewDescription,
+            }}
+          ></p>
 
           <div className={styles.iconContainer}>
             {/* {user?.id == posted_by && (

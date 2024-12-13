@@ -97,6 +97,8 @@
   font-weight: 400;
   word-wrap: break-word;
   overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   @media screen and (max-width: 668px) {
     width: 100%;
@@ -227,4 +229,11 @@
   .container {
     border-radius: 0.75rem;
   }
+}
+
+.image {
+  max-width: 200px;
+  max-height: 200px;
+  align-items: center;
+  justify-content: center;
 }

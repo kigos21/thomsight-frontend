@@ -3,7 +3,7 @@ import { Company } from "./types";
 
 export type ButtonProps = {
   children: React.ReactNode;
-  color: "primary" | "secondary" | "black" | "gray";
+  color?: "primary" | "secondary" | "black" | "gray";
   roundness?: "sm-rounded" | "rounded";
 
   classNames?: string;
@@ -81,6 +81,7 @@ export type ReviewItemProps = {
   id: number | undefined;
   posted_by: string | undefined;
   onReviewDelete: (id: number | undefined) => void;
+  reviewImage?: string;
 };
 
 export type PaddedContainerProps = {

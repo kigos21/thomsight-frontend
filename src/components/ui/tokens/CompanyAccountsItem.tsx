@@ -34,7 +34,7 @@ const CompanyAccountsItem: React.FC<CompanyAccountsItemProps> = ({
       <p className={styles.token}>{companyName}</p>
       <Status status={status} />
       <p className={styles.expiration}>{expiration}</p>
-      <p>{email}</p>
+      <p className={styles.email}>{email}</p>
       {isDeleted ? (
         <IconRestore className={styles.restoreIcon} onClick={restore} />
       ) : (

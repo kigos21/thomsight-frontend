@@ -23,6 +23,8 @@ export type Review = {
   date?: string | number | Date;
   poster_name?: string;
   user_id?: number;
+  image?: File | null;
+  image_path?: string;
 };
 
 export default function UserCompanyOverview() {
@@ -36,6 +38,7 @@ export default function UserCompanyOverview() {
   const { slug } = useParams<{ slug: string }>();
   const { getCompanyBySlug, loading: companyLoading, error } = useCompanies();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -97,10 +100,25 @@ export default function UserCompanyOverview() {
 
     try {
       setLoading("Creating review...");
-      await axiosInstance.post(`/api/company/${slug}/reviews/create`, {
-        rating: review.rating,
-        description: review.description,
-      });
+
+      const formData = new FormData();
+      formData.append("rating", review.rating);
+      formData.append("description", review.description);
+
+      if (selectedFile) {
+        formData.append("image", selectedFile);
+      }
+
+      await axiosInstance.post(
+        `/api/company/${slug}/reviews/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       setIsAddingReview(false);
       setReview({ rating: "", description: "" });
       setLoading("Refetching reviews...");
@@ -176,7 +194,13 @@ export default function UserCompanyOverview() {
         <div className={styles.leftcontainer}>
           <div className={styles.titleContainer}>
             <h2 className={styles.titleHeader}>Company Description</h2>
-            <p>{company?.description}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(
+                  company?.description || "No company description"
+                ),
+              }}
+            ></p>
           </div>
 
           <div className={styles.rightcontainerMobile}>
@@ -218,6 +242,7 @@ export default function UserCompanyOverview() {
                 onSave={handleSave}
                 onChange={handleChange}
                 onCancel={handleCancel}
+                setSelectedFile={setSelectedFile}
               />
             )}
             {reviews.length === 0 && (
@@ -238,6 +263,7 @@ export default function UserCompanyOverview() {
                     : "N/A"
                 }
                 reviewDescription={DOMPurify.sanitize(review.description)}
+                reviewImage={review.image_path}
                 onReviewChange={(updatedReview: {
                   rating: string;
                   description: string;

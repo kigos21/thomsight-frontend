@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./EditCompanyInfoPopup.module.scss";
 import FormField from "../../form/FormField";
 import Button from "../../ui/Button";
 import { toast } from "react-toastify";
 import Spinner from "../../ui/Spinner";
+import Quill from "quill";
 
 interface EditCompanyInfoPopupProps {
   isOpen: boolean;
@@ -31,6 +32,9 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
   const [description, setDescription] = useState(initialDescription);
   const [loading, setLoading] = useState(false);
 
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
   useEffect(() => {
     if (isOpen) {
       setSize(initialSize);
@@ -38,6 +42,40 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
       setDescription(initialDescription);
     }
   }, [isOpen, initialSize, initialIndustry, initialDescription]);
+
+  useEffect(() => {
+    if (isOpen && quillRef.current) {
+      if (quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
+
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+            [{ align: [] }],
+          ],
+        },
+      });
+
+      quillInstance.current.root.innerHTML = initialDescription;
+
+      quillInstance.current.on("text-change", () => {
+        const htmlContent = quillInstance.current?.root.innerHTML || "";
+        setDescription(htmlContent);
+      });
+    }
+
+    return () => {
+      if (quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
+    };
+  }, [isOpen, initialDescription]);
 
   const handleSave = async () => {
     const sizeTrimmed = size.trim();
@@ -125,20 +163,23 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
             </div>
             <div>
               <label className={styles.label}>Company Description</label>
-              <FormField
+              <div className={styles.quillWrapper}>
+                <div ref={quillRef} className={styles.quillContainer}></div>
+              </div>
+              {/* <FormField
                 classNames={styles.textarea}
                 type="textarea"
                 placeholder="Company Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
-              />
+              /> */}
             </div>
           </div>
         )}
         <div className={styles.buttonContainer}>
           <Button
-            color="secondary"
+            color="black"
             classNames={styles.cancelButton}
             onClick={onClose}
           >

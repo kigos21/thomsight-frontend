@@ -8,6 +8,7 @@ import DeletePopUp from "../company/DeletePopUp";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../services/axiosInstance";
 import Spinner from "../Spinner";
+import DOMPurify from "dompurify";
 
 export default function AnnouncementItem({
   classNames,
@@ -138,7 +139,12 @@ export default function AnnouncementItem({
             </div>
           </div>
         ) : (
-          <p className={styles.description}>{announcementDescription}</p>
+          <p
+            className={styles.description}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(announcementDescription),
+            }}
+          ></p>
         )}
       </StyledBox>
 
