@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./CreateAnnouncementPopup.module.scss";
 import { toast } from "react-toastify";
 import { createAnnouncement } from "../../../api/adminCRUD";
@@ -9,6 +9,7 @@ import axiosInstance from "../../../services/axiosInstance";
 import FormField from "../../form/FormField";
 import Button from "../Button";
 import { Announcement } from "../../../types/types";
+import Quill from "quill";
 
 interface CreateAnnouncementPopupProps {
   isOpen: boolean;
@@ -25,6 +26,44 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
   const [details, setDetails] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
+  useEffect(() => {
+    if (isOpen && quillRef.current) {
+      if (quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
+
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+            [{ indent: "-1" }, { indent: "+1" }],
+            [{ align: [] }],
+          ],
+        },
+      });
+
+      quillInstance.current.root.innerHTML = details;
+
+      quillInstance.current.on("text-change", () => {
+        const htmlContent = quillInstance.current?.root.innerHTML || "";
+        setDetails(htmlContent);
+      });
+    }
+
+    return () => {
+      if (quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -70,7 +109,21 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
         subject,
         details,
       });
+      resetForm();
     }
+  };
+
+  const resetForm = () => {
+    setSubject("");
+    setDetails("");
+    if (quillInstance.current) {
+      quillInstance.current.root.innerHTML = "";
+    }
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
   };
 
   return (
@@ -90,21 +143,16 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
             onChange={(e) => setSubject(e.target.value)}
           />
           <label className={styles.label}>Details</label>
-          <FormField
-            classNames={styles.textarea}
-            type="textarea"
-            placeholder="Announcement Details"
-            required={true}
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-          />
+          <div className={styles.quillWrapper}>
+            <div ref={quillRef} className={styles.quillContainer}></div>
+          </div>
         </div>
         <div className={styles.buttonContainer}>
           <Button
             color="black"
             classNames={styles.cancelButton}
             roundness="sm-rounded"
-            onClick={onClose}
+            onClick={handleClose}
           >
             Cancel
           </Button>
