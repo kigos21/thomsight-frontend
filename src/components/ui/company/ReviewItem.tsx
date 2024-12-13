@@ -1,10 +1,5 @@
 import { ReviewItemProps } from "../../../types/props";
-import {
-  IconFlagFilled,
-  IconTrash,
-  IconEdit,
-  IconStarFilled,
-} from "@tabler/icons-react";
+import { IconFlagFilled, IconTrash, IconStarFilled } from "@tabler/icons-react";
 import ButtonReview from "../ButtonReview";
 
 import styles from "./ReviewItem.module.scss";
@@ -120,9 +115,9 @@ export default function ReviewItem({
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditing((state) => !state);
-  };
+  // const handleEditClick = () => {
+  //   setIsEditing((state) => !state);
+  // };
 
   const handleSaveClick = async () => {
     if (ratingRef.current && !ratingRef.current!.checkValidity()) {
@@ -326,11 +321,11 @@ export default function ReviewItem({
           )}
 
           <div className={styles.iconContainer}>
-            {user?.id == posted_by && (
+            {/* {user?.id == posted_by && (
               <button onClick={handleEditClick} className={styles.iconButton}>
                 <IconEdit size={25} stroke={1.5} className={styles.iconEdit} />
               </button>
-            )}
+            )} */}
             {user?.id == posted_by && (
               <button onClick={handleDeleteClick} className={styles.iconButton}>
                 <IconTrash
