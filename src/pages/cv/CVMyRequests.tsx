@@ -15,6 +15,9 @@ const CVMyRequests = () => {
   const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
   const [selectedCVId, setSelectedCVId] = useState<number | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   useEffect(() => {
     const fetchCVs = async () => {
       try {
@@ -33,6 +36,14 @@ const CVMyRequests = () => {
     fetchCVs();
   }, []);
 
+  const combinedCVs = [...requestedCVs, ...reviewedCVs];
+
+  const totalPages = Math.ceil(combinedCVs.length / itemsPerPage);
+  const paginatedCVs = combinedCVs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const handleDelete = async () => {
     if (!selectedCVId) return;
     try {
@@ -48,45 +59,112 @@ const CVMyRequests = () => {
     }
   };
 
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
-    <div className={styles.rootContainer}>
-      {loading && <Spinner message={loading} />}
-      {requestedCVs.map((cv) => (
-        <>
+    <div className={styles.pageContainer}>
+      <div className={styles.rootContainer}>
+        {loading && <Spinner message={loading} />}
+        {paginatedCVs.map((cv) => (
           <CVCard
             key={cv.id}
             name={cv.name}
             fileTitle={cv.file}
             description={cv.description}
-            buttonVariant="cancel"
-            onButtonClick={() => {
-              setSelectedCVId(cv.id);
-              setShowDeletePopup(true);
-            }}
+            buttonVariant={
+              requestedCVs.find((requested) => requested.id === cv.id)
+                ? "cancel"
+                : "view-feedback"
+            }
+            onButtonClick={
+              requestedCVs.find((requested) => requested.id === cv.id)
+                ? () => {
+                    setSelectedCVId(cv.id);
+                    setShowDeletePopup(true);
+                  }
+                : undefined
+            }
+            url={
+              reviewedCVs.find((reviewed) => reviewed.id === cv.id)
+                ? `/cv-review/view/${cv.id}`
+                : undefined
+            }
           />
-          {showDeletePopup && (
-            <DeletePopUp
-              isVisible={showDeletePopup}
-              onClose={() => setShowDeletePopup(false)}
-              onDelete={handleDelete}
-              heading="Cancel Review Request"
-              details="Are you sure you want to cancel your review request?"
-            />
-          )}
-        </>
-      ))}
-      {reviewedCVs.map((cv) => (
-        <CVCard
-          key={cv.id}
-          name={cv.name}
-          fileTitle={cv.file}
-          description={cv.description}
-          buttonVariant="view-feedback"
-          url={`/cv-review/view/${cv.id}`}
-        />
-      ))}
-      {reviewedCVs.length === 0 && requestedCVs.length === 0 && !loading && (
-        <div style={{ fontSize: "1.25rem" }}>No requests made.</div>
+        ))}
+        {showDeletePopup && (
+          <DeletePopUp
+            isVisible={showDeletePopup}
+            onClose={() => setShowDeletePopup(false)}
+            onDelete={handleDelete}
+            heading="Cancel Review Request"
+            details="Are you sure you want to cancel your review request?"
+          />
+        )}
+        {combinedCVs.length === 0 && !loading && (
+          <div style={{ fontSize: "1.25rem" }}>No requests made.</div>
+        )}
+      </div>
+      {combinedCVs.length > itemsPerPage && (
+        <div className={styles.pagination}>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            &#60; Previous
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            First
+          </button>
+
+          {Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(
+              Math.max(currentPage - 2, 0),
+              Math.min(currentPage + 1, totalPages)
+            )
+            .map((page) => (
+              <button
+                key={page}
+                className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                onClick={() => handlePageSelect(page)}
+              >
+                {page}
+              </button>
+            ))}
+
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            Last
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next &#62;
+          </button>
+        </div>
       )}
     </div>
   );
