@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./CreateAnnouncementPopup.module.scss";
+import styles from "./CreateAnnouncementPopUp.module.scss";
 import { toast } from "react-toastify";
 import { createAnnouncement } from "../../../api/adminCRUD";
 import Spinner from "../Spinner";
