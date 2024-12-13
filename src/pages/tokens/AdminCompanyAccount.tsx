@@ -17,6 +17,9 @@ export default function AdminCompanyAccount() {
   const [loading, setLoading] = useState<string>("");
   const { loadCompanies, loadJobs } = useCompanies();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   useEffect(() => {
     const fetchRepUsers = async () => {
       setLoading("Fetching company accounts...");
@@ -36,6 +39,12 @@ export default function AdminCompanyAccount() {
   useEffect(() => {
     setFilteredRepUsers(repUsers);
   }, [repUsers]);
+
+  const totalPages = Math.ceil(filteredRepUsers.length / itemsPerPage);
+  const paginatedRepUsers = filteredRepUsers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleSoftDelete = async (
     companyId: number | undefined
@@ -129,6 +138,23 @@ export default function AdminCompanyAccount() {
     }
 
     setFilteredRepUsers(sortedUsers);
+    setCurrentPage(1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -151,7 +177,7 @@ export default function AdminCompanyAccount() {
             <p className={styles.expiresIn}>Expires&nbsp;In</p>
             <p className={styles.company}>Email</p>
           </div>
-          {filteredRepUsers.map((user) => (
+          {paginatedRepUsers.map((user) => (
             <>
               {user.company && (
                 <CompanyAccountsItem
@@ -169,6 +195,55 @@ export default function AdminCompanyAccount() {
             </>
           ))}
         </div>
+
+        {filteredRepUsers.length > itemsPerPage && (
+          <div className={styles.pagination}>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              &#60; Previous
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(1)}
+              disabled={currentPage === 1}
+            >
+              First
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => index + 1)
+              .slice(
+                Math.max(currentPage - 2, 0),
+                Math.min(currentPage + 1, totalPages)
+              )
+              .map((page) => (
+                <button
+                  key={page}
+                  className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                  onClick={() => handlePageSelect(page)}
+                >
+                  {page}
+                </button>
+              ))}
+
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(totalPages)}
+              disabled={currentPage === totalPages}
+            >
+              Last
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next &#62;
+            </button>
+          </div>
+        )}
       </StyledBox>
     </PaddedContainer>
   );
