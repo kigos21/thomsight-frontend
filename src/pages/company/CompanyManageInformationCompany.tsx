@@ -9,6 +9,7 @@ import Spinner from "../../components/ui/Spinner";
 import { updateCompanyInfo } from "../../api/companyCRUD";
 import { toast } from "react-toastify";
 import EditCompanyInfoPopup from "../../components/ui/company/EditCompanyInfoPopup";
+import DOMPurify from "dompurify";
 
 export default function CompanyManageInformationCompany() {
   const { slug } = useParams<{ slug: string }>();
@@ -63,7 +64,13 @@ export default function CompanyManageInformationCompany() {
           <h3>Company Description</h3>
         </div>
 
-        <p>{description}</p>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(
+              company?.description || "No company description"
+            ),
+          }}
+        ></p>
       </div>
       {/* END OF COMPANY DESCRIPTION */}
       {/* COMPANY SIZE */}

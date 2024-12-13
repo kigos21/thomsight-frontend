@@ -44,27 +44,39 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
   }, [isOpen, initialSize, initialIndustry, initialDescription]);
 
   useEffect(() => {
-    if (!quillRef.current || quillInstance.current) return;
+    if (isOpen && quillRef.current) {
+      if (quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
 
-    quillInstance.current = new Quill(quillRef.current, {
-      theme: "snow",
-      modules: {
-        toolbar: [
-          ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-          [{ indent: "-1" }, { indent: "+1" }],
-          [{ align: [] }],
-        ],
-      },
-    });
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+            [{ indent: "-1" }, { indent: "+1" }],
+            [{ align: [] }],
+          ],
+        },
+      });
 
-    quillInstance.current.root.innerHTML = description;
+      quillInstance.current.root.innerHTML = initialDescription;
 
-    quillInstance.current.on("text-change", () => {
-      const htmlContent = quillInstance.current?.root.innerHTML || "";
-      setDescription(htmlContent);
-    });
-  }, [description]);
+      quillInstance.current.on("text-change", () => {
+        const htmlContent = quillInstance.current?.root.innerHTML || "";
+        setDescription(htmlContent);
+      });
+    }
+
+    return () => {
+      if (quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
+    };
+  }, [isOpen, initialDescription]);
 
   const handleSave = async () => {
     const sizeTrimmed = size.trim();
@@ -152,7 +164,9 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
             </div>
             <div>
               <label className={styles.label}>Company Description</label>
-              <div ref={quillRef} className={styles.quillContainer}></div>
+              <div className={styles.quillWrapper}>
+                <div ref={quillRef} className={styles.quillContainer}></div>
+              </div>
               {/* <FormField
                 classNames={styles.textarea}
                 type="textarea"
