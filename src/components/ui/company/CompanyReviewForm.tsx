@@ -39,7 +39,6 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
         toolbar: [
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-          [{ indent: "-1" }, { indent: "+1" }],
           [{ align: [] }],
         ],
       },

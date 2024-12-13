@@ -97,6 +97,8 @@
   font-weight: 400;
   word-wrap: break-word;
   overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   @media screen and (max-width: 668px) {
     width: 100%;
