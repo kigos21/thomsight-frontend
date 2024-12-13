@@ -82,6 +82,9 @@ export default function UserCompanyDiscussionForum() {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(1);
+
   useEffect(() => {
     const fetchDiscussions = async () => {
       try {
@@ -103,6 +106,12 @@ export default function UserCompanyDiscussionForum() {
 
     fetchDiscussions();
   }, [slug]);
+
+  const totalPages = Math.ceil(postData.length / itemsPerPage);
+  const paginatedPosts = postData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleSave = async () => {
     if (postForm.description.trim() === "") {
@@ -187,6 +196,7 @@ export default function UserCompanyDiscussionForum() {
 
   const handleDiscussionDelete = (id: number | undefined) => {
     setPostData((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    setCurrentPage(1);
   };
 
   const handleReplyChange = (value: string) => {
@@ -255,6 +265,7 @@ export default function UserCompanyDiscussionForum() {
       );
       setPostData(discussions);
       toast.success("Reply deleted successfully.");
+      setCurrentPage(1);
     } catch (error) {
       console.error("Error deleting reply:", error);
       toast.error("An error occurred while deleting the reply.");
@@ -368,6 +379,22 @@ export default function UserCompanyDiscussionForum() {
     setShowDeletePopup(true);
   };
 
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
@@ -416,8 +443,8 @@ export default function UserCompanyDiscussionForum() {
                 There are no posts as of now, create the first one!
               </em>
             )}
-            {postData &&
-              postData.map((post) => (
+            {paginatedPosts &&
+              paginatedPosts.map((post) => (
                 <Fragment key={post.id}>
                   <DiscussionForumItem
                     id={post.id}
@@ -581,6 +608,54 @@ export default function UserCompanyDiscussionForum() {
                 </Fragment>
               ))}
           </div>
+          {postData.length > itemsPerPage && (
+            <div className={styles.pagination}>
+              <button
+                className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                &#60; Previous
+              </button>
+              <button
+                className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+                onClick={() => setCurrentPage(1)}
+                disabled={currentPage === 1}
+              >
+                First
+              </button>
+
+              {Array.from({ length: totalPages }, (_, index) => index + 1)
+                .slice(
+                  Math.max(currentPage - 2, 0),
+                  Math.min(currentPage + 1, totalPages)
+                )
+                .map((page) => (
+                  <button
+                    key={page}
+                    className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                    onClick={() => handlePageSelect(page)}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+              <button
+                className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+                onClick={() => setCurrentPage(totalPages)}
+                disabled={currentPage === totalPages}
+              >
+                Last
+              </button>
+              <button
+                className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next &#62;
+              </button>
+            </div>
+          )}
         </div>
         <div className={styles.rightcontainer}>
           <StyledBox paddedContainerClass={styles.styledBox}>

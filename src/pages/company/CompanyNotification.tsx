@@ -59,8 +59,6 @@ export default function CompanyNotification() {
     currentPage * itemsPerPage
   );
 
-  console.log(paginatedNotifs);
-
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
