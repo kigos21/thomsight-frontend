@@ -138,7 +138,7 @@ export type CompanyAccountsItemProps = {
   expiration: string | undefined; // Token string to display
   status: "active" | "inactive" | "expiring";
   classNames?: string; // Optional classNames prop
-  email?: string;
+  email: string;
   handleSoftDelete: (id: number | undefined) => Promise<boolean>;
   handleRestore: (id: number | undefined) => Promise<boolean>;
   companyId: number | undefined;

@@ -34,7 +34,10 @@ const CompanyAccountsItem: React.FC<CompanyAccountsItemProps> = ({
       <p className={styles.token}>{companyName}</p>
       <Status status={status} />
       <p className={styles.expiration}>{expiration}</p>
-      <p className={styles.email}>{email}</p>
+      <p className={styles.email} title={email}>
+        {email.length > 45 ? `${email.slice(0, 40)}...` : email}
+      </p>
+
       {isDeleted ? (
         <IconRestore className={styles.restoreIcon} onClick={restore} />
       ) : (
