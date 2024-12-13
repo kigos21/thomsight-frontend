@@ -2,18 +2,13 @@ import StyledBox from "../../layout/StyledBox";
 import { HomeCompanyItemProps } from "../../../types/props";
 import styles from "./HomeCompanyItem.module.scss";
 import JobChip from "./JobChip";
+import srcLogo from "../../../assets/no-image.png";
 
 const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   company,
 }) => {
   const { name, jobs, description, locations, image } = company;
   const trimmedJobs = jobs?.slice(0, 3);
-
-  const getInitials = (companyName: string) => {
-    const words = companyName.split(" ");
-    const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
-    return initials;
-  };
 
   return (
     <StyledBox
@@ -27,9 +22,11 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
           className={styles.companyImage}
         />
       ) : (
-        <div className={styles.companyImageFallback}>
-          {name ? getInitials(name) : "NA"}
-        </div>
+        <img
+          src={srcLogo}
+          alt={"Image of " + name}
+          className={styles.companyImage}
+        />
       )}
 
       <div className={styles.coreInfoSection}>
