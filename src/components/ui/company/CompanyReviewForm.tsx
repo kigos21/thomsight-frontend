@@ -94,7 +94,9 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
 
           <div>
             <p className={styles.formTitle}>Description</p>
-            <div ref={quillRef} className={styles.quillContainer}></div>
+            <div className={styles.quillWrapper}>
+              <div ref={quillRef} className={styles.quillContainer}></div>
+            </div>
             {/* <FormField
               classNames={styles.formFieldBio}
               type="textarea"
