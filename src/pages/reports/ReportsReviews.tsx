@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import { FeedbackReport } from "../../types/types";
 import DeletePopUp from "../../components/ui/company/DeletePopUp";
+import DismissPopUp from "../../components/ui/reports/DismissPopUp";
 import { toast } from "react-toastify";
 
 const ReportsReviews = () => {
@@ -140,10 +141,10 @@ const ReportsReviews = () => {
               </div>
             </div>
             {showDeleteReportPopup && (
-              <DeletePopUp
+              <DismissPopUp
                 isVisible={showDeleteReportPopup}
                 onClose={() => setShowDeleteReportPopup(false)}
-                onDelete={() => handleDeleteReport(report.id)}
+                onDismiss={() => handleDeleteReport(report.id)}
                 heading="Dismiss Report"
                 details="Are you sure you want to dismiss this report?"
               />
