@@ -33,6 +33,9 @@ export default function UserCompanyInterviewTips() {
   const { getCompanyBySlug, loading: companyLoading, error } = useCompanies();
   const [tips, setTips] = useState<Tip[]>([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
   useEffect(() => {
     const fetchInterviewTips = async () => {
       try {
@@ -53,6 +56,12 @@ export default function UserCompanyInterviewTips() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   getCompanyBySlug(slug as string);
+
+  const totalPages = Math.ceil(tips.length / itemsPerPage);
+  const paginatedTips = tips.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleSave = async () => {
     if (!tip.title.trim()) {
@@ -132,6 +141,23 @@ export default function UserCompanyInterviewTips() {
 
   const handleTipDelete = (id: number | undefined) => {
     setTips((prevTips) => prevTips.filter((tip) => tip.id !== id));
+    setCurrentPage(1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -179,7 +205,7 @@ export default function UserCompanyInterviewTips() {
           There's no data available currently!
         </em>
       )}
-      {tips.map((tip) => (
+      {paginatedTips.map((tip) => (
         <InterviewTipsItem
           key={tip.id}
           id={tip.id}
@@ -194,6 +220,55 @@ export default function UserCompanyInterviewTips() {
           poster_id={tip.poster_id}
         />
       ))}
+
+      {tips.length > itemsPerPage && (
+        <div className={styles.pagination}>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            &#60; Previous
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            First
+          </button>
+
+          {Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(
+              Math.max(currentPage - 2, 0),
+              Math.min(currentPage + 1, totalPages)
+            )
+            .map((page) => (
+              <button
+                key={page}
+                className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                onClick={() => handlePageSelect(page)}
+              >
+                {page}
+              </button>
+            ))}
+
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            Last
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next &#62;
+          </button>
+        </div>
+      )}
     </PaddedContainer>
   );
 }
