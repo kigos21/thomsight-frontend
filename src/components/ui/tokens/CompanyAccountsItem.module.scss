@@ -45,3 +45,24 @@
     gap: 2.5rem;
   }
 }
+
+.token {
+  min-width: 180px;
+}
+
+.expiration {
+  padding: 0 0 0 1rem;
+
+  @media screen and (max-width: 1268px) {
+    padding: 0 0 0 1.5rem;
+    min-width: 120px;
+  }
+}
+
+.email {
+  padding: 0 0 0 1rem;
+
+  @media screen and (max-width: 1268px) {
+    padding: 0 0 0 1.75rem;
+  }
+}
