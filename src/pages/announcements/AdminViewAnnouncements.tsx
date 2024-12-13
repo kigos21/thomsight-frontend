@@ -18,6 +18,9 @@ export default function AdminViewAnnouncements() {
   const { user } = useUser();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
@@ -46,6 +49,7 @@ export default function AdminViewAnnouncements() {
         prevAnnouncements.filter((announcement) => announcement.id !== id)
       );
       toast.success("Deleted announcement successfully");
+      setCurrentPage(1);
     } catch (error) {
       toast.error("Failed to delete announcement." + error);
     } finally {
@@ -71,6 +75,28 @@ export default function AdminViewAnnouncements() {
     );
   };
 
+  const totalPages = Math.ceil(announcements.length / itemsPerPage);
+  const paginatedAnnouncements = announcements.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
       <div className={styles.container}>
@@ -92,8 +118,8 @@ export default function AdminViewAnnouncements() {
 
         {loading ? (
           <Spinner message="Fetching announcements..." />
-        ) : announcements.length > 0 ? (
-          announcements.map((announcement) => (
+        ) : paginatedAnnouncements.length > 0 ? (
+          paginatedAnnouncements.map((announcement) => (
             <AnnouncementItem
               key={announcement.id}
               id={announcement.id}
@@ -106,6 +132,55 @@ export default function AdminViewAnnouncements() {
           ))
         ) : (
           <p>No announcements available.</p>
+        )}
+
+        {announcements.length > itemsPerPage && (
+          <div className={styles.pagination}>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              &#60; Previous
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(1)}
+              disabled={currentPage === 1}
+            >
+              First
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => index + 1)
+              .slice(
+                Math.max(currentPage - 2, 0),
+                Math.min(currentPage + 1, totalPages)
+              )
+              .map((page) => (
+                <button
+                  key={page}
+                  className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                  onClick={() => handlePageSelect(page)}
+                >
+                  {page}
+                </button>
+              ))}
+
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(totalPages)}
+              disabled={currentPage === totalPages}
+            >
+              Last
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next &#62;
+            </button>
+          </div>
         )}
       </div>
 
