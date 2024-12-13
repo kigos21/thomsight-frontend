@@ -13,6 +13,7 @@ import {
 } from "../../../api/companyCRUD";
 import DeletePopUp from "./DeletePopUp";
 import { toast } from "react-toastify";
+import EditLocationPopup from "./AddLocationPopup";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -20,7 +21,6 @@ const LocationManagement: React.FC = () => {
   const { getCompanyBySlug, loading, error, updateCompany } = useCompanies();
   const company = getCompanyBySlug(slug as string);
 
-  const [showAddForm, setShowAddForm] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
   const [newLocation, setNewLocation] = useState("");
@@ -30,6 +30,7 @@ const LocationManagement: React.FC = () => {
   const [createLoading, setCreateLoading] = useState<boolean>(false);
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [showAddPopup, setShowAddPopup] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -44,19 +45,20 @@ const LocationManagement: React.FC = () => {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
 
-  const handleAddLocation = async () => {
-    if (!newLocation.trim()) {
+  const handleAddLocation = async (address: string) => {
+    if (!address.trim()) {
       toast.error("Location cannot be blank.");
       return;
     }
-    if (newLocation.length > 48) {
+    if (address.length > 48) {
       toast.error("Location should not exceed 48 characters");
+      return;
     }
 
     setCreateLoading(true);
 
     if (slug) {
-      const response = await addLocation(slug, newLocation);
+      const response = await addLocation(slug, address);
       if (response) {
         const updatedCompany = {
           ...company!,
@@ -64,8 +66,7 @@ const LocationManagement: React.FC = () => {
         };
         updateCompany(updatedCompany);
         setLocations([...locations, response]);
-        setNewLocation("");
-        setShowAddForm(false);
+        setShowAddPopup(false);
         toast.success("Location added successfully");
       }
     }
@@ -85,6 +86,7 @@ const LocationManagement: React.FC = () => {
     }
     if (editingLocation && editingLocation.address.length > 48) {
       toast.error("Location should not exceed 48 characters");
+      return;
     }
 
     setUpdateLoading(true);
@@ -132,21 +134,17 @@ const LocationManagement: React.FC = () => {
     }
   };
 
-  // if (!slug) {
-  //   return <ErrorPage />;
-  // }
-
   return (
     <div className={styles.locationManagement}>
       {createLoading && <Spinner message="Creating location..." />}
       {updateLoading && <Spinner message="Updating location..." />}
-      {deleteLoading && <Spinner message="Deleting locaiton..." />}
+      {deleteLoading && <Spinner message="Deleting location..." />}
       <div className={styles.sectionHeading}>
         <h3>Company Location</h3>
         <button
           className={styles.addLocationButton}
           onClick={() => {
-            setShowAddForm(true);
+            setShowAddPopup(true);
           }}
         >
           <IconPlus stroke={1.5} size={20} />
@@ -154,30 +152,13 @@ const LocationManagement: React.FC = () => {
         </button>
       </div>
 
-      {showAddForm && (
-        <div className={styles.addForm}>
-          <input
-            type="text"
-            value={newLocation}
-            onChange={(e) => setNewLocation(e.target.value)}
-            placeholder="Enter new location"
-            className={styles.inputText}
-          />
-          <div className={styles.saveAndCancelButtons}>
-            <button
-              onClick={() => {
-                setShowAddForm(false);
-                setNewLocation("");
-              }}
-              className={styles.cancelButton}
-            >
-              Cancel
-            </button>
-            <button onClick={handleAddLocation} className={styles.saveButton}>
-              Add
-            </button>
-          </div>
-        </div>
+      {showAddPopup && (
+        <EditLocationPopup
+          isOpen={showAddPopup}
+          onClose={() => setShowAddPopup(false)}
+          onSave={handleAddLocation}
+          initialAddress=""
+        />
       )}
 
       {showEditDialog && editingLocation && (
