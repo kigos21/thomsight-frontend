@@ -1,3 +1,10 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Adjust space between the grid and pagination */
+  margin-bottom: 5rem; /* Add spacing below the pagination */
+}
+
 .rootContainer {
   display: grid;
   grid-template-columns: repeat(
@@ -6,5 +13,49 @@
   ); /* Adjust 250px to your desired minimum card width */
   gap: 1rem; /* Space between the cards */
   justify-content: center; /* Center the grid items horizontally */
-  margin-bottom: 5rem;
+}
+
+//pagination
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 0 0;
+
+  @media screen and (max-width: 480px) {
+    padding: 1rem 2rem;
+  }
+}
+
+.paginationButton {
+  background-color: var(--black); // Change to your preferred color
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &.active {
+    background-color: var(--black); // Active page color
+    font-weight: bold;
+  }
+
+  &.disabled {
+    background-color: #ccc; // Disable color
+    cursor: not-allowed;
+    pointer-events: none; // Prevent click
+  }
+
+  &:focus {
+    outline: none; // Remove default focus outline
+  }
 }
