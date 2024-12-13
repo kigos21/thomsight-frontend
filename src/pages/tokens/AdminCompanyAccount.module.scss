@@ -5,7 +5,7 @@
   align-items: center;
   padding: 2.875rem 10rem;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1120px) {
     padding: 2.875rem 2rem;
   }
 }
@@ -21,7 +21,6 @@
 
 .styledbox {
   border: 2px solid var(--neutral-1);
-  max-width: 1024px;
   max-width: 1024px;
 
   margin-left: auto;
@@ -80,6 +79,10 @@
   margin-top: -2.8rem;
 
   min-width: fit-content;
+
+  // @media screen and (max-width: 768px) {
+  //   margin: 0;
+  // }
 }
 
 .header {
@@ -113,19 +116,11 @@
 
 @media screen and (max-width: 768px) {
   .childClass {
-    padding: 0;
-  }
-
-  .companytokens {
-    margin: 0;
+    padding: 4rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .childClass {
-    padding: 0;
-  }
-
   .title {
     margin-bottom: 1rem;
     font-size: 1.5rem;
@@ -178,5 +173,46 @@
 
   &:focus {
     outline: none; // Remove default focus outline
+  }
+}
+
+@media screen and (max-width: 1120px) {
+  .expiresIn {
+    padding: 0 0 0 1rem;
+  }
+
+  .company {
+    padding: 0 0 0 1rem;
+  }
+}
+
+@media screen and (max-width: 1120px) {
+  .expiresIn {
+    padding: 0 0 0 1.5rem;
+  }
+
+  .company {
+    padding: 0 0 0 1rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .company {
+    padding: 0 0 0 2.5rem;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .expiresIn {
+    padding: 0 0 0 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .status {
+    padding: 0 0 0 1rem;
+  }
+  .header {
+    gap: 2rem;
   }
 }
