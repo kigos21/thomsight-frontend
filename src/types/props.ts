@@ -4,7 +4,7 @@ import { Company } from "./types";
 export type ButtonProps = {
   children: React.ReactNode;
   color: "primary" | "secondary" | "black" | "gray";
-  roundness: "sm-rounded" | "rounded";
+  roundness?: "sm-rounded" | "rounded";
 
   classNames?: string;
   style?: React.CSSProperties;

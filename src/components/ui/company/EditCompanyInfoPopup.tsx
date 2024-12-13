@@ -8,7 +8,11 @@ import Spinner from "../../ui/Spinner";
 interface EditCompanyInfoPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: { size: string; industry: string; description: string }) => Promise<void>;
+  onSave: (data: {
+    size: string;
+    industry: string;
+    description: string;
+  }) => Promise<void>;
   initialSize?: string;
   initialIndustry?: string;
   initialDescription?: string;
@@ -72,10 +76,15 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
 
     try {
       setLoading(true);
-      await onSave({ size: sizeTrimmed, industry: industryTrimmed, description: descriptionTrimmed });
+      await onSave({
+        size: sizeTrimmed,
+        industry: industryTrimmed,
+        description: descriptionTrimmed,
+      });
       onClose();
     } catch (error) {
       toast.error("Failed to save company information");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -130,8 +139,9 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
         <div className={styles.buttonContainer}>
           <Button
             color="secondary"
-            classNames={styles.cancelButton} 
-            onClick={onClose}>
+            classNames={styles.cancelButton}
+            onClick={onClose}
+          >
             Cancel
           </Button>
           <Button
