@@ -8,15 +8,18 @@ import { containsBadWords } from "../../../badWordsFilter";
 import axiosInstance from "../../../services/axiosInstance";
 import FormField from "../../form/FormField";
 import Button from "../Button";
+import { Announcement } from "../../../types/types";
 
 interface CreateAnnouncementPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  onAdd: (newAnnouncement: Announcement) => void;
 }
 
 const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
   isOpen,
   onClose,
+  onAdd,
 }) => {
   const [subject, setSubject] = useState<string>("");
   const [details, setDetails] = useState<string>("");
@@ -53,12 +56,9 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
 
     try {
       setLoading(true);
-      await createAnnouncement(subject, details);
-      await axiosInstance.post("/api/announcements/email", {
-        subject,
-        details,
-      });
+      const newAnnouncement = await createAnnouncement(subject, details);
       toast.success("Announcement created successfully!");
+      onAdd(newAnnouncement);
       navigate("/announcements");
     } catch (error) {
       console.error("Error creating announcement:", error);
@@ -66,6 +66,10 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
     } finally {
       setLoading(false);
       onClose();
+      await axiosInstance.post("/api/announcements/email", {
+        subject,
+        details,
+      });
     }
   };
 

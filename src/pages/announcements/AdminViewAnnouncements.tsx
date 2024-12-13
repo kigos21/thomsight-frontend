@@ -34,6 +34,10 @@ export default function AdminViewAnnouncements() {
     fetchAnnouncements();
   }, []);
 
+  const addAnnouncement = (newAnnouncement: Announcement) => {
+    setAnnouncements((prev) => [newAnnouncement, ...prev]);
+  };
+
   const handleDelete = async (id: number) => {
     setDeleteLoading("Deleting announcement...");
     try {
@@ -108,6 +112,7 @@ export default function AdminViewAnnouncements() {
       <CreateAnnouncementPopup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
+        onAdd={addAnnouncement}
       />
     </PaddedContainer>
   );
