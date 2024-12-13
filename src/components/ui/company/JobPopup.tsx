@@ -3,6 +3,9 @@ import styles from "./JobPopup.module.scss"; // Create this stylesheet for styli
 import { toast } from "react-toastify";
 import FormField from "../../form/FormField"; // Import FormField
 import Button from "../../ui/Button"; // Import Button
+import { addJob } from "../../../api/companyCRUD";
+import { useParams } from "react-router-dom";
+import Spinner from "../Spinner";
 
 interface JobPopupProps {
   isOpen: boolean;
@@ -14,6 +17,9 @@ const JobPopup: React.FC<JobPopupProps> = ({ isOpen, onClose, onSubmit }) => {
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const { slug } = useParams<{ slug: string }>();
+
+  if (!slug) return;
 
   const handleSubmit = async () => {
     if (jobTitle.trim() === "") {
@@ -35,10 +41,12 @@ const JobPopup: React.FC<JobPopupProps> = ({ isOpen, onClose, onSubmit }) => {
 
     setLoading(true);
     try {
+      await addJob(slug, { title: jobTitle, description: jobDescription });
       await onSubmit(jobTitle, jobDescription);
       onClose();
     } catch (error) {
       toast.error("Failed to add job.");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -48,6 +56,7 @@ const JobPopup: React.FC<JobPopupProps> = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className={styles.overlay}>
+      {loading && <Spinner message="Creating job..." />}
       <div className={styles.popup}>
         <h2 className={styles.title}>Add Job</h2>
         <div className={styles.separator}></div>
@@ -70,10 +79,19 @@ const JobPopup: React.FC<JobPopupProps> = ({ isOpen, onClose, onSubmit }) => {
           required
         />
         <div className={styles.buttonContainer}>
-          <Button color="secondary" classNames={styles.cancelButton} onClick={onClose}>
+          <Button
+            color="secondary"
+            classNames={styles.cancelButton}
+            onClick={onClose}
+          >
             Cancel
           </Button>
-          <Button color="secondary" classNames={styles.submitButton} onClick={handleSubmit} disabled={loading}>
+          <Button
+            color="secondary"
+            classNames={styles.submitButton}
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Submit"}
           </Button>
         </div>
@@ -82,4 +100,4 @@ const JobPopup: React.FC<JobPopupProps> = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-export default JobPopup; 
+export default JobPopup;

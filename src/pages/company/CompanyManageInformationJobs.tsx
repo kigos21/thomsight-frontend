@@ -56,7 +56,12 @@ export default function CompanyManageInformationJobs() {
   };
 
   const handleAddJob = async (jobTitle: string, jobDescription: string) => {
-    const newJob = { id: jobs.length + 1, company_id: 1, title: jobTitle, description: jobDescription };
+    const newJob = {
+      id: jobs.length + 1,
+      company_id: 1,
+      title: jobTitle,
+      description: jobDescription,
+    };
     setJobs([...jobs, newJob]);
     toast.success("Job added successfully");
     setShowJobPopup(false);
@@ -176,15 +181,22 @@ export default function CompanyManageInformationJobs() {
         <EditJobPopup
           isOpen={showEditJobPopup}
           onClose={() => setShowEditJobPopup(false)}
-          onSave={async (jobTitle, jobDescription) => {
+          onSave={async (jobTitle: string, jobDescription: string) => {
             // Update the job in the state
-            const updatedJob = { ...currentJob, title: jobTitle, description: jobDescription };
-            setJobs(jobs.map((job) => (job.id === currentJob.id ? updatedJob : job)));
+            const updatedJob = {
+              ...currentJob,
+              title: jobTitle,
+              description: jobDescription,
+            };
+            setJobs(
+              jobs.map((job) => (job.id === currentJob.id ? updatedJob : job))
+            );
             toast.success("Job updated successfully");
             setShowEditJobPopup(false);
           }}
           initialJobTitle={currentJob.title}
           initialJobDescription={currentJob.description}
+          initialJobId={currentJob.id}
         />
       )}
     </div>

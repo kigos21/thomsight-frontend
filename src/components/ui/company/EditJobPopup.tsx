@@ -3,6 +3,9 @@ import styles from "./EditJobPopup.module.scss";
 import { toast } from "react-toastify";
 import FormField from "../../form/FormField";
 import Button from "../Button";
+import { updateJob } from "../../../api/companyCRUD";
+import { useParams } from "react-router-dom";
+import Spinner from "../Spinner";
 
 interface EditJobPopupProps {
   isOpen: boolean;
@@ -10,6 +13,7 @@ interface EditJobPopupProps {
   onSave: (jobTitle: string, jobDescription: string) => Promise<void>;
   initialJobTitle: string;
   initialJobDescription: string;
+  initialJobId: number;
 }
 
 const EditJobPopup: React.FC<EditJobPopupProps> = ({
@@ -18,10 +22,14 @@ const EditJobPopup: React.FC<EditJobPopupProps> = ({
   onSave,
   initialJobTitle,
   initialJobDescription,
+  initialJobId,
 }) => {
   const [jobTitle, setJobTitle] = useState(initialJobTitle);
   const [jobDescription, setJobDescription] = useState(initialJobDescription);
   const [loading, setLoading] = useState(false);
+  const { slug } = useParams<{ slug: string }>();
+
+  if (!slug) return;
 
   const handleSave = async () => {
     if (jobTitle.trim() === "") {
@@ -41,12 +49,17 @@ const EditJobPopup: React.FC<EditJobPopupProps> = ({
       return;
     }
 
-    setLoading(true);
     try {
+      setLoading(true);
+      await updateJob(slug, initialJobId, {
+        title: jobTitle,
+        description: jobDescription,
+      });
       await onSave(jobTitle, jobDescription);
       onClose();
     } catch (error) {
       toast.error("Failed to update job.");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -56,6 +69,7 @@ const EditJobPopup: React.FC<EditJobPopupProps> = ({
 
   return (
     <div className={styles.overlay}>
+      {loading && <Spinner message="Updating job..." />}
       <div className={styles.popup}>
         <h2 className={styles.title}>Edit Job</h2>
         <div className={styles.separator}></div>
@@ -78,10 +92,19 @@ const EditJobPopup: React.FC<EditJobPopupProps> = ({
           required
         />
         <div className={styles.buttonContainer}>
-          <Button color="secondary" classNames={styles.cancelButton} onClick={onClose}>
+          <Button
+            color="secondary"
+            classNames={styles.cancelButton}
+            onClick={onClose}
+          >
             Cancel
           </Button>
-          <Button color="secondary" classNames={styles.submitButton} onClick={handleSave} disabled={loading}>
+          <Button
+            color="secondary"
+            classNames={styles.submitButton}
+            onClick={handleSave}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Save"}
           </Button>
         </div>
@@ -90,4 +113,4 @@ const EditJobPopup: React.FC<EditJobPopupProps> = ({
   );
 };
 
-export default EditJobPopup; 
+export default EditJobPopup;

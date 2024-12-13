@@ -32,6 +32,7 @@ const AddLocationPopup: React.FC<AddLocationPopupProps> = ({
       onClose();
     } catch (error) {
       toast.error("Failed to save location.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -57,7 +58,11 @@ const AddLocationPopup: React.FC<AddLocationPopupProps> = ({
           <Button classNames={styles.cancelButton} onClick={onClose}>
             Cancel
           </Button>
-          <Button classNames={styles.saveButton} onClick={handleSave} disabled={loading}>
+          <Button
+            classNames={styles.saveButton}
+            onClick={handleSave}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Add"}
           </Button>
         </div>
@@ -66,4 +71,4 @@ const AddLocationPopup: React.FC<AddLocationPopupProps> = ({
   );
 };
 
-export default AddLocationPopup; 
+export default AddLocationPopup;

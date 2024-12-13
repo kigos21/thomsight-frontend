@@ -23,7 +23,7 @@ const LocationManagement: React.FC = () => {
 
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
-  const [newLocation, setNewLocation] = useState("");
+  // const [newLocation, setNewLocation] = useState("");
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [locationToDelete, setLocationToDelete] = useState<number | null>(null);
 
