@@ -36,7 +36,12 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
     quillInstance.current = new Quill(quillRef.current, {
       theme: "snow",
       modules: {
-        toolbar: [["bold", "italic", { list: "bullet" }, { list: "ordered" }]],
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ indent: "-1" }, { indent: "+1" }],
+          [{ align: [] }],
+        ],
       },
     });
 
