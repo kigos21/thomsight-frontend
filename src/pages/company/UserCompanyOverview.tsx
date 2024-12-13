@@ -176,7 +176,15 @@ export default function UserCompanyOverview() {
         <div className={styles.leftcontainer}>
           <div className={styles.titleContainer}>
             <h2 className={styles.titleHeader}>Company Description</h2>
-            <p>{company?.description}</p>
+            {company && (
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    company.description || "No company description"
+                  ),
+                }}
+              ></p>
+            )}
           </div>
 
           <div className={styles.rightcontainerMobile}>
