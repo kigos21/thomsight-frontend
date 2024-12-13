@@ -37,6 +37,9 @@ export default function UserCompanyOverview() {
   const { getCompanyBySlug, loading: companyLoading, error } = useCompanies();
   const [reviews, setReviews] = useState<Review[]>([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -59,6 +62,12 @@ export default function UserCompanyOverview() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
   const company = getCompanyBySlug(slug as string);
+
+  const totalPages = Math.ceil(reviews.length / itemsPerPage);
+  const paginatedReviews = reviews.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleSave = async () => {
     let isValid = true;
@@ -141,6 +150,23 @@ export default function UserCompanyOverview() {
     setReviews((prevReviews) =>
       prevReviews.filter((review) => review.id !== id)
     );
+    setCurrentPage(1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handlePageSelect = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -199,7 +225,7 @@ export default function UserCompanyOverview() {
                 There's no data available currently!
               </em>
             )}
-            {reviews.map((review) => (
+            {paginatedReviews.map((review) => (
               <ReviewItem
                 key={review.id}
                 id={review.id}
@@ -226,6 +252,55 @@ export default function UserCompanyOverview() {
                 user_id={review.user_id}
               />
             ))}
+
+            {reviews.length > itemsPerPage && (
+              <div className={styles.pagination}>
+                <button
+                  className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+                  onClick={handlePrevPage}
+                  disabled={currentPage === 1}
+                >
+                  &#60; Previous
+                </button>
+                <button
+                  className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+                  onClick={() => setCurrentPage(1)}
+                  disabled={currentPage === 1}
+                >
+                  First
+                </button>
+
+                {Array.from({ length: totalPages }, (_, index) => index + 1)
+                  .slice(
+                    Math.max(currentPage - 2, 0),
+                    Math.min(currentPage + 1, totalPages)
+                  )
+                  .map((page) => (
+                    <button
+                      key={page}
+                      className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                      onClick={() => handlePageSelect(page)}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                <button
+                  className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+                  onClick={() => setCurrentPage(totalPages)}
+                  disabled={currentPage === totalPages}
+                >
+                  Last
+                </button>
+                <button
+                  className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next &#62;
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.rightcontainer}>

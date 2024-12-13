@@ -83,7 +83,7 @@ export default function UserCompanyDiscussionForum() {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchDiscussions = async () => {
