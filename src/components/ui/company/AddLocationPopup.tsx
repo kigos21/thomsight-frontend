@@ -54,10 +54,19 @@ const AddLocationPopup: React.FC<AddLocationPopupProps> = ({
           required
         />
         <div className={styles.buttonContainer}>
-          <Button classNames={styles.cancelButton} onClick={onClose}>
+          <Button
+            color="black"
+            classNames={styles.cancelButton}
+            onClick={onClose}
+          >
             Cancel
           </Button>
-          <Button classNames={styles.saveButton} onClick={handleSave} disabled={loading}>
+          <Button
+            color="secondary"
+            classNames={styles.saveButton}
+            onClick={handleSave}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Add"}
           </Button>
         </div>
@@ -66,4 +75,4 @@ const AddLocationPopup: React.FC<AddLocationPopupProps> = ({
   );
 };
 
-export default AddLocationPopup; 
+export default AddLocationPopup;

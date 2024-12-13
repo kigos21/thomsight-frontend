@@ -138,7 +138,7 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
         )}
         <div className={styles.buttonContainer}>
           <Button
-            color="secondary"
+            color="black"
             classNames={styles.cancelButton}
             onClick={onClose}
           >

@@ -132,8 +132,8 @@
 
 .iconEdit {
   margin-right: 0.5rem;
-  width: 1rem;
-  height: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
   color: var(--white);
 }
 
@@ -167,6 +167,7 @@
   font-weight: 600;
   padding: 0.825rem 1.15rem;
   border-radius: 10px;
+  align-items: center;
 
   &:hover {
     background-color: var(--blue-8);
