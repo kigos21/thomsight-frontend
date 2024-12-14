@@ -211,10 +211,7 @@ export default function CompanyDetails() {
                 ) : (
                   <p className={styles.companyName}>{companyName}</p>
                 )}
-                <button
-                  className={styles.editButton}
-                  onClick={handleEditInfo}
-                >
+                <button className={styles.editButton} onClick={handleEditInfo}>
                   <IconEdit className={styles.iconEdit} />
                   Edit Name & Email
                 </button>

@@ -188,3 +188,8 @@
     outline: none; // Remove default focus outline
   }
 }
+
+.companyDescription {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

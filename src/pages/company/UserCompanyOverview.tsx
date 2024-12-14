@@ -195,6 +195,7 @@ export default function UserCompanyOverview() {
           <div className={styles.titleContainer}>
             <h2 className={styles.titleHeader}>Company Description</h2>
             <p
+              className={styles.companyDescription}
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(
                   company?.description || "No company description"
