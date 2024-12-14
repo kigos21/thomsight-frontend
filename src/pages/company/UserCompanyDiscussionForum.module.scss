@@ -113,14 +113,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.75rem;
-
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding-left: 1rem;
   margin-left: 1rem;
-
   border-left: 1px solid var(--black);
 
   @media screen and (max-width: 480px) {
@@ -218,6 +216,20 @@
 
 .descriptionTextarea {
   resize: none;
+}
+
+.addPostButtonButton{
+  background-color: var(--secondary-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+  
+    &:hover {
+      background-color: var(--blue-8);
+    }
 }
 
 .editButtons {
@@ -328,5 +340,19 @@
 
   &:focus {
     outline: none; // Remove default focus outline
+  }
+}
+
+.viewRepliesButton {
+  background-color: transparent;
+  color: var(--black);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+
+  &:hover {
+    color: var(--neutral-8);
   }
 }
