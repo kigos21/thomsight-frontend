@@ -24,19 +24,13 @@ export default function CompanyDetails() {
   const [logo, setLogo] = useState<string>("");
   const [company, setCompany] = useState<Company | null>(null);
 
-  const [isEditName, setIsEditName] = useState(false);
-  const [isEditEmail, setIsEditEmail] = useState(false);
-
   const [companyName, setCompanyName] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
 
-  const [originalCompanyName, setOriginalCompanyName] = useState("");
-  const [originalCompanyEmail, setOriginalCompanyEmail] = useState("");
   const [locations, setLocations] = useState<Location[]>([]);
 
-  const [isUpdating, setIsUpdating] = useState<string>("");
-
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPopupInfoOpen, setIsPopupInfoOpen] = useState(false);
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
 
   useEffect(() => {
@@ -46,8 +40,6 @@ export default function CompanyDetails() {
         setCompany(fetchedCompany);
         setCompanyName(fetchedCompany.name || "");
         setCompanyEmail(fetchedCompany.email || "");
-        setOriginalCompanyName(fetchedCompany.name || "");
-        setOriginalCompanyEmail(fetchedCompany.email || "");
         setLocations(fetchedCompany.locations || []);
         setLogo(fetchedCompany.image || "");
       }
@@ -74,25 +66,22 @@ export default function CompanyDetails() {
     return <Spinner message="Please wait while we render relevant data!" />;
   if (error) return <ErrorPage />;
 
-  const handleSaveUpdates = async () => {
+  const handleSaveUpdates = async (name: string, email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (isEditName && companyName.trim() === "") {
+    if (name.trim() === "") {
       toast.error("Company name cannot be blank");
       return;
     }
 
-    if (isEditEmail && companyEmail.trim() === "") {
+    if (email.trim() === "") {
       toast.error("Company email cannot be blank");
       return;
     }
 
-    if (isEditEmail && !emailRegex.test(companyEmail)) {
+    if (!emailRegex.test(email)) {
       toast.error("Invalid email format");
       return;
     }
-
-    setIsUpdating("Updating details...");
 
     try {
       if (!slug) {
@@ -100,31 +89,25 @@ export default function CompanyDetails() {
       }
 
       const updatedData = {
-        name: companyName,
-        email: companyEmail,
+        name,
+        email,
       };
 
       await updateCompanyDetails(slug, updatedData);
 
       const updatedCompany = {
         ...company,
-        name: companyName,
-        email: companyEmail,
+        name,
+        email,
       };
       updateCompany(updatedCompany);
-      if (isEditName && isEditEmail) {
-        toast.success("Updated details successfully");
-      } else if (isEditName) {
-        toast.success("Updated company name successfully");
-      } else if (isEditEmail) {
-        toast.success("Updated company email successfully");
-      }
+      toast.success("Updated details successfully");
     } catch (error) {
       console.error("Error updating company details:", error);
     } finally {
-      setIsUpdating("");
-      setIsEditName(false);
-      setIsEditEmail(false);
+      setCompanyName(name);
+      setCompanyEmail(email);
+      setIsPopupOpen(false);
     }
   };
 
@@ -142,27 +125,20 @@ export default function CompanyDetails() {
    * Otherwise, return with read-only component
    */
 
-  const getInitials = (companyName: string) => {
-    const words = companyName.split(" ");
-    const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
-    return initials;
-  };
-
   const handleEditInfo = () => {
-    setIsPopupOpen(true);
+    setIsPopupInfoOpen(true);
   };
 
-  const handleSave = async (name: string, email: string) => {
-    // Logic to save the updated name and email
-    setCompanyName(name);
-    setCompanyEmail(email);
-    setIsPopupOpen(false);
-  };
+  // const handleSave = async (name: string, email: string) => {
+  //   // Logic to save the updated name and email
+  //   setCompanyName(name);
+  //   setCompanyEmail(email);
+  //   setIsPopupOpen(false);
+  // };
 
   if (location.pathname.includes("/manage/")) {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
-        {isUpdating && <Spinner message={isUpdating} />}
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             {logo !== "http://localhost:8000/storage/uploads/companies" ? (
@@ -201,16 +177,7 @@ export default function CompanyDetails() {
             {/* Company Name */}
             <div className={styles.sectionHeading}>
               <div className={styles.companyInfo}>
-                {isEditName ? (
-                  <input
-                    type="text"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    className={styles.inputTextCompanyName}
-                  />
-                ) : (
-                  <p className={styles.companyName}>{companyName}</p>
-                )}
+                <p className={styles.companyName}>{companyName}</p>
                 <button className={styles.editButton} onClick={handleEditInfo}>
                   <IconEdit className={styles.iconEdit} />
                   Edit Name & Email
@@ -220,20 +187,11 @@ export default function CompanyDetails() {
 
             {/* Company Email */}
             <div className={styles.sectionHeading}>
-              {isEditEmail ? (
-                <input
-                  type="text"
-                  value={companyEmail}
-                  onChange={(e) => setCompanyEmail(e.target.value)}
-                  className={styles.inputTextEmail}
-                />
-              ) : (
-                <p>
-                  {companyEmail && companyEmail.trim()
-                    ? companyEmail
-                    : "No email set"}
-                </p>
-              )}
+              <p>
+                {companyEmail && companyEmail.trim()
+                  ? companyEmail
+                  : "No email set"}
+              </p>
             </div>
 
             <div className={styles.locationsContainer}>
@@ -272,11 +230,11 @@ export default function CompanyDetails() {
             </div>
           </div>
         )}
-        {isPopupOpen && (
+        {isPopupInfoOpen && (
           <EditCompanyNameEmailPopup
-            isOpen={isPopupOpen}
-            onClose={() => setIsPopupOpen(false)}
-            onSave={handleSave}
+            isOpen={isPopupInfoOpen}
+            onClose={() => setIsPopupInfoOpen(false)}
+            onSave={handleSaveUpdates}
             initialName={companyName}
             initialEmail={companyEmail}
           />

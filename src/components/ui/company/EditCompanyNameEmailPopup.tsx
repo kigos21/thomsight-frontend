@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./EditCompanyNameEmailPopup.module.scss";
 import { toast } from "react-toastify";
 import Button from "../../ui/Button";
+import Spinner from "../Spinner";
 
 interface EditCompanyNameEmailPopupProps {
   isOpen: boolean;
@@ -21,33 +22,34 @@ const EditCompanyNameEmailPopup: React.FC<EditCompanyNameEmailPopupProps> = ({
   const [name, setName] = useState(initialName);
   const [email, setEmail] = useState(initialEmail);
   const [loading, setLoading] = useState(false);
-
+  console.log(name);
   const handleSave = async () => {
-    const nameTrimmed = name.trim();
-    const emailTrimmed = email.trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // const nameTrimmed = name.trim();
+    // const emailTrimmed = email.trim();
+    // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (nameTrimmed === "") {
-      toast.error("Company name cannot be blank");
-      return;
-    }
+    // if (nameTrimmed === "") {
+    //   toast.error("Company name cannot be blank");
+    //   return;
+    // }
 
-    if (emailTrimmed === "") {
-      toast.error("Email cannot be blank");
-      return;
-    }
+    // if (emailTrimmed === "") {
+    //   toast.error("Email cannot be blank");
+    //   return;
+    // }
 
-    if (!emailPattern.test(emailTrimmed)) {
-      toast.error("Invalid email format");
-      return;
-    }
+    // if (!emailPattern.test(emailTrimmed)) {
+    //   toast.error("Invalid email format");
+    //   return;
+    // }
 
     try {
       setLoading(true);
-      await onSave(nameTrimmed, emailTrimmed);
+      await onSave(name, email);
       onClose();
     } catch (error) {
       toast.error("Failed to save company name and email");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -57,6 +59,7 @@ const EditCompanyNameEmailPopup: React.FC<EditCompanyNameEmailPopupProps> = ({
 
   return (
     <div className={styles.overlay}>
+      {loading && <Spinner message="Updating details..." />}
       <div className={styles.popup}>
         <h2 className={styles.title}>Company Name & Email</h2>
         <div className={styles.separator}></div>
@@ -78,7 +81,11 @@ const EditCompanyNameEmailPopup: React.FC<EditCompanyNameEmailPopupProps> = ({
           <Button classNames={styles.cancelButton} onClick={onClose}>
             Cancel
           </Button>
-          <Button classNames={styles.saveButton} onClick={handleSave} disabled={loading}>
+          <Button
+            classNames={styles.saveButton}
+            onClick={handleSave}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Save"}
           </Button>
         </div>
@@ -87,4 +94,4 @@ const EditCompanyNameEmailPopup: React.FC<EditCompanyNameEmailPopupProps> = ({
   );
 };
 
-export default EditCompanyNameEmailPopup; 
+export default EditCompanyNameEmailPopup;
