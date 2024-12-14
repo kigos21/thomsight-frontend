@@ -13,7 +13,8 @@ import {
 } from "../../../api/companyCRUD";
 import DeletePopUp from "./DeletePopUp";
 import { toast } from "react-toastify";
-import EditLocationPopup from "./AddLocationPopup";
+import EditLocationPopup from "./EditLocationPopup";
+import AddLocationPopup from "./AddLocationPopup";
 
 const LocationManagement: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -26,11 +27,10 @@ const LocationManagement: React.FC = () => {
   // const [newLocation, setNewLocation] = useState("");
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [locationToDelete, setLocationToDelete] = useState<number | null>(null);
-
+  const [showAddPopup, setShowAddPopup] = useState(false);
   const [createLoading, setCreateLoading] = useState<boolean>(false);
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [showAddPopup, setShowAddPopup] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -79,27 +79,15 @@ const LocationManagement: React.FC = () => {
     setShowEditDialog(true);
   };
 
-  const handleUpdateLocation = async () => {
-    if (editingLocation && !editingLocation.address.trim()) {
-      toast.error("Location address cannot be blank.");
-      return;
-    }
-    if (editingLocation && editingLocation.address.length > 48) {
-      toast.error("Location should not exceed 48 characters");
-      return;
-    }
+  const handleUpdateLocation = async (address: string) => {
+    if (editingLocation) {
+      const updatedLocation = { ...editingLocation, address };
 
-    setUpdateLoading(true);
+      const response = await updateLocation(updatedLocation.id, updatedLocation);
 
-    if (editingLocation && slug) {
-      const response = await updateLocation(
-        slug,
-        editingLocation.id,
-        editingLocation.address
-      );
       if (response) {
         const updatedLocations = locations.map((loc) =>
-          loc.id === editingLocation.id ? response : loc
+          loc.id === updatedLocation.id ? response : loc
         );
         const updatedCompany = { ...company!, locations: updatedLocations };
         updateCompany(updatedCompany);
@@ -107,8 +95,9 @@ const LocationManagement: React.FC = () => {
         setShowEditDialog(false);
         setEditingLocation(null);
         toast.success("Location updated successfully");
+      } else {
+        toast.error("Failed to update location");
       }
-      setUpdateLoading(false);
     }
   };
 
@@ -126,7 +115,7 @@ const LocationManagement: React.FC = () => {
       );
       const updatedCompany = { ...company!, locations: updatedLocations };
       updateCompany(updatedCompany);
-      setLocations(updatedLocations);
+
       setShowDeletePopup(false);
       setLocationToDelete(null);
       setDeleteLoading(false);
@@ -153,7 +142,7 @@ const LocationManagement: React.FC = () => {
       </div>
 
       {showAddPopup && (
-        <EditLocationPopup
+        <AddLocationPopup
           isOpen={showAddPopup}
           onClose={() => setShowAddPopup(false)}
           onSave={handleAddLocation}
@@ -161,48 +150,13 @@ const LocationManagement: React.FC = () => {
         />
       )}
 
-      {showEditDialog && editingLocation && (
-        <div
-          className={styles.dialogBackdrop}
-          onClick={() => {
-            setShowEditDialog(false);
-          }}
-        >
-          <div
-            className={styles.editDialog}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h4>Edit Location</h4>
-            <div className={styles.editForm}>
-              <input
-                type="text"
-                value={editingLocation.address}
-                onChange={(e) =>
-                  setEditingLocation({
-                    ...editingLocation,
-                    address: e.target.value,
-                  })
-                }
-              />
-              <div className={styles.saveAndCancelButtonsPopUp}>
-                <button
-                  onClick={() => {
-                    setShowEditDialog(false);
-                  }}
-                  className={styles.cancelButtonPopUp}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUpdateLocation}
-                  className={styles.saveButtonPopUp}
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {showEditDialog && (
+        <EditLocationPopup
+          isOpen={showEditDialog}
+          onClose={() => setShowEditDialog(false)}
+          onSave={handleUpdateLocation}
+          initialAddress={editingLocation?.address}
+        />
       )}
 
       <div className={styles.locationGrid}>
@@ -235,7 +189,7 @@ const LocationManagement: React.FC = () => {
           onClose={() => setShowDeletePopup(false)}
           onDelete={handleDeleteLocation}
           heading="Delete Location"
-          details="Are you sure you want to delete this location?"
+          details="Are you sure you want to delete this location? This action cannot be undone."
         />
       )}
     </div>
