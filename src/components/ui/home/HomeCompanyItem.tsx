@@ -7,10 +7,16 @@ import srcLogo from "../../../assets/no-image.png";
 const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   company,
 }) => {
-  const { name, jobs, locations, image } = company;
+  const { name, jobs, locations, image, rating, reviews } = company;
   const trimmedJobs = jobs?.slice(0, 2);
+  const numericRating = Number(rating);
+  let formattedRating = "0.0";
 
-  const someBoolState = true;
+  if (numericRating && numericRating !== 0)
+    formattedRating =
+      numericRating % 1 === 0 || numericRating % 0.5 === 0
+        ? numericRating.toFixed(1)
+        : numericRating.toFixed(2);
 
   return (
     <div className={styles.container}>
@@ -50,10 +56,10 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
 
       <div className={styles.cardBody}>
         {/* Render if there are reviews, else fallback */}
-        {someBoolState ? (
+        {formattedRating !== 0 && reviews !== 0 ? (
           <p className={styles.reviews}>
             <IconStarFilled className={styles.starIcon} />
-            5.0 | 4 reviews
+            {formattedRating} | {reviews} {reviews === 1 ? "review" : "reviews"}
           </p>
         ) : (
           <p className={styles.reviews}>
