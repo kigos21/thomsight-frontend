@@ -3,12 +3,13 @@ import styles from "./EditLocationPopup.module.scss";
 import { toast } from "react-toastify";
 import FormField from "../../form/FormField";
 import Button from "../Button";
+import Spinner from "../Spinner";
 
 interface EditLocationPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (address: string) => Promise<void>;
-  initialAddress: string;
+  initialAddress?: string;
 }
 
 const EditLocationPopup: React.FC<EditLocationPopupProps> = ({
@@ -17,11 +18,11 @@ const EditLocationPopup: React.FC<EditLocationPopupProps> = ({
   onSave,
   initialAddress,
 }) => {
-  const [address, setAddress] = useState(initialAddress);
+  const [address, setAddress] = useState(initialAddress || "");
   const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
-    if (address.trim() === "") {
+    if (address && address.trim() === "") {
       toast.error("Location address cannot be blank.");
       return;
     }
@@ -32,6 +33,7 @@ const EditLocationPopup: React.FC<EditLocationPopupProps> = ({
       onClose();
     } catch (error) {
       toast.error("Failed to save location.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -41,6 +43,7 @@ const EditLocationPopup: React.FC<EditLocationPopupProps> = ({
 
   return (
     <div className={styles.overlay}>
+      {loading && <Spinner message="Updating location..." />}
       <div className={styles.popup}>
         <h2 className={styles.title}>Edit Location</h2>
         <div className={styles.separator}></div>
@@ -57,7 +60,11 @@ const EditLocationPopup: React.FC<EditLocationPopupProps> = ({
           <Button classNames={styles.cancelButton} onClick={onClose}>
             Cancel
           </Button>
-          <Button classNames={styles.saveButton} onClick={handleSave} disabled={loading}>
+          <Button
+            classNames={styles.saveButton}
+            onClick={handleSave}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Save"}
           </Button>
         </div>
@@ -66,4 +73,4 @@ const EditLocationPopup: React.FC<EditLocationPopupProps> = ({
   );
 };
 
-export default EditLocationPopup; 
+export default EditLocationPopup;

@@ -29,7 +29,6 @@ const LocationManagement: React.FC = () => {
   const [locationToDelete, setLocationToDelete] = useState<number | null>(null);
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [createLoading, setCreateLoading] = useState<boolean>(false);
-  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -83,7 +82,11 @@ const LocationManagement: React.FC = () => {
     if (editingLocation) {
       const updatedLocation = { ...editingLocation, address };
 
-      const response = await updateLocation(updatedLocation.id, updatedLocation);
+      const response = await updateLocation(
+        slug || "",
+        updatedLocation.id,
+        updatedLocation.address
+      );
 
       if (response) {
         const updatedLocations = locations.map((loc) =>
@@ -126,7 +129,6 @@ const LocationManagement: React.FC = () => {
   return (
     <div className={styles.locationManagement}>
       {createLoading && <Spinner message="Creating location..." />}
-      {updateLoading && <Spinner message="Updating location..." />}
       {deleteLoading && <Spinner message="Deleting location..." />}
       <div className={styles.sectionHeading}>
         <h3>Company Location</h3>
