@@ -167,6 +167,7 @@ export default function UserCompanyDiscussionForum() {
       toast.error("An error occurred while saving the post.");
     } finally {
       setLoading("");
+      setSelectedFile(null);
     }
   };
 

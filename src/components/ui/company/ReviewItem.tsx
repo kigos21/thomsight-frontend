@@ -53,8 +53,6 @@ export default function ReviewItem({
     fetchVotes();
   }, [id]);
 
-  console.log(reviewImage);
-
   const handleVote = async (voteType: "up" | "down") => {
     try {
       await axiosInstance.post(`/api/review/${id}/vote`, {

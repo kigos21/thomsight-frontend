@@ -75,6 +75,10 @@ export default function UserCompanyOverview() {
   const handleSave = async () => {
     let isValid = true;
 
+    if (review.description.trim() === "") {
+      toast.error("Description cannot be left blank.");
+      isValid = false;
+    }
     if (containsBadWords(review.description)) {
       toast.error("Your review contains inappropriate language.");
       isValid = false;
@@ -134,6 +138,7 @@ export default function UserCompanyOverview() {
       }
     } finally {
       setLoading("");
+      setSelectedFile(null);
     }
   };
 
