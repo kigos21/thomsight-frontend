@@ -12,6 +12,7 @@ import ErrorPage from "../../../pages/ErrorPage.tsx";
 import ChangePhotoPopup from "../ChangePhotoPopup.tsx";
 import { toast } from "react-toastify";
 import { Company, Location } from "../../../types/types.ts";
+import EditCompanyNameEmailPopup from "./EditCompanyNameEmailPopup";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -146,6 +147,17 @@ export default function CompanyDetails() {
     return initials;
   };
 
+  const handleEditInfo = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleSave = async (name: string, email: string) => {
+    // Logic to save the updated name and email
+    setCompanyName(name);
+    setCompanyEmail(email);
+    setIsPopupOpen(false);
+  };
+
   if (location.pathname.includes("/manage/")) {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
@@ -189,45 +201,25 @@ export default function CompanyDetails() {
           <div className={styles.detailsHolder}>
             {/* Company Name */}
             <div className={styles.sectionHeading}>
-              {isEditName ? (
-                <input
-                  type="text"
-                  value={companyName}
-                  onChange={(e) => setCompanyName(e.target.value)}
-                  className={styles.inputTextCompanyName}
-                />
-              ) : (
-                <p className={styles.companyName}>{companyName}</p>
-              )}
-              {isEditName ? (
-                <div className={styles.saveAndCancelButtons}>
-                  <button
-                    className={styles.cancelButton}
-                    onClick={() => {
-                      setIsEditName(false);
-                      setCompanyName(originalCompanyName);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className={styles.saveButton}
-                    onClick={handleSaveUpdates}
-                  >
-                    Save
-                  </button>
-                </div>
-              ) : (
+              <div className={styles.companyInfo}>
+                {isEditName ? (
+                  <input
+                    type="text"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    className={styles.inputTextCompanyName}
+                  />
+                ) : (
+                  <p className={styles.companyName}>{companyName}</p>
+                )}
                 <button
-                  className={styles.headingEditButton}
-                  onClick={() => {
-                    setOriginalCompanyName(companyName);
-                    setIsEditName(true);
-                  }}
+                  className={styles.editButton}
+                  onClick={handleEditInfo}
                 >
                   <IconEdit className={styles.iconEdit} />
+                  Edit Name & Email
                 </button>
-              )}
+              </div>
             </div>
 
             {/* Company Email */}
@@ -245,36 +237,6 @@ export default function CompanyDetails() {
                     ? companyEmail
                     : "No email set"}
                 </p>
-              )}
-
-              {isEditEmail ? (
-                <div className={styles.saveAndCancelButtons}>
-                  <button
-                    className={styles.cancelButton}
-                    onClick={() => {
-                      setIsEditEmail(false);
-                      setCompanyEmail(originalCompanyEmail);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className={styles.saveButton}
-                    onClick={handleSaveUpdates}
-                  >
-                    Save
-                  </button>
-                </div>
-              ) : (
-                <button
-                  className={styles.headingEditButton}
-                  onClick={() => {
-                    setOriginalCompanyEmail(companyEmail);
-                    setIsEditEmail(true);
-                  }}
-                >
-                  <IconEdit className={styles.iconEdit} />
-                </button>
               )}
             </div>
 
@@ -313,6 +275,15 @@ export default function CompanyDetails() {
               </span>
             </div>
           </div>
+        )}
+        {isPopupOpen && (
+          <EditCompanyNameEmailPopup
+            isOpen={isPopupOpen}
+            onClose={() => setIsPopupOpen(false)}
+            onSave={handleSave}
+            initialName={companyName}
+            initialEmail={companyEmail}
+          />
         )}
       </PaddedContainer>
     );

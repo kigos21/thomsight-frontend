@@ -1,6 +1,14 @@
 import React from "react";
 import styles from "./DeletePopUp.module.scss";
-import { DeletePopUpProps } from "../../../types/props";
+import Button from "../Button";
+
+interface DeletePopUpProps {
+  isVisible: boolean;
+  onClose: () => void;
+  onDelete: () => Promise<void>;
+  heading: string;
+  details: string;
+}
 
 const DeletePopUp: React.FC<DeletePopUpProps> = ({
   isVisible,
@@ -12,17 +20,18 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
   if (!isVisible) return null;
 
   return (
-    <div className={styles.deletePopUpOverlay}>
-      <div className={styles.deletePopUp}>
-        <h2 className={styles.heading}>{heading}</h2>
-        <p>{details}</p>
-        <div className={styles.buttonGroup}>
-          <button className={styles.cancelButton} onClick={onClose}>
+    <div className={styles.overlay}>
+      <div className={styles.popup}>
+        <h2 className={styles.title}>{heading}</h2>
+        <div className={styles.separator}></div>
+        <p className={styles.details}>{details}</p>
+        <div className={styles.buttonContainer}>
+          <Button classNames={styles.cancelButton} onClick={onClose}>
             Cancel
-          </button>
-          <button className={styles.deleteButton} onClick={() => onDelete?.()}>
+          </Button>
+          <Button classNames={styles.deleteButton} onClick={onDelete}>
             Delete
-          </button>
+          </Button>
         </div>
       </div>
     </div>
