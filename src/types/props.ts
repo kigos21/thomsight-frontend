@@ -54,7 +54,7 @@ export type DiscussionForumItemProps = {
   internName: string;
   date: string;
   description: string;
-  onDescriptionChange: (updatedDescription: string) => void;
+  onChange: (updatedDescription: string, updatedImage: string) => void;
 
   classNames?: string;
   style?: React.CSSProperties;

@@ -210,6 +210,21 @@ export default function UserCompanyDiscussionForum() {
     setPostData(newPosts);
   };
 
+  const handleImageChange = (id: number, updatedImage: string) => {
+    const newPosts = postData.map((post) => {
+      if (post.id != id) {
+        return post;
+      }
+
+      return {
+        ...post,
+        image: updatedImage,
+      };
+    });
+
+    setPostData(newPosts);
+  };
+
   const handleDiscussionDelete = (id: number | undefined) => {
     setPostData((prevPosts) => prevPosts.filter((post) => post.id !== id));
     setCurrentPage(1);
@@ -468,9 +483,13 @@ export default function UserCompanyDiscussionForum() {
                     internName={post.internName}
                     date={post.date}
                     description={post.description}
-                    onDescriptionChange={(updatedDescription: string) =>
-                      handleDescriptionChange(post.id, updatedDescription)
-                    }
+                    onChange={(
+                      updatedDescription: string,
+                      updatedImage: string
+                    ) => {
+                      handleDescriptionChange(post.id, updatedDescription);
+                      handleImageChange(post.id, updatedImage);
+                    }}
                     setLoading={setLoading}
                     onDiscussionDelete={handleDiscussionDelete}
                     posted_by={post.posted_by}

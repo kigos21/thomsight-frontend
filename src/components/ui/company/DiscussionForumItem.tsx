@@ -23,7 +23,7 @@ export default function DiscussionForumItem({
   internName,
   date,
   description,
-  onDescriptionChange,
+  onChange,
   id,
   setLoading,
   onDiscussionDelete,
@@ -32,6 +32,7 @@ export default function DiscussionForumItem({
   user_id,
   image,
 }: DiscussionForumItemProps) {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
   const { slug } = useParams<{ slug: string }>();
@@ -92,13 +93,28 @@ export default function DiscussionForumItem({
       toast.error("Description should be limited to 2500 characters");
       return;
     }
+
+    const formData = new FormData();
+    formData.append("description", tempDescription);
+
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
+
     try {
       setLoading("Updating discussion...");
-      await axiosInstance.put(`/api/company/${slug}/discussion/${id}/update`, {
-        description: tempDescription,
-      });
 
-      onDescriptionChange(tempDescription);
+      const response = await axiosInstance.post(
+        `/api/company/${slug}/discussion/${id}/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      onChange(tempDescription, response.data.image);
       setIsEditing(false);
       toast.success("Updated discussion successfully");
     } catch (error) {
@@ -182,6 +198,12 @@ export default function DiscussionForumItem({
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
       {reportLoading && <Spinner message={reportLoading} />}
@@ -236,7 +258,7 @@ export default function DiscussionForumItem({
                     id="fileInput"
                     type="file"
                     accept=".jpeg, .jpg, .png"
-                    // onChange={handleFileChange}
+                    onChange={handleFileChange}
                   />
                 </div>
               </div>
