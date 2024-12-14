@@ -14,6 +14,7 @@ import {
   IconBriefcase,
   IconBulb,
 } from "@tabler/icons-react";
+import { Carousel } from "../ui/company/Carousel";
 
 // Define the type for navigation links
 interface NavLink {
@@ -76,6 +77,14 @@ export default function CompanyRoot() {
         },
       ];
 
+  const images: string[] = [
+    // Put images here
+    // "some/path",
+    // "some/path",
+    // "some/path",
+    // "some/path",
+  ];
+
   let elements: React.ReactNode[];
   if (!isManagePath) {
     elements = [
@@ -128,6 +137,8 @@ export default function CompanyRoot() {
 
   return (
     <div className={styles.container}>
+      {images.length > 0 && <Carousel images={images} interval={4000} />}
+
       <CompanyDetails />
       <NavbarCompany elements={elements} />
       <PaddedContainer>

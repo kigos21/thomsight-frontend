@@ -1,0 +1,111 @@
+.paddedContainer {
+  padding-top: 2.5rem;
+  padding-bottom: 0;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.imagesWrapper {
+  overflow: hidden;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
+  // aspect-ratio: 16/9;
+  height: 340px;
+}
+
+.imageContainer {
+  display: flex;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.imageInnerContainer {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.carouselImage {
+  width: 100%;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--neutral-1);
+}
+
+.leftCarouselBtn {
+  background-color: #a3a3a3;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  border-radius: 99px;
+  padding: 4px 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightCarouselBtn {
+  background-color: #a3a3a3;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  border-radius: 99px;
+  padding: 4px 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.positionIndicator {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.active {
+  background-color: white;
+}
+
+.inactive {
+  background-color: #a3a3a3;
+}
+
+@media screen and (max-width: 768px) {
+  .paddedContainer {
+    padding-top: 2rem;
+  }
+
+  .imagesWrapper {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .paddedContainer {
+    padding-top: 1rem;
+  }
+
+  .imagesWrapper {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+}
