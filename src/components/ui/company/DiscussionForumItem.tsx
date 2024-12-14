@@ -14,6 +14,7 @@ import ReportForm from "./ReportForm";
 import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
+import DOMPurify from "dompurify";
 
 export default function DiscussionForumItem({
   classNames,
@@ -190,7 +191,12 @@ export default function DiscussionForumItem({
           {image !== "http://localhost:8000/storage/uploads/discussions" && (
             <img className={styles.image} src={image} alt={"Test"} />
           )}
-          <p className={styles.discussionForumDescription}>{description}</p>
+          <p
+            className={styles.discussionForumDescription}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(description),
+            }}
+          ></p>
 
           <div className={styles.iconContainer}>
             {user?.id === posted_by && (

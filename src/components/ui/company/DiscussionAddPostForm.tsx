@@ -1,7 +1,8 @@
-import FormField from "../../form/FormField";
+import { useEffect, useRef, useState } from "react";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import styles from "./CompanyReviewForm.module.scss";
+import Quill from "quill";
 
 interface Post {
   description: string;
@@ -18,12 +19,33 @@ interface DiscussionAddPostFormProps {
 const DiscussionAddPostForm: React.FunctionComponent<
   DiscussionAddPostFormProps
 > = ({ post, onSave, onChange, onCancel, setSelectedFile }) => {
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    onChange({ ...post, [name]: value }); // Update review state based on input change
-  };
+  const [description, setDescription] = useState(post.description);
+
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
+  useEffect(() => {
+    if (!quillRef.current || quillInstance.current) return;
+
+    quillInstance.current = new Quill(quillRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ align: [] }],
+        ],
+      },
+    });
+
+    quillInstance.current.root.innerHTML = description;
+
+    quillInstance.current.on("text-change", () => {
+      const htmlContent = quillInstance.current?.root.innerHTML || "";
+      setDescription(htmlContent);
+      onChange({ description: htmlContent });
+    });
+  }, [description, onChange]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,14 +63,9 @@ const DiscussionAddPostForm: React.FunctionComponent<
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
             <p className={styles.formTitle}>Description</p>
-            <FormField
-              classNames={styles.formFieldBio}
-              type="textarea"
-              name="description"
-              placeholder="Tell us about your post"
-              value={post.description}
-              onChange={handleInputChange}
-            ></FormField>
+            <div className={styles.quillWrapper}>
+              <div ref={quillRef} className={styles.quillContainer}></div>
+            </div>
           </div>
 
           <div>
