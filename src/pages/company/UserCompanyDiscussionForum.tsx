@@ -35,6 +35,7 @@ interface Post {
   replies: Reply[];
   user_id: number;
   created_at: string;
+  image: string;
 }
 
 interface ReplyToDelete {
@@ -85,6 +86,8 @@ export default function UserCompanyDiscussionForum() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   useEffect(() => {
     const fetchDiscussions = async () => {
       try {
@@ -133,9 +136,21 @@ export default function UserCompanyDiscussionForum() {
 
     try {
       setLoading("Creating discussion...");
+      const formData = new FormData();
+      formData.append("description", newPost.description);
+
+      if (selectedFile) {
+        formData.append("image", selectedFile);
+      }
+
       const response = await axiosInstance.post(
         `/api/company/${slug}/discussions/create`,
-        newPost
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       const savedPost = response.data;
@@ -434,6 +449,7 @@ export default function UserCompanyDiscussionForum() {
               onSave={handleSave}
               onChange={handleChange}
               onCancel={handleCancel}
+              setSelectedFile={setSelectedFile}
             />
           )}
 
@@ -463,6 +479,7 @@ export default function UserCompanyDiscussionForum() {
                       );
                     }}
                     user_id={post.user_id}
+                    image={post.image}
                   />
                   {
                     <div className={styles.repliesContainer}>

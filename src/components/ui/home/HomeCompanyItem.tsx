@@ -56,7 +56,7 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
 
       <div className={styles.cardBody}>
         {/* Render if there are reviews, else fallback */}
-        {formattedRating !== 0 && reviews !== 0 ? (
+        {Number(formattedRating) !== 0 && reviews !== 0 ? (
           <p className={styles.reviews}>
             <IconStarFilled className={styles.starIcon} />
             {formattedRating} | {reviews} {reviews === 1 ? "review" : "reviews"}

@@ -64,6 +64,7 @@ export type DiscussionForumItemProps = {
   posted_by: number;
   user_id: number;
   handleReplyClick: () => void;
+  image: string;
 };
 
 export type ReviewItemProps = {

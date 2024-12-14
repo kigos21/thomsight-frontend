@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import FormField from "../../form/FormField";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
-import Spinner from "../Spinner";
 import styles from "./CompanyReviewForm.module.scss";
 
 interface Post {
@@ -14,11 +12,12 @@ interface DiscussionAddPostFormProps {
   onSave: () => void;
   onChange: (post: Post) => void;
   onCancel: () => void;
+  setSelectedFile: (file: File | null) => void;
 }
 
 const DiscussionAddPostForm: React.FunctionComponent<
   DiscussionAddPostFormProps
-> = ({ post, onSave, onChange, onCancel }) => {
+> = ({ post, onSave, onChange, onCancel, setSelectedFile }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -26,21 +25,18 @@ const DiscussionAddPostForm: React.FunctionComponent<
     onChange({ ...post, [name]: value }); // Update review state based on input change
   };
 
-  const [creating, setCreating] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };
 
-  // PAKIBURA NETO, NEED KO LANG ICONSOLE LOG FOR NOW, MAARTE LINTER
-  useEffect(() => {
-    console.log(setCreating(false));
-  }, []);
-  // END OF PAKIBURA
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
 
   return (
     <div className={`${styles.container}`}>
-      {creating && <Spinner message="Creating job..." />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
@@ -53,6 +49,18 @@ const DiscussionAddPostForm: React.FunctionComponent<
               value={post.description}
               onChange={handleInputChange}
             ></FormField>
+          </div>
+
+          <div>
+            <p className={styles.formTitle}>
+              Image Upload (optional, max 4 MB)
+            </p>
+            <input
+              id="fileInput"
+              type="file"
+              accept=".jpeg, .jpg, .png"
+              onChange={handleFileChange}
+            />
           </div>
 
           <div className={styles.buttonGroup}>
