@@ -4,7 +4,7 @@ import Button from "../Button";
 
 import styles from "./DiscussionForumItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import DeletePopUp from "./DeletePopUp";
@@ -15,6 +15,7 @@ import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
 import DOMPurify from "dompurify";
+import Quill from "quill";
 
 export default function DiscussionForumItem({
   classNames,
@@ -45,9 +46,38 @@ export default function DiscussionForumItem({
 
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
   const handleEditClick = () => {
     setIsEditing((state) => !state);
   };
+
+  useEffect(() => {
+    if (quillInstance.current && !isEditing) {
+      quillInstance.current = null;
+    }
+
+    if (!quillRef.current || quillInstance.current || !isEditing) return;
+
+    quillInstance.current = new Quill(quillRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ align: [] }],
+        ],
+      },
+    });
+
+    quillInstance.current.root.innerHTML = tempDescription;
+
+    quillInstance.current.on("text-change", () => {
+      const htmlContent = quillInstance.current?.root.innerHTML || "";
+      setTempDescription(htmlContent);
+    });
+  }, [isEditing]);
 
   const handleSaveClick = async () => {
     if (!tempDescription.trim()) {
@@ -191,12 +221,45 @@ export default function DiscussionForumItem({
           {image !== "http://localhost:8000/storage/uploads/discussions" && (
             <img className={styles.image} src={image} alt={"Test"} />
           )}
-          <p
-            className={styles.discussionForumDescription}
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(description),
-            }}
-          ></p>
+
+          {isEditing ? (
+            <div className={styles.editDescriptionSection}>
+              <div>
+                <div className={styles.quillWrapper}>
+                  <div ref={quillRef} className={styles.quillContainer}></div>
+                </div>
+                <div className={styles.fileWrapper}>
+                  <p className={styles.formTitle}>
+                    Change Image (optional, max 4 MB)
+                  </p>
+                  <input
+                    id="fileInput"
+                    type="file"
+                    accept=".jpeg, .jpg, .png"
+                    // onChange={handleFileChange}
+                  />
+                </div>
+              </div>
+              <div className={styles.editButtons}>
+                <button
+                  onClick={handleCancelClick}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+                <button onClick={handleSaveClick} className={styles.saveButton}>
+                  Save
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p
+              className={styles.discussionForumDescription}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(description),
+              }}
+            ></p>
+          )}
 
           <div className={styles.iconContainer}>
             {user?.id === posted_by && (
