@@ -113,7 +113,7 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
       {loading && <Spinner message={loading} />}
       <div className={styles.popup}>
         <h2 className={styles.title}>Manage Image Gallery</h2>
-
+        <div className={styles.separator}></div>
         <div className={styles.imageListContainer}>
           {/* Existing images list */}
           {existingImages.length > 0 && (
@@ -180,10 +180,10 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
         </div>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.redButton} onClick={onClose}>
+          <button className={styles.cancelButton} onClick={onClose}>
             Cancel
           </button>
-          <button className={styles.popupButton} onClick={handleSave}>
+          <button className={styles.saveButton} onClick={handleSave}>
             Save
           </button>
         </div>
