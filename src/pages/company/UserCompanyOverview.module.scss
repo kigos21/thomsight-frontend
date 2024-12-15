@@ -142,21 +142,28 @@
 .noteContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 1rem 0rem;
-  max-width: 380px;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  max-width: 530px;
 }
 
 .companySize,
 .industry {
   display: grid;
-  align-items: center;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
 
-  p {
-    word-wrap: break-word;
-  }
+.companySize h3,
+.industry h3 {
+  margin: 0; /* Remove default margin */
+  white-space: nowrap;
+}
+
+.companySize p,
+.industry p {
+  margin: 0;
+  word-break: break-word;
 }
 
 .description {
