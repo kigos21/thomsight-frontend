@@ -19,6 +19,8 @@
   width: 90%;
   max-width: 800px;
   text-align: left;
+  max-height: 900px;
+  overflow-y: auto;
 }
 
 .title {
@@ -41,7 +43,8 @@
   font-weight: bold;
 }
 
-.input, .textarea {
+.input,
+.textarea {
   padding: 0.75rem;
   border: 1px solid var(--black);
   border-radius: 10px;
@@ -50,7 +53,7 @@
 }
 
 .textarea {
-  height: 450px;
+  height: 100px;
   resize: none;
 }
 
@@ -60,7 +63,8 @@
   gap: 1rem;
 }
 
-.cancelButton, .submitButton {
+.cancelButton,
+.submitButton {
   padding: 0.7rem 1.2rem;
   border: none;
   border-radius: 10px;
@@ -68,35 +72,35 @@
 }
 
 .cancelButton {
-    padding: 0.7rem 1.2rem;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--neutral-4);
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
-  
-    &:hover {
-      background-color: var(--neutral-6);
-    }
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--neutral-4);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--neutral-6);
+  }
 }
 
 .submitButton {
-    padding: 0.7rem 1.2rem;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--blue-6);
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
-  
-    &:hover {
-      background-color: var(--blue-8);
-    }
-} 
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue-6);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
+}
 
 .separator {
-    height: 1px;
-    background-color: var(--muted-black);
-    margin: 2rem 0rem;
-  }
+  height: 1px;
+  background-color: var(--muted-black);
+  margin: 2rem 0rem;
+}

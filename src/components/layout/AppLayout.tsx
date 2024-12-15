@@ -201,6 +201,14 @@ export default function AppRoot() {
         >
           FAQs
         </NavLink>,
+        <NavLink
+          to="/interview-guide"
+          key="interviewTipsUser"
+          className={({ isActive }) => (isActive ? styles.active : "")}
+          onClick={() => setDisplayNav(false)}
+        >
+          Interview Tips
+        </NavLink>,
       ];
       break;
 
