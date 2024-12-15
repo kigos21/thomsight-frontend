@@ -12,6 +12,14 @@
   padding-right: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+  }
 }
 
 .detailsContainer {
@@ -19,6 +27,25 @@
   flex-direction: row;
   align-items: center;
   gap: 25px;
+}
+
+.containerUser {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+  }
 }
 
 .imageContainer {
@@ -87,17 +114,16 @@
   }
 }
 
-.detailsHolder {
-  p {
-    font-size: 0.875rem;
-  }
-}
-
 .companyName {
   font-size: 1.25rem !important;
 }
 
 .detailsHolder {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsHolderUser {
   display: flex;
   flex-direction: column;
   gap: 8px;
