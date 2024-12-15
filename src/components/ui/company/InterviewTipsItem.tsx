@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import Spinner from "../Spinner";
 import { containsBadWords } from "../../../badWordsFilter";
 import Button from "../Button";
+import DOMPurify from "dompurify";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -229,7 +230,12 @@ export default function InterviewTipsItem({
                   </p>
                 )}
               </div>
-              <p className={styles.jobDescription}>{tipDescription}</p>
+              <p
+                className={styles.jobDescription}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(tipDescription),
+                }}
+              ></p>
             </div>
           )}
           <div className={styles.iconContainer}>
