@@ -179,11 +179,13 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
           </div>
 
           {/* Add new input button */}
-          {imageInputs.length + existingImages.length < 5 && (
-            <button className={styles.addButton} onClick={handleAddInput}>
-              + Add Another Image
-            </button>
-          )}
+          <div className={styles.addButtonContainer}>
+            {imageInputs.length + existingImages.length < 5 && (
+              <button className={styles.addButton} onClick={handleAddInput}>
+                + Add Another Image
+              </button>
+            )}
+          </div>
         </div>
 
         <div className={styles.buttonContainer}>

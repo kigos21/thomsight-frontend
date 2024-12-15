@@ -89,6 +89,7 @@ const EditCompanyNameEmailPopup: React.FC<EditCompanyNameEmailPopupProps> = ({
             classNames={styles.saveButton}
             onClick={handleSave}
             color="secondary"
+            roundness="sm-rounded"
             disabled={loading}
           >
             {loading ? "Saving..." : "Save"}
