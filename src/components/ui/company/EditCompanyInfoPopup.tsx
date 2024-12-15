@@ -80,7 +80,10 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
   const handleSave = async () => {
     const sizeTrimmed = size.trim();
     const industryTrimmed = industry.trim();
-    const descriptionTrimmed = description.trim();
+    const plainTextDescription =
+      new DOMParser()
+        .parseFromString(description, "text/html")
+        .body.textContent?.trim() || "";
 
     if (sizeTrimmed === "") {
       toast.error("Company size cannot be blank");
@@ -92,12 +95,12 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
       return;
     }
 
-    if (descriptionTrimmed === "") {
+    if (plainTextDescription === "") {
       toast.error("Company description cannot be blank");
       return;
     }
 
-    if (descriptionTrimmed.length > 2500) {
+    if (plainTextDescription.length > 2500) {
       toast.error("Description should not exceed more than 2500 characters");
       return;
     }
@@ -115,9 +118,9 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
     try {
       setLoading(true);
       await onSave({
-        size: sizeTrimmed,
-        industry: industryTrimmed,
-        description: descriptionTrimmed,
+        size: size,
+        industry: industry,
+        description: description,
       });
       onClose();
     } catch (error) {

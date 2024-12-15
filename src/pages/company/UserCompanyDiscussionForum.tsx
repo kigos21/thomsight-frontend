@@ -123,7 +123,12 @@ export default function UserCompanyDiscussionForum() {
   );
 
   const handleSave = async () => {
-    if (postForm.description.trim() === "") {
+    const plainTextDescription =
+      new DOMParser()
+        .parseFromString(postForm.description, "text/html")
+        .body.textContent?.trim() || "";
+
+    if (plainTextDescription === "") {
       toast.error("Post description can not be blank.");
       return;
     }
@@ -131,7 +136,7 @@ export default function UserCompanyDiscussionForum() {
       toast.error("Post description contains foul language");
       return;
     }
-    if (postForm.description.length > 2500) {
+    if (plainTextDescription.length > 2500) {
       toast.error("Post description should be limited to 2500 characters.");
       return;
     }
