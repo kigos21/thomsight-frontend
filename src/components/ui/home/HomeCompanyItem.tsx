@@ -3,6 +3,7 @@ import styles from "./HomeCompanyItem.module.scss";
 import JobChip from "./JobChip";
 import { IconMapPin, IconStarFilled } from "@tabler/icons-react";
 import srcLogo from "../../../assets/no-image.png";
+import { useState } from "react";
 
 const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   company,
@@ -11,6 +12,7 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   const trimmedJobs = jobs?.slice(0, 2);
   const numericRating = Number(rating);
   let formattedRating = "0.0";
+  const [imageLoadError, setImageLoadError] = useState<boolean>(false);
 
   if (numericRating && numericRating !== 0)
     formattedRating =
@@ -21,10 +23,12 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.cardHeader}>
-        {image !== "http://localhost:8000/storage/uploads/companies" ? (
+        {image !== "http://localhost:8000/storage/uploads/companies" &&
+        !imageLoadError ? (
           <img
             src={image}
             alt={"Image of " + name}
+            onError={() => setImageLoadError(true)}
             className={styles.companyImage}
           />
         ) : (
