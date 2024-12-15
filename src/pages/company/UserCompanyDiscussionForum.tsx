@@ -508,23 +508,25 @@ export default function UserCompanyDiscussionForum() {
                     image={post.image}
                   />
                   <div className={styles.repliesContainer}>
-                    <button
-                      className={styles.viewRepliesButton}
-                      onClick={() => {
-                        setShowReplies((prev) => ({
-                          ...prev,
-                          [post.id]: !prev[post.id],
-                        }));
-                        if (!showReplies[post.id]) {
-                          setVisibleReplies((prev) => ({
+                    {post.replies && post.replies.length > 0 && (
+                      <button
+                        className={styles.viewRepliesButton}
+                        onClick={() => {
+                          setShowReplies((prev) => ({
                             ...prev,
-                            [post.id]: 2,
+                            [post.id]: !prev[post.id],
                           }));
-                        }
-                      }}
-                    >
-                      {showReplies[post.id] ? "Hide Replies" : "View Replies"}
-                    </button>
+                          if (!showReplies[post.id]) {
+                            setVisibleReplies((prev) => ({
+                              ...prev,
+                              [post.id]: 2,
+                            }));
+                          }
+                        }}
+                      >
+                        {showReplies[post.id] ? "Hide Replies" : "View Replies"}
+                      </button>
+                    )}
                     {showReplies[post.id] &&
                       post.replies &&
                       post.replies
