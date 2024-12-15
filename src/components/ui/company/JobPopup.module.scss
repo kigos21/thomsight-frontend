@@ -29,11 +29,11 @@
 }
 
 .label {
-    margin-bottom: 1rem;
-    color: var(--black);
-    font-size: 1rem;
-    font-weight: bold;
-  }
+  margin-bottom: 1rem;
+  color: var(--black);
+  font-size: 1rem;
+  font-weight: bold;
+}
 
 .input {
   width: 100%;
@@ -45,15 +45,15 @@
 }
 
 .textarea {
-    padding: 0.75rem;
-    border: 1px solid black;
-    border-radius: 10px;
-    height: 250px;
-    resize: none;
-    font-size: 1rem;
-    width: 100%;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 250px;
+  resize: none;
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .buttonContainer {
@@ -63,33 +63,19 @@
 }
 
 .cancelButton {
-  background-color: var(--neutral-4);
-  color: white;
   padding: 0.75rem 1rem;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: var(--neutral-6);
-  }
 }
 
 .submitButton {
-  background-color: var(--secondary-color);
-  color: white;
   padding: 0.75rem 1rem;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: var(--blue-8);
-  }
-} 
+}
 
 .separator {
-    height: 1px;
-    background-color: var(--muted-black);
-    margin: 2rem 0rem;
-  } 
+  height: 1px;
+  background-color: var(--muted-black);
+  margin: 2rem 0rem;
+}

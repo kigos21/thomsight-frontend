@@ -30,13 +30,9 @@
 .leftcontainer {
   display: flex;
   flex-direction: column;
-  width: 65%;
+
   gap: 20px;
   padding: 0rem 2rem;
-
-  @media screen and (max-width: 910px) {
-    width: 100%;
-  }
 }
 
 .titleContainer {
@@ -77,69 +73,12 @@
   justify-content: space-between;
 }
 
-.rightcontainer {
-  width: 35%;
-
-  p {
-    font-size: 14px;
-    padding: 0.4rem 0rem;
-    color: black;
-  }
-
-  @media screen and (max-width: 910px) {
-    display: none;
-  }
-}
-
-.rightcontainerMobile {
-  display: none;
-
-  @media screen and (max-width: 910px) {
-    display: block;
-    width: 360px;
-
-    p {
-      font-size: 14px;
-      padding: 0.4rem 0rem;
-      color: black;
-    }
-
-    h5 {
-      font-size: 1rem;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    display: block;
-    padding: 0.4rem 0rem;
-    width: 100%;
-
-    p {
-      font-size: 0.875rem;
-      padding: 0.4rem 0rem;
-      color: black;
-    }
-
-    h5 {
-      font-size: 0.9rem;
-    }
-  }
-}
-
-.noteContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .companySize,
 .industry {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 15% 85%;
 
   p {
-    padding: 0;
     word-wrap: break-word;
   }
 }
@@ -194,7 +133,20 @@
   word-wrap: break-word;
 }
 
-.reviewButton{
+.noteContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 1rem 0rem;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reviewButton {
   padding: 0.7rem 1.2rem;
   border: none;
   border-radius: 10px;

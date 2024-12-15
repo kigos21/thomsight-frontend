@@ -80,7 +80,7 @@ const JobPopup: React.FC<JobPopupProps> = ({ isOpen, onClose, onSubmit }) => {
         />
         <div className={styles.buttonContainer}>
           <Button
-            color="secondary"
+            color="black"
             classNames={styles.cancelButton}
             onClick={onClose}
           >
