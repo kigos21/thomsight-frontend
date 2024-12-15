@@ -2,6 +2,8 @@ import PaddedContainer from "../components/layout/PaddedContainer";
 import StyledBox from "../components/layout/StyledBox";
 import styles from "./InterviewGuidePage.module.scss";
 import srcLogo from "../assets/thomsight-logo.svg";
+import Button from "../components/ui/Button";
+import { IconEdit } from "@tabler/icons-react";
 
 export default function InterviewGuidePage() {
   return (
@@ -12,7 +14,20 @@ export default function InterviewGuidePage() {
         </div>
 
         <div className={styles.container}>
-          <h1 className={styles.title}>Interview Tips</h1>
+          <h1 className={styles.title}>
+            Interview Tips
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.editButton}
+              onClick={() => {
+        
+              }}
+            >
+              <IconEdit size={20} className={styles.iconEdit} style={{ marginRight: '0.5rem' }} />
+              Edit
+            </Button>
+          </h1>
           {/* #1 */}
           <h2 className={styles.subtitle}>
             1. Prepare for the day of the interview
