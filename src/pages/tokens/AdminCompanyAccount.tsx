@@ -184,9 +184,7 @@ export default function AdminCompanyAccount() {
                   key={user.id}
                   status={user.company.deleted_at ? "inactive" : "active"}
                   companyName={user.company.name}
-                  email={
-                    "karlmattieu.vivar.cics@ust.edu.ph.oraclephasadsadasdsad"
-                  }
+                  email={user.email}
                   expiration={user.company.expiration}
                   handleSoftDelete={handleSoftDelete}
                   handleRestore={handleRestore}

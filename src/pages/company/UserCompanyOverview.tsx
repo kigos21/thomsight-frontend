@@ -193,7 +193,7 @@ export default function UserCompanyOverview() {
       <div className={styles.container}>
         <div className={styles.leftcontainer}>
           <div className={styles.titleContainer}>
-            <h2 className={styles.titleHeader}>Company Description</h2>
+            <h2 className={styles.titleHeader}>Company Overview</h2>
             <p
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(
@@ -203,7 +203,7 @@ export default function UserCompanyOverview() {
             ></p>
           </div>
 
-          <div className={styles.rightcontainerMobile}>
+          {/* <div className={styles.rightcontainerMobile}>
             <StyledBox paddedContainerClass={styles.styledBox}>
               <div className={styles.noteContainer}>
                 <div className={styles.companySize}>
@@ -216,7 +216,7 @@ export default function UserCompanyOverview() {
                 </div>
               </div>
             </StyledBox>
-          </div>
+          </div> */}
 
           <div className={styles.reviewContainer}>
             <div className={styles.reviewHeaderContainer}>
@@ -329,7 +329,7 @@ export default function UserCompanyOverview() {
             )}
           </div>
         </div>
-        <div className={styles.rightcontainer}>
+        {/* <div className={styles.rightcontainer}>
           <StyledBox paddedContainerClass={styles.styledBox}>
             <div className={styles.noteContainer}>
               <div className={styles.companySize}>
@@ -342,7 +342,7 @@ export default function UserCompanyOverview() {
               </div>
             </div>
           </StyledBox>
-        </div>
+        </div> */}
       </div>
     </PaddedContainer>
   );
