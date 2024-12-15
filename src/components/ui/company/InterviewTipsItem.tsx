@@ -11,6 +11,7 @@ import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
 import { containsBadWords } from "../../../badWordsFilter";
+import Button from "../Button";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -197,19 +198,26 @@ export default function InterviewTipsItem({
                 rows={5}
               />
               <div className={styles.editButtons}>
-                <button
+                <Button
                   onClick={handleCancelClick}
-                  className={styles.cancelButton}
+                  classNames={styles.cancelButton}
+                  roundness="sm-rounded"
+                  color="black"
                 >
                   Cancel
-                </button>
-                <button onClick={handleSaveClick} className={styles.saveButton}>
+                </Button>
+                <Button
+                  onClick={handleSaveClick}
+                  classNames={styles.saveButton}
+                  roundness="sm-rounded"
+                  color="secondary"
+                >
                   Save
-                </button>
+                </Button>
               </div>
             </div>
           ) : (
-            <>
+            <div className={styles.interviewTipsContainer}>
               <div className={styles.tipsSubjectContainer}>
                 <p className={styles.subjectHeading}>{subjectHeading}</p>
                 {internName && (
@@ -222,7 +230,7 @@ export default function InterviewTipsItem({
                 )}
               </div>
               <p className={styles.jobDescription}>{tipDescription}</p>
-            </>
+            </div>
           )}
           <div className={styles.iconContainer}>
             {user?.id === poster_id && (

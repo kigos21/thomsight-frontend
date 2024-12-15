@@ -199,27 +199,29 @@ export default function UserCompanyInterviewTips() {
           onCancel={handleCancel}
         />
       )}
-
       {tips.length === 0 && (
         <em style={{ fontSize: "0.875rem" }}>
           There's no data available currently!
         </em>
       )}
-      {paginatedTips.map((tip) => (
-        <InterviewTipsItem
-          key={tip.id}
-          id={tip.id}
-          internName={tip.posted_by}
-          subjectHeading={tip.title}
-          tipDescription={tip.description}
-          onTipChange={(updatedTip) =>
-            handleTipChange(tip.id, updatedTip.title, updatedTip.description)
-          }
-          onTipDelete={handleTipDelete}
-          setLoading={setLoading}
-          poster_id={tip.poster_id}
-        />
-      ))}
+
+      <div className={styles.boxContainer}>
+        {paginatedTips.map((tip) => (
+          <InterviewTipsItem
+            key={tip.id}
+            id={tip.id}
+            internName={tip.posted_by}
+            subjectHeading={tip.title}
+            tipDescription={tip.description}
+            onTipChange={(updatedTip) =>
+              handleTipChange(tip.id, updatedTip.title, updatedTip.description)
+            }
+            onTipDelete={handleTipDelete}
+            setLoading={setLoading}
+            poster_id={tip.poster_id}
+          />
+        ))}
+      </div>
 
       {tips.length > itemsPerPage && (
         <div className={styles.pagination}>
