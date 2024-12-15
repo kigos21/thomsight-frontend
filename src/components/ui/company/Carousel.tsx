@@ -30,9 +30,9 @@ export function Carousel({ images, interval = 3000 }: CarouselProps) {
                 <img
                   src={image}
                   alt={`Slide ${index + 1}`}
-                  width={1280}
-                  height={720}
+                  height={340}
                   className={styles.carouselImage}
+                  style={{ width: `${(1 / images.length) * 100}%` }}
                 />
               </div>
             ))}
