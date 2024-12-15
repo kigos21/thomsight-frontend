@@ -170,7 +170,7 @@ export default function UserCompanyInterviewTips() {
             <Button
               color="primary"
               roundness="rounded"
-              classNames={styles.replyButton}
+              classNames={styles.tipButton}
               onClick={() => {
                 setIsAddingTip(true);
               }}

@@ -237,7 +237,7 @@ export default function UserCompanyOverview() {
                 <Button
                   color="primary"
                   roundness="rounded"
-                  classNames={styles.replyButton}
+                  classNames={styles.reviewButton}
                   onClick={() => {
                     setIsAddingReview(true);
                   }}
