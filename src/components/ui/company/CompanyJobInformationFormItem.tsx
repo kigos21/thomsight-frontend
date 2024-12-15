@@ -120,16 +120,6 @@ export default function CompanyJobInformationFormItem({
             ></FormField>
           </div>
 
-          {/* <div>
-            <p className={styles.formTitle}>Tags</p>
-            <FormField
-              classNames={styles.formField}
-              type="text"
-              placeholder="Enter Tags"
-              required={true}
-            ></FormField>
-          </div> */}
-
           <div>
             <p className={styles.formTitle}>Job Description</p>
             <FormField

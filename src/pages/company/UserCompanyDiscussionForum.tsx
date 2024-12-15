@@ -677,7 +677,7 @@ export default function UserCompanyDiscussionForum() {
                         <IconX />
                       </Button>
                       <Button
-                        color={"primary"}
+                        color={"secondary"}
                         roundness={"sm-rounded"}
                         classNames={styles.sendReplyButton}
                         onClick={() => handleAddReply(post.id)}

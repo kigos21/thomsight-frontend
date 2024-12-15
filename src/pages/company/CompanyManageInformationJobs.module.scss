@@ -17,4 +17,12 @@
   h2 {
     font-weight: bold;
   }
+
+  @media (max-width: 638px) {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 0 0;
+    gap: 1rem;
+    align-items: flex-start;
+  }
 }

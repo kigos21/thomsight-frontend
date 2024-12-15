@@ -5,7 +5,9 @@
 }
 
 .styledBox {
-  background-color: var(--neutral-0);
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.285);
+  border: 1px solid var(--muted-black);
   padding: 1.75rem 2rem;
   border-radius: 1.5rem;
 }
@@ -46,25 +48,5 @@
   @media screen and (max-width: 480px) {
     display: flex;
     flex-direction: column;
-  }
-}
-
-.buttonCancel,
-.buttonSubmit {
-  padding: 1rem 3rem;
-}
-
-.buttonCancel {
-  background-color: var(--neutral-4);
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-
-  &:hover {
-    background-color: var(--neutral-6);
-  }
-
-  &:active {
-    background-color: var(--neutral-8);
   }
 }
