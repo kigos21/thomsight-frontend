@@ -51,20 +51,29 @@
 
 .buttonCancel,
 .buttonSubmit {
-  padding: 1rem 3rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue-6);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
 }
 
 .buttonCancel {
-  background-color: var(--neutral-4);
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--black);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
 
   &:hover {
-    background-color: var(--neutral-6);
-  }
-
-  &:active {
     background-color: var(--neutral-8);
   }
 }

@@ -8,6 +8,7 @@
   background-color: var(--neutral-0);
   padding: 1.75rem 2rem;
   border-radius: 1.5rem;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
 }
 
 .formContainer {
@@ -64,13 +65,13 @@
 }
 
 .buttonCancel {
-  background-color: var(--neutral-4);
+  background-color: var(--black);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 
   &:hover {
-    background-color: var(--neutral-6);
+    background-color: var(--neutral-8);
   }
 
   &:active {
@@ -86,4 +87,8 @@
   font-family: inherit;
   font-size: inherit;
   color: black;
+}
+
+.quillContainer{
+  background-color: var(--white);
 }

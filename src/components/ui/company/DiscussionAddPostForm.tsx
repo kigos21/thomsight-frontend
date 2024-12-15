@@ -89,7 +89,7 @@ const DiscussionAddPostForm: React.FunctionComponent<
               Cancel
             </Button>
             <Button
-              color="primary"
+              color="secondary"
               roundness="rounded"
               classNames={styles.buttonSubmit}
               onClick={onSave}
