@@ -1,7 +1,6 @@
 import styles from "./CreateAnnouncementPopUp.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { updateAnnouncement } from "../../../api/adminCRUD"; // Assuming you have an update function
 import Spinner from "../Spinner";
 import { useNavigate } from "react-router-dom";
 import { containsBadWords } from "../../../badWordsFilter";
@@ -12,17 +11,18 @@ interface EditAnnouncementPopupProps {
   isOpen: boolean;
   onClose: () => void;
   announcement: Announcement;
-  onUpdate: (updatedAnnouncement: Announcement) => void;
+  onUpdate?: (updatedAnnouncement: Announcement) => void;
+  onSave: (id: number, title: string, content: string) => void;
 }
 
 const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
   isOpen,
   onClose,
   announcement,
-  onUpdate,
+  onSave,
 }) => {
-  const [subject, setSubject] = useState<string>(announcement.subject);
-  const [details, setDetails] = useState<string>(announcement.details);
+  const [subject, setSubject] = useState<string>(announcement.title);
+  const [details, setDetails] = useState<string>(announcement.content);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -93,9 +93,7 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
 
     try {
       setLoading(true);
-      const updatedAnnouncement = await updateAnnouncement(announcement.id, subject, details);
-      toast.success("Announcement updated successfully!");
-      onUpdate(updatedAnnouncement);
+      onSave(announcement.id, subject, details);
       navigate("/announcements");
     } catch (error) {
       console.error("Error updating announcement:", error);
@@ -107,8 +105,8 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
   };
 
   const resetForm = () => {
-    setSubject(announcement.subject);
-    setDetails(announcement.details);
+    setSubject(announcement.title);
+    setDetails(announcement.content);
     if (quillInstance.current) {
       quillInstance.current.root.innerHTML = details;
     }
@@ -153,4 +151,4 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
   );
 };
 
-export default EditAnnouncementPopup; 
+export default EditAnnouncementPopup;

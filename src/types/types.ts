@@ -57,7 +57,7 @@ export type Announcement = {
   id: number;
   title: string;
   content: string;
-  updated_at: Date;
+  updated_at?: Date;
 };
 
 export type FeedbackReport = {
