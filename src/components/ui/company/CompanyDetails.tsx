@@ -129,6 +129,10 @@ export default function CompanyDetails() {
     setIsPopupInfoOpen(true);
   };
 
+  const handleNewAction = () => {
+    // Logic for the new action
+  };
+
   // const handleSave = async (name: string, email: string) => {
   //   // Logic to save the updated name and email
   //   setCompanyName(name);
@@ -178,10 +182,20 @@ export default function CompanyDetails() {
             <div className={styles.sectionHeading}>
               <div className={styles.companyInfo}>
                 <p className={styles.companyName}>{companyName}</p>
-                <button className={styles.editButton} onClick={handleEditInfo}>
+                <div>
+                  <button className={styles.editButton} onClick={handleEditInfo}>
+                    <IconEdit className={styles.iconEdit} />
+                    Edit Name & Email
+                  </button>
+                  <button 
+                    className={styles.editButton} 
+                    onClick={handleNewAction} 
+                    style={{ marginTop: '0.5rem' }}
+                  >
                   <IconEdit className={styles.iconEdit} />
-                  Edit Name & Email
-                </button>
+                    Edit Images
+                  </button>
+                </div>
               </div>
             </div>
 
