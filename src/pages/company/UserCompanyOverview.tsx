@@ -1,6 +1,5 @@
 import PaddedContainer from "../../components/layout/PaddedContainer";
 import ReviewItem from "../../components/ui/company/ReviewItem";
-import StyledBox from "../../components/layout/StyledBox";
 import styles from "./UserCompanyOverview.module.scss";
 import Button from "../../components/ui/Button";
 import { useParams } from "react-router-dom";
@@ -75,7 +74,12 @@ export default function UserCompanyOverview() {
   const handleSave = async () => {
     let isValid = true;
 
-    if (review.description.trim() === "") {
+    const plainTextDesc =
+      new DOMParser()
+        .parseFromString(review.description, "text/html")
+        .body.textContent?.trim() || "";
+
+    if (plainTextDesc === "") {
       toast.error("Description cannot be left blank.");
       isValid = false;
     }
@@ -95,7 +99,7 @@ export default function UserCompanyOverview() {
       isValid = false;
     }
 
-    if (review.description.length > 2500) {
+    if (plainTextDesc.length > 2500) {
       toast.error("Review cannot exceed 2500 characters.");
       isValid = false;
     }
@@ -233,7 +237,7 @@ export default function UserCompanyOverview() {
                 <Button
                   color="primary"
                   roundness="rounded"
-                  classNames={styles.replyButton}
+                  classNames={styles.reviewButton}
                   onClick={() => {
                     setIsAddingReview(true);
                   }}

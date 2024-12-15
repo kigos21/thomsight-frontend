@@ -67,7 +67,6 @@ export default function DiscussionForumItem({
         toolbar: [
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-          [{ align: [] }],
         ],
       },
     });
@@ -81,7 +80,12 @@ export default function DiscussionForumItem({
   }, [isEditing]);
 
   const handleSaveClick = async () => {
-    if (!tempDescription.trim()) {
+    const plainTextDescription =
+      new DOMParser()
+        .parseFromString(tempDescription, "text/html")
+        .body.textContent?.trim() || "";
+
+    if (plainTextDescription === "") {
       toast.error("New description can not be blank");
       return;
     }
@@ -89,7 +93,7 @@ export default function DiscussionForumItem({
       toast.error("New description contains foul language");
       return;
     }
-    if (tempDescription.length > 2500) {
+    if (plainTextDescription.length > 2500) {
       toast.error("Description should be limited to 2500 characters");
       return;
     }

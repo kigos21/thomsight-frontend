@@ -14,6 +14,24 @@
   flex-direction: column;
 }
 
+.editButton{
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  font-size: 1rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue-6);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
+}
+
 .imgContainer {
   display: flex;
   justify-content: center;
@@ -21,9 +39,12 @@
 }
 
 .title {
-  align-self: center;
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
   text-align: center;
+  width: 100%;
 }
 
 .subtitle {

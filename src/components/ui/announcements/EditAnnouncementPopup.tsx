@@ -42,7 +42,6 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
           toolbar: [
             ["bold", "italic", "underline", "strike"],
             [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-            [{ align: [] }],
           ],
         },
       });
@@ -66,11 +65,16 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
   if (!isOpen) return null;
 
   const handleSubmit = async () => {
+    const plainTextDetails =
+      new DOMParser()
+        .parseFromString(details, "text/html")
+        .body.textContent?.trim() || "";
+
     if (subject.trim() === "") {
       toast.error("Subject cannot be blank");
       return;
     }
-    if (details.trim() === "") {
+    if (plainTextDetails.trim() === "") {
       toast.error("Details cannot be blank");
       return;
     }
@@ -82,11 +86,12 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
       toast.error("Details contains foul language");
       return;
     }
+
     if (subject.length > 100) {
       toast.error("Subject should be limited to 100 characters");
       return;
     }
-    if (details.length > 500) {
+    if (plainTextDetails.length > 500) {
       toast.error("Details should be limited to 500 characters");
       return;
     }
