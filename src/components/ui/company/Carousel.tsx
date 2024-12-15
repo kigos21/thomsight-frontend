@@ -3,6 +3,8 @@
 import { useCarousel } from "../../../hooks/useCarousel";
 import styles from "./Carousel.module.scss";
 import PaddedContainer from "../../layout/PaddedContainer";
+import Button from "../Button";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 interface CarouselProps {
   images: string[];
@@ -10,11 +12,7 @@ interface CarouselProps {
 }
 
 export function Carousel({ images, interval = 3000 }: CarouselProps) {
-  const {
-    currentIndex,
-    // nextSlide,
-    // prevSlide
-  } = useCarousel(images, interval);
+  const { currentIndex, nextSlide, prevSlide } = useCarousel(images, interval);
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -47,14 +45,12 @@ export function Carousel({ images, interval = 3000 }: CarouselProps) {
 
         */}
 
-        {/* 
         <Button classNames={styles.leftCarouselBtn} onClick={prevSlide}>
           <IconChevronLeft style={{ width: "16px", height: "16px" }} />
         </Button>
         <Button classNames={styles.rightCarouselBtn} onClick={nextSlide}>
           <IconChevronRight style={{ width: "16px", height: "16px" }} />
-        </Button> 
-        */}
+        </Button>
 
         <div className={styles.positionIndicator}>
           {images.map((_, index) => (
