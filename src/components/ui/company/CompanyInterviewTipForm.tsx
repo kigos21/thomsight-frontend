@@ -61,8 +61,8 @@ const CompanyInterviewTipForm: React.FunctionComponent<
 
           <div className={styles.buttonGroup}>
             <Button
-              color="gray"
-              roundness="rounded"
+              color="black"
+              roundness="sm-rounded"
               classNames={styles.buttonCancel}
               onClick={onCancel}
             >
@@ -70,7 +70,7 @@ const CompanyInterviewTipForm: React.FunctionComponent<
             </Button>
             <Button
               color="secondary"
-              roundness="rounded"
+              roundness="sm-rounded"
               classNames={styles.buttonSubmit}
               onClick={onSave}
             >

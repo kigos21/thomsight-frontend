@@ -4,7 +4,9 @@
 
 .container {
   border-radius: 1.25rem;
-  background-color: var(--neutral-0);
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.285);
+  border: 1px solid var(--muted-black);
   color: black;
   margin-top: 1rem;
 }
@@ -18,7 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 20%;
 
   p {
     font-size: 0.875rem;
@@ -26,29 +27,36 @@
   }
 }
 
+.interviewTipsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
 .subjectHeading {
   font-size: 22px !important;
   font-weight: 600 !important;
+  margin: 0;
+  word-break: break-word;
 }
 
 .jobDescription {
-  width: 80%;
-  text-align: left;
+  // text-align: left;
   font-size: 0.875rem;
   font-weight: 400;
-  padding: 0rem 8rem 0rem 2rem;
-  word-wrap: break-word;
-  overflow-y: auto;
+  margin: 0;
+  word-break: break-word;
 }
 
 .internName {
-  // border-bottom: 1px solid transparent;
+  margin: 0;
+  word-break: break-word;
   transition:
     color 0.3s ease,
     border-bottom-color 0.3s ease;
   &:hover {
     color: var(--secondary-color);
-    // border-bottom: 1px solid var(--secondary-color);
     cursor: pointer;
   }
 }
@@ -75,6 +83,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding-left: 1rem;
 }
 
 .editTipSection {
@@ -91,37 +100,15 @@
 }
 
 .saveButton {
-  background-color: var(--secondary-color);
-  color: var(--white);
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
   border-radius: 10px;
   transition: all 0.3s ease;
-
-  &:hover {
-    background-color: var(--blue-7);
-  }
-
-  &:active {
-    background-color: var(--blue-9);
-  }
 }
 
 .cancelButton {
-  background-color: var(--red-6);
-  color: var(--white);
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
   border-radius: 10px;
   transition: all 0.3s ease;
-
-  &:hover {
-    background-color: var(--red-7);
-  }
-
-  &:active {
-    background-color: var(--red-9);
-  }
 }
 
 .descriptionTextarea {
@@ -153,6 +140,7 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+    padding-left: 0;
   }
 }
 

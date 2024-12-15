@@ -268,7 +268,7 @@ export default function CompanyDetails() {
   } else {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
-        <div className={styles.container}>
+        <div className={styles.containerUser}>
           <div className={styles.imageContainer}>
             {logo !== "http://localhost:8000/storage/uploads/companies" ? (
               <img src={logo} alt="Logo" />
@@ -277,7 +277,7 @@ export default function CompanyDetails() {
             )}
           </div>
 
-          <div className={styles.detailsHolder}>
+          <div className={styles.detailsHolderUser}>
             <p className={styles.companyName}>
               {company?.name || "No company name set"}
             </p>
