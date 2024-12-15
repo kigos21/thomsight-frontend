@@ -101,7 +101,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
             ></FormField> */}
             <StarRating
               rating={rating}
-              onRate={(newRating) => {
+              onRate={(newRating: string) => {
                 setRating(newRating);
                 onChange({ rating: newRating, description });
               }}
@@ -126,26 +126,26 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               onChange={handleFileChange}
             />
           </div>
-        </form>
 
-        <div className={styles.buttonGroup}>
-          <Button
-            color="gray"
-            roundness="rounded"
-            classNames={styles.buttonCancel}
-            onClick={onCancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            roundness="rounded"
-            classNames={styles.buttonSubmit}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </div>
+          <div className={styles.buttonGroup}>
+            <Button
+              color="gray"
+              roundness="rounded"
+              classNames={styles.buttonCancel}
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.buttonSubmit}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
       </StyledBox>
     </div>
   );

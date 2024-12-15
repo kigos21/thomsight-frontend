@@ -95,7 +95,7 @@ export default function UserCompanyOverview() {
       ratingValue < 1 ||
       ratingValue > 5
     ) {
-      toast.error("Rating must be an integer between 1 and 5.");
+      toast.error("Please choose a rating.");
       isValid = false;
     }
 
