@@ -73,7 +73,7 @@ export default function CompanyManageInformationCompany() {
           <h3>Industry</h3>
         </div>
 
-        <p>{industry}</p>
+        <p className={styles.industryContainer}>{industry}</p>
       </div>
       {/* END OF COMPANY INDUSTRY */}
       {/* COMPANY DESCRIPTION */}

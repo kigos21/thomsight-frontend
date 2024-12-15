@@ -29,6 +29,11 @@
   }
 }
 
+.industryContainer {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 .locationGrid {
   display: grid;
   gap: 0.5rem;
@@ -157,6 +162,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+
+  @media (max-width: 638px) {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 0 0;
+    gap: 1rem;
+    align-items: flex-start;
+  }
 }
 
 .editButton {

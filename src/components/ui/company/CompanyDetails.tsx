@@ -139,81 +139,80 @@ export default function CompanyDetails() {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
         <div className={styles.container}>
-          <div className={styles.imageContainer}>
-            {logo !== "http://localhost:8000/storage/uploads/companies" ? (
-              <img src={logo} alt="Logo" />
-            ) : (
-              <img src={srcLogo} alt={"No image"} />
-            )}
-            <div className={styles.positionedButton} ref={dropdownRef}>
-              <button
-                onClick={() => {
-                  setIsDropdownOpen((state) => !state);
-                }}
-              >
-                <IconChevronDown stroke={1.5} size={18} />
-              </button>
-              {isDropdownOpen && (
-                <div className={styles.dropdownContent}>
-                  <button
-                    onClick={handleViewPhoto}
-                    className={styles.dropdownItem}
-                  >
-                    View Photo
-                  </button>
-                  <button
-                    onClick={() => setIsPopupOpen(true)}
-                    className={styles.dropdownItem}
-                  >
-                    Change Photo
-                  </button>
-                </div>
+          <div className={styles.detailsContainer}>
+            <div className={styles.imageContainer}>
+              {logo !== "http://localhost:8000/storage/uploads/companies" ? (
+                <img src={logo} alt="Logo" />
+              ) : (
+                <img src={srcLogo} alt={"No image"} />
               )}
-            </div>
-          </div>
-
-          <div className={styles.detailsHolder}>
-            {/* Company Name */}
-            <div className={styles.sectionHeading}>
-              <div className={styles.companyInfo}>
-                <p className={styles.companyName}>{companyName}</p>
+              <div className={styles.positionedButton} ref={dropdownRef}>
+                <button
+                  onClick={() => {
+                    setIsDropdownOpen((state) => !state);
+                  }}
+                >
+                  <IconChevronDown stroke={1.5} size={18} />
+                </button>
+                {isDropdownOpen && (
+                  <div className={styles.dropdownContent}>
+                    <button
+                      onClick={handleViewPhoto}
+                      className={styles.dropdownItem}
+                    >
+                      View Photo
+                    </button>
+                    <button
+                      onClick={() => setIsPopupOpen(true)}
+                      className={styles.dropdownItem}
+                    >
+                      Change Photo
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
-
-            {/* Company Email */}
-            <div className={styles.sectionHeading}>
-              <p
-                className={styles.email}
-                title={
-                  companyEmail && companyEmail.trim()
-                    ? companyEmail
-                    : "No email set"
-                }
-              >
-                {companyEmail && companyEmail.trim()
-                  ? companyEmail.length > 45
-                    ? `${companyEmail.slice(0, 40)}...`
-                    : companyEmail
-                  : "No email set"}
-              </p>
-            </div>
-
-            <div className={styles.locationsContainer}>
-              {locations.length > 0 ? (
-                <p className={styles.locations}>
-                  {locations.map((location, index) => (
-                    <span key={index}>
-                      {location.address}
-                      {index < locations.length - 1 && " | "}
-                    </span>
-                  ))}
+            <div className={styles.detailsHolder}>
+              {/* Company Name */}
+              <div className={styles.sectionHeading}>
+                <div className={styles.companyInfo}>
+                  <p className={styles.companyName}>{companyName}</p>
+                </div>
+              </div>
+              {/* Company Email */}
+              <div className={styles.sectionHeading}>
+                <p
+                  className={styles.email}
+                  title={
+                    companyEmail && companyEmail.trim()
+                      ? companyEmail
+                      : "No email set"
+                  }
+                >
+                  {companyEmail && companyEmail.trim()
+                    ? companyEmail.length > 45
+                      ? `${companyEmail.slice(0, 40)}...`
+                      : companyEmail
+                    : "No email set"}
                 </p>
-              ) : (
-                <p>No location data available.</p>
-              )}
+              </div>
+              <div className={styles.locationsContainer}>
+                {locations.length > 0 ? (
+                  <p className={styles.locations}>
+                    {locations.map((location, index) => (
+                      <span key={index}>
+                        {location.address}
+                        {index < locations.length - 1 && " | "}
+                      </span>
+                    ))}
+                  </p>
+                ) : (
+                  <p>No location data available.</p>
+                )}
+              </div>
             </div>
           </div>
-          <div>
+          <div className={styles.buttonHolder}>
             <button className={styles.editButton} onClick={handleEditInfo}>
               <IconEdit className={styles.iconEdit} />
               Edit Name & Email

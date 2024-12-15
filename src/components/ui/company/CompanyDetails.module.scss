@@ -6,11 +6,19 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   gap: 25px;
   padding-left: 2rem;
   padding-right: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
 }
 
 .imageContainer {
@@ -264,4 +272,10 @@
   @media (max-width: 480px) {
     gap: 1.5rem;
   }
+}
+
+.buttonHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
