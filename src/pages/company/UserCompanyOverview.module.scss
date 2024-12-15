@@ -1,11 +1,18 @@
 .paddedContainer {
-  padding: 0rem 0rem;
+  padding: 0rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 
   @media (max-width: 1024px) {
     margin-bottom: 4rem;
   }
 
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+  }
+
   @media (max-width: 480px) {
+    padding: 0 1rem;
     margin-bottom: 1rem;
   }
 }
@@ -32,7 +39,6 @@
   flex-direction: column;
 
   gap: 20px;
-  padding: 0rem 2rem;
 }
 
 .titleContainer {
@@ -51,11 +57,21 @@
     padding: 0rem 0rem 0.75rem 0rem;
   }
 
+  @media screen and (max-width: 768px) {
+    h3 {
+      font-size: 1.2rem;
+    }
+  }
+
   @media screen and (max-width: 480px) {
     p {
       font-size: 0.875rem;
       color: black;
       font-weight: 400;
+    }
+
+    h3 {
+      font-size: 1rem;
     }
   }
 }
@@ -71,16 +87,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
-
-.companySize,
-.industry {
-  display: grid;
-  grid-template-columns: 15% 85%;
-
-  p {
-    word-wrap: break-word;
-  }
 }
 
 //pagination
@@ -136,8 +142,28 @@
 .noteContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 1rem 0rem;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  max-width: 530px;
+}
+
+.companySize,
+.industry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.companySize h3,
+.industry h3 {
+  margin: 0; /* Remove default margin */
+  white-space: nowrap;
+}
+
+.companySize p,
+.industry p {
+  margin: 0;
+  word-break: break-word;
 }
 
 .description {

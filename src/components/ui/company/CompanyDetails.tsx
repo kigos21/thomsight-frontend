@@ -135,13 +135,6 @@ export default function CompanyDetails() {
     setIsImageGalleryOpen(true);
   };
 
-  // const handleSave = async (name: string, email: string) => {
-  //   // Logic to save the updated name and email
-  //   setCompanyName(name);
-  //   setCompanyEmail(email);
-  //   setIsPopupOpen(false);
-  // };
-
   if (location.pathname.includes("/manage/")) {
     return (
       <PaddedContainer classNames={styles.paddedContainer}>
