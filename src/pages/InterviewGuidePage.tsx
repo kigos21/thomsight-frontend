@@ -1,9 +1,24 @@
+import React, { useState } from 'react';
 import PaddedContainer from "../components/layout/PaddedContainer";
 import StyledBox from "../components/layout/StyledBox";
 import styles from "./InterviewGuidePage.module.scss";
 import srcLogo from "../assets/thomsight-logo.svg";
+import Button from "../components/ui/Button";
+import { IconEdit } from "@tabler/icons-react";
+import EditTipPopup from "../components/ui/EditTipPopup";
 
 export default function InterviewGuidePage() {
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setPopupOpen(true);
+  };
+
+  const handleSave = (title: string, description: string) => {
+    console.log("Saved:", title, description);
+    setPopupOpen(false);
+  };
+
   return (
     <PaddedContainer>
       <StyledBox classNames={styles.styledbox}>
@@ -12,7 +27,18 @@ export default function InterviewGuidePage() {
         </div>
 
         <div className={styles.container}>
-          <h1 className={styles.title}>Interview Tips</h1>
+          <h1 className={styles.title}>
+            Interview Tips
+            <Button
+              color="primary"
+              roundness="rounded"
+              classNames={styles.editButton}
+              onClick={handleEditClick}
+            >
+              <IconEdit size={20} className={styles.iconEdit} style={{ marginRight: '0.5rem' }} />
+              Edit
+            </Button>
+          </h1>
           {/* #1 */}
           <h2 className={styles.subtitle}>
             1. Prepare for the day of the interview
@@ -157,6 +183,12 @@ export default function InterviewGuidePage() {
           </div>
         </div>
       </StyledBox>
+
+      <EditTipPopup
+        isOpen={isPopupOpen}
+        onClose={() => setPopupOpen(false)}
+        onSave={handleSave}
+      />
     </PaddedContainer>
   );
 }
