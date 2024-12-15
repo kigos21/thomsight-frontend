@@ -36,6 +36,8 @@ export type Company = {
   image?: string;
   deleted_at?: Date | null;
   expiration?: string;
+  rating?: number;
+  reviews?: number;
 };
 
 export type Location = {

@@ -65,6 +65,7 @@ export default function CompanyManageInformationCompany() {
         </div>
 
         <p
+          className={styles.companyDescription}
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(
               company?.description || "No company description"

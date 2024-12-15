@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import FormField from "../../form/FormField";
+import { useEffect, useRef, useState } from "react";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
-import Spinner from "../Spinner";
 import styles from "./CompanyReviewForm.module.scss";
+import Quill from "quill";
 
 interface Post {
   description: string;
@@ -14,45 +13,71 @@ interface DiscussionAddPostFormProps {
   onSave: () => void;
   onChange: (post: Post) => void;
   onCancel: () => void;
+  setSelectedFile: (file: File | null) => void;
 }
 
 const DiscussionAddPostForm: React.FunctionComponent<
   DiscussionAddPostFormProps
-> = ({ post, onSave, onChange, onCancel }) => {
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    onChange({ ...post, [name]: value }); // Update review state based on input change
-  };
+> = ({ post, onSave, onChange, onCancel, setSelectedFile }) => {
+  const [description, setDescription] = useState(post.description);
 
-  const [creating, setCreating] = useState(false);
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
+  useEffect(() => {
+    if (!quillRef.current || quillInstance.current) return;
+
+    quillInstance.current = new Quill(quillRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ align: [] }],
+        ],
+      },
+    });
+
+    quillInstance.current.root.innerHTML = description;
+
+    quillInstance.current.on("text-change", () => {
+      const htmlContent = quillInstance.current?.root.innerHTML || "";
+      setDescription(htmlContent);
+      onChange({ description: htmlContent });
+    });
+  }, [description, onChange]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };
 
-  // PAKIBURA NETO, NEED KO LANG ICONSOLE LOG FOR NOW, MAARTE LINTER
-  useEffect(() => {
-    console.log(setCreating(false));
-  }, []);
-  // END OF PAKIBURA
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
 
   return (
     <div className={`${styles.container}`}>
-      {creating && <Spinner message="Creating job..." />}
       <StyledBox paddedContainerClass={styles.styledBox}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
             <p className={styles.formTitle}>Description</p>
-            <FormField
-              classNames={styles.formFieldBio}
-              type="textarea"
-              name="description"
-              placeholder="Tell us about your post"
-              value={post.description}
-              onChange={handleInputChange}
-            ></FormField>
+            <div className={styles.quillWrapper}>
+              <div ref={quillRef} className={styles.quillContainer}></div>
+            </div>
+          </div>
+
+          <div>
+            <p className={styles.formTitle}>
+              Image Upload (optional, max 4 MB)
+            </p>
+            <input
+              id="fileInput"
+              type="file"
+              accept=".jpeg, .jpg, .png"
+              onChange={handleFileChange}
+            />
           </div>
 
           <div className={styles.buttonGroup}>

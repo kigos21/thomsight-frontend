@@ -15,7 +15,7 @@ export default function UserHomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [jobSearchQuery, setJobSearchQuery] = useState("");
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(8);
   const navigate = useNavigate();
 
   const jobOptions = jobs

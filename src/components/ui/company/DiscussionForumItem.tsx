@@ -4,7 +4,7 @@ import Button from "../Button";
 
 import styles from "./DiscussionForumItem.module.scss";
 import StyledBox from "../../layout/StyledBox";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
 import DeletePopUp from "./DeletePopUp";
@@ -14,6 +14,8 @@ import ReportForm from "./ReportForm";
 import DisplayProfile from "./DisplayProfile";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
+import DOMPurify from "dompurify";
+import Quill from "quill";
 
 export default function DiscussionForumItem({
   classNames,
@@ -21,14 +23,16 @@ export default function DiscussionForumItem({
   internName,
   date,
   description,
-  onDescriptionChange,
+  onChange,
   id,
   setLoading,
   onDiscussionDelete,
   posted_by,
   handleReplyClick,
   user_id,
+  image,
 }: DiscussionForumItemProps) {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempDescription, setTempDescription] = useState<string>(description);
   const { slug } = useParams<{ slug: string }>();
@@ -43,9 +47,38 @@ export default function DiscussionForumItem({
 
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
   const handleEditClick = () => {
     setIsEditing((state) => !state);
   };
+
+  useEffect(() => {
+    if (quillInstance.current && !isEditing) {
+      quillInstance.current = null;
+    }
+
+    if (!quillRef.current || quillInstance.current || !isEditing) return;
+
+    quillInstance.current = new Quill(quillRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ align: [] }],
+        ],
+      },
+    });
+
+    quillInstance.current.root.innerHTML = tempDescription;
+
+    quillInstance.current.on("text-change", () => {
+      const htmlContent = quillInstance.current?.root.innerHTML || "";
+      setTempDescription(htmlContent);
+    });
+  }, [isEditing]);
 
   const handleSaveClick = async () => {
     if (!tempDescription.trim()) {
@@ -60,13 +93,28 @@ export default function DiscussionForumItem({
       toast.error("Description should be limited to 2500 characters");
       return;
     }
+
+    const formData = new FormData();
+    formData.append("description", tempDescription);
+
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
+
     try {
       setLoading("Updating discussion...");
-      await axiosInstance.put(`/api/company/${slug}/discussion/${id}/update`, {
-        description: tempDescription,
-      });
 
-      onDescriptionChange(tempDescription);
+      const response = await axiosInstance.post(
+        `/api/company/${slug}/discussion/${id}/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      onChange(tempDescription, response.data.image);
       setIsEditing(false);
       toast.success("Updated discussion successfully");
     } catch (error) {
@@ -150,6 +198,12 @@ export default function DiscussionForumItem({
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   return (
     <div className={`${styles.container} ${classNames}`} style={{ ...style }}>
       {reportLoading && <Spinner message={reportLoading} />}
@@ -186,14 +240,28 @@ export default function DiscussionForumItem({
             </div>
           </div>
 
+          {image !== "http://localhost:8000/storage/uploads/discussions" && (
+            <img className={styles.image} src={image} alt={"Test"} />
+          )}
+
           {isEditing ? (
             <div className={styles.editDescriptionSection}>
-              <textarea
-                className={styles.descriptionTextarea}
-                value={tempDescription}
-                onChange={(e) => setTempDescription(e.target.value)}
-                rows={5}
-              />
+              <div>
+                <div className={styles.quillWrapper}>
+                  <div ref={quillRef} className={styles.quillContainer}></div>
+                </div>
+                <div className={styles.fileWrapper}>
+                  <p className={styles.formTitle}>
+                    Change Image (optional, max 4 MB)
+                  </p>
+                  <input
+                    id="fileInput"
+                    type="file"
+                    accept=".jpeg, .jpg, .png"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </div>
               <div className={styles.editButtons}>
                 <button
                   onClick={handleCancelClick}
@@ -207,7 +275,12 @@ export default function DiscussionForumItem({
               </div>
             </div>
           ) : (
-            <p className={styles.discussionForumDescription}>{description}</p>
+            <p
+              className={styles.discussionForumDescription}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(description),
+              }}
+            ></p>
           )}
 
           <div className={styles.iconContainer}>
