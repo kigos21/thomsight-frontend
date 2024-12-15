@@ -18,15 +18,19 @@ interface GuideTip {
 export default function InterviewGuidePage() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [tips, setTips] = useState<GuideTip[]>([]);
+  const [loading, setLoading] = useState("");
   const { user } = useUser();
 
   useEffect(() => {
     const fetchTips = async () => {
+      setLoading("Loading tips...");
       try {
         const response = await axiosInstance.get("/api/guide-tips");
         setTips(response.data);
       } catch (error) {
         console.error("Error fetching tips:", error);
+      } finally {
+        setLoading("");
       }
     };
 
@@ -40,6 +44,7 @@ export default function InterviewGuidePage() {
   return (
     <PaddedContainer>
       <StyledBox classNames={styles.styledbox}>
+        {loading && <Spinner message={loading} />}
         <div className={styles.imgContainer}>
           <img src={srcLogo} alt="Thomsight logo" />
         </div>
@@ -75,7 +80,7 @@ export default function InterviewGuidePage() {
               </div>
             ))
           ) : (
-            <Spinner message="Loading tips..." />
+            <p> No tips available! </p>
           )}
           <div className={styles.videoContainer}>
             <iframe
