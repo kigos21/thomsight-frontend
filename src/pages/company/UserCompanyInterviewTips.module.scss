@@ -100,3 +100,17 @@
     outline: none; // Remove default focus outline
   }
 }
+
+.tipButton{
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue-6);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
+}
