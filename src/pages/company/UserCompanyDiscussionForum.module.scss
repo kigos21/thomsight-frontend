@@ -5,8 +5,9 @@
 .styledBox {
   padding: 1rem 2rem;
   background-color: var(--blue-0);
-  border: 1.5px solid black;
+  border: 1px solid var(--neutral-3);
   border-radius: 1.875rem;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
 }
 
 .container {
