@@ -11,8 +11,9 @@ interface ImageGalleryPopupProps {
 }
 
 const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
+  const defaultImage = new File([""], "default.jpg", { type: "image/jpeg" });
   const { slug } = useParams<{ slug: string }>();
-  const [imageInputs, setImageInputs] = useState<File[]>([]);
+  const [imageInputs, setImageInputs] = useState<File[]>([defaultImage]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
   const [loading, setLoading] = useState<string>("");
@@ -22,13 +23,19 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
     if (!slug) return;
 
     const fetchImages = async () => {
+      setLoading("Fetching images...");
       try {
         const response = await axiosInstance.get(`/api/company/${slug}/images`);
         const images = response.data.images || [];
         setExistingImages(images);
+        if (images.length === 5) {
+          setImageInputs([]);
+        }
       } catch (error) {
         console.error("Error fetching existing images:", error);
         toast.error("Failed to fetch existing images.");
+      } finally {
+        setLoading("");
       }
     };
 
