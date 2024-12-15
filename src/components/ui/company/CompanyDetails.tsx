@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Company, Location } from "../../../types/types.ts";
 import srcLogo from "../../../assets/no-image.png";
 import EditCompanyNameEmailPopup from "./EditCompanyNameEmailPopup";
+import ImageGalleryPopup from "./ImageGalleryPopup.tsx";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -32,6 +33,7 @@ export default function CompanyDetails() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupInfoOpen, setIsPopupInfoOpen] = useState(false);
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
+  const [isGalleryOpen, setIsImageGalleryOpen] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -129,8 +131,8 @@ export default function CompanyDetails() {
     setIsPopupInfoOpen(true);
   };
 
-  const handleNewAction = () => {
-    // Logic for the new action
+  const handleImagePopup = () => {
+    setIsImageGalleryOpen(true);
   };
 
   // const handleSave = async (name: string, email: string) => {
@@ -219,19 +221,19 @@ export default function CompanyDetails() {
             </div>
           </div>
           <div>
-                  <button className={styles.editButton} onClick={handleEditInfo}>
-                    <IconEdit className={styles.iconEdit} />
-                    Edit Name & Email
-                  </button>
-                  <button 
-                    className={styles.editButton} 
-                    onClick={handleNewAction} 
-                    style={{ marginTop: '0.5rem' }}
-                  >
-                  <IconEdit className={styles.iconEdit} />
-                    Edit Images
-                  </button>
-                </div>
+            <button className={styles.editButton} onClick={handleEditInfo}>
+              <IconEdit className={styles.iconEdit} />
+              Edit Name & Email
+            </button>
+            <button
+              className={styles.editButton}
+              onClick={handleImagePopup}
+              style={{ marginTop: "0.5rem" }}
+            >
+              <IconEdit className={styles.iconEdit} />
+              Edit Images
+            </button>
+          </div>
         </div>
         <ChangePhotoPopup
           isOpen={isPopupOpen}
@@ -261,6 +263,9 @@ export default function CompanyDetails() {
             initialName={companyName}
             initialEmail={companyEmail}
           />
+        )}
+        {isGalleryOpen && (
+          <ImageGalleryPopup onClose={() => setIsImageGalleryOpen(false)} />
         )}
       </PaddedContainer>
     );
