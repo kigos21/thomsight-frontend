@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface ImageContextData {
   images: string[];
   handleImageUpload: (newImage: string) => void;
+  removeImages: () => void;
 }
 
 const ImageContext = createContext<ImageContextData | undefined>(undefined);
@@ -16,10 +17,12 @@ export const GalleryProvider: React.FC<{ children: ReactNode }> = ({
     setImages((prevImages) => [...prevImages, newImage]);
   };
 
-  console.log(images);
+  const removeImages = () => {
+    setImages([]);
+  };
 
   return (
-    <ImageContext.Provider value={{ images, handleImageUpload }}>
+    <ImageContext.Provider value={{ images, handleImageUpload, removeImages }}>
       {children}
     </ImageContext.Provider>
   );

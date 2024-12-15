@@ -40,12 +40,6 @@ export default function CompanyRoot() {
       try {
         const response = await axiosInstance.get(`/api/company/${slug}/images`);
         setImageArray(response.data.images);
-
-        // newImages.forEach((image: string) => {
-        //   if (!images.includes(image)) {
-        //     handleImageUpload(image);
-        //   }
-        // });
       } catch (error) {
         console.error("Error fetching images:", error);
       }
