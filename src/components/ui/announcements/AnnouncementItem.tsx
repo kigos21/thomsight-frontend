@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import axiosInstance from "../../../services/axiosInstance";
 import Spinner from "../Spinner";
 import DOMPurify from "dompurify";
+import EditAnnouncementPopup from "./EditAnnouncementPopup";
 
 export default function AnnouncementItem({
   classNames,
@@ -21,9 +22,7 @@ export default function AnnouncementItem({
   onEdit,
 }: any) {
   const [isDeletePopupVisible, setDeletePopupVisible] = useState(false);
-  const [activeEditAnnouncementId, setActiveEditAnnouncementId] = useState<
-    number | null
-  >(null);
+  const [isEditPopupOpen, setEditPopupOpen] = useState(false);
   const [editedHeader, setEditedHeader] = useState<string>(announcementHeader);
   const [editedDescription, setEditedDescription] = useState<string>(
     announcementDescription
@@ -52,7 +51,7 @@ export default function AnnouncementItem({
         subject: editedHeader,
         details: editedDescription,
       });
-      setActiveEditAnnouncementId(null);
+      setEditPopupOpen(false);
       onEdit(id, editedHeader, editedDescription);
       toast.success("Updated announcement successfully");
     } catch (error) {
@@ -76,6 +75,10 @@ export default function AnnouncementItem({
     }
   };
 
+  const handleEditClick = () => {
+    setEditPopupOpen(true);
+  };
+
   const { user } = useUser();
 
   return (
@@ -83,7 +86,7 @@ export default function AnnouncementItem({
       {loading && <Spinner message={loading} />}
       <div className={styles.detailsContainer}>
         <div className={styles.detailsHeaderContainer}>
-          {activeEditAnnouncementId === id ? (
+          {isEditPopupOpen ? (
             <input
               className={styles.editHeaderInput}
               type="text"
@@ -99,7 +102,7 @@ export default function AnnouncementItem({
         {user?.role === "Admin" && (
           <div className={styles.iconContainer}>
             <button
-              onClick={() => setActiveEditAnnouncementId(id)}
+              onClick={handleEditClick}
               className={styles.iconButton}
             >
               <IconEdit className={styles.iconEdit} />
@@ -111,7 +114,7 @@ export default function AnnouncementItem({
         )}
       </div>
       <StyledBox paddedContainerClass={styles.styledBox}>
-        {activeEditAnnouncementId === id ? (
+        {isEditPopupOpen ? (
           <div className={styles.editDescriptionSection}>
             <textarea
               className={styles.descriptionTextarea}
@@ -123,7 +126,7 @@ export default function AnnouncementItem({
               <button
                 className={styles.cancelButton}
                 onClick={() => {
-                  setActiveEditAnnouncementId(null);
+                  setEditPopupOpen(false);
                   setEditedHeader(announcementHeader);
                   setEditedDescription(announcementDescription);
                 }}
@@ -154,6 +157,16 @@ export default function AnnouncementItem({
         onDelete={handleDelete}
         heading="Delete Announcement"
         details="Are you sure you want to delete this announcement?"
+      />
+
+      <EditAnnouncementPopup
+        isOpen={isEditPopupOpen}
+        onClose={() => setEditPopupOpen(false)}
+        announcement={{ id, subject: editedHeader, details: editedDescription }}
+        onUpdate={(updatedAnnouncement) => {
+          setEditedHeader(updatedAnnouncement.subject);
+          setEditedDescription(updatedAnnouncement.details);
+        }}
       />
     </div>
   );
