@@ -9,6 +9,9 @@
   padding: 1.75rem 2rem;
   border-radius: 1.5rem;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  // background-color: white;
+  border: 1px solid var(--muted-black);
 }
 
 .formContainer {
@@ -41,27 +44,30 @@
 
 .buttonGroup {
   display: flex;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: flex-end;
   gap: 1rem;
-  margin: 0 auto;
 
   @media screen and (max-width: 480px) {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 }
 
 .buttonCancel,
 .buttonSubmit {
   background-color: var(--secondary-color);
-    color: white;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  
-    &:hover {
-      background-color: var(--blue-8);
-    }
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
 }
 
 .buttonCancel {
@@ -89,6 +95,6 @@
   color: black;
 }
 
-.quillContainer{
+.quillContainer {
   background-color: var(--white);
 }

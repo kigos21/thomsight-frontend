@@ -8,14 +8,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .reportForm {
   background-color: var(--neutral-0);
   padding: 2rem;
   border-radius: 1.25rem;
-  width: 400px;
+  width: 90%;
+  max-width: 600px;
   box-shadow: 0 4px 8px var(--black-overlay);
 }
 
@@ -60,7 +61,6 @@
   border-radius: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
-  margin-bottom: 1rem;
   transition: background-color 0.3s;
 
   &:hover {
@@ -81,6 +81,8 @@
   border-radius: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
+  margin-bottom: 1rem;
+
   transition: background-color 0.3s;
 
   &:hover {

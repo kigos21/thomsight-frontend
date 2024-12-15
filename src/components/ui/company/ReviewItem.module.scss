@@ -8,6 +8,9 @@
   color: black;
   margin-top: 1rem;
 
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.285);
+  border: 1px solid var(--muted-black);
+
   @media screen and (max-width: 668px) {
     margin-bottom: 5rem;
   }

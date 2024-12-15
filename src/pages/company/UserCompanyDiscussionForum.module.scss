@@ -5,7 +5,7 @@
 .styledBox {
   padding: 1rem 2rem;
   background-color: var(--blue-0);
-  border: 1px solid var(--neutral-3);
+  border: 1px solid var(--muted-black);
   border-radius: 1.875rem;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
 }
@@ -219,18 +219,18 @@
   resize: none;
 }
 
-.addPostButtonButton{
+.addPostButtonButton {
   background-color: var(--secondary-color);
-    color: white;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
-  
-    &:hover {
-      background-color: var(--blue-8);
-    }
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
 }
 
 .editButtons {
