@@ -184,23 +184,6 @@ export default function CompanyDetails() {
             <div className={styles.sectionHeading}>
               <div className={styles.companyInfo}>
                 <p className={styles.companyName}>{companyName}</p>
-                <div>
-                  <button
-                    className={styles.editButton}
-                    onClick={handleEditInfo}
-                  >
-                    <IconEdit className={styles.iconEdit} />
-                    Edit Name & Email
-                  </button>
-                  <button
-                    className={styles.editButton}
-                    onClick={handleImagePopup}
-                    style={{ marginTop: "0.5rem" }}
-                  >
-                    <IconEdit className={styles.iconEdit} />
-                    Manage Image Gallery
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -236,6 +219,20 @@ export default function CompanyDetails() {
                 <p>No location data available.</p>
               )}
             </div>
+          </div>
+          <div>
+            <button className={styles.editButton} onClick={handleEditInfo}>
+              <IconEdit className={styles.iconEdit} />
+              Edit Name & Email
+            </button>
+            <button
+              className={styles.editButton}
+              onClick={handleImagePopup}
+              style={{ marginTop: "0.5rem" }}
+            >
+              <IconEdit className={styles.iconEdit} />
+              Edit Images
+            </button>
           </div>
         </div>
         <ChangePhotoPopup
