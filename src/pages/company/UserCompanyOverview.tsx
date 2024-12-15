@@ -199,30 +199,30 @@ export default function UserCompanyOverview() {
         <div className={styles.leftcontainer}>
           <div className={styles.titleContainer}>
             <h2 className={styles.titleHeader}>Company Overview</h2>
-            <p
-              className={styles.companyDescription}
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  company?.description || "No company description"
-                ),
-              }}
-            ></p>
-          </div>
 
-          {/* <div className={styles.rightcontainerMobile}>
-            <StyledBox paddedContainerClass={styles.styledBox}>
-              <div className={styles.noteContainer}>
-                <div className={styles.companySize}>
-                  <h5>Company Size</h5>
-                  <p>{company?.size}</p>
-                </div>
-                <div className={styles.industry}>
-                  <h5>Industry</h5>
-                  <p>{company?.industry}</p>
-                </div>
+            <div className={styles.noteContainer}>
+              <div className={styles.companySize}>
+                <h3>Company Size</h3>
+                <p>{company?.size}</p>
               </div>
-            </StyledBox>
-          </div> */}
+              <div className={styles.industry}>
+                <h3>Industry</h3>
+                <p>{company?.industry}</p>
+              </div>
+            </div>
+
+            <div className={styles.description}>
+              <h3>Company Description</h3>
+              <p
+                className={styles.companyDescription}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    company?.description || "No company description"
+                  ),
+                }}
+              ></p>
+            </div>
+          </div>
 
           <div className={styles.reviewContainer}>
             <div className={styles.reviewHeaderContainer}>
@@ -335,20 +335,6 @@ export default function UserCompanyOverview() {
             )}
           </div>
         </div>
-        {/* <div className={styles.rightcontainer}>
-          <StyledBox paddedContainerClass={styles.styledBox}>
-            <div className={styles.noteContainer}>
-              <div className={styles.companySize}>
-                <h5>Company Size</h5>
-                <p>{company?.size}</p>
-              </div>
-              <div className={styles.industry}>
-                <h5>Industry</h5>
-                <p>{company?.industry}</p>
-              </div>
-            </div>
-          </StyledBox>
-        </div> */}
       </div>
     </PaddedContainer>
   );

@@ -136,7 +136,7 @@ export default function CompanyManageInformationJobs() {
         <Button
           classNames={styles.addJobButton}
           color="secondary"
-          roundness="rounded"
+          roundness="sm-rounded"
           onClick={handleAdd}
         >
           Add Job
