@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./EditTipPopup.module.scss";
 import Button from "./Button";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
@@ -140,13 +141,13 @@ const EditTipPopup: React.FC<EditTipPopupProps> = ({ isOpen, onClose }) => {
                   classNames={styles.removeButton}
                   onClick={() => removeField(field.id)}
                 >
-                  Remove
+                  <IconTrash size={24} style={{ color: "red" }} />
                 </Button>
               )}
             </div>
           ))}
           <Button classNames={styles.addButton} onClick={addField}>
-            Add Tip
+            <IconPlus size={16} style={{ marginRight: "0.5rem" }} /> Add Tip
           </Button>
         </div>
         <div className={styles.buttonContainer}>

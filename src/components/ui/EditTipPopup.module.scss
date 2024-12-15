@@ -17,9 +17,9 @@
   border-radius: 20px;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
   width: 90%;
-  max-width: 800px;
+  max-width: 1050px;
   text-align: left;
-  max-height: 900px;
+  max-height: 750px;
   overflow-y: auto;
 }
 
@@ -46,10 +46,12 @@
 .input,
 .textarea {
   padding: 0.75rem;
-  border: 1px solid var(--black);
+  border: 1px solid var(--neutral-2);
   border-radius: 10px;
   font-size: 1rem;
   width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .textarea {
@@ -99,8 +101,46 @@
   }
 }
 
+.addButton{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    width: 200px;
+    padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue-6);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+
+  &:hover {
+    background-color: var(--blue-8);
+  }
+}
+
 .separator {
   height: 1px;
   background-color: var(--muted-black);
   margin: 2rem 0rem;
+}
+
+.fieldGroup{
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+}
+
+.removeButton{
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--neutral-2);
+  border-radius: 10px;
+  background-color: var(--white);
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--neutral-4);
+  }
 }
