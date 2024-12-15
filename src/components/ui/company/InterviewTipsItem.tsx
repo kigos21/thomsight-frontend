@@ -1,7 +1,7 @@
 import { IconFlagFilled, IconTrash, IconEdit } from "@tabler/icons-react";
 import PaddedContainer from "../../layout/PaddedContainer";
 import styles from "./InterviewTipsItem.module.scss";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import DeletePopUp from "./DeletePopUp";
 import axiosInstance from "../../../services/axiosInstance";
 import { useParams } from "react-router-dom";
@@ -13,6 +13,7 @@ import Spinner from "../Spinner";
 import { containsBadWords } from "../../../badWordsFilter";
 import Button from "../Button";
 import DOMPurify from "dompurify";
+import Quill from "quill";
 
 export interface InterviewTipsItemProps {
   id?: number;
@@ -60,6 +61,37 @@ export default function InterviewTipsItem({
 
   const { user } = useUser();
   const [showProfile, setShowProfile] = useState<boolean>(false);
+
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
+  useEffect(() => {
+    if (isEditing && quillRef.current && !quillInstance.current) {
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          ],
+        },
+      });
+
+      quillInstance.current.root.innerHTML = tempTip.description;
+
+      quillInstance.current.on("text-change", () => {
+        const htmlContent = quillInstance.current?.root.innerHTML || "";
+        setTempTip((current) => ({ ...current, description: htmlContent }));
+      });
+    }
+
+    return () => {
+      if (!isEditing && quillInstance.current) {
+        quillInstance.current.off("text-change");
+        quillInstance.current = null;
+      }
+    };
+  }, [isEditing, tempTip.description]);
 
   const handleEditClick = () => {
     setIsEditing((state) => !state);
@@ -187,17 +219,9 @@ export default function InterviewTipsItem({
                   }))
                 }
               />
-              <textarea
-                className={styles.descriptionTextarea}
-                value={tempTip.description}
-                onChange={(e) =>
-                  setTempTip((current) => ({
-                    ...current,
-                    description: e.target.value,
-                  }))
-                }
-                rows={5}
-              />
+              <div className={styles.quillWrapper}>
+                <div ref={quillRef} className={styles.quillContainer}></div>
+              </div>
               <div className={styles.editButtons}>
                 <Button
                   onClick={handleCancelClick}

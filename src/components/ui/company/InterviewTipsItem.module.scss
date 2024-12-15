@@ -91,13 +91,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem; /* Increased spacing */
 }
 
 .editButtons {
   display: flex;
-  gap: 0.5rem;
-  margin-left: auto;
+  gap: 1rem;
+  margin-top: 3rem; /* Adds space between Quill editor and buttons */
+  justify-content: flex-end; /* Aligns buttons to the right */
 }
 
 .saveButton {
@@ -162,4 +163,9 @@
     flex-direction: row;
     gap: 10px;
   }
+}
+
+.quillContainer {
+  font-size: 20px;
+  min-height: 10px;
 }
