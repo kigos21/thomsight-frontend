@@ -15,6 +15,9 @@ import {
   IconBulb,
 } from "@tabler/icons-react";
 import { Carousel } from "../ui/company/Carousel";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../services/axiosInstance";
+import { useImages } from "../../contexts/GalleryContext";
 
 // Define the type for navigation links
 interface NavLink {
@@ -27,6 +30,37 @@ export default function CompanyRoot() {
   const { loading, error, getCompanyBySlug } = useCompanies();
   const { user } = useUser();
   const location = useLocation();
+  const [imageArray, setImageArray] = useState<string[]>([]);
+  const { images, handleImageUpload } = useImages();
+
+  useEffect(() => {
+    if (!slug) return;
+
+    const fetchImages = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/company/${slug}/images`);
+        setImageArray(response.data.images);
+
+        // newImages.forEach((image: string) => {
+        //   if (!images.includes(image)) {
+        //     handleImageUpload(image);
+        //   }
+        // });
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    fetchImages();
+  }, [slug]);
+
+  useEffect(() => {
+    imageArray.forEach((image: string) => {
+      if (!images.includes(image)) {
+        handleImageUpload(image);
+      }
+    });
+  }, [imageArray]);
 
   if (loading) {
     return <Spinner message="Please wait while we render relevant data!" />;
@@ -76,14 +110,6 @@ export default function CompanyRoot() {
           icon: <IconBriefcase stroke={2} className={styles.bottomNavIcon} />,
         },
       ];
-
-  const images: string[] = [
-    // Put images here
-    // "some/path",
-    // "some/path",
-    // "some/path",
-    // "some/path",
-  ];
 
   let elements: React.ReactNode[];
   if (!isManagePath) {

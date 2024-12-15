@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
 import axiosInstance from "../../../services/axiosInstance";
+import { useImages } from "../../../contexts/GalleryContext";
 
 interface ImageGalleryPopupProps {
   onClose: () => void;
@@ -13,6 +14,7 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
   const { slug } = useParams<{ slug: string }>();
   const [imageInputs, setImageInputs] = useState<File[]>([new File([], "")]);
   const [loading, setLoading] = useState<string>("");
+  const { images, handleImageUpload } = useImages();
 
   const handleAddInput = () => {
     if (imageInputs.length < 5) {
@@ -54,8 +56,11 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
         }
       );
       if (response.status === 200) {
-        console.log(response);
         toast.success("Uploaded images successfully");
+        const uploadedImages = response.data.images || [];
+        uploadedImages.forEach((image: string) => {
+          handleImageUpload(image);
+        });
         onClose();
       }
     } catch (error: any) {

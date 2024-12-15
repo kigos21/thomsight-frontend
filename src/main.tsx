@@ -64,6 +64,7 @@ import ReportsComments from "./pages/reports/ReportsComments.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavProvider } from "./contexts/NavContext.tsx";
+import { GalleryProvider } from "./contexts/GalleryContext.tsx";
 // import DisplayProfile from "./components/ui/company/DisplayProfile.tsx";
 
 // Profile Management
@@ -156,7 +157,11 @@ const router = createBrowserRouter([
       // Company
       {
         path: "company/:slug",
-        element: <CompanyLayout />,
+        element: (
+          <GalleryProvider>
+            <CompanyLayout />
+          </GalleryProvider>
+        ),
         children: [
           // {
           //   index: true,
