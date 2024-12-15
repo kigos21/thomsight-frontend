@@ -187,9 +187,18 @@ export default function CompanyDetails() {
 
             {/* Company Email */}
             <div className={styles.sectionHeading}>
-              <p>
+              <p
+                className={styles.email}
+                title={
+                  companyEmail && companyEmail.trim()
+                    ? companyEmail
+                    : "No email set"
+                }
+              >
                 {companyEmail && companyEmail.trim()
-                  ? companyEmail
+                  ? companyEmail.length > 45
+                    ? `${companyEmail.slice(0, 40)}...`
+                    : companyEmail
                   : "No email set"}
               </p>
             </div>
