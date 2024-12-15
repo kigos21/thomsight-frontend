@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import FormField from "../../form/FormField";
+// import FormField from "../../form/FormField";
+import StarRating from "../../layout/StarRating";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import styles from "./CompanyReviewForm.module.scss";
@@ -59,16 +60,16 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
     onChange({ rating, description });
   }, [rating, description, onChange]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    if (name === "description") {
-      setDescription(value);
-    } else if (name === "rating") {
-      setRating(value);
-    }
-  };
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   if (name === "description") {
+  //     setDescription(value);
+  //   } else if (name === "rating") {
+  //     setRating(value);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,7 +90,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <div>
             <p className={styles.formTitle}>Rating</p>
-            <FormField
+            {/* <FormField
               classNames={styles.formField}
               type="number"
               name="rating"
@@ -97,7 +98,14 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
               required={true}
               value={rating}
               onChange={handleInputChange}
-            ></FormField>
+            ></FormField> */}
+            <StarRating
+              rating={rating}
+              onRate={(newRating) => {
+                setRating(newRating);
+                onChange({ rating: newRating, description });
+              }}
+            ></StarRating>
           </div>
 
           <div>
@@ -105,15 +113,6 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
             <div className={styles.quillWrapper}>
               <div ref={quillRef} className={styles.quillContainer}></div>
             </div>
-            {/* <FormField
-              classNames={styles.formFieldBio}
-              type="textarea"
-              name="description"
-              placeholder="Rating Description"
-              required={true}
-              value={review.description}
-              onChange={handleInputChange}
-            ></FormField> */}
           </div>
 
           <div>

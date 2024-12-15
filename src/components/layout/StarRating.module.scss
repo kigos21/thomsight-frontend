@@ -1,0 +1,13 @@
+.starContainer {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.filledStar {
+  color: var(--primary-color);
+}
+
+.emptyStar {
+  color: lightgray;
+}
