@@ -58,22 +58,6 @@ export default function CompanyManageInformationCompany() {
         </button>
       </div>
       {isUpdating && <Spinner message="Updating..." />}
-      {/* COMPANY DESCRIPTION */}
-      <div>
-        <div className={styles.sectionHeading}>
-          <h3>Company Description</h3>
-        </div>
-
-        <p
-          className={styles.companyDescription}
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(
-              company?.description || "No company description"
-            ),
-          }}
-        ></p>
-      </div>
-      {/* END OF COMPANY DESCRIPTION */}
       {/* COMPANY SIZE */}
       <div>
         <div className={styles.sectionHeading}>
@@ -92,6 +76,23 @@ export default function CompanyManageInformationCompany() {
         <p>{industry}</p>
       </div>
       {/* END OF COMPANY INDUSTRY */}
+      {/* COMPANY DESCRIPTION */}
+      <div>
+        <div className={styles.sectionHeading}>
+          <h3>Company Description</h3>
+        </div>
+
+        <p
+          className={styles.companyDescription}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(
+              company?.description || "No company description"
+            ),
+          }}
+        ></p>
+      </div>
+      {/* END OF COMPANY DESCRIPTION */}
+
       {/* LOCATIONS */}
       <LocationManagement />
       {/* END OF LOCATIONS */}
