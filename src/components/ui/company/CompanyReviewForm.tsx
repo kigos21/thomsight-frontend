@@ -41,7 +41,7 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
       modules: {
         toolbar: [
           ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ list: "ordered" }],
         ],
       },
     });

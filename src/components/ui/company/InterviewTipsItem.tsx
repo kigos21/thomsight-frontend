@@ -72,7 +72,7 @@ export default function InterviewTipsItem({
         modules: {
           toolbar: [
             ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+            [{ list: "ordered" }],
           ],
         },
       });

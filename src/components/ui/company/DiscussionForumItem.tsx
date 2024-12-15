@@ -66,7 +66,7 @@ export default function DiscussionForumItem({
       modules: {
         toolbar: [
           ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+          [{ list: "ordered" }],
         ],
       },
     });
