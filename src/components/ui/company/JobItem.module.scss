@@ -1,24 +1,28 @@
 .paddedContainer {
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
 }
 
 .container {
   border-radius: 1.25rem;
-  background-color: var(--neutral-0);
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.285);
+  border: 1px solid var(--muted-black);
+
   color: black;
   margin-top: 1rem;
 }
 
 .jobDetailsContainer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .jobSubjectContainer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 25%;
 
   p {
     font-size: 0.875rem;
@@ -32,11 +36,8 @@
 }
 
 .jobDescription {
-  width: 75%;
-  text-align: left;
   font-size: 0.875rem;
   font-weight: 400;
-  padding: 0rem 2rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -62,12 +63,7 @@
   }
 
   .jobDescription {
-    width: 100%;
     padding: 1rem 0;
-  }
-
-  .jobSubjectContainer {
-    width: 100%;
   }
 }
 
@@ -82,10 +78,5 @@
 
   .jobDescription {
     padding: 1rem 0;
-    width: 100%;
-  }
-
-  .jobSubjectContainer {
-    width: 100%;
   }
 }

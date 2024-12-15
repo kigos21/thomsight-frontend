@@ -34,7 +34,7 @@ export default function UserCompanyInterviewTips() {
   const [tips, setTips] = useState<Tip[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(6);
 
   useEffect(() => {
     const fetchInterviewTips = async () => {
