@@ -33,7 +33,6 @@ const DiscussionAddPostForm: React.FunctionComponent<
         toolbar: [
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-          [{ align: [] }],
         ],
       },
     });

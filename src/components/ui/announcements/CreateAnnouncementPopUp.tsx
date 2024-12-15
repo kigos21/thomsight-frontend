@@ -43,7 +43,6 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
           toolbar: [
             ["bold", "italic", "underline", "strike"],
             [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-            [{ align: [] }],
           ],
         },
       });

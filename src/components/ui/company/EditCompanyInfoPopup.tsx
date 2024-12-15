@@ -56,7 +56,6 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
           toolbar: [
             ["bold", "italic", "underline", "strike"],
             [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-            [{ align: [] }],
           ],
         },
       });

@@ -42,7 +42,6 @@ const EditAnnouncementPopup: React.FC<EditAnnouncementPopupProps> = ({
           toolbar: [
             ["bold", "italic", "underline", "strike"],
             [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-            [{ align: [] }],
           ],
         },
       });
