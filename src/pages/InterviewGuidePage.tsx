@@ -10,7 +10,8 @@ import { useUser } from "../contexts/UserContext";
 import axiosInstance from "../services/axiosInstance";
 import Spinner from "../components/ui/Spinner";
 
-interface GuideTip {
+export interface GuideTip {
+  id: number;
   header: string;
   details: string;
 }
@@ -35,10 +36,36 @@ export default function InterviewGuidePage() {
     };
 
     fetchTips();
-  }, [isPopupOpen === false]);
+  }, []);
 
   const handleEditClick = () => {
     setPopupOpen(true);
+  };
+
+  const handleUpdateTips = (payload: {
+    newTips: GuideTip[];
+    updatedTips: GuideTip[];
+    deletedTips: GuideTip[];
+  }) => {
+    setTips((prevTips) => {
+      const remainingTips = prevTips.filter(
+        (tip) =>
+          !payload.deletedTips.some((deletedTip) => deletedTip.id === tip.id)
+      );
+
+      const tipsWithoutUpdates = remainingTips.filter(
+        (tip) =>
+          !payload.updatedTips.some((updatedTip) => updatedTip.id === tip.id)
+      );
+
+      const updatedTipsList = [
+        ...tipsWithoutUpdates,
+        ...payload.newTips,
+        ...payload.updatedTips,
+      ];
+
+      return updatedTipsList.sort((a, b) => a.id - b.id);
+    });
   };
 
   return (
@@ -97,7 +124,12 @@ export default function InterviewGuidePage() {
         </div>
       </StyledBox>
 
-      <EditTipPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
+      <EditTipPopup
+        isOpen={isPopupOpen}
+        onClose={() => setPopupOpen(false)}
+        handleUpdateTips={handleUpdateTips}
+        tips={tips}
+      />
     </PaddedContainer>
   );
 }

@@ -5,49 +5,43 @@ import { IconPlus, IconTrash } from "@tabler/icons-react";
 import axiosInstance from "../../services/axiosInstance";
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
-
-interface Field {
-  id: number;
-  header: string;
-  description: string;
-}
+import { GuideTip } from "../../pages/InterviewGuidePage";
 
 interface EditTipPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  handleUpdateTips: (payload: {
+    newTips: GuideTip[];
+    updatedTips: GuideTip[];
+    deletedTips: GuideTip[];
+  }) => void;
+  tips: GuideTip[];
 }
 
-const EditTipPopup: React.FC<EditTipPopupProps> = ({ isOpen, onClose }) => {
-  const [fields, setFields] = useState<Field[]>([]);
+const EditTipPopup: React.FC<EditTipPopupProps> = ({
+  isOpen,
+  onClose,
+  handleUpdateTips,
+  tips,
+}) => {
+  const [fields, setFields] = useState<GuideTip[]>([]);
   const [loading, setLoading] = useState<string>("");
-  const [existingTips, setExistingTips] = useState<Field[]>([]);
+  const [existingTips, setExistingTips] = useState<GuideTip[]>([]);
 
   useEffect(() => {
-    const fetchTips = async () => {
-      if (!isOpen) return;
-
-      setLoading("Loading tips...");
-      try {
-        const response = await axiosInstance.get("/api/guide-tips");
-        const fetchedTips = response.data.map((tip: any) => ({
-          id: tip.id,
-          header: tip.header,
-          description: tip.details,
-        }));
-        setExistingTips(fetchedTips);
-        setFields(fetchedTips);
-      } catch (error) {
-        toast.error("Error fetching tips. Please try again later.");
-        console.error("Error fetching tips:", error);
-      } finally {
-        setLoading("");
-      }
+    const fetchTips = () => {
+      setFields(tips);
+      setExistingTips(tips);
     };
 
     fetchTips();
   }, [isOpen]);
 
-  const handleFieldChange = (id: number, field: keyof Field, value: string) => {
+  const handleFieldChange = (
+    id: number,
+    field: keyof GuideTip,
+    value: string
+  ) => {
     setFields((prevFields) =>
       prevFields.map((f) => (f.id === id ? { ...f, [field]: value } : f))
     );
@@ -56,7 +50,7 @@ const EditTipPopup: React.FC<EditTipPopupProps> = ({ isOpen, onClose }) => {
   const addField = () => {
     setFields((prevFields) => [
       ...prevFields,
-      { id: Date.now(), header: "", description: "" },
+      { id: Date.now(), header: "", details: "" },
     ]);
   };
 
@@ -74,8 +68,7 @@ const EditTipPopup: React.FC<EditTipPopupProps> = ({ isOpen, onClose }) => {
         existingTips.find(
           (tip) =>
             tip.id === field.id &&
-            (tip.header !== field.header ||
-              tip.description !== field.description)
+            (tip.header !== field.header || tip.details !== field.details)
         )
       );
       const deletedTips = existingTips.filter(
@@ -89,6 +82,8 @@ const EditTipPopup: React.FC<EditTipPopupProps> = ({ isOpen, onClose }) => {
       };
 
       await axiosInstance.post("/api/guide-tips/store", payload);
+
+      handleUpdateTips(payload);
 
       toast.success("Updated tips successfully");
       setFields([]);
@@ -131,9 +126,9 @@ const EditTipPopup: React.FC<EditTipPopupProps> = ({ isOpen, onClose }) => {
               <textarea
                 className={styles.textarea}
                 placeholder="Input interview tips"
-                value={field.description}
+                value={field.details}
                 onChange={(e) =>
-                  handleFieldChange(field.id, "description", e.target.value)
+                  handleFieldChange(field.id, "details", e.target.value)
                 }
               />
               {fields.length > 1 && (
