@@ -102,13 +102,13 @@ const EditCompanyInfoPopup: React.FC<EditCompanyInfoPopupProps> = ({
       return;
     }
 
-    if (sizeTrimmed.length > 100) {
-      toast.error("Size should not exceed more than 100 characters");
+    if (sizeTrimmed.length > 56) {
+      toast.error("Size should not exceed more than 56 characters");
       return;
     }
 
-    if (industryTrimmed.length > 100) {
-      toast.error("Industry should not exceed more than 100 characters");
+    if (industryTrimmed.length > 56) {
+      toast.error("Industry should not exceed more than 56 characters");
       return;
     }
 
