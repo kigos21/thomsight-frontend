@@ -1,9 +1,5 @@
 .paddedContainer {
   padding-bottom: 0.5rem;
-  max-width: 1600px;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 auto;
 }
 
 .container {
@@ -11,6 +7,10 @@
   flex-direction: row;
   align-items: center;
   gap: 25px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .imageContainer {
