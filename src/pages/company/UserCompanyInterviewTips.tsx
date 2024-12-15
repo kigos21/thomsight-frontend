@@ -64,11 +64,16 @@ export default function UserCompanyInterviewTips() {
   );
 
   const handleSave = async () => {
+    const plainTextDesc =
+      new DOMParser()
+        .parseFromString(tip.description, "text/html")
+        .body.textContent?.trim() || "";
+
     if (!tip.title.trim()) {
       toast.error("Title should not be left blank");
       return;
     }
-    if (!tip.description.trim()) {
+    if (plainTextDesc === "") {
       toast.error("Description should not be left blank");
       return;
     }
@@ -87,7 +92,7 @@ export default function UserCompanyInterviewTips() {
       return;
     }
 
-    if (tip.description.length > 1500) {
+    if (plainTextDesc.length > 1500) {
       toast.error("Tip description cannot exceed 1500 characters.");
       return;
     }
@@ -197,6 +202,7 @@ export default function UserCompanyInterviewTips() {
           onSave={handleSave}
           onChange={handleChange}
           onCancel={handleCancel}
+          isAddingTip={isAddingTip}
         />
       )}
       {tips.length === 0 && (

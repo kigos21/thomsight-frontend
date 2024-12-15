@@ -1,7 +1,9 @@
+import { useEffect, useRef, useState } from "react";
 import FormField from "../../form/FormField";
 import StyledBox from "../../layout/StyledBox";
 import Button from "../Button";
 import styles from "./CompanyInterviewTipForm.module.scss";
+import Quill from "quill";
 
 interface Tip {
   title: string;
@@ -13,17 +15,46 @@ interface CompanyInterviewTipFormProps {
   onSave: () => void;
   onChange: (review: Tip) => void;
   onCancel: () => void;
+  isAddingTip: boolean;
 }
 
 const CompanyInterviewTipForm: React.FunctionComponent<
   CompanyInterviewTipFormProps
-> = ({ tip, onSave, onChange, onCancel }) => {
+> = ({ tip, onSave, onChange, onCancel, isAddingTip }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    onChange({ ...tip, [name]: value }); // Update review state based on input change
+    if (name === "title") onChange({ ...tip, [name]: value });
   };
+  const [desc, setDesc] = useState(tip.description);
+  const quillRef = useRef<HTMLDivElement | null>(null);
+  const quillInstance = useRef<Quill | null>(null);
+
+  useEffect(() => {
+    if (!quillRef.current || quillInstance.current) return;
+
+    quillInstance.current = new Quill(quillRef.current, {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+        ],
+      },
+    });
+
+    quillInstance.current.root.innerHTML = tip.description;
+
+    quillInstance.current.on("text-change", () => {
+      const htmlContent = quillInstance.current?.root.innerHTML || "";
+      setDesc(htmlContent);
+    });
+  }, [isAddingTip]);
+
+  useEffect(() => {
+    onChange({ ...tip, description: desc });
+  }, [desc]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,15 +79,9 @@ const CompanyInterviewTipForm: React.FunctionComponent<
 
           <div>
             <p className={styles.formTitle}>Description</p>
-            <FormField
-              classNames={styles.formFieldBio}
-              type="textarea"
-              name="description"
-              placeholder="Tip Description"
-              // required={true}
-              value={tip.description}
-              onChange={handleInputChange}
-            ></FormField>
+            <div className={styles.quillWrapper}>
+              <div ref={quillRef} className={styles.quillContainer}></div>
+            </div>
           </div>
 
           <div className={styles.buttonGroup}>
