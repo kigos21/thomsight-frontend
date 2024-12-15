@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Company, Location } from "../../../types/types.ts";
 import srcLogo from "../../../assets/no-image.png";
 import EditCompanyNameEmailPopup from "./EditCompanyNameEmailPopup";
+import Button from "../Button.tsx";
 
 export default function CompanyDetails() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -178,18 +179,31 @@ export default function CompanyDetails() {
             <div className={styles.sectionHeading}>
               <div className={styles.companyInfo}>
                 <p className={styles.companyName}>{companyName}</p>
-                <button className={styles.editButton} onClick={handleEditInfo}>
+                <Button
+                  classNames={styles.editButton}
+                  color="secondary"
+                  onClick={handleEditInfo}
+                >
                   <IconEdit className={styles.iconEdit} />
                   Edit Name & Email
-                </button>
+                </Button>
               </div>
             </div>
 
             {/* Company Email */}
             <div className={styles.sectionHeading}>
-              <p>
+              <p
+                className={styles.email}
+                title={
+                  companyEmail && companyEmail.trim()
+                    ? companyEmail
+                    : "No email set"
+                }
+              >
                 {companyEmail && companyEmail.trim()
-                  ? companyEmail
+                  ? companyEmail.length > 45
+                    ? `${companyEmail.slice(0, 40)}...`
+                    : companyEmail
                   : "No email set"}
               </p>
             </div>
