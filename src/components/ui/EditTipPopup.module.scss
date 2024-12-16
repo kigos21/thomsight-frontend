@@ -19,7 +19,7 @@
   width: 90%;
   max-width: 1050px;
   text-align: left;
-  max-height: 750px;
+  max-height: 90vh;
   overflow-y: auto;
 }
 
@@ -101,12 +101,12 @@
   }
 }
 
-.addButton{
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    width: 200px;
-    padding: 0.7rem 1.2rem;
+.addButton {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 200px;
+  padding: 0.7rem 1.2rem;
   border: none;
   border-radius: 10px;
   background-color: var(--blue-6);
@@ -125,16 +125,16 @@
   margin: 2rem 0rem;
 }
 
-.fieldGroup{
-    border: none;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
+.fieldGroup {
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
 }
 
-.removeButton{
-    padding: 0.7rem 1.2rem;
-    border: 1px solid var(--neutral-2);
+.removeButton {
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--neutral-2);
   border-radius: 10px;
   background-color: var(--white);
   color: white;
