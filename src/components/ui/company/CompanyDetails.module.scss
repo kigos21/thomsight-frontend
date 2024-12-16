@@ -61,7 +61,7 @@
     left: -0.5rem;
 
     & > button {
-      background-color: var(--primary-color);
+      background-color: var(--secondary-color);
       height: 2rem;
       width: 2rem;
       border-radius: 2rem;
@@ -71,7 +71,11 @@
       color: white;
 
       &:hover {
-        background-color: var(--yellow-8);
+        background-color: var(--blue-8);
+      }
+
+      &:active {
+        background-color: var(--blue-9);
       }
     }
 
@@ -85,7 +89,7 @@
       z-index: 1;
       border-radius: 4px;
       overflow: hidden;
-      background-color: var(--primary-color);
+      background-color: var(--secondary-color);
       color: var(--white);
     }
 
@@ -100,7 +104,11 @@
       cursor: pointer;
 
       &:hover {
-        background-color: var(--yellow-8);
+        background-color: var(--blue-8);
+      }
+
+      &:active {
+        background-color: var(--blue-9);
       }
     }
 
