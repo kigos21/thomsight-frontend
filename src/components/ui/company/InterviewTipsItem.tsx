@@ -98,11 +98,24 @@ export default function InterviewTipsItem({
   };
 
   const handleSaveClick = async () => {
+    const plainTextDesc =
+      new DOMParser()
+        .parseFromString(tempTip.description, "text/html")
+        .body.textContent?.trim() || "";
+
+    if (tempTip.title.trim() === "") {
+      toast.error("Title should not be left blank");
+      return;
+    }
+    if (plainTextDesc === "") {
+      toast.error("Description should not be left blank");
+      return;
+    }
     if (tempTip.title.length > 100) {
       toast.error("Title should be limited to 100 characters");
       return;
     }
-    if (tempTip.description.length > 1500) {
+    if (plainTextDesc.length > 1500) {
       toast.error("Interview tips should be limited to 1500 characters");
       return;
     }

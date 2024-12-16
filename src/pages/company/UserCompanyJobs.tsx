@@ -47,7 +47,7 @@ export default function UserCompanyJobs() {
     <PaddedContainer classNames={styles.paddedContainer}>
       <h2>Job Description</h2>
       <div className={styles.boxContainer}>
-        {paginatedJobs ? (
+        {paginatedJobs && paginatedJobs.length > 0 ? (
           paginatedJobs.map((job, index) => (
             <JobItem
               key={index}
@@ -64,7 +64,7 @@ export default function UserCompanyJobs() {
               display: "block",
             }}
           >
-            There's no data available currently!
+            There's no jobs available currently!
           </em>
         )}
       </div>
