@@ -244,9 +244,10 @@ export default function DiscussionForumItem({
             </div>
           </div>
 
-          {image !== "http://localhost:8000/storage/uploads/discussions" && (
-            <img className={styles.image} src={image} alt={"Test"} />
-          )}
+          {image &&
+            image !== "https://thomsight.com/storage/uploads/discussions" && (
+              <img className={styles.image} src={image} alt={"Test"} />
+            )}
 
           {isEditing ? (
             <div className={styles.editDescriptionSection}>

@@ -146,7 +146,7 @@ const ImageGalleryPopup: React.FC<ImageGalleryPopupProps> = ({ onClose }) => {
 
           {/* New image inputs */}
           <div className={styles.imageInputContainer}>
-            {imageInputs.map((input, index) => (
+            {imageInputs.map((_, index) => (
               <div key={index} className={styles.imageInputRow}>
                 <label
                   className={styles.chooseImageLabel}

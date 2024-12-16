@@ -141,7 +141,8 @@ export default function CompanyDetails() {
         <div className={styles.container}>
           <div className={styles.detailsContainer}>
             <div className={styles.imageContainer}>
-              {logo !== "http://localhost:8000/storage/uploads/companies" ? (
+              {logo &&
+              logo !== "https://thomsight.com/storage/uploads/companies" ? (
                 <img src={logo} alt="Logo" />
               ) : (
                 <img src={srcLogo} alt={"No image"} />
@@ -270,7 +271,8 @@ export default function CompanyDetails() {
       <PaddedContainer classNames={styles.paddedContainer}>
         <div className={styles.containerUser}>
           <div className={styles.imageContainer}>
-            {logo !== "http://localhost:8000/storage/uploads/companies" ? (
+            {logo &&
+            logo !== "https://thomsight.com/storage/uploads/companies" ? (
               <img src={logo} alt="Logo" />
             ) : (
               <img src={srcLogo} alt={"No image"} />

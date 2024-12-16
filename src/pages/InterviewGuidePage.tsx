@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PaddedContainer from "../components/layout/PaddedContainer";
 import StyledBox from "../components/layout/StyledBox";
 import styles from "./InterviewGuidePage.module.scss";
 import srcLogo from "../assets/thomsight-logo.svg";
-import Button from "../components/ui/Button";
 import { IconEdit } from "@tabler/icons-react";
 import EditTipPopup from "../components/ui/EditTipPopup";
 import { useUser } from "../contexts/UserContext";

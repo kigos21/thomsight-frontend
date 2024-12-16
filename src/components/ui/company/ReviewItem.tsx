@@ -210,9 +210,10 @@ export default function ReviewItem({
             </div>
           </div>
 
-          {reviewImage !== "http://localhost:8000/storage/uploads/reviews" && (
-            <img className={styles.image} src={reviewImage} alt={"Test"} />
-          )}
+          {reviewImage &&
+            reviewImage !== "https://thomsight.com/storage/uploads/reviews" && (
+              <img className={styles.image} src={reviewImage} alt={"Test"} />
+            )}
 
           <p
             className={styles.reviewDescription}
