@@ -244,8 +244,7 @@ export default function DiscussionForumItem({
           </div>
 
           {image &&
-            image !==
-              "https://api.thomsight.com/storage/uploads/discussions" && (
+            image !== "http://localhost:8000/storage/uploads/discussions" && (
               <img className={styles.image} src={image} alt={"Test"} />
             )}
 
