@@ -24,7 +24,7 @@ const HomeCompanyItem: React.FunctionComponent<HomeCompanyItemProps> = ({
     <div className={styles.container}>
       <div className={styles.cardHeader}>
         {image &&
-        image !== "https://api.thomsight.com/storage/uploads/companies" &&
+        image !== "http://localhost:8000/storage/uploads/companies" &&
         !imageLoadError ? (
           <img
             src={image}
