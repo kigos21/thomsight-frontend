@@ -169,7 +169,9 @@ export default function AdminGenerateTokenPage() {
             />
           ))}
         </div>
+      </StyledBox>
 
+      <div className={styles.paginationContainer}>
         {tokens.length > itemsPerPage && (
           <div className={styles.pagination}>
             <button
@@ -186,7 +188,6 @@ export default function AdminGenerateTokenPage() {
             >
               First
             </button>
-
             {Array.from({ length: totalPages }, (_, index) => index + 1)
               .slice(
                 Math.max(currentPage - 2, 0),
@@ -201,7 +202,6 @@ export default function AdminGenerateTokenPage() {
                   {page}
                 </button>
               ))}
-
             <button
               className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
               onClick={() => setCurrentPage(totalPages)}
@@ -218,7 +218,7 @@ export default function AdminGenerateTokenPage() {
             </button>
           </div>
         )}
-      </StyledBox>
+      </div>
 
       {showBulkGenerate && (
         <BulkGeneratePopup

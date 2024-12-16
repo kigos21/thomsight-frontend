@@ -13,7 +13,7 @@
 
   @media (max-width: 480px) {
     padding: 0 1rem;
-    margin-bottom: 6rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -69,5 +69,23 @@
 
   &:focus {
     outline: none; // Remove default focus outline
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .paginationButton {
+    padding: 7.5px 12.5px !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .paginationButton {
+    padding: 5px 10px !important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .paginationButton {
+    padding: 4px 8px !important;
   }
 }

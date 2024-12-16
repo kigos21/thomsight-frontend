@@ -51,6 +51,8 @@
 .header {
   font-size: 1.125rem;
   font-weight: 600;
+  margin: 0;
+  word-break: break-word;
 
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -66,6 +68,8 @@
   font-size: 1rem;
   color: var(--neutral-800);
   margin-bottom: 10px;
+  margin: 0;
+  word-break: break-word;
 
   @media (max-width: 768px) {
     font-size: 0.9rem;

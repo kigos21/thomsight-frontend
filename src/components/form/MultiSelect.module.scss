@@ -51,7 +51,7 @@
 
 .paginationButton {
   background-color: var(
-    --primary-color,
+    --secondary-color,
     #007bff
   ); /* Assuming your primary color is blue */
   color: #fff;
@@ -78,8 +78,8 @@
   }
 
   &:disabled {
-    background-color: #ccc;
-    color: #999;
+    background-color: var(--black);
+    color: white;
     cursor: not-allowed;
     box-shadow: none;
   }
