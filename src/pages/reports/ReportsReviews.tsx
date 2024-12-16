@@ -163,56 +163,56 @@ const ReportsReviews = () => {
             )}
           </div>
         ))}
-
-        {reports.length > itemsPerPage && (
-          <div className={styles.pagination}>
-            <button
-              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              &#60; Previous
-            </button>
-            <button
-              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-              onClick={() => setCurrentPage(1)}
-              disabled={currentPage === 1}
-            >
-              First
-            </button>
-
-            {Array.from({ length: totalPages }, (_, index) => index + 1)
-              .slice(
-                Math.max(currentPage - 2, 0),
-                Math.min(currentPage + 1, totalPages)
-              )
-              .map((page) => (
-                <button
-                  key={page}
-                  className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
-                  onClick={() => handlePageSelect(page)}
-                >
-                  {page}
-                </button>
-              ))}
-
-            <button
-              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-              onClick={() => setCurrentPage(totalPages)}
-              disabled={currentPage === totalPages}
-            >
-              Last
-            </button>
-            <button
-              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next &#62;
-            </button>
-          </div>
-        )}
       </ReportsTable>
+
+      {reports.length > itemsPerPage && (
+        <div className={styles.pagination}>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            &#60; Previous
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            First
+          </button>
+
+          {Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(
+              Math.max(currentPage - 2, 0),
+              Math.min(currentPage + 1, totalPages)
+            )
+            .map((page) => (
+              <button
+                key={page}
+                className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                onClick={() => handlePageSelect(page)}
+              >
+                {page}
+              </button>
+            ))}
+
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            Last
+          </button>
+          <button
+            className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next &#62;
+          </button>
+        </div>
+      )}
     </div>
   );
 };

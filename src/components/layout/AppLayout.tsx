@@ -5,6 +5,7 @@ import NavbarApp from "../ui/NavbarApp";
 import { useUser } from "../../contexts/UserContext";
 import { useCompanies } from "../../contexts/CompaniesContext";
 import NavDropdown from "../ui/NavDropdown";
+import NavDropdownAdmin from "../ui/NavDropdownAdmin";
 import { useNav } from "../../contexts/NavContext";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
@@ -193,22 +194,18 @@ export default function AppRoot() {
             )}
           </div>
         </NavLink>,
-        <NavLink
-          to="/faqs"
-          key="faqs"
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          onClick={() => setDisplayNav(false)}
-        >
-          FAQs
-        </NavLink>,
-        <NavLink
-          to="/interview-guide"
-          key="interviewTipsUser"
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          onClick={() => setDisplayNav(false)}
-        >
-          Interview Tips
-        </NavLink>,
+
+        <NavDropdownAdmin
+          key="supportAdmin"
+          label={"Support"}
+          items={[
+            { label: "FAQs", link: "/faqs" },
+            {
+              label: "Interview Tips",
+              link: "/interview-guide",
+            },
+          ]}
+        />,
       ];
       break;
 

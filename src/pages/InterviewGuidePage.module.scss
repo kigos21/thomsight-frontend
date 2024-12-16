@@ -14,22 +14,12 @@
   flex-direction: column;
 }
 
-.editButton{
-  display: flex;
-  align-items: center;
-  margin-left: 1rem;
-  font-size: 1rem;
-  padding: 0.7rem 1.2rem;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--blue-6);
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
-
-  &:hover {
-    background-color: var(--blue-8);
-  }
+.editIcon {
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-self: flex-end;
+  display: block;
+  margin-left: auto;
 }
 
 .imgContainer {
@@ -42,6 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1.5rem;
   margin-bottom: 3rem;
   text-align: center;
   width: 100%;
