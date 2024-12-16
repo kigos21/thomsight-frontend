@@ -202,7 +202,11 @@ export default function UserCompanyDiscussionForum() {
     setPostForm({ description: "" });
   };
 
-  const handleDescriptionChange = (id: number, updatedDescription: string) => {
+  const handleDescAndImageChange = (
+    id: number,
+    updatedDescription: string,
+    updatedImage: string
+  ) => {
     if (/(@rep)\b/i.test(updatedDescription)) {
       notifyRepresentativeBySlug(updatedDescription);
     }
@@ -211,28 +215,12 @@ export default function UserCompanyDiscussionForum() {
       if (post.id != id) {
         return post;
       }
-
       return {
         ...post,
         description: updatedDescription,
-      };
-    });
-
-    setPostData(newPosts);
-  };
-
-  const handleImageChange = (id: number, updatedImage: string) => {
-    const newPosts = postData.map((post) => {
-      if (post.id != id) {
-        return post;
-      }
-
-      return {
-        ...post,
         image: updatedImage,
       };
     });
-
     setPostData(newPosts);
   };
 
@@ -499,8 +487,11 @@ export default function UserCompanyDiscussionForum() {
                         updatedDescription: string,
                         updatedImage: string
                       ) => {
-                        handleDescriptionChange(post.id, updatedDescription);
-                        handleImageChange(post.id, updatedImage);
+                        handleDescAndImageChange(
+                          post.id,
+                          updatedDescription,
+                          updatedImage
+                        );
                       }}
                       setLoading={setLoading}
                       onDiscussionDelete={handleDiscussionDelete}

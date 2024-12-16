@@ -117,7 +117,6 @@ export default function DiscussionForumItem({
           },
         }
       );
-
       onChange(tempDescription, response.data.image);
       setIsEditing(false);
       toast.success("Updated discussion successfully");
