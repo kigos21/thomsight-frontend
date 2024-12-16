@@ -1,5 +1,20 @@
 .paddedContainer {
-  padding: 0rem 0rem;
+  padding: 0rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .styledBox {
@@ -33,7 +48,7 @@
   flex-direction: column;
   width: 65%;
   gap: 20px;
-  padding: 0rem 2rem;
+  padding: 0rem 2rem 0 0;
 
   @media screen and (max-width: 910px) {
     width: 100%;
@@ -57,7 +72,7 @@
 
 .rightcontainer {
   width: 35%;
-  padding: 5.25rem 2rem 0 2rem;
+  padding: 5.25rem 0 0 2rem;
 
   p {
     font-size: 14px;
