@@ -142,7 +142,7 @@ export default function CompanyDetails() {
           <div className={styles.detailsContainer}>
             <div className={styles.imageContainer}>
               {logo &&
-              logo !== "https://thomsight.com/storage/uploads/companies" ? (
+              logo !== "https://api.thomsight.com/storage/uploads/companies" ? (
                 <img src={logo} alt="Logo" />
               ) : (
                 <img src={srcLogo} alt={"No image"} />
@@ -272,7 +272,7 @@ export default function CompanyDetails() {
         <div className={styles.containerUser}>
           <div className={styles.imageContainer}>
             {logo &&
-            logo !== "https://thomsight.com/storage/uploads/companies" ? (
+            logo !== "https://api.thomsight.com/storage/uploads/companies" ? (
               <img src={logo} alt="Logo" />
             ) : (
               <img src={srcLogo} alt={"No image"} />

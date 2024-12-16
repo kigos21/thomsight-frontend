@@ -211,7 +211,8 @@ export default function ReviewItem({
           </div>
 
           {reviewImage &&
-            reviewImage !== "https://thomsight.com/storage/uploads/reviews" && (
+            reviewImage !==
+              "https://api.thomsight.com/storage/uploads/reviews" && (
               <img className={styles.image} src={reviewImage} alt={"Test"} />
             )}
 
