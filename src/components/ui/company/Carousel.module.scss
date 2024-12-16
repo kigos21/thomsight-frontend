@@ -45,6 +45,13 @@
   align-items: center;
   justify-content: center;
   background-color: var(--neutral-1);
+
+  p {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #b8b8b8;
+  }
 }
 
 .leftCarouselBtn {

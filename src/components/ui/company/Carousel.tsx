@@ -5,6 +5,7 @@ import styles from "./Carousel.module.scss";
 import PaddedContainer from "../../layout/PaddedContainer";
 import Button from "../Button";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { useState } from "react";
 
 interface CarouselProps {
   images: string[];
@@ -13,6 +14,9 @@ interface CarouselProps {
 
 export function Carousel({ images, interval = 3000 }: CarouselProps) {
   const { currentIndex, nextSlide, prevSlide } = useCarousel(images, interval);
+  const [imageLoadError, setImageLoadError] = useState<boolean[]>(() =>
+    new Array(images.length).fill(false)
+  );
 
   return (
     <PaddedContainer classNames={styles.paddedContainer}>
@@ -27,13 +31,32 @@ export function Carousel({ images, interval = 3000 }: CarouselProps) {
           >
             {images.map((image, index) => (
               <div key={index} className={styles.imageInnerContainer}>
-                <img
-                  src={image}
-                  alt={`Slide ${index + 1}`}
-                  height={340}
-                  className={styles.carouselImage}
-                  style={{ width: `${(1 / images.length) * 100}%` }}
-                />
+                {!imageLoadError[index] ? (
+                  <img
+                    src={image}
+                    alt={`Slide ${index + 1}`}
+                    height={340}
+                    className={styles.carouselImage}
+                    onError={() => {
+                      setImageLoadError((prev) => {
+                        const updatedErrors = [...prev];
+                        updatedErrors[index] = true;
+                        return updatedErrors;
+                      });
+                    }}
+                    style={{ width: `${(1 / images.length) * 100}%` }}
+                  />
+                ) : (
+                  <div
+                    className={styles.carouselImage}
+                    style={{
+                      width: `${(1 / images.length) * 100}%`,
+                      height: "340px",
+                    }}
+                  >
+                    <p>Image Failed to Load</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
