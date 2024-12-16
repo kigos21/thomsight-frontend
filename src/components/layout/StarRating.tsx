@@ -3,8 +3,8 @@ import { IconStarFilled } from "@tabler/icons-react";
 import styles from "./StarRating.module.scss";
 
 interface StarRatingProps {
-  rating: number;
-  onRate: (rating: number) => void;
+  rating: string;
+  onRate: (rating: string) => void;
 }
 
 const StarRating: React.FunctionComponent<StarRatingProps> = ({
@@ -12,7 +12,7 @@ const StarRating: React.FunctionComponent<StarRatingProps> = ({
   onRate,
 }) => {
   const handleClick = (index: number) => {
-    onRate(index + 1);
+    onRate((index + 1).toString());
   };
 
   return (
@@ -21,7 +21,9 @@ const StarRating: React.FunctionComponent<StarRatingProps> = ({
         <IconStarFilled
           size={30}
           key={index}
-          className={index < rating ? styles.filledStar : styles.emptyStar}
+          className={
+            index < Number(rating) ? styles.filledStar : styles.emptyStar
+          }
           onClick={() => handleClick(index)}
         />
       ))}
