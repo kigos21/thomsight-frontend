@@ -77,24 +77,29 @@ export default function InterviewGuidePage() {
         </div>
 
         <div className={styles.container}>
-          <h1 className={styles.title}>
-            Interview Tips
-            {user?.role === "Admin" && (
-              <Button
-                color="primary"
-                roundness="rounded"
-                classNames={styles.editButton}
-                onClick={handleEditClick}
-              >
-                <IconEdit
-                  size={20}
-                  className={styles.iconEdit}
-                  style={{ marginRight: "0.5rem" }}
-                />
-                Edit
-              </Button>
-            )}
-          </h1>
+          <div className={styles.titleHolder}>
+            <h1 className={styles.title}>
+              Interview Tips
+              {user?.role === "Admin" && (
+                <div className={styles.buttonHolder}>
+                  {/* <Button
+                      color="secondary"
+                      roundness="sm-rounded"
+                      classNames={styles.editButton}
+                      onClick={handleEditClick}
+                    > */}
+                  <IconEdit
+                    size={35}
+                    stroke={1.5}
+                    className={styles.editIcon}
+                    onClick={handleEditClick}
+                  />
+                  {/* Edit
+                    </Button> */}
+                </div>
+              )}
+            </h1>
+          </div>
           {tips.length > 0 ? (
             tips.map((tip, index) => (
               <div key={index}>

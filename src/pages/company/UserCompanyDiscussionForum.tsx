@@ -441,22 +441,259 @@ export default function UserCompanyDiscussionForum() {
     <PaddedContainer classNames={styles.paddedContainer}>
       {loading && <Spinner message={loading} />}
       {reportLoading && <Spinner message={reportLoading} />}
-      <div className={styles.container}>
-        <div className={styles.leftcontainer}>
-          <div className={styles.titleButtonContainer}>
-            <h2>Discussion Forum</h2>
-            <Button
-              color="primary"
-              roundness="rounded"
-              classNames={styles.addPostButtonButton}
-              onClick={() => {
-                setIsAddingPost(true);
-              }} // Show form on button click
-            >
-              Add Post
-            </Button>
+      <>
+        <div className={styles.container}>
+          <div className={styles.leftcontainer}>
+            <div className={styles.titleButtonContainer}>
+              <h2>Discussion Forum</h2>
+              <Button
+                color="primary"
+                roundness="rounded"
+                classNames={styles.addPostButtonButton}
+                onClick={() => {
+                  setIsAddingPost(true);
+                }} // Show form on button click
+              >
+                Add Post
+              </Button>
+            </div>
+            <div className={styles.rightcontainerMobile}>
+              <StyledBox paddedContainerClass={styles.styledBox}>
+                <p className={styles.noteTitle}>Note</p>
+                <p>
+                  No offensive and rude behavior is allowed. Please report them
+                  by clicking the report button on the post.
+                </p>
+                <p>
+                  If you need to mention the company, simply type "@rep" in your
+                  message.
+                </p>
+              </StyledBox>
+            </div>
+
+            {isAddingPost && (
+              <DiscussionAddPostForm
+                post={postForm}
+                onSave={handleSave}
+                onChange={handleChange}
+                onCancel={handleCancel}
+                setSelectedFile={setSelectedFile}
+              />
+            )}
+
+            <div className={styles.discussionContainer}>
+              {postData.length === 0 && (
+                <em style={{ fontSize: "0.875rem" }}>
+                  There are no posts as of now, create the first one!
+                </em>
+              )}
+              {paginatedPosts &&
+                paginatedPosts.map((post) => (
+                  <Fragment key={post.id}>
+                    <DiscussionForumItem
+                      id={post.id}
+                      internName={post.internName}
+                      date={post.date}
+                      description={post.description}
+                      onChange={(
+                        updatedDescription: string,
+                        updatedImage: string
+                      ) => {
+                        handleDescriptionChange(post.id, updatedDescription);
+                        handleImageChange(post.id, updatedImage);
+                      }}
+                      setLoading={setLoading}
+                      onDiscussionDelete={handleDiscussionDelete}
+                      posted_by={post.posted_by}
+                      handleReplyClick={() => {
+                        setActiveReplyPostId(
+                          activeReplyPostId === post.id ? -1 : post.id
+                        );
+                      }}
+                      user_id={post.user_id}
+                      image={post.image}
+                    />
+                    <div className={styles.repliesContainer}>
+                      {post.replies && post.replies.length > 0 && (
+                        <button
+                          className={styles.viewRepliesButton}
+                          onClick={() => {
+                            setShowReplies((prev) => ({
+                              ...prev,
+                              [post.id]: !prev[post.id],
+                            }));
+                            if (!showReplies[post.id]) {
+                              setVisibleReplies((prev) => ({
+                                ...prev,
+                                [post.id]: 2,
+                              }));
+                            }
+                          }}
+                        >
+                          {showReplies[post.id]
+                            ? "Hide Replies"
+                            : "View Replies"}
+                        </button>
+                      )}
+                      {showReplies[post.id] &&
+                        post.replies &&
+                        post.replies
+                          .slice(0, visibleReplies[post.id] || 2)
+                          .map((reply) => (
+                            <div
+                              key={reply.id}
+                              className={styles.commentContainer}
+                            >
+                              {activeProfileUserId === reply.posted_by && (
+                                <DisplayProfile
+                                  onClose={() => setActiveProfileUserId(null)}
+                                  user_id={reply.posted_by}
+                                  isVisible={
+                                    activeProfileUserId === reply.posted_by
+                                  }
+                                />
+                              )}
+                              <div className={styles.repliesDetails}>
+                                <strong
+                                  className={styles.replyInternName}
+                                  onClick={() =>
+                                    handleProfileClick(reply.posted_by)
+                                  }
+                                >
+                                  {reply.username}
+                                </strong>
+                                <span className={styles.separator}> · </span>
+                                {reply.posted_at}
+                              </div>
+
+                              {activeEditReplyId === reply.id ? (
+                                <div className={styles.editDescriptionSection}>
+                                  <textarea
+                                    className={styles.descriptionTextarea}
+                                    rows={5}
+                                    value={editedReplyText}
+                                    onChange={(e) =>
+                                      setEditedReplyText(e.target.value)
+                                    }
+                                  />
+                                  <div className={styles.editButtons}>
+                                    <button
+                                      className={styles.cancelButton}
+                                      onClick={() => setActiveEditReplyId(null)}
+                                    >
+                                      Cancel
+                                    </button>
+                                    <button
+                                      className={styles.saveButton}
+                                      onClick={() => handleSaveEdit(reply.id)}
+                                    >
+                                      Save
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div
+                                  style={{
+                                    maxWidth: "100%",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {reply.comment}
+                                </div>
+                              )}
+
+                              <div className={styles.iconContainer}>
+                                {user?.id === reply.posted_by && (
+                                  <button
+                                    onClick={() =>
+                                      handleEditClick(reply.id, reply.comment)
+                                    }
+                                  >
+                                    <IconEdit
+                                      size={25}
+                                      stroke={1.5}
+                                      className={styles.iconEdit}
+                                    />
+                                  </button>
+                                )}
+
+                                {user?.id === reply.posted_by && (
+                                  <button
+                                    onClick={() =>
+                                      handleDeleteClick(reply.id, post.id)
+                                    }
+                                  >
+                                    <IconTrash
+                                      size={25}
+                                      stroke={1.5}
+                                      className={styles.iconDelete}
+                                    />
+                                  </button>
+                                )}
+
+                                {user?.id !== reply.posted_by && (
+                                  <button
+                                    onClick={() => handleReportClick(reply.id)}
+                                  >
+                                    <IconFlagFilled
+                                      size={25}
+                                      stroke={1.5}
+                                      className={styles.iconReport}
+                                    />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                      {showReplies[post.id] &&
+                        post.replies &&
+                        visibleReplies[post.id] < post.replies.length && (
+                          <button
+                            className={styles.loadMoreRepliesButton}
+                            onClick={() =>
+                              setVisibleReplies((prev) => ({
+                                ...prev,
+                                [post.id]: (prev[post.id] || 2) + 2,
+                              }))
+                            }
+                          >
+                            Show More Replies
+                          </button>
+                        )}
+                    </div>
+                    {activeReplyPostId === post.id && (
+                      <div className={styles.replyFormFieldContainer}>
+                        <FormField
+                          type={"text"}
+                          placeholder={"Add your reply..."}
+                          classNames={styles.replyFormField}
+                          parentDivClassnames={styles.formFieldParent}
+                          value={reply}
+                          onChange={(e) => handleReplyChange(e.target.value)}
+                        />
+                        <Button
+                          color={"black"}
+                          roundness={"sm-rounded"}
+                          classNames={styles.cancelReplyButton}
+                          onClick={() => setActiveReplyPostId(-1)}
+                        >
+                          <IconX />
+                        </Button>
+                        <Button
+                          color={"secondary"}
+                          roundness={"sm-rounded"}
+                          classNames={styles.sendReplyButton}
+                          onClick={() => handleAddReply(post.id)}
+                        >
+                          <IconSend />
+                        </Button>
+                      </div>
+                    )}
+                  </Fragment>
+                ))}
+            </div>
           </div>
-          <div className={styles.rightcontainerMobile}>
+          <div className={styles.rightcontainer}>
             <StyledBox paddedContainerClass={styles.styledBox}>
               <p className={styles.noteTitle}>Note</p>
               <p>
@@ -469,289 +706,56 @@ export default function UserCompanyDiscussionForum() {
               </p>
             </StyledBox>
           </div>
+        </div>
+        {postData.length > itemsPerPage && (
+          <div className={styles.pagination}>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              &#60; Previous
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(1)}
+              disabled={currentPage === 1}
+            >
+              First
+            </button>
 
-          {isAddingPost && (
-            <DiscussionAddPostForm
-              post={postForm}
-              onSave={handleSave}
-              onChange={handleChange}
-              onCancel={handleCancel}
-              setSelectedFile={setSelectedFile}
-            />
-          )}
-
-          <div className={styles.discussionContainer}>
-            {postData.length === 0 && (
-              <em style={{ fontSize: "0.875rem" }}>
-                There are no posts as of now, create the first one!
-              </em>
-            )}
-            {paginatedPosts &&
-              paginatedPosts.map((post) => (
-                <Fragment key={post.id}>
-                  <DiscussionForumItem
-                    id={post.id}
-                    internName={post.internName}
-                    date={post.date}
-                    description={post.description}
-                    onChange={(
-                      updatedDescription: string,
-                      updatedImage: string
-                    ) => {
-                      handleDescriptionChange(post.id, updatedDescription);
-                      handleImageChange(post.id, updatedImage);
-                    }}
-                    setLoading={setLoading}
-                    onDiscussionDelete={handleDiscussionDelete}
-                    posted_by={post.posted_by}
-                    handleReplyClick={() => {
-                      setActiveReplyPostId(
-                        activeReplyPostId === post.id ? -1 : post.id
-                      );
-                    }}
-                    user_id={post.user_id}
-                    image={post.image}
-                  />
-                  <div className={styles.repliesContainer}>
-                    {post.replies && post.replies.length > 0 && (
-                      <button
-                        className={styles.viewRepliesButton}
-                        onClick={() => {
-                          setShowReplies((prev) => ({
-                            ...prev,
-                            [post.id]: !prev[post.id],
-                          }));
-                          if (!showReplies[post.id]) {
-                            setVisibleReplies((prev) => ({
-                              ...prev,
-                              [post.id]: 2,
-                            }));
-                          }
-                        }}
-                      >
-                        {showReplies[post.id] ? "Hide Replies" : "View Replies"}
-                      </button>
-                    )}
-                    {showReplies[post.id] &&
-                      post.replies &&
-                      post.replies
-                        .slice(0, visibleReplies[post.id] || 2)
-                        .map((reply) => (
-                          <div
-                            key={reply.id}
-                            className={styles.commentContainer}
-                          >
-                            {activeProfileUserId === reply.posted_by && (
-                              <DisplayProfile
-                                onClose={() => setActiveProfileUserId(null)}
-                                user_id={reply.posted_by}
-                                isVisible={
-                                  activeProfileUserId === reply.posted_by
-                                }
-                              />
-                            )}
-                            <div className={styles.repliesDetails}>
-                              <strong
-                                className={styles.replyInternName}
-                                onClick={() =>
-                                  handleProfileClick(reply.posted_by)
-                                }
-                              >
-                                {reply.username}
-                              </strong>
-                              <span className={styles.separator}> · </span>
-                              {reply.posted_at}
-                            </div>
-
-                            {activeEditReplyId === reply.id ? (
-                              <div className={styles.editDescriptionSection}>
-                                <textarea
-                                  className={styles.descriptionTextarea}
-                                  rows={5}
-                                  value={editedReplyText}
-                                  onChange={(e) =>
-                                    setEditedReplyText(e.target.value)
-                                  }
-                                />
-                                <div className={styles.editButtons}>
-                                  <button
-                                    className={styles.cancelButton}
-                                    onClick={() => setActiveEditReplyId(null)}
-                                  >
-                                    Cancel
-                                  </button>
-                                  <button
-                                    className={styles.saveButton}
-                                    onClick={() => handleSaveEdit(reply.id)}
-                                  >
-                                    Save
-                                  </button>
-                                </div>
-                              </div>
-                            ) : (
-                              <div
-                                style={{
-                                  maxWidth: "100%",
-                                  wordWrap: "break-word",
-                                }}
-                              >
-                                {reply.comment}
-                              </div>
-                            )}
-
-                            <div className={styles.iconContainer}>
-                              {user?.id === reply.posted_by && (
-                                <button
-                                  onClick={() =>
-                                    handleEditClick(reply.id, reply.comment)
-                                  }
-                                >
-                                  <IconEdit
-                                    size={25}
-                                    stroke={1.5}
-                                    className={styles.iconEdit}
-                                  />
-                                </button>
-                              )}
-
-                              {user?.id === reply.posted_by && (
-                                <button
-                                  onClick={() =>
-                                    handleDeleteClick(reply.id, post.id)
-                                  }
-                                >
-                                  <IconTrash
-                                    size={25}
-                                    stroke={1.5}
-                                    className={styles.iconDelete}
-                                  />
-                                </button>
-                              )}
-
-                              {user?.id !== reply.posted_by && (
-                                <button
-                                  onClick={() => handleReportClick(reply.id)}
-                                >
-                                  <IconFlagFilled
-                                    size={25}
-                                    stroke={1.5}
-                                    className={styles.iconReport}
-                                  />
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                    {showReplies[post.id] &&
-                      post.replies &&
-                      visibleReplies[post.id] < post.replies.length && (
-                        <button
-                          className={styles.loadMoreRepliesButton}
-                          onClick={() =>
-                            setVisibleReplies((prev) => ({
-                              ...prev,
-                              [post.id]: (prev[post.id] || 2) + 2,
-                            }))
-                          }
-                        >
-                          Show More Replies
-                        </button>
-                      )}
-                  </div>
-                  {activeReplyPostId === post.id && (
-                    <div className={styles.replyFormFieldContainer}>
-                      <FormField
-                        type={"text"}
-                        placeholder={"Add your reply..."}
-                        classNames={styles.replyFormField}
-                        parentDivClassnames={styles.formFieldParent}
-                        value={reply}
-                        onChange={(e) => handleReplyChange(e.target.value)}
-                      />
-                      <Button
-                        color={"black"}
-                        roundness={"sm-rounded"}
-                        classNames={styles.cancelReplyButton}
-                        onClick={() => setActiveReplyPostId(-1)}
-                      >
-                        <IconX />
-                      </Button>
-                      <Button
-                        color={"secondary"}
-                        roundness={"sm-rounded"}
-                        classNames={styles.sendReplyButton}
-                        onClick={() => handleAddReply(post.id)}
-                      >
-                        <IconSend />
-                      </Button>
-                    </div>
-                  )}
-                </Fragment>
+            {Array.from({ length: totalPages }, (_, index) => index + 1)
+              .slice(
+                Math.max(currentPage - 2, 0),
+                Math.min(currentPage + 1, totalPages)
+              )
+              .map((page) => (
+                <button
+                  key={page}
+                  className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
+                  onClick={() => handlePageSelect(page)}
+                >
+                  {page}
+                </button>
               ))}
+
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={() => setCurrentPage(totalPages)}
+              disabled={currentPage === totalPages}
+            >
+              Last
+            </button>
+            <button
+              className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next &#62;
+            </button>
           </div>
-          {postData.length > itemsPerPage && (
-            <div className={styles.pagination}>
-              <button
-                className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-              >
-                &#60; Previous
-              </button>
-              <button
-                className={`${styles.paginationButton} ${currentPage === 1 ? styles.disabled : ""}`}
-                onClick={() => setCurrentPage(1)}
-                disabled={currentPage === 1}
-              >
-                First
-              </button>
-
-              {Array.from({ length: totalPages }, (_, index) => index + 1)
-                .slice(
-                  Math.max(currentPage - 2, 0),
-                  Math.min(currentPage + 1, totalPages)
-                )
-                .map((page) => (
-                  <button
-                    key={page}
-                    className={`${styles.paginationButton} ${currentPage === page ? styles.active : ""}`}
-                    onClick={() => handlePageSelect(page)}
-                  >
-                    {page}
-                  </button>
-                ))}
-
-              <button
-                className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-                onClick={() => setCurrentPage(totalPages)}
-                disabled={currentPage === totalPages}
-              >
-                Last
-              </button>
-              <button
-                className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ""}`}
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Next &#62;
-              </button>
-            </div>
-          )}
-        </div>
-        <div className={styles.rightcontainer}>
-          <StyledBox paddedContainerClass={styles.styledBox}>
-            <p className={styles.noteTitle}>Note</p>
-            <p>
-              No offensive and rude behavior is allowed. Please report them by
-              clicking the report button on the post.
-            </p>
-            <p>
-              If you need to mention the company, simply type "@rep" in your
-              message.
-            </p>
-          </StyledBox>
-        </div>
-      </div>
+        )}
+      </>
       {showReportPopup && (
         <ReportForm
           isVisible={showReportPopup}

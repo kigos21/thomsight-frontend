@@ -93,3 +93,11 @@
     background-color: var(--black);
   }
 }
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  max-width: 370px;
+  align-items: center;
+  margin: 0 auto;
+}

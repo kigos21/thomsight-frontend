@@ -116,6 +116,13 @@
 
 .companyName {
   font-size: 1.25rem !important;
+  margin: 0;
+  word-break: break-word;
+}
+
+.email {
+  margin: 0;
+  word-break: break-word;
 }
 
 .detailsHolder {
