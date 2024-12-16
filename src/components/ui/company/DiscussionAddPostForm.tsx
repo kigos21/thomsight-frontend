@@ -81,7 +81,7 @@ const DiscussionAddPostForm: React.FunctionComponent<
 
           <div className={styles.buttonGroup}>
             <Button
-              color="gray"
+              color="black"
               roundness="rounded"
               classNames={styles.buttonCancel}
               onClick={onCancel}

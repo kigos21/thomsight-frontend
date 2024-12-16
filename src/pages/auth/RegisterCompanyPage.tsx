@@ -222,6 +222,15 @@ export default function CompanyRegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
 
+              <div className={styles.passwordContainer}>
+                <p className={styles.passwordHeader}>Password Requirements:</p>
+                <div className={styles.instructions}>
+                  <p>• At least 8 characters</p>
+                  <p>• Contains a special character </p>
+                  <p>• Uppercase and lowercase letters</p>
+                </div>
+              </div>
+
               {/* Confirm Password Field */}
               <FormField
                 icon={

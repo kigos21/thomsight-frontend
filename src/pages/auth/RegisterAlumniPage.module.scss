@@ -78,3 +78,22 @@
     font-size: 1.2rem;
   }
 }
+
+.passwordContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 2.25rem;
+  gap: 0.25rem;
+
+  p {
+    color: var(--neutral-8);
+  }
+}
+
+.passwordHeader {
+  font-weight: 600;
+}
+
+.instructions {
+  padding-left: 1.25rem;
+}

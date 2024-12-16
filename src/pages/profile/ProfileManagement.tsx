@@ -141,7 +141,7 @@ export default function ProfileManagement() {
                   <IconX />
                 </Button>
                 <Button
-                  color={"primary"}
+                  color={"secondary"}
                   roundness={"sm-rounded"}
                   classNames={styles.sendEditButton}
                   onClick={handleConfirmClick}

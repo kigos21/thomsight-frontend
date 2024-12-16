@@ -16,7 +16,7 @@
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.285);
-  width: 100%;
+  width: 90%;
   max-width: 500px;
   text-align: center;
   display: flex;
@@ -30,7 +30,9 @@
 
 .buttonContainer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-end;
 }
 
 .chooseImageContainer {
@@ -62,4 +64,11 @@
   display: block;
   margin-bottom: 1rem;
   font-weight: 600;
+}
+
+.noteGenerate {
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  padding-bottom: 2rem;
 }

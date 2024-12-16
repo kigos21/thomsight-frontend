@@ -235,8 +235,8 @@ export default function UserCompanyOverview() {
               </h2>
               {user?.role === "Alumni" && (
                 <Button
-                  color="primary"
-                  roundness="rounded"
+                  color="secondary"
+                  roundness="sm-rounded"
                   classNames={styles.reviewButton}
                   onClick={() => {
                     setIsAddingReview(true);

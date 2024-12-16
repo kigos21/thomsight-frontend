@@ -72,6 +72,11 @@ const BulkGeneratePopup: React.FC<BulkGeneratePopupProps> = ({
           <label htmlFor="fileInput" className={styles.fileLabel}>
             Please upload a CSV list of emails:
           </label>
+          <p className={styles.noteGenerate}>
+            When uploading the .csv file, please make sure that the header/s are
+            on the first row and at least one header has the keyword "email" or
+            "e-mail"
+          </p>
           <input
             id="fileInput"
             type="file"

@@ -173,7 +173,7 @@ export default function UserCompanyInterviewTips() {
           <h2>Interview Tips</h2>
           {user?.role === "Alumni" && (
             <Button
-              color="primary"
+              color="secondary"
               roundness="rounded"
               classNames={styles.tipButton}
               onClick={() => {

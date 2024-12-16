@@ -77,7 +77,7 @@ const ChangePassword = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <Button
-            color="primary"
+            color="secondary"
             roundness="rounded"
             classNames={styles.button}
             type="submit"

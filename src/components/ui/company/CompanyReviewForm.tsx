@@ -129,16 +129,16 @@ const CompanyReviewForm: React.FunctionComponent<CompanyReviewFormProps> = ({
 
           <div className={styles.buttonGroup}>
             <Button
-              color="gray"
-              roundness="rounded"
+              color="black"
+              roundness="sm-rounded"
               classNames={styles.buttonCancel}
               onClick={onCancel}
             >
               Cancel
             </Button>
             <Button
-              color="primary"
-              roundness="rounded"
+              color="secondary"
+              roundness="sm-rounded"
               classNames={styles.buttonSubmit}
               type="submit"
             >
