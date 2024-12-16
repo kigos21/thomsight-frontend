@@ -92,8 +92,8 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
       toast.error("Subject should be limited to 100 characters");
       return;
     }
-    if (plainTextDetails.length > 500) {
-      toast.error("Details should be limited to 500 characters");
+    if (plainTextDetails.length > 1500) {
+      toast.error("Details should be limited to 1500 characters");
       return;
     }
 
@@ -109,11 +109,11 @@ const CreateAnnouncementPopup: React.FC<CreateAnnouncementPopupProps> = ({
     } finally {
       setLoading(false);
       onClose();
+      resetForm();
       await axiosInstance.post("/api/announcements/email", {
         subject,
         details,
       });
-      resetForm();
     }
   };
 
