@@ -90,7 +90,7 @@ const CVFeedbackCreate = () => {
         <span>by {remarkedBy}</span>
       </div>
 
-      <p>{remark} </p>
+      <p className={styles.remark}>{remark} </p>
     </div>
   );
 };

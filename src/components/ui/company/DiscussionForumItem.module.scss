@@ -118,9 +118,9 @@
   gap: 0.5rem;
 }
 
-.descriptionTextarea {
-  resize: none;
-}
+// .descriptionTextarea {
+//   resize: none;
+// }
 
 .editButtons {
   display: flex;
@@ -186,4 +186,6 @@
 
 .quillContainer {
   background-color: var(--white);
+  margin: 0;
+  word-break: break-word;
 }
