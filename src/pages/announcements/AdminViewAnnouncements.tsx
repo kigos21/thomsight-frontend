@@ -124,7 +124,9 @@ export default function AdminViewAnnouncements() {
               key={announcement.id}
               id={announcement.id}
               announcementHeader={announcement.title}
-              date={new Date(announcement.updated_at).toLocaleDateString()}
+              date={new Date(
+                announcement.updated_at || ""
+              ).toLocaleDateString()}
               announcementDescription={announcement.content}
               onDelete={handleDelete}
               onEdit={handleEdit}
