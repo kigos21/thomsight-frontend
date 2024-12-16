@@ -7,22 +7,6 @@
   width: 100%;
 }
 
-.token {
-  // grid-column: 1 / 2;
-}
-
-.status {
-  // grid-column: 2 / 3;
-}
-
-.expiration {
-  // grid-column: 3 / 4;
-}
-
-.tokenformfield {
-  // grid-column: 4 / 5;
-}
-
 .trashIcon {
   // grid-column: 5 / 6;
   cursor: pointer;
@@ -41,17 +25,20 @@
 
 @media screen and (max-width: 768px) {
   .tokenItem {
-    // grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 }
 
 .token {
   min-width: 180px;
+  margin: 0;
+  word-break: break-word;
 }
 
 .expiration {
   padding: 0 0 0 1rem;
+  margin: 0;
+  word-break: break-word;
 
   @media screen and (max-width: 1268px) {
     padding: 0 0 0 1.5rem;
