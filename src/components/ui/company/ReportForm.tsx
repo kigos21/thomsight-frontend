@@ -64,17 +64,18 @@ const ReportForm: React.FC<ReportFormProps> = ({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
-          <button className={styles.cancelButton} onClick={onClose}>
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Submit Report"}
-          </button>
+          <div className={styles.buttonGroup}>
+            <button className={styles.cancelButton} onClick={onClose}>
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={loading}
+            >
+              {loading ? "Submitting..." : "Submit Report"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
