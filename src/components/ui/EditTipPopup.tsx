@@ -10,11 +10,7 @@ import { GuideTip } from "../../pages/InterviewGuidePage";
 interface EditTipPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  handleUpdateTips: (payload: {
-    newTips: GuideTip[];
-    updatedTips: GuideTip[];
-    deletedTips: GuideTip[];
-  }) => void;
+  handleUpdateTips: (tips: GuideTip[]) => void;
   tips: GuideTip[];
 }
 
@@ -81,9 +77,14 @@ const EditTipPopup: React.FC<EditTipPopupProps> = ({
         deletedTips,
       };
 
-      await axiosInstance.post("/api/guide-tips/store", payload);
+      const response = await axiosInstance.post(
+        "/api/guide-tips/store",
+        payload
+      );
 
-      handleUpdateTips(payload);
+      console.log(response.data);
+
+      handleUpdateTips(response.data);
 
       toast.success("Updated tips successfully");
       setFields([]);

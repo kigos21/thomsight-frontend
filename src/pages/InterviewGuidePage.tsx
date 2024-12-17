@@ -41,30 +41,8 @@ export default function InterviewGuidePage() {
     setPopupOpen(true);
   };
 
-  const handleUpdateTips = (payload: {
-    newTips: GuideTip[];
-    updatedTips: GuideTip[];
-    deletedTips: GuideTip[];
-  }) => {
-    setTips((prevTips) => {
-      const remainingTips = prevTips.filter(
-        (tip) =>
-          !payload.deletedTips.some((deletedTip) => deletedTip.id === tip.id)
-      );
-
-      const tipsWithoutUpdates = remainingTips.filter(
-        (tip) =>
-          !payload.updatedTips.some((updatedTip) => updatedTip.id === tip.id)
-      );
-
-      const updatedTipsList = [
-        ...tipsWithoutUpdates,
-        ...payload.newTips,
-        ...payload.updatedTips,
-      ];
-
-      return updatedTipsList.sort((a, b) => a.id - b.id);
-    });
+  const handleUpdateTips = (tips: GuideTip[]) => {
+    setTips(tips);
   };
 
   return (
