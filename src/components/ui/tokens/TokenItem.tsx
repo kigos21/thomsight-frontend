@@ -28,6 +28,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
   };
 
   const handleDelete = async () => {
+    setDeleteConfirm(false);
     setDeleteLoading(true);
     try {
       await axiosInstance.delete(`api/tokens/${id}/delete`);

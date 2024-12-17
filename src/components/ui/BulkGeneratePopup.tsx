@@ -52,6 +52,9 @@ const BulkGeneratePopup: React.FC<BulkGeneratePopupProps> = ({
         const newTokens = response.data.tokens;
         onBulkGenerateSuccess(newTokens);
         onClose();
+        await axiosInstance.post("api/tokens/bulk-email", {
+          tokens: newTokens,
+        });
       } else {
         toast.error(response.data.message || "Failed to generate tokens.");
       }
