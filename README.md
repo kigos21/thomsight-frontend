@@ -6,7 +6,9 @@ Students at the University of Santo Tomas (UST) face challenges in securing inte
 
 ### Built With
 
-[![React][React.js]][React-url]
+- React
+- React Router
+- Vite + CSS Modules
 
 <!-- GETTING STARTED -->
 
